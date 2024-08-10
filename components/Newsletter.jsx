@@ -3,7 +3,7 @@ import React from "react";
 export default function Newsletter() {
   return (
     <>
-      <section className="bg-white dark:bg-gray-900">
+      <section className="bg-white dark:bg-gray-900 mt-12">
         <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6 bg-[#F7EBE0]">
           <div className=" sm:text-center  flex gap-24">
             <div>
