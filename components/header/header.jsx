@@ -1,6 +1,7 @@
 import NewsBannerNav from "./news-banner-nav/news-banner-nav";
 import MiddleBarNav from "./middle-bar-nav/middle-bar-nav";
 import Navigation from "./navigation-nav/navigation";
+import Promo from "./banner/Promo";
 
 export default function Header() {
     return (
@@ -8,6 +9,7 @@ export default function Header() {
             <NewsBannerNav />
             <MiddleBarNav />
             <Navigation />
+            <Promo/>
         </header>
     )
 }
