@@ -1,6 +1,6 @@
 "use client";
 
-import { FiSearch } from "react-icons/fi";
+// import { FiSearch } from "react-icons/fi";
 import { UserIcon } from "../../../public/icons/user";
 import { CartIcon } from "../../../public/icons/cart";
 import Link from "next/link";
