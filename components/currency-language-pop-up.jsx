@@ -1,5 +1,8 @@
 "use client";
 import { usePopupStore } from "../states/use-popup-store";
+import Image from "next/image";
+import uklogo from '../public/UK Flag.png';
+
 
 export default function CurrencyLanguagePopUp() {
   const isOpen = usePopupStore((state) => state.isOpen);
@@ -19,13 +22,15 @@ export default function CurrencyLanguagePopUp() {
             </button>
 
             {/* Flag Image */}
-            {/* <div className="flex justify-center mb-4">
-              <img
-                src="/UK Flag.png"
+            <div className="flex justify-center mb-4">
+              <Image
+                src={uklogo}
                 alt="UK Flag"
+                width={64} // Specify the width
+                height={64} // Specify the height
                 className="w-16 h-auto rounded shadow-lg"
               />
-            </div> */}
+            </div>
 
             {/* Content */}
             <h2 className="text-xl font-bold text-center mb-2">
@@ -35,17 +40,33 @@ export default function CurrencyLanguagePopUp() {
               Prices are shown and charged in GBP
             </p>
 
-            {/* Dropdowns */}
-            <div className="flex flex-col w-full space-y-3">
-              <select className="w-full p-2.5 border border-gray-300 rounded-md">
-                <option>United Kingdom</option>
-                {/* Other options can be added here */}
-              </select>
-              <select className="w-full p-2 border border-gray-300 rounded-md">
-                <option>Currency</option>
-                {/* Other options can be added here */}
-              </select>
-            </div>
+          {/* Dropdowns */}
+<div className="flex flex-col w-full space-y-3">
+  <select className="w-full p-2.5 border border-gray-300 rounded-md">
+    <option value="UK">United Kingdom</option>
+    <option value="US">United States</option>
+    <option value="CA">Canada</option>
+    <option value="AU">Australia</option>
+    <option value="DE">Germany</option>
+    <option value="FR">France</option>
+    <option value="JP">Japan</option>
+    <option value="CN">China</option>
+    <option value="IN">India</option>
+    {/* Add more options as needed */}
+  </select>
+  <select className="w-full p-2 border border-gray-300 rounded-md">
+    <option value="GBP">British Pound (GBP)</option>
+    <option value="USD">US Dollar (USD)</option>
+    <option value="CAD">Canadian Dollar (CAD)</option>
+    <option value="AUD">Australian Dollar (AUD)</option>
+    <option value="EUR">Euro (EUR)</option>
+    <option value="JPY">Japanese Yen (JPY)</option>
+    <option value="CNY">Chinese Yuan (CNY)</option>
+    <option value="INR">Indian Rupee (INR)</option>
+    {/* Add more options as needed */}
+  </select>
+</div>
+
 
             {/* Continue Button */}
             <button
