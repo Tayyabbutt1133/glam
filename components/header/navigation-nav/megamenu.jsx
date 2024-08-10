@@ -4,8 +4,8 @@ import React from "react";
 export default function MegaMenu() {
     return (
         <>
-   
-        {/* <div className="absolute top-full mt-2 w-screen bg-white shadow-lg z-50">
+    
+        <div className="flex top-full mt-2 w-screen bg-white shadow-lg z-50">
             <div className="px-10 py-6 max-w-screen-xl mx-auto">
                 <div className="grid grid-cols-6 gap-8">
                     <div>
@@ -70,7 +70,7 @@ export default function MegaMenu() {
                     </div>
                 </div>
             </div>
-        </div> */}
+        </div>
    
         </>     
     );
