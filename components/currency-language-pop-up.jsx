@@ -33,29 +33,22 @@ export default function CurrencyLanguagePopUp() {
         <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
           <div
             ref={modalRef}
-            className="bg-white rounded-lg shadow-lg p-6 relative max-w-sm w-full"
+            className="bg-white rounded-lg shadow-lg py-6 px-8 relative max-w-sm w-full"
           >
-            {/* Close Button */}
-            <button
-              className="absolute top-2 right-2 text-gray-600 hover:text-gray-800"
-              onClick={closeModal}
-            >
-              &times;
-            </button>
 
             {/* Flag Image */}
-            <div className="flex justify-center mb-4">
+            <div className="absolute -top-10 left-[50%] -translate-x-[50%] mb-4">
               <Image
                 src={uklogo}
                 alt="UK Flag"
-                width={64} // Specify the width
-                height={64} // Specify the height
-                className="w-16 h-auto rounded shadow-lg"
+                width={1000} // Specify the width
+                height={100} // Specify the height
+                className="w-36 h-auto rounded shadow-lg"
               />
             </div>
 
             {/* Content */}
-            <h2 className="text-xl font-bold text-center mb-2">
+            <h2 className="text-xl font-bold text-center mt-12 mb-2">
               CHOOSE YOUR SHIPPING COUNTRY/REGION
             </h2>
             <p className="text-center text-gray-600 mb-4">
