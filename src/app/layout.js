@@ -4,12 +4,10 @@ import CurrencyLanguagePopUp from "../../components/currency-language-pop-up";
 import Header from "../../components/header/header";
 import Newsletter from "../../components/Newsletter";
 import Footer from "../../components/Footer";
-// import CurrencyLanguagePopUp from '../components/currency-language-pop-up.jsx'
 const inter = Inter({ subsets: ["latin"] });
+import { ClerkProvider } from "@clerk/nextjs";
+import NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY from '@clerk/nextjs'
 
-// import Header from '../components/header/header.jsx';
-// import Newsletter from '../components/Newsletter.jsx'
-// import Footer from '../components/Footer.jsx';
 
 export const metadata = {
   title: "Glam Studio",
@@ -19,15 +17,16 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
+    <ClerkProvider frontendapi={NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}>
     <html lang="en">
       <body className={inter.className}>
-        
         <CurrencyLanguagePopUp />
         <Header/>
         {children}
         <Newsletter />
         <Footer/>
       </body>
-    </html>
+      </html>
+      </ClerkProvider>
   );
 }

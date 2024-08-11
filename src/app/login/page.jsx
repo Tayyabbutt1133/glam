@@ -86,12 +86,16 @@ export default function Login() {
             />
             <label htmlFor="rememberMe" className="ml-2 block text-sm text-gray-900">Remember me</label>
           </div>
+
+          <Link href="/">
           <button
             type="submit"
             className="w-full py-2 bg-black text-white font-semibold rounded-md shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-900"
           >
             Sign In
           </button>
+          </Link>
+
         </form>
         {message && <div className="mt-4 text-center text-sm text-red-600">{message}</div>}
         <div className="mt-6 text-center text-gray-600">or Sign in with</div>

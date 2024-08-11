@@ -131,12 +131,14 @@ export default function SignUp() {
               By ticking, you are confirming that you agree to our <a href="/terms" className="text-purple-600">Terms and Conditions</a> and <a href="/privacy" className="text-purple-600">Privacy Policy</a> *
             </label>
           </div>
+          <Link href="/">
           <button
             type="submit"
             className="w-full py-2 bg-purple-600 text-white font-semibold rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
           >
             Sign Up
-          </button>
+            </button>
+            </Link>
         </form>
         <div className="mt-6 text-center text-gray-600">or Register with</div>
         <div className="flex justify-between mt-4 space-x-4">
