@@ -123,7 +123,7 @@ export default function Footer() {
             <span className="text-sm text-gray-500 sm:text-center">
               GLAMBEAUTY © 2024. All Rights Reserved.
             </span>
-            <div className="flex sm:justify-center sm:mt-0 ">
+            <div className="flex sm:justify-center sm:mt-0 -space-x-8">
               <a href="#">
                 <Image width={100} height={100} src={"/card-logos/visa.png"} alt="Card 1" />
               </a>
