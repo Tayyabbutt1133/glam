@@ -32,7 +32,7 @@ export default function MiddleBarNav() {
 
   return (
     <>
-      <div className="flex w-full border-b-2 border-gray-100">
+      <div className="flex w-full border-b-2 border-gray-100 bg-white">
         <Container>
           <div className="flex flex-row w-full justify-between items-center py-4">
             {/* Logo */}
