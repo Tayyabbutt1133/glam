@@ -14,6 +14,8 @@ import maestro from "../public/card-logos/maestro.svg"
 import ae from "../public/card-logos/american-express.svg"
 import paypal from "../public/card-logos/paypal.svg"
 import Link from "next/link";
+import { Lexend_Deca } from "next/font/google";
+
 
 export default function Footer() {
   return (
@@ -34,7 +36,7 @@ export default function Footer() {
                 <Image src={logo} />
                 <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"></span>
               </a>
-              <p className=" text-sm font-sans text-[#7E7E7E] w-60">Lorem ipsum dolor sit amet consectetur Sit egestas facilisi porttitor leo dolor sit amet.</p>
+              <p className=" text-sm  text-[#7E7E7E] w-60">Lorem ipsum dolor sit amet consectetur Sit egestas facilisi porttitor leo dolor sit amet.</p>
               <div name="socials" className=" flex gap-4">
                 <Image src={fb} />
                 <Image src={Insta} />
@@ -54,17 +56,17 @@ export default function Footer() {
                   Glam Beauty
                 </h2>
                 <ul className="text-[#7E7E7E]  text-sm space-y-3">
-                  <li className="font-sans">
+                  <li className="">
                     <a href="#" className="hover:underline">
                       About us
                     </a>
                   </li>
-                  <li className="font-sans">
+                  <li className="">
                     <a href="#" className="hover:underline">
                       Partnerships & Suppliers
                     </a>
                   </li>
-                  <li className="font-sans">
+                  <li className="">
                     <a href="#" className="hover:underline">
                       Sitemap
                     </a>
@@ -77,27 +79,27 @@ export default function Footer() {
                   Help & Information
                 </h2>
                 <ul className="text-gray-500 dark:text-gray-400 text-sm space-y-3">
-                  <li className="font-sans">
+                  <li className="">
                     <a href="#" className="hover:underline">
                       Delivery Information
                     </a>
                   </li>
-                  <li className="font-sans">
+                  <li className="">
                     <a href="#" className="hover:underline">
                       Returns Policy
                     </a>
                   </li>
-                  <li className="font-sans">
+                  <li className="">
                     <a href="#" className="hover:underline">
                       FAQs
                     </a>
                   </li>
-                  <li className="font-sans">
+                  <li className="">
                     <a href="#" className="hover:underline">
                       Contact Us
                     </a>
                   </li>
-                  <li className="font-sans">
+                  <li className="">
                     <a href="#" className="hover:underline">
                       Student Discounts
                     </a>
@@ -110,17 +112,17 @@ export default function Footer() {
                   Legal
                 </h2>
                 <ul className="text-gray-500 text-sm space-y-3">
-                  <li className="font-sans">
+                  <li className="">
                     <a href="#" className="hover:underline">
                       Terms &amp; Conditions
                     </a>
                   </li>
-                  <li className="font-sans">
+                  <li className="">
                     <a href="#" className="hover:underline">
                       Privacy Policy
                     </a>
                   </li>
-                  <li className="font-sans">
+                  <li className="">
                     <a href="#" className="hover:underline">
                       Cookie Policy (EU)
                     </a>
@@ -132,7 +134,7 @@ export default function Footer() {
                 <h2 className="mb-4 text-sm font-semibold text-gray-900 uppercase">
                   Download App
                 </h2>
-                <p className="text-gray-500 text-sm mb-4 font-sans">
+                <p className="text-gray-500 text-sm mb-4">
                   Download the App and get an extra 10% off your first order...!
                 </p>
                 <div className="flex sm:flex-col xl:flex-row gap-6">
@@ -146,7 +148,7 @@ export default function Footer() {
           <hr className=" border-gray-200 sm:mx-auto dark:border-gray-700" />
 
           <div className="sm:flex sm:items-center sm:justify-between my-6">
-            <span className="text-sm text-[#7E7E7E] font-sans sm:text-center">
+            <span className="text-sm text-[#7E7E7E] sm:text-center">
               GLAMBEAUTY © 2024. All Rights Reserved.
             </span>
             <div className="flex justify-between items-center gap-3">

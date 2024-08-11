@@ -5,8 +5,6 @@ import Header from "../../components/header/header";
 import Newsletter from "../../components/Newsletter";
 import Footer from "../../components/Footer";
 const inter = Inter({ subsets: ["latin"] });
-// import { ClerkProvider } from "@clerk/nextjs";
-// import NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY from '@clerk/nextjs'
 
 
 export const metadata = {
@@ -17,7 +15,6 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    // <ClerkProvider frontendapi={NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}>
     <html lang="en">
       <body className={inter.className}>
         <CurrencyLanguagePopUp />
@@ -27,6 +24,5 @@ export default function RootLayout({ children }) {
         <Footer/>
       </body>
       </html>
-      // </ClerkProvider>
   );
 }
