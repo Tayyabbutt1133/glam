@@ -10,14 +10,14 @@ export default function Newsletter() {
 
             <div className="sm:text-center flex flex-col sm:flex-row space-y-6 sm:space-y-0 sm:gap-16">
               <div className="flex items-center">
-                <h2 className="mb-4 text-3xl tracking-tight font-normal text-gray-900 sm:text-2xl">
+                <h2 className="text-3xl tracking-tight font-normal text-gray-900 sm:text-2xl">
                   <span className="text-[#CF8562]">SIGN UP</span> TO RECEIVE
                   OFFERS AND UPDATES
                 </h2>
               </div>
   
               <form action="#">
-                <div className="items-center mx-auto mb-3 space-y-4 max-w-screen-sm sm:flex sm:flex-row sm:space-y-0 sm:space-x-4">
+                <div className="items-center mx-auto space-y-4 max-w-screen-sm sm:flex sm:flex-row sm:space-y-0 sm:space-x-4">
 
                   <div className="relative w-full">
                     <label

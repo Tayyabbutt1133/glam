@@ -1,9 +1,12 @@
 import React from "react";
+import Image from "next/image";
+import Link from "next/link";
+
+import Container from "./container";
+
 import logo from "../public/logo.svg";
 import app_store from "../public/app_store.svg";
 import play_store from "../public/play_store.svg";
-import Image from "next/image";
-import Container from "./container";
 import fb from '../public/socials/fb.svg';
 import Insta from '../public/socials/instagram.svg';
 import pin from '../public/socials/pinterest.svg';
@@ -13,7 +16,6 @@ import master from "../public/card-logos/master.svg"
 import maestro from "../public/card-logos/maestro.svg"
 import ae from "../public/card-logos/american-express.svg"
 import paypal from "../public/card-logos/paypal.svg"
-import Link from "next/link";
 import { Lexend_Deca } from "next/font/google";
 
 
