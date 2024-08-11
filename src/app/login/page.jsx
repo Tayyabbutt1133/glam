@@ -1,34 +1,36 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import Link from 'next/link';
-import { FcGoogle } from 'react-icons/fc'; // Google icon
-import { FaApple } from 'react-icons/fa'; // Apple icon
-import axios from 'axios'; // Ensure axios is installed and imported
+import { useState } from "react";
+import Link from "next/link";
+import { FcGoogle } from "react-icons/fc"; // Google icon
+import { FaApple } from "react-icons/fa"; // Apple icon
+import axios from "axios"; // Ensure axios is installed and imported
 
 export default function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
-  const [message, setMessage] = useState(''); // State to hold the success or error message
+  const [message, setMessage] = useState(""); // State to hold the success or error message
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('/api/login', {
+      const response = await axios.post("/api/login", {
         email,
         password,
-        rememberMe
+        rememberMe,
       });
       if (response.data.success) {
-        setMessage('Successfully logged in!');
+        setMessage("Successfully logged in!");
       } else {
-        setMessage('Login failed. Please check your credentials and try again.');
+        setMessage(
+          "Login failed. Please check your credentials and try again."
+        );
       }
     } catch (error) {
       console.error(error);
-      setMessage('An error occurred. Please try again later.');
+      setMessage("An error occurred. Please try again later.");
     }
   };
 
@@ -55,7 +57,12 @@ export default function Login() {
         </div>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email Address</label>
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Email Address
+            </label>
             <input
               type="email"
               id="email"
@@ -66,7 +73,12 @@ export default function Login() {
             />
           </div>
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Password
+            </label>
             <input
               type="password"
               id="password"
@@ -84,31 +96,33 @@ export default function Login() {
               onChange={(e) => setRememberMe(e.target.checked)}
               className="h-4 w-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500"
             />
-            <label htmlFor="rememberMe" className="ml-2 block text-sm text-gray-900">Remember me</label>
+            <label
+              htmlFor="rememberMe"
+              className="ml-2 block text-sm text-gray-900"
+            >
+              Remember me
+            </label>
           </div>
 
           <Link href="/">
-          <button
-            type="submit"
-            className="w-full py-2 bg-black text-white font-semibold rounded-md shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-900"
-          >
-            Sign In
-          </button>
+            <button
+              type="submit"
+              className="w-full py-2 bg-black text-white font-semibold rounded-md shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-900"
+            >
+              Sign In
+            </button>
           </Link>
-
         </form>
-        {message && <div className="mt-4 text-center text-sm text-red-600">{message}</div>}
+        {message && (
+          <div className="mt-4 text-center text-sm text-red-600">{message}</div>
+        )}
         <div className="mt-6 text-center text-gray-600">or Sign in with</div>
         <div className="flex justify-between mt-4 space-x-4">
-          <button
-            className="flex items-center justify-center w-full px-4 py-2 bg-gray-100 text-gray-800 font-semibold rounded-md shadow-sm hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300"
-          >
+          <button className="flex items-center justify-center w-full px-4 py-2 bg-gray-100 text-gray-800 font-semibold rounded-md shadow-sm hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300">
             <FcGoogle className="mr-2" />
             Google
           </button>
-          <button
-            className="flex items-center justify-center w-full px-4 py-2 bg-black text-white font-semibold rounded-md shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-900"
-          >
+          <button className="flex items-center justify-center w-full px-4 py-2 bg-black text-white font-semibold rounded-md shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-900">
             <FaApple className="mr-2" />
             Apple
           </button>

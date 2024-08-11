@@ -1,28 +1,28 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import Link from 'next/link';
-import { FcGoogle } from 'react-icons/fc'; // Google icon
-import { FaApple } from 'react-icons/fa'; // Apple icon
+import { useState } from "react";
+import Link from "next/link";
+import { FcGoogle } from "react-icons/fc"; // Google icon
+import { FaApple } from "react-icons/fa"; // Apple icon
 
 export default function SignUp() {
-  const [fullName, setFullName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [phone, setPhone] = useState('');
-  const [countryCode, setCountryCode] = useState('+1'); // Default to +1 (USA)
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState("");
+  const [countryCode, setCountryCode] = useState("+1"); // Default to +1 (USA)
   const [agreeToTerms, setAgreeToTerms] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!agreeToTerms) {
-      alert('You must agree to the Terms and Conditions and Privacy Policy.');
+      alert("You must agree to the Terms and Conditions and Privacy Policy.");
       return;
     }
 
     try {
-      const response = await axios.post('/api/signup', {
+      const response = await axios.post("/api/signup", {
         fullName,
         email,
         password,
@@ -41,7 +41,7 @@ export default function SignUp() {
     <div className="flex justify-center items-center min-h-screen bg-white">
       <div className="w-full max-w-md p-8 bg-white rounded-lg">
         <div className="flex justify-between mb-6">
-        <div className="flex-1 text-center">
+          <div className="flex-1 text-center">
             <Link href="/login">
               <span className="text-2xl font-bold cursor-pointer relative">
                 Login
@@ -57,11 +57,15 @@ export default function SignUp() {
               </span>
             </Link>
           </div>
-         
         </div>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label htmlFor="fullName" className="block text-sm font-medium text-gray-700">Full Name</label>
+            <label
+              htmlFor="fullName"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Full Name
+            </label>
             <input
               type="text"
               id="fullName"
@@ -72,7 +76,12 @@ export default function SignUp() {
             />
           </div>
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email Address</label>
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Email Address
+            </label>
             <input
               type="email"
               id="email"
@@ -83,7 +92,12 @@ export default function SignUp() {
             />
           </div>
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Password
+            </label>
             <input
               type="password"
               id="password"
@@ -94,7 +108,12 @@ export default function SignUp() {
             />
           </div>
           <div>
-            <label htmlFor="phone" className="block text-sm font-medium text-gray-700">Phone Number</label>
+            <label
+              htmlFor="phone"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Phone Number
+            </label>
             <div className="flex mt-1">
               <select
                 id="countryCode"
@@ -127,30 +146,37 @@ export default function SignUp() {
               className="h-4 w-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500"
               required
             />
-            <label htmlFor="agreeToTerms" className="ml-2 block text-sm text-gray-900">
-              By ticking, you are confirming that you agree to our <a href="/terms" className="text-purple-600">Terms and Conditions</a> and <a href="/privacy" className="text-purple-600">Privacy Policy</a> *
+            <label
+              htmlFor="agreeToTerms"
+              className="ml-2 block text-sm text-gray-900"
+            >
+              By ticking, you are confirming that you agree to our{" "}
+              <a href="/terms" className="text-purple-600">
+                Terms and Conditions
+              </a>{" "}
+              and{" "}
+              <a href="/privacy" className="text-purple-600">
+                Privacy Policy
+              </a>{" "}
+              *
             </label>
           </div>
           <Link href="/">
-          <button
-            type="submit"
-            className="w-full py-2 bg-purple-600 text-white font-semibold rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
-          >
-            Sign Up
+            <button
+              type="submit"
+              className="w-full py-2 bg-purple-600 text-white font-semibold rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            >
+              Sign Up
             </button>
-            </Link>
+          </Link>
         </form>
         <div className="mt-6 text-center text-gray-600">or Register with</div>
         <div className="flex justify-between mt-4 space-x-4">
-          <button
-            className="flex items-center justify-center w-full px-4 py-2 bg-gray-100 text-gray-800 font-semibold rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300"
-          >
+          <button className="flex items-center justify-center w-full px-4 py-2 bg-gray-100 text-gray-800 font-semibold rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300">
             <FcGoogle className="mr-2" />
             Google
           </button>
-          <button
-            className="flex items-center justify-center w-full px-4 py-2 bg-black text-white font-semibold rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-900"
-          >
+          <button className="flex items-center justify-center w-full px-4 py-2 bg-black text-white font-semibold rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-900">
             <FaApple className="mr-2" />
             Apple
           </button>
