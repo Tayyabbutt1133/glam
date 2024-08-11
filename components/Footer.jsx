@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { Lexend_Deca } from "next/font/google";
 
 import Container from "./container";
 
@@ -16,13 +17,13 @@ import master from "../public/card-logos/master.svg"
 import maestro from "../public/card-logos/maestro.svg"
 import ae from "../public/card-logos/american-express.svg"
 import paypal from "../public/card-logos/paypal.svg"
-import { Lexend_Deca } from "next/font/google";
 
+const ld = Lexend_Deca({subsets: ["latin"]});
 
 export default function Footer() {
   return (
     <Container>
-      <footer className="bg-white">
+      <footer className={ld.className}>
 
 
         <div className="mx-auto w-full ">
@@ -80,7 +81,7 @@ export default function Footer() {
                 <h2 className="mb-4 text-sm font-semibold text-gray-900 uppercase">
                   Help & Information
                 </h2>
-                <ul className="text-gray-500 dark:text-gray-400 text-sm space-y-3">
+                <ul className="text-[#7E7E7E] text-sm space-y-3">
                   <li className="">
                     <a href="#" className="hover:underline">
                       Delivery Information
@@ -113,7 +114,7 @@ export default function Footer() {
                 <h2 className="mb-4 text-sm font-semibold text-gray-900 uppercase">
                   Legal
                 </h2>
-                <ul className="text-gray-500 text-sm space-y-3">
+                <ul className="text-[#7E7E7E] text-sm space-y-3">
                   <li className="">
                     <a href="#" className="hover:underline">
                       Terms &amp; Conditions
@@ -136,7 +137,7 @@ export default function Footer() {
                 <h2 className="mb-4 text-sm font-semibold text-gray-900 uppercase">
                   Download App
                 </h2>
-                <p className="text-gray-500 text-sm mb-4">
+                <p className="text-[#7E7E7E] text-sm mb-4">
                   Download the App and get an extra 10% off your first order...!
                 </p>
                 <div className="flex sm:flex-col xl:flex-row gap-6">
