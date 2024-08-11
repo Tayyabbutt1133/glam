@@ -1,10 +1,10 @@
 "use client";
 import { FiSearch } from "react-icons/fi";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export default function SearchBarWithDropdown() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
- 
+  const searchBarRef = useRef(null);
 
   const handleChange = (e) => {
     if (e.target.value.length > 0) {
@@ -13,9 +13,22 @@ export default function SearchBarWithDropdown() {
       setIsDropdownOpen(false);
     }
   };
-  
+
+  const handleClickOutside = (e) => {
+    if (searchBarRef.current && !searchBarRef.current.contains(e.target)) {
+      setIsDropdownOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className="flex justify-center relative w-[768px]">
+    <div ref={searchBarRef} className="flex justify-center relative w-[768px]">
       {/* Search Bar */}
       <section className="flex flex-row w-full max-w-[612px] h-10 border border-solid
       border-gray-200 rounded-md px-1 focus-within:border-gray-700 transition-colors ease-in-out duration-100">
@@ -32,7 +45,7 @@ export default function SearchBarWithDropdown() {
       </section>
 
       {/* Dropdown Panel */}
-      <div className={`absolute top-12 left-0 w-full bg-white border border-gray-200 rounded-md shadow-lg ${isDropdownOpen ? "flex" : "hidden"}`}>
+      <div className={`absolute top-12 left-0 w-full bg-white border border-gray-200 rounded-md shadow-lg z-50 ${isDropdownOpen ? "flex" : "hidden"}`}>
         {/* Popular Searches */}
         <div className="w-1/3 p-4 border-r border-gray-200">
           <h3 className="text-xs font-semibold text-gray-400 uppercase mb-2">

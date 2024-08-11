@@ -83,7 +83,7 @@ export default function MiddleBarNav() {
               <div>
                 <div className="flex flex-row justify-center items-center gap-2">
                   <CartIcon className={"w-7"} />
-                  <span className="capitalize">cart</span>
+                  <span className="capitalize">My Bag</span>
                 </div>
               </div>
             </section>
