@@ -38,10 +38,10 @@ export default function MiddleBarNav() {
             {/* Logo */}
             <Link href="/">
               <Image
-                src="/logo.png"
+                src="/logo.svg"
                 alt="Glam Beauty Logo"
-                width={120}
-                height={40}
+                width={160}
+                height={80}
               />
             </Link>
 
