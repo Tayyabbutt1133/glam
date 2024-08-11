@@ -18,7 +18,7 @@ let links = [
 export default function Navigation() {
   return (
     <>
-      <div>
+      <div className="bg-white">
         <Container>
           <nav className="flex flex-row w-full justify-center items-center py-3 gap-6">
             {links.map((link, index) => (

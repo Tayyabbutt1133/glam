@@ -5,7 +5,7 @@ import Promo from "./banner/Promo";
 
 export default function Header() {
     return (
-        <header>
+        <header className="sticky top-0 left-0 z-10">
             <NewsBannerNav />
             <MiddleBarNav />
             <Navigation />
