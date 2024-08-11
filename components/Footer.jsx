@@ -8,6 +8,12 @@ import fb from '../public/socials/fb.svg';
 import Insta from '../public/socials/instagram.svg';
 import pin from '../public/socials/pinterest.svg';
 import tik from '../public/socials/tiktok.svg';
+import visa from "../public/card-logos/visa.svg";
+import master from "../public/card-logos/master.svg"
+import maestro from "../public/card-logos/maestro.svg"
+import ae from "../public/card-logos/american-express.svg"
+import paypal from "../public/card-logos/paypal.svg"
+import Link from "next/link";
 
 export default function Footer() {
   return (
@@ -139,27 +145,27 @@ export default function Footer() {
 
           <hr className=" border-gray-200 sm:mx-auto dark:border-gray-700" />
 
-          <div className="sm:flex sm:items-center sm:justify-between ">
+          <div className="sm:flex sm:items-center sm:justify-between my-6">
             <span className="text-sm text-[#7E7E7E] font-sans sm:text-center">
               GLAMBEAUTY © 2024. All Rights Reserved.
             </span>
-            <div className="flex sm:justify-center sm:mt-0 -space-x-8">
-              <a href="#">
-                <Image width={100} height={100} src={"/card-logos/visa.png"} alt="Card 1" />
-              </a>
-              <a href="#">
-                <Image width={100} height={100} src={"/card-logos/master.png"} alt="Card 2" />
-              </a>
-              <a href="#">
-                <Image width={100} height={100} src={"/card-logos/maestro.png"} alt="Card 3" />
-              </a>
-              <a href="#">
-                <Image width={100} height={100} src={"/card-logos/american-express.png"} alt="Card 4" />
-              </a>
-              <a href="#">
-                <Image width={100} height={100} src={"/card-logos/paypal.png"} alt="Card 5" />
-              </a>
-            </div>
+            <div className="flex justify-between items-center gap-3">
+              <Link className="grid place-items-center w-[50px] h-[32px] border border-gray-300 rounded-[8px]" href="#">
+                <Image width={35} height={0} src={visa} alt="Card 1" />
+              </Link>
+              <Link className="grid place-items-center w-[50px] h-[32px] border border-gray-300 rounded-[8px]" href="#">
+                <Image width={24} height={0} src={maestro} alt="Card 3" />
+              </Link>
+              <Link className="grid place-items-center w-[50px] h-[32px] border border-gray-300 rounded-[8px]" href="#">
+                <Image width={27} height={0} src={master} alt="Card 2" />
+              </Link>
+              <Link className="flex justify-end w-[50px] h-[32px] border border-gray-300 rounded-[8px]" href="#">
+                <Image width={27} height={0} src={ae} alt="Card 4" />
+              </Link>
+              <Link className="grid place-items-center w-[50px] h-[32px] border border-gray-300 rounded-[8px]" href="#">
+                <Image width={35} height={0} src={paypal} alt="Card 5" />
+              </Link>
+            </div>
           </div>
         </div>
       </footer>
