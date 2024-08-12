@@ -41,7 +41,29 @@ export default function SignUp() {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-white">
-      <div className="w-full max-w-md p-8 bg-white rounded-lg  pt-24 pb-20">
+      <div className="w-full max-w-md p-8 bg-white rounded-lg  pt-16 pb-20">
+
+       {/* Social Login Buttons */}
+       <div className="flex justify-between space-x-4">
+          <button className="flex items-center justify-center w-full px-4 py-2 bg-white text-gray-800 font-semibold rounded-md shadow-sm hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300">
+            <FcGoogle className="mr-2" />
+            Google
+          </button>
+          <button className="flex items-center justify-center w-full px-4 py-2 bg-white text-black font-semibold rounded-md shadow-sm hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-900">
+            <FaApple className="mr-2" />
+            Apple
+          </button>
+        </div>
+        
+
+       
+        {/* Separator */}
+        <div className="relative  text-center my-6">
+          <span className="mx-4 text-sm text-gray-500 font-sans">or Continue with</span>
+        </div>
+
+
+
         <div className="flex justify-between mb-6">
           <div
             className="flex-1 text-center"
@@ -57,7 +79,7 @@ export default function SignUp() {
                 Login
                 <div
                   className={`absolute left-0 bottom-0 w-full h-[2px] ${
-                    hoveredTab === "login" ? "bg-orange-500" : "bg-transparent"
+                    hoveredTab === "login" ? "bg-black" : "bg-transparent"
                   } transition-all duration-300`}
                 ></div>
               </span>
@@ -77,7 +99,7 @@ export default function SignUp() {
                 Sign up
                 <div
                   className={`absolute left-0 bottom-0 w-full h-[2px] ${
-                    hoveredTab === "signup" ? "bg-orange-500" : "bg-gray-400"
+                    hoveredTab === "signup" ? "bg-black" : "bg-[#D9D9D9]"
                   } transition-all duration-300`}
                 ></div>
               </span>
@@ -194,17 +216,8 @@ export default function SignUp() {
             REGISTER
           </button>
         </form>
-        <div className="mt-6 text-center text-gray-600">or Continue with</div>
-        <div className="flex justify-between mt-4 space-x-4">
-          <button className="flex items-center justify-center w-full px-4 py-2 bg-gray-100 text-gray-800 font-semibold rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300">
-            <FcGoogle className="mr-2" />
-            Google
-          </button>
-          <button className="flex items-center justify-center w-full px-4 py-2 bg-black text-white font-semibold rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-900">
-            <FaApple className="mr-2" />
-            Apple
-          </button>
-        </div>
+       
+        
       </div>
     </div>
   );
