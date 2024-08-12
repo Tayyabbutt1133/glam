@@ -2,6 +2,7 @@
 import { usePopupStore } from "../states/use-popup-store";
 import { useRef, useEffect, useState } from "react";
 import name from '../src/app/currencies-with-flags.json';
+import Image from "next/image";
 
 export default function CurrencyLanguagePopUp() {
   const isOpen = usePopupStore((state) => state.isOpen);
@@ -83,7 +84,7 @@ export default function CurrencyLanguagePopUp() {
           >
             {/* Country Flag Banner */}
             <div className="flex justify-center mb-4">
-              <img
+              <Image
                 src={flagUrl}
                 alt={`${selectedCountry.country} flag`}
                 className="w-36 h-auto object-contain absolute -top-8"
