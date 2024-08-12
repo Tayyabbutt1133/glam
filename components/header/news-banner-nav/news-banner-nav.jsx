@@ -57,14 +57,15 @@ export default function NewsBannerNav() {
                         <p className="text-center">
                             Up to 50% off selected brands + UK next day delivery over £40
                         </p>
-                        <div className="flex flex-row gap-2 absolute right-0">
+                        <div className="flex flex-row gap-1 absolute right-0">
                             <div className="relative flex w-10">
                                 {flagUrl && (
                                     <Image 
                                         src={flagUrl} 
                                         alt={`${selectedCountry.country} Flag`} 
-                                        sizes="50px"
-                                        fill
+                                        // sizes="50px"
+                                        width={31}
+                                        height={22}
                                         objectFit="contain"
                                     />
                                 )}
