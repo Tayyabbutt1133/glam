@@ -10,12 +10,16 @@ export default function NewsBannerNav() {
     const selectedCountryFromStore = usePopupStore((state) => state.selectedCountry);
     
     const [selectedCountry, setSelectedCountry] = useState(() => {
-        // First check the global state, fallback to localStorage
-        if (selectedCountryFromStore && selectedCountryFromStore.countryCode) {
-            return selectedCountryFromStore;
+        // Check if window is defined to ensure code runs in the browser
+        if (typeof window !== "undefined") {
+            if (selectedCountryFromStore && selectedCountryFromStore.countryCode) {
+                return selectedCountryFromStore;
+            }
+            const savedCountry = localStorage.getItem('selectedCountry');
+            return savedCountry ? JSON.parse(savedCountry) : { countryCode: '', code: '', country: '' };
+        } else {
+            return { countryCode: '', code: '', country: '' }; // Default value during SSR
         }
-        const savedCountry = localStorage.getItem('selectedCountry');
-        return savedCountry ? JSON.parse(savedCountry) : { countryCode: '', code: '', country: '' };
     });
 
     const [flagUrl, setFlagUrl] = useState('');
@@ -42,7 +46,9 @@ export default function NewsBannerNav() {
             const updatedCountry = state.selectedCountry;
             if (updatedCountry && updatedCountry.countryCode !== selectedCountry.countryCode) {
                 setSelectedCountry(updatedCountry);
-                localStorage.setItem('selectedCountry', JSON.stringify(updatedCountry));
+                if (typeof window !== "undefined") {
+                    localStorage.setItem('selectedCountry', JSON.stringify(updatedCountry));
+                }
             }
         });
 
@@ -50,37 +56,34 @@ export default function NewsBannerNav() {
     }, [selectedCountry]);
 
     return (
-        <>
-            <div className="w-full bg-[#F7EBE0]">
-                <Container>
-                    <div className="flex w-full justify-center items-center relative py-2">
-                        <p className="text-center">
-                            Up to 50% off selected brands + UK next day delivery over £40
-                        </p>
-                        <div className="flex flex-row gap-1 absolute right-0">
-                            <div className="relative flex w-10">
-                                {flagUrl && (
-                                    <Image 
-                                        src={flagUrl} 
-                                        alt={`${selectedCountry.country} Flag`} 
-                                        // sizes="50px"
-                                        width={31}
-                                        height={22}
-                                        objectFit="contain"
-                                    />
-                                )}
-                            </div>
-                            <button 
-                                className="flex flex-row items-center cursor-pointer"
-                                onClick={onOpen}
-                            >
-                                <span>{`${selectedCountry.countryCode} - ${selectedCountry.code}`}</span>
-                                <IoIosArrowDown color="black"/>
-                            </button>
+        <div className="w-full bg-[#F7EBE0]">
+            <Container>
+                <div className="flex w-full justify-center items-center relative py-2">
+                    <p className="text-center">
+                        Up to 50% off selected brands + UK next day delivery over £40
+                    </p>
+                    <div className="flex flex-row gap-1 absolute right-0">
+                        <div className="relative flex w-10">
+                            {flagUrl && (
+                                <Image 
+                                    src={flagUrl} 
+                                    alt={`${selectedCountry.country} Flag`} 
+                                    width={31}
+                                    height={22}
+                                    objectFit="contain"
+                                />
+                            )}
                         </div>
+                        <button 
+                            className="flex flex-row items-center cursor-pointer"
+                            onClick={onOpen}
+                        >
+                            <span>{`${selectedCountry.countryCode} - ${selectedCountry.code}`}</span>
+                            <IoIosArrowDown color="black"/>
+                        </button>
                     </div>
-                </Container>
-            </div>
-        </>
+                </div>
+            </Container>
+        </div>
     );
 }
