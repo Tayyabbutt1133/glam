@@ -6,9 +6,10 @@ import { usePopupStore } from "../../../states/use-popup-store.jsx";
 import { useEffect, useState } from "react";
 
 export default function NewsBannerNav() {
+    const [mounted, setMounted] = useState(false);
     const onOpen = usePopupStore((state) => state.onOpen);
     const selectedCountryFromStore = usePopupStore((state) => state.selectedCountry);
-    const [mounted, setmounted] = useState(false);
+    
 
     const [selectedCountry, setSelectedCountry] = useState(() => {
         // Check if window is defined to ensure code runs in the browser
@@ -56,12 +57,16 @@ export default function NewsBannerNav() {
         return () => unsubscribe();
     }, [selectedCountry]);
 
-  useEffect(() => {
-    setmounted(true);
-  }, []);
-  if (!mounted) {
-    return null;
-  }
+    // Set mounted to true after the component mounts
+    // This is to prevent the component from rendering on the server
+    // and causing a hydration mismatch
+    useEffect(() => {
+        setMounted(true);
+      }, []);
+
+      if (!mounted) {
+        return null;
+      }
 
     return (
         <div className="w-full bg-[#F7EBE0]">

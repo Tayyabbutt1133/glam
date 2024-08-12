@@ -7,7 +7,7 @@ export default function CurrencyLanguagePopUp() {
   const isOpen = usePopupStore((state) => state.isOpen);
   const closeModal = usePopupStore((state) => state.onClose);
   const setSelectedCountryInStore = usePopupStore((state) => state.setSelectedCountry);
-  
+
   const modalRef = useRef(null);
 
   const handleClickOutside = (e) => {
@@ -16,19 +16,23 @@ export default function CurrencyLanguagePopUp() {
     }
   };
 
-  const [selectedCountry, setSelectedCountry] = useState(() => {
-    // Retrieve the selected country from local storage or default to the first country
-    const savedCountry = localStorage.getItem('selectedCountry');
-    return savedCountry ? JSON.parse(savedCountry) : name[0];
-  });
-
-  const [selectedCurrency, setSelectedCurrency] = useState(() => {
-    // Retrieve the selected currency from local storage or default to the first country's code
-    const savedCurrency = localStorage.getItem('selectedCurrency');
-    return savedCurrency || name[0]?.code || 'GBP';
-  });
-
+  const [selectedCountry, setSelectedCountry] = useState(name[0]);
+  const [selectedCurrency, setSelectedCurrency] = useState(name[0]?.code || 'GBP');
   const [flagUrl, setFlagUrl] = useState('');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const savedCountry = localStorage.getItem('selectedCountry');
+      const savedCurrency = localStorage.getItem('selectedCurrency');
+
+      if (savedCountry) {
+        setSelectedCountry(JSON.parse(savedCountry));
+      }
+      if (savedCurrency) {
+        setSelectedCurrency(savedCurrency);
+      }
+    }
+  }, []);
 
   const fetchFlag = async (countryCode) => {
     try {
@@ -47,9 +51,10 @@ export default function CurrencyLanguagePopUp() {
     setSelectedCurrency(country.code);
     fetchFlag(country.countryCode);
 
-    // Save the selected country and currency to local storage
-    localStorage.setItem('selectedCountry', JSON.stringify(country));
-    localStorage.setItem('selectedCurrency', country.code);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('selectedCountry', JSON.stringify(country));
+      localStorage.setItem('selectedCurrency', country.code);
+    }
   };
 
   useEffect(() => {
