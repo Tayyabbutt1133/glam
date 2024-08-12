@@ -1,14 +1,53 @@
 "use client";
-import Image from "next/image"
+import Image from "next/image";
 import { IoIosArrowDown } from "react-icons/io";
-
-import Container from "../../container"
+import Container from "../../container";
 import { usePopupStore } from "../../../states/use-popup-store.jsx";
-
+import { useEffect, useState } from "react";
 
 export default function NewsBannerNav() {
+    const onOpen = usePopupStore((state) => state.onOpen);
+    const selectedCountryFromStore = usePopupStore((state) => state.selectedCountry);
+    
+    const [selectedCountry, setSelectedCountry] = useState(() => {
+        // First check the global state, fallback to localStorage
+        if (selectedCountryFromStore && selectedCountryFromStore.countryCode) {
+            return selectedCountryFromStore;
+        }
+        const savedCountry = localStorage.getItem('selectedCountry');
+        return savedCountry ? JSON.parse(savedCountry) : { countryCode: '', code: '', country: '' };
+    });
 
-    const onOpen = usePopupStore(state => state.onOpen)
+    const [flagUrl, setFlagUrl] = useState('');
+
+    const fetchFlag = async (countryCode) => {
+        try {
+            const response = await fetch(`https://restcountries.com/v3.1/alpha/${countryCode}`);
+            const data = await response.json();
+            setFlagUrl(data[0].flags.svg);
+        } catch (error) {
+            console.error("Error fetching flag:", error);
+        }
+    };
+
+    useEffect(() => {
+        if (selectedCountry.countryCode) {
+            fetchFlag(selectedCountry.countryCode);
+        }
+    }, [selectedCountry]);
+
+    useEffect(() => {
+        // Sync state with the store when the popup selection changes
+        const unsubscribe = usePopupStore.subscribe((state) => {
+            const updatedCountry = state.selectedCountry;
+            if (updatedCountry && updatedCountry.countryCode !== selectedCountry.countryCode) {
+                setSelectedCountry(updatedCountry);
+                localStorage.setItem('selectedCountry', JSON.stringify(updatedCountry));
+            }
+        });
+
+        return () => unsubscribe();
+    }, [selectedCountry]);
 
     return (
         <>
@@ -18,30 +57,29 @@ export default function NewsBannerNav() {
                         <p className="text-center">
                             Up to 50% off selected brands + UK next day delivery over £40
                         </p>
-                        {/* Make a currency selector button. When it is clikcked, It should trigger a pop-up menu where language and currency is selected */}
                         <div className="flex flex-row gap-2 absolute right-0">
                             <div className="relative flex w-10">
-                                <Image 
-                                    src='/UK Flag.png' 
-                                    alt="UK flag" 
-                                    sizes="50px"
-                                    fill
-                                    objectFit="contain"
-                                />
+                                {flagUrl && (
+                                    <Image 
+                                        src={flagUrl} 
+                                        alt={`${selectedCountry.country} Flag`} 
+                                        sizes="50px"
+                                        fill
+                                        objectFit="contain"
+                                    />
+                                )}
                             </div>
                             <button 
                                 className="flex flex-row items-center cursor-pointer"
                                 onClick={onOpen}
                             >
-                                <span>en - GBP</span>
+                                <span>{`${selectedCountry.countryCode} - ${selectedCountry.code}`}</span>
                                 <IoIosArrowDown color="black"/>
                             </button>
                         </div>
-
                     </div>
                 </Container>
             </div>
         </>
-    )
-
+    );
 }
