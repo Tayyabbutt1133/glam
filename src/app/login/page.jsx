@@ -56,7 +56,7 @@ export default function Login() {
                 Login
                 <div
                   className={`absolute left-0 bottom-0 w-full h-[2px]  ${
-                    hoveredTab === "login" ? "bg-orange-500" : " bg-transparent"
+                    hoveredTab === "login" ? "bg-orange-500" : " bg-gray-400"
                   } transition-all duration-300`}
                 ></div>
               </span>
