@@ -178,7 +178,7 @@ export default function SignUp() {
 
             <label
               htmlFor="agreeToTerms"
-              className="ml-2 block text-sm text-gray-900"
+              className="ml-2 block text-sm text-gray-900 font-sans"
             >
             Tick here if you do not wish to receive exclusive offers and discounts via email.
             </label>
@@ -196,14 +196,14 @@ export default function SignUp() {
 
             <label
               htmlFor="agreeToTerms"
-              className="ml-2 block text-sm text-gray-900"
+              className="ml-2 block text-sm text-gray-900 font-sans"
             >
               By ticking, you are confirming that you agree to our{" "}
-              <a href="/terms" className="text-purple-600">
+              <a href="/terms" className="text-[#8B929D] underline">
                 Terms and Conditions
               </a>{" "}
               and{" "}
-              <a href="/privacy" className="text-purple-600">
+              <a href="/privacy" className="text-[#8B929D] underline">
                 Privacy Policy
               </a>{" "}
               *
