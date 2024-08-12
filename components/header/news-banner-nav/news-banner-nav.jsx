@@ -8,7 +8,8 @@ import { useEffect, useState } from "react";
 export default function NewsBannerNav() {
     const onOpen = usePopupStore((state) => state.onOpen);
     const selectedCountryFromStore = usePopupStore((state) => state.selectedCountry);
-    
+    const [mounted, setmounted] = useState(false);
+
     const [selectedCountry, setSelectedCountry] = useState(() => {
         // Check if window is defined to ensure code runs in the browser
         if (typeof window !== "undefined") {
@@ -54,6 +55,13 @@ export default function NewsBannerNav() {
 
         return () => unsubscribe();
     }, [selectedCountry]);
+
+  useEffect(() => {
+    setmounted(true);
+  }, []);
+  if (!mounted) {
+    return null;
+  }
 
     return (
         <div className="w-full bg-[#F7EBE0]">
