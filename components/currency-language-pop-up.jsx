@@ -106,7 +106,7 @@ export default function CurrencyLanguagePopUp() {
                 className="w-36 h-auto object-contain absolute -top-8"
               />
             </div>
-            <div className="mt-[3rem] mb-2">
+            <div className="mt-[4rem] mb-2">
               <Text style={"h3"} className={`text-center ${jost.className} text-2xl`}>
                 CHOOSE YOUR SHIPPING COUNTRY/REGION
               </Text>
@@ -150,7 +150,7 @@ export default function CurrencyLanguagePopUp() {
             </div>
 
             <button
-              className={`${plusJakartaSans.className} w-full mt-4 p-3 bg-button text-white font-bold rounded-[8px] transition-colors ease-linear duration-100 hover:bg-hover`}
+              className={`${lexendDeca.className} w-full mt-4 p-3 bg-button text-white font-bold rounded-[8px] transition-colors ease-linear duration-100 hover:bg-hover`}
               onClick={() => {
                 setSelectedCountryInStore({
                   ...selectedCountry,
