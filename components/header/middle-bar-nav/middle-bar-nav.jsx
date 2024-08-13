@@ -62,7 +62,7 @@ export default function MiddleBarNav() {
                   <Link href="/signup">
                     <div className="flex flex-row justify-center items-center gap-2">
                       <UserIcon className={"w-4"} />
-                      <span className="capitalize text-nowrap lg:text-base xl:text-xl">my account</span>
+                      <span className="capitalize text-nowrap lg:text-base xl:text-lg">my account</span>
                     </div>
                   </Link>
                 </div>
@@ -86,7 +86,7 @@ export default function MiddleBarNav() {
               <div>
                 <div className="flex flex-row justify-center items-center gap-2">
                   <CartIcon className={"w-7"} />
-                  <span className="capitalize text-nowrap lg:text-base xl:text-xl">My Bag</span>
+                  <span className="capitalize text-nowrap lg:text-base xl:text-lg">My Bag</span>
                 </div>
               </div>
             </section>
