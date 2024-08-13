@@ -180,7 +180,7 @@ export default function SignUp() {
 
             <label
               htmlFor="agreeToTerms"
-              className={`ml-2 block text-sm text-gray-900 font-sans ${lexendDeca.className}`}
+              className={`ml-2 block text-sm text-gray-900 ${lexendDeca.className}`}
             >
             Tick here if you do not wish to receive exclusive offers and discounts via email.
             </label>
