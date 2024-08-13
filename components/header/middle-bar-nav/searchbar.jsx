@@ -1,6 +1,9 @@
 "use client";
-import { FiSearch } from "react-icons/fi";
 import { useState, useEffect, useRef } from "react";
+import SearchIcon from "../../../public/icons/search"
+
+import { Plus_Jakarta_Sans } from "next/font/google";
+const plusJakartaSans = Plus_Jakarta_Sans({ subsets: ["latin"] });
 
 export default function SearchBarWithDropdown() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -28,18 +31,18 @@ export default function SearchBarWithDropdown() {
   }, []);
 
   return (
-    <div ref={searchBarRef} className="flex justify-center relative w-[768px]">
+    <div ref={searchBarRef} className={`flex justify-center relative w-[768px]`}>
       {/* Search Bar */}
-      <section className="flex flex-row w-full max-w-[612px] h-10 border border-solid
-      border-gray-200 rounded-md px-1 focus-within:border-gray-700 transition-colors ease-in-out duration-100">
+      <section className="flex flex-row w-[80%] max-w-[696px] h-10 border border-solid
+      border-border-03 rounded-[8px] px-1 focus-within:border-gray-700 transition-colors ease-in-out duration-100">
         <div className="grid place-items-center h-full w-12">
-          <FiSearch />
+          <SearchIcon className="h-auto w-5"/>
         </div>
         <input
-          className="h-full w-full outline-none text-sm text-gray-700 pr-2"
+          className={` ${plusJakartaSans.className} h-full w-full outline-none text-sm text-gray-700 pr-2`}
           type="text"
           id="search"
-          placeholder="Search products.."
+          placeholder="Search products, trends"
           onChange={handleChange}
         />
       </section>
