@@ -6,6 +6,9 @@ import { FcGoogle } from "react-icons/fc"; // Google icon
 import { FaApple } from "react-icons/fa"; // Apple icon
 import axios from "axios"; // Ensure axios is installed and imported
 
+import { lexendDeca } from "../../../components/ui/fonts";
+
+
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -56,7 +59,7 @@ export default function Login() {
         
         {/* Separator */}
         <div className="relative  text-center my-6">
-          <span className="mx-4 text-sm text-gray-500 font-sans">or Continue with</span>
+          <span className={`mx-4 text-sm text-gray-500 ${lexendDeca.className}`}>or Continue with</span>
         </div>
 
 
@@ -120,7 +123,7 @@ export default function Login() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Email or Phone Number*"
-              className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              className={`block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent ${lexendDeca.className}`}
               required
             />
           </div>
@@ -131,7 +134,7 @@ export default function Login() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Password*"
-              className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              className={`block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent ${lexendDeca.className}`}
               required
             />
           </div>
@@ -145,7 +148,7 @@ export default function Login() {
             />
             <label
               htmlFor="rememberMe"
-              className="ml-2 block text-sm text-gray-900 font-sans"
+              className={`ml-2 block text-sm text-gray-900 font-sans ${lexendDeca.className}`}
             >
               Remember Me
             </label>
@@ -153,7 +156,7 @@ export default function Login() {
 
           {/* Forgot Password Link */}
           <div className="flex">
-            <Link href="/forgot-password" className="text-sm text-gray-600 underline font-sans">
+            <Link href="/forgot-password" className={`text-sm text-gray-600 underline font-sans ${lexendDeca.className}`}>
               Forgot your Password?
             </Link>
           </div>
@@ -161,7 +164,7 @@ export default function Login() {
           {/* Sign In Button */}
           <button
             type="submit"
-            className="w-full py-2 bg-black text-white font-semibold rounded-md shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-900"
+            className={`w-full py-2 bg-black text-white font-semibold rounded-md shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-900 ${lexendDeca.className}`}
           >
             SIGN IN
           </button>

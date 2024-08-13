@@ -4,6 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc"; // Google icon
 import { FaApple } from "react-icons/fa"; // Apple icon
+import { lexendDeca } from "../../../components/ui/fonts";
+
 
 export default function SignUp() {
   const [fullName, setFullName] = useState("");
@@ -59,7 +61,7 @@ export default function SignUp() {
        
         {/* Separator */}
         <div className="relative  text-center my-6">
-          <span className="mx-4 text-sm text-gray-500 font-sans">or Continue with</span>
+          <span className={`mx-4 text-sm text-gray-500 ${lexendDeca.className}`}>or Continue with</span>
         </div>
 
 
@@ -115,7 +117,7 @@ export default function SignUp() {
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
               placeholder="Full Name*"
-              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              className={`mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent ${lexendDeca.className}`}
               required
             />
           </div>
@@ -126,7 +128,7 @@ export default function SignUp() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Email Address*"
-              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              className= {`mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent ${lexendDeca.className}`}
               required
             />
           </div>
@@ -137,7 +139,7 @@ export default function SignUp() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Password*"
-              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              className={`mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent ${lexendDeca.className}`}
               required
             />
           </div>
@@ -161,7 +163,7 @@ export default function SignUp() {
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 placeholder="Phone Number*"
-                className="block w-full px-4 py-2 border border-gray-300 rounded-r-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                className={`block w-full px-4 py-2 border border-gray-300 rounded-r-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent ${lexendDeca.className}`}
                 required
               />
             </div>
@@ -178,7 +180,7 @@ export default function SignUp() {
 
             <label
               htmlFor="agreeToTerms"
-              className="ml-2 block text-sm text-gray-900 font-sans"
+              className={`ml-2 block text-sm text-gray-900 font-sans ${lexendDeca.className}`}
             >
             Tick here if you do not wish to receive exclusive offers and discounts via email.
             </label>
@@ -196,7 +198,7 @@ export default function SignUp() {
 
             <label
               htmlFor="agreeToTerms"
-              className="ml-2 block text-sm text-gray-900 font-sans"
+              className={`ml-2 block text-sm text-gray-900 ${lexendDeca.className}`}
             >
               By ticking, you are confirming that you agree to our{" "}
               <a href="/terms" className="text-[#8B929D] underline">
@@ -211,7 +213,7 @@ export default function SignUp() {
           </div>
           <button
             type="submit"
-            className="w-full mt-6 py-2 bg-black text-white font-semibold rounded-md shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-900"
+            className={`w-full mt-6 py-2 bg-black text-white font-semibold rounded-md shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-900 ${lexendDeca.className}`}
           >
             REGISTER
           </button>
