@@ -2,13 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --text-primary: #FFFFFF;
-  /* --text-secondary:  ; */
-  
+@layer base {
+  :root {
+    --text-primary: black;
+    --text-secondary:#7E7E7E;
+    --text-light: #8b929d;
+    --text-sale: #bf0000;
+    --text-white: white;
+    
+    --color-button: #202020;
+    --color-hover: #cf8562;
+    
+    --color-border01: #efefef;
+    --color-border02: #f7f7f7a6;
+    --color-border03: #8b929c73;
+    
+    --color-bg01: #f7ebe0;
+    --color-bg02: white;
+    --color-bg03: var(--color-button);
+    --color-bg04: var(--color-border01);
 
-  --rounded-sm: 0.25rem;
-  --rounded-md: 0.5rem;
+  }
 }
 
 
@@ -18,4 +32,5 @@
     text-wrap: balance;
   }
 }
-   
+
+@import url('https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&display=swap');

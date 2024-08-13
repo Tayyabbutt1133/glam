@@ -13,6 +13,7 @@ let links = [
   "Bath & Body",
   "Home",
   "Wellness",
+  "Electrics"
 ];
 
 export default function Navigation() {

@@ -12,6 +12,8 @@ export default function SignUp() {
   const [phone, setPhone] = useState("");
   const [countryCode, setCountryCode] = useState("+1"); // Default to +1 (USA)
   const [agreeToTerms, setAgreeToTerms] = useState(false);
+  const [agreeToOffers, setagreeToOffers] = useState(false);
+  const [hoveredTab, setHoveredTab] = useState(""); // State to track the hovered tab
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,81 +41,107 @@ export default function SignUp() {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-white">
-      <div className="w-full max-w-md p-8 bg-white rounded-lg">
+      <div className="w-full max-w-md p-8 bg-white rounded-lg  pt-16 pb-20">
+
+       {/* Social Login Buttons */}
+       <div className="flex justify-between space-x-4">
+          <button className="flex items-center justify-center w-full px-4 py-2 bg-white text-gray-800 font-semibold rounded-md shadow-sm hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300">
+            <FcGoogle className="mr-2" />
+            Google
+          </button>
+          <button className="flex items-center justify-center w-full px-4 py-2 bg-white text-black font-semibold rounded-md shadow-sm hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-900">
+            <FaApple className="mr-2" />
+            Apple
+          </button>
+        </div>
+        
+
+       
+        {/* Separator */}
+        <div className="relative  text-center my-6">
+          <span className="mx-4 text-sm text-gray-500 font-sans">or Continue with</span>
+        </div>
+
+
+
         <div className="flex justify-between mb-6">
-          <div className="flex-1 text-center">
+          <div
+            className="flex-1 text-center"
+            onMouseEnter={() => setHoveredTab("login")}
+            onMouseLeave={() => setHoveredTab("")}
+          >
             <Link href="/login">
-              <span className="text-2xl font-bold cursor-pointer relative">
+              <span
+                className={`block w-full text-2xl font-bold relative pb-2 ${
+                  hoveredTab === "login" ? "text-black" : ""
+                }`}
+              >
                 Login
-                <div className="absolute left-0 w-full h-1 bg-gray-700 hover:bg-darkorange transition-all duration-300"></div>
+                <div
+                  className={`absolute left-0 bottom-0 w-full h-[2px] ${
+                    hoveredTab === "login" ? "bg-black" : "bg-transparent"
+                  } transition-all duration-300`}
+                ></div>
               </span>
             </Link>
           </div>
-          <div className="flex-1 text-center">
+          <div
+            className="flex-1 text-center"
+            onMouseEnter={() => setHoveredTab("signup")}
+            onMouseLeave={() => setHoveredTab("")}
+          >
             <Link href="/signup">
-              <span className="text-2xl font-bold cursor-pointer relative">
-                Sign Up
-                <div className="absolute left-0 w-full h-1 bg-gray-700 hover:bg-darkorange transition-all duration-300"></div>
+              <span
+                className={`block w-full text-2xl font-bold relative pb-2 ${
+                  hoveredTab === "signup" ? "text-black" : ""
+                }`}
+              >
+                Sign up
+                <div
+                  className={`absolute left-0 bottom-0 w-full h-[2px] ${
+                    hoveredTab === "signup" ? "bg-black" : "bg-[#D9D9D9]"
+                  } transition-all duration-300`}
+                ></div>
               </span>
             </Link>
           </div>
         </div>
+
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label
-              htmlFor="fullName"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Full Name
-            </label>
             <input
               type="text"
               id="fullName"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
+              placeholder="Full Name*"
               className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               required
             />
           </div>
           <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Email Address
-            </label>
             <input
               type="email"
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              placeholder="Email Address*"
               className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               required
             />
           </div>
           <div>
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Password
-            </label>
             <input
               type="password"
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password*"
               className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               required
             />
           </div>
           <div>
-            <label
-              htmlFor="phone"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Phone Number
-            </label>
             <div className="flex mt-1">
               <select
                 id="countryCode"
@@ -132,11 +160,30 @@ export default function SignUp() {
                 id="phone"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
+                placeholder="Phone Number*"
                 className="block w-full px-4 py-2 border border-gray-300 rounded-r-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 required
               />
             </div>
           </div>
+          <div className="flex items-center">
+            <input
+              type="checkbox"
+              id="agreeToOffers"
+              checked={agreeToOffers}
+              onChange={(e) => setagreeToOffers(e.target.checked)}
+              className="h-4 w-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500"
+              required
+            />
+
+            <label
+              htmlFor="agreeToTerms"
+              className="ml-2 block text-sm text-gray-900 font-sans"
+            >
+            Tick here if you do not wish to receive exclusive offers and discounts via email.
+            </label>
+          </div>
+
           <div className="flex items-center">
             <input
               type="checkbox"
@@ -146,41 +193,31 @@ export default function SignUp() {
               className="h-4 w-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500"
               required
             />
+
             <label
               htmlFor="agreeToTerms"
-              className="ml-2 block text-sm text-gray-900"
+              className="ml-2 block text-sm text-gray-900 font-sans"
             >
               By ticking, you are confirming that you agree to our{" "}
-              <a href="/terms" className="text-purple-600">
+              <a href="/terms" className="text-[#8B929D] underline">
                 Terms and Conditions
               </a>{" "}
               and{" "}
-              <a href="/privacy" className="text-purple-600">
+              <a href="/privacy" className="text-[#8B929D] underline">
                 Privacy Policy
               </a>{" "}
               *
             </label>
           </div>
-          <Link href="/">
-            <button
-              type="submit"
-              className="w-full py-2 bg-purple-600 text-white font-semibold rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
-            >
-              Sign Up
-            </button>
-          </Link>
+          <button
+            type="submit"
+            className="w-full mt-6 py-2 bg-black text-white font-semibold rounded-md shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-900"
+          >
+            REGISTER
+          </button>
         </form>
-        <div className="mt-6 text-center text-gray-600">or Register with</div>
-        <div className="flex justify-between mt-4 space-x-4">
-          <button className="flex items-center justify-center w-full px-4 py-2 bg-gray-100 text-gray-800 font-semibold rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300">
-            <FcGoogle className="mr-2" />
-            Google
-          </button>
-          <button className="flex items-center justify-center w-full px-4 py-2 bg-black text-white font-semibold rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-900">
-            <FaApple className="mr-2" />
-            Apple
-          </button>
-        </div>
+       
+        
       </div>
     </div>
   );

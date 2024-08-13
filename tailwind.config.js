@@ -7,13 +7,27 @@ module.exports = {
   ],
   theme: {
     extend: {
-      fontFamily: {
-        sans: ['Lexend Deca', 'ui-sans-serif', 'system-ui'], // Set "Lexend Deca" as the default sans font
-      },
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      colors: {
+        primary: "var(--text-primary)",
+        secondary: "var(--text-secondary)",
+        light: "var(--text-light)",
+        sale: "var(--text-sale)",
+        white: "var(--text-white)",
+
+        button: "var(--color-button)",
+        hover: "var(--color-hover)",
+
+        b: {
+          "01": "var(--color-border01)",
+          "02": "var(--color-border02)",
+          "03": "var(--color-border03)",
+        },
+        bg: {
+          "01": "var(--color-bg01)",
+          "02": "var(--color-bg02)",
+          "03": "var(--color-bg03)",
+          "04": "var(--color-bg04)",
+        },
       },
     },
   },

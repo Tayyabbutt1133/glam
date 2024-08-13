@@ -41,10 +41,10 @@ export default function MiddleBarNav() {
             {/* Logo */}
             <Link href="/">
               <Image
-                src="/logo.png"
+                src="/logo.svg"
                 alt="Glam Beauty Logo"
-                width={120}
-                height={40}
+                width={160}
+                height={80}
               />
             </Link>
 
@@ -59,14 +59,14 @@ export default function MiddleBarNav() {
                   onMouseEnter={handleMouseEnterAccount}
                   onMouseLeave={handleMouseLeaveAccount}
                 >
-                  <Link href="/#">
+                  <Link href="/signup">
                     <div className="flex flex-row justify-center items-center gap-2">
                       <UserIcon className={"w-4"} />
                       <span className="capitalize text-nowrap lg:text-base xl:text-xl">my account</span>
                     </div>
                   </Link>
                 </div>
-                {isDropdownOpen && (
+                {/* {isDropdownOpen && (
                   <ul
                     className=" w-44 text-center absolute top-full left-0 bg-white rounded-md shadow-md"
                     ref={dropdownRef}
@@ -80,7 +80,7 @@ export default function MiddleBarNav() {
                       <Link href="/signup" className="block px-4 py-2 hover:bg-[#F7EBE0]  transition duration-300 ease-in-out ">Sign Up</Link>
                     </li>
                   </ul>
-                )}
+                )} */}
               </div>
 
               <div>

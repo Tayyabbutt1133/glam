@@ -150,7 +150,7 @@ export default function Footer() {
 
           <hr className=" border-gray-200 sm:mx-auto dark:border-gray-700" />
 
-          <div className="sm:flex sm:items-center sm:justify-between my-6">
+          <div className="sm:flex sm:items-center sm:justify-between my-4">
             <span className="text-sm text-[#7E7E7E] sm:text-center">
               GLAMBEAUTY © 2024. All Rights Reserved.
             </span>
