@@ -52,7 +52,7 @@ export default function MiddleBarNav() {
             <SearchBarWithDropdown />
 
             {/* Account and Cart */}
-            <section className="flex flex-row justify-between items-center gap-6">
+            <section className="flex flex-row justify-between items-center gap-6 text-primary">
               <div className="relative">
                 <div
                   ref={accountLinkRef}

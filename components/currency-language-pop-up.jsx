@@ -11,21 +11,16 @@ export default function CurrencyLanguagePopUp() {
 
   const modalRef = useRef(null);
 
-  const handleClickOutside = (e) => {
-    if (modalRef.current && !modalRef.current.contains(e.target)) {
-      closeModal();
-    }
-  };
-
+  
   const [selectedCountry, setSelectedCountry] = useState(name[0]);
   const [selectedCurrency, setSelectedCurrency] = useState(name[0]?.code || 'GBP');
   const [flagUrl, setFlagUrl] = useState('');
-
+  
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const savedCountry = localStorage.getItem('selectedCountry');
       const savedCurrency = localStorage.getItem('selectedCurrency');
-
+      
       if (savedCountry) {
         setSelectedCountry(JSON.parse(savedCountry));
       }
@@ -34,7 +29,7 @@ export default function CurrencyLanguagePopUp() {
       }
     }
   }, []);
-
+  
   const fetchFlag = async (countryCode) => {
     try {
       const response = await fetch(`https://restcountries.com/v3.1/alpha/${countryCode}`);
@@ -44,25 +39,30 @@ export default function CurrencyLanguagePopUp() {
       console.error("Error fetching flag:", error);
     }
   };
-
+  
   const handleCountryChange = (e) => {
     const selectedCountryCode = e.target.value;
     const country = name.find((country) => country.code === selectedCountryCode);
     setSelectedCountry(country);
     setSelectedCurrency(country.code);
     fetchFlag(country.countryCode);
-
+    
     if (typeof window !== 'undefined') {
       localStorage.setItem('selectedCountry', JSON.stringify(country));
       localStorage.setItem('selectedCurrency', country.code);
     }
   };
-
+  
   useEffect(() => {
     fetchFlag(selectedCountry.countryCode);
   }, [selectedCountry]);
-
+  
   useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (modalRef.current && !modalRef.current.contains(e.target)) {
+        closeModal();
+      }
+    };
     if (isOpen) {
       document.addEventListener("mousedown", handleClickOutside);
     } else {
@@ -72,7 +72,7 @@ export default function CurrencyLanguagePopUp() {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isOpen]);
+  }, [isOpen, closeModal]);
 
   return (
     <>
