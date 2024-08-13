@@ -2,12 +2,13 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import ArrowDown from "../../../public/icons/arrow-down";
-import { Lexend_Deca } from "next/font/google";
+// import { Lexend_Deca } from "next/font/google";
+import { lexendDeca } from "../../ui/fonts";
 
 import Container from "../../container";
 import { usePopupStore } from "../../../states/use-popup-store.jsx";
 
-const lexendDeca = Lexend_Deca({ subsets: ["latin"] });
+// const lexendDeca = Lexend_Deca({ subsets: ["latin"] });
 
 export default function NewsBannerNav() {
   const [mounted, setMounted] = useState(false);
@@ -103,10 +104,10 @@ export default function NewsBannerNav() {
               )}
             </div>
             <button
-              className="flex flex-row items-center cursor-pointer gap-2"
+              className={`flex flex-row items-center cursor-pointer gap-2 ${lexendDeca.className}`}
               onClick={onOpen}
             >
-                <div className="font-normal text-base">
+              <div className={`font-normal text-base ${lexendDeca.className}`}>
                     <span className="lowercase">
                         {selectedCountry.countryCode}
                     </span>

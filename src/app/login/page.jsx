@@ -148,7 +148,7 @@ export default function Login() {
             />
             <label
               htmlFor="rememberMe"
-              className={`ml-2 block text-sm text-gray-900 font-sans ${lexendDeca.className}`}
+              className={`ml-2 block text-sm text-gray-900  ${lexendDeca.className}`}
             >
               Remember Me
             </label>
@@ -156,7 +156,7 @@ export default function Login() {
 
           {/* Forgot Password Link */}
           <div className="flex">
-            <Link href="/forgot-password" className={`text-sm text-gray-600 underline font-sans ${lexendDeca.className}`}>
+            <Link href="/forgot-password" className={`text-sm text-gray-600 underline ${lexendDeca.className}`}>
               Forgot your Password?
             </Link>
           </div>
