@@ -81,7 +81,7 @@ export default function Login() {
                 Login
                 <div
                   className={`absolute left-0 bottom-0 w-full h-[2px]  ${
-                    hoveredTab === "login" ? "bg-[#101010]" : " bg-[#D9D9D9]"
+                    hoveredTab === "login" ? "bg-[#CF8562]" : " bg-[#D9D9D9]"
                   } transition-all duration-300`}
                 ></div>
               </span>
@@ -103,7 +103,7 @@ export default function Login() {
                 Sign up
                 <div
                   className={`absolute left-0 bottom-0 w-full h-[2px] ${
-                    hoveredTab === "signup" ? "bg-[#101010]" : "bg-transparent"
+                    hoveredTab === "signup" ? "bg-[#CF8562]" : "bg-transparent"
                   } transition-all duration-300`}
                 ></div>
               </span>
