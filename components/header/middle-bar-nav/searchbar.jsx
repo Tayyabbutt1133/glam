@@ -34,12 +34,12 @@ export default function SearchBarWithDropdown() {
     <div ref={searchBarRef} className={`flex justify-center relative w-[768px]`}>
       {/* Search Bar */}
       <section className="flex flex-row w-[80%] max-w-[696px] h-10 border border-solid
-      border-border-03 rounded-[8px] px-1 focus-within:border-gray-700 transition-colors ease-in-out duration-100">
+      border-b-03 rounded-[8px] px-1 focus-within:border-gray-700 transition-colors ease-in-out duration-100">
         <div className="grid place-items-center h-full w-12">
           <SearchIcon className="h-auto w-5"/>
         </div>
         <input
-          className={` ${plusJakartaSans.className} h-full w-full outline-none text-sm text-gray-700 pr-2`}
+          className={` ${plusJakartaSans.className} h-full w-full outline-none text-sm text-secondary pr-2`}
           type="text"
           id="search"
           placeholder="Search products, trends"
