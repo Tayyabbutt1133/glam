@@ -8,6 +8,9 @@ import SearchBarWithDropdown from "./searchbar";
 import Container from "../../container";
 import Image from "next/image";
 import { useState, useRef } from 'react';
+import { Jost } from "next/font/google";
+
+const jost = Jost({subsets: ['latin']});
 
 export default function MiddleBarNav() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -32,7 +35,7 @@ export default function MiddleBarNav() {
 
   return (
     <>
-      <div className="flex w-full border-b-2 border-gray-100 bg-white">
+      <div className={`${jost.className} flex w-full border-b-2 border-gray-100 bg-white font-normal`}>
         <Container>
           <div className="flex flex-row w-full justify-between items-center py-4">
             {/* Logo */}
@@ -59,7 +62,7 @@ export default function MiddleBarNav() {
                   <Link href="/signup">
                     <div className="flex flex-row justify-center items-center gap-2">
                       <UserIcon className={"w-4"} />
-                      <span className="capitalize">my account</span>
+                      <span className="capitalize text-nowrap lg:text-base xl:text-xl">my account</span>
                     </div>
                   </Link>
                 </div>
@@ -83,7 +86,7 @@ export default function MiddleBarNav() {
               <div>
                 <div className="flex flex-row justify-center items-center gap-2">
                   <CartIcon className={"w-7"} />
-                  <span className="capitalize">My Bag</span>
+                  <span className="capitalize text-nowrap lg:text-base xl:text-xl">My Bag</span>
                 </div>
               </div>
             </section>
