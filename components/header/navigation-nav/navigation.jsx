@@ -25,10 +25,10 @@ export default function Navigation() {
   return (
     <>
       <div
-        className={`${jost.className} flex items-center h-[66px] font-normal lg:text-md xl:text-xl bg-white`}
+        className={`${jost.className} flex items-center h-[66px] font-normal lg:text-base xl:text-xl bg-white`}
       >
         <Container>
-          <nav className="flex flex-row w-full justify-center items-center py-3 lg:gap-4 2xl:gap-11">
+          <nav className="flex flex-row w-full justify-center items-center py-3 lg:gap-3 2xl:gap-11">
             {links.map((link, index) => (
               <Link
                 className={`box-border px-2 pb-2 -mb-2 text-nowrap uppercase ${
