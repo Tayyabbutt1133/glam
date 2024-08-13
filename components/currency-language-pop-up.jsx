@@ -5,6 +5,9 @@ import name from "../src/app/currencies-with-flags.json";
 import Image from "next/image";
 import Text from "./ui/Text";
 import { Plus_Jakarta_Sans } from "next/font/google";
+import { jost } from "./ui/fonts";
+
+
 
 const plusJakartaSans = Plus_Jakarta_Sans({subsets: ['latin']});
 
@@ -104,7 +107,7 @@ export default function CurrencyLanguagePopUp() {
               />
             </div>
             <div className="mt-[3rem] mb-2">
-              <Text style={"h3"} className={"text-center"}>
+              <Text style={"h3"} className={`text-center ${jost.className} text-2xl`}>
                 CHOOSE YOUR SHIPPING COUNTRY/REGION
               </Text>
             </div>
