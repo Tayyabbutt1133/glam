@@ -5,7 +5,7 @@ import name from "../src/app/currencies-with-flags.json";
 import Image from "next/image";
 import Text from "./ui/Text";
 import { Plus_Jakarta_Sans } from "next/font/google";
-import { jost } from "./ui/fonts";
+import { jost, lexendDeca } from "./ui/fonts";
 
 
 
@@ -121,9 +121,9 @@ export default function CurrencyLanguagePopUp() {
             </div>
 
             <div className="flex flex-col w-full space-y-3">
-              <Text style={"xs"}>
+              <Text style={"sm"}>
                 <select
-                  className="w-full p-2.5 border border-gray-300 rounded-md"
+                  className={`  w-full p-2.5 border border-gray-300 rounded-md`}
                   onChange={handleCountryChange}
                   value={selectedCountry?.code || ""}
                 >
@@ -134,7 +134,7 @@ export default function CurrencyLanguagePopUp() {
                   ))}
                 </select>
               </Text>
-              <Text style={"xs"}>
+              <Text style={"sm"}>
                 <select
                   className="w-full p-2.5 border border-gray-300 rounded-md"
                   onChange={(e) => setSelectedCurrency(e.target.value)}
