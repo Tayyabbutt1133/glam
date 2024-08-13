@@ -4,7 +4,7 @@ import Container from "./container";
 export default function Newsletter() {
   return (
     <>
-      <section className="bg-[#F7EBE0]">
+      <section className="bg-[#F7EBE0] h-[238px] grid place-items-center">
         <Container>
           <div className="flex justify-center items-center mx-auto w-full py-10">
 
