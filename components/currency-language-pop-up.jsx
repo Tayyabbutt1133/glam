@@ -123,7 +123,7 @@ export default function CurrencyLanguagePopUp() {
             <div className="flex flex-col w-full space-y-3">
               <Text style={"sm"}>
                 <select
-                  className={`  w-full p-2.5 border border-gray-300 rounded-md`}
+                  className={`w-full p-2.5 border border-gray-300 rounded-md ${lexendDeca.className}`}
                   onChange={handleCountryChange}
                   value={selectedCountry?.code || ""}
                 >
@@ -136,7 +136,7 @@ export default function CurrencyLanguagePopUp() {
               </Text>
               <Text style={"sm"}>
                 <select
-                  className="w-full p-2.5 border border-gray-300 rounded-md"
+                  className={`w-full p-2.5 border border-gray-300 rounded-md ${lexendDeca.className}`}
                   onChange={(e) => setSelectedCurrency(e.target.value)}
                   value={selectedCurrency || ""}
                 >
