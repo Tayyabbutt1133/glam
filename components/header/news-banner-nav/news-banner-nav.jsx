@@ -104,10 +104,10 @@ export default function NewsBannerNav() {
               )}
             </div>
             <button
-              className={`flex flex-row items-center cursor-pointer gap-2 ${lexendDeca.className}`}
+              className={`flex flex-row items-center cursor-pointer gap-2 `}
               onClick={onOpen}
             >
-              <div className={`font-normal text-base ${lexendDeca.className}`}>
+              <div className={`font-normal text-base `}>
                     <span className="lowercase">
                         {selectedCountry.countryCode}
                     </span>
