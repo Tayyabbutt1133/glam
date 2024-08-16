@@ -102,12 +102,12 @@ const AddressBook = () => {
     <div className="mx-auto">
       {isEditing ? (
         <>
-          <h2 className={`text-2xl font-medium  mb-14 -mt-4 ${jost.className}`}>
+          <h2 className={`text-2xl font-medium mb-14 -mt-4 ${jost.className}`}>
             {formData.firstName ? 'EDIT ADDRESS' : 'ADD NEW ADDRESS'}
           </h2>
           <form className="space-y-6">
             <div>
-              <h3 className={`text-lg font-medium  mb-4 ${jost.className}`}>Contact Details</h3>
+              <h3 className={`text-lg font-medium mb-4 ${jost.className}`}>Contact Details</h3>
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <input
@@ -137,15 +137,17 @@ const AddressBook = () => {
                   onChange={handlePhoneChange}
                   className={`${lexendDeca.className}`}
                   inputStyle={{
-                    width: '100%',
-                    paddingLeft: '2.75rem',
-                    paddingTop: '0.6rem',
-                    paddingBottom: '0.6rem'
+                    width: '95.5%',
+                    padding: '0.75rem', // Adjusted to match padding of other inputs
+                    fontSize: '0.875rem', // Match font size
+                    height: '2.75rem', // Match height
+                    marginLeft: "35px"
                   }}
                   buttonStyle={{
                     backgroundColor: '#f9fafb',
                     borderTopLeftRadius: '0.375rem',
-                    borderBottomLeftRadius: '0.375rem'
+                    borderBottomLeftRadius: '0.375rem',
+                    borderColor: '#d1d5db' // Match border color
                   }}
                   placeholder="Phone*"
                 />
@@ -153,7 +155,7 @@ const AddressBook = () => {
             </div>
 
             {/* address details */}
-            <div className=''>
+            <div>
               <h3 className={`text-lg font-medium mb-4 mt-24 ${jost.className}`}>Address Details</h3>
               <div className="grid grid-cols-2 gap-4">
                 <div className="col-span-2">
@@ -208,7 +210,7 @@ const AddressBook = () => {
                 </div>
               </div>
             </div>
-            <div className="">
+            <div>
               <button
                 type="button"
                 onClick={handleSave}
@@ -220,27 +222,17 @@ const AddressBook = () => {
           </form>
         </>
       ) : (
-          <>
-            {/* Saved address */}
-            <h2 className={`text-2xl font-medium mb-8 ${jost.className}`}>SAVED ADDRESSES</h2>
+        <>
+          {/* Saved address */}
+          <h2 className={`text-2xl font-medium mb-8 ${jost.className}`}>SAVED ADDRESSES</h2>
           <div className="space-y-4">
             {addresses.map((address, index) => (
               <div key={index} className="border p-4 rounded-md flex flex-col gap-6">
-
-
                 <div className={`text-lg font-medium ${jost.className}`}>{`${address.firstName} ${address.lastName}`}</div>
-
-
-                <div className=''>
+                <div>
                   <div className={`text-gray-700 ${jost.className}`}>{address.addressLine1} {address.addressLine2}</div>
                   <div className={`text-gray-700 ${jost.className}`}>{`${address.city}, ${address.postalCode}, ${address.country}`}</div>
                 </div>
-                
-
-
-
-
-              
                 <div className={`text-gray-700 ${jost.className} font-medium`}>{address.phone}</div>
                 <div className="flex items-center space-x-2 mt-4">
                   <input
@@ -283,9 +275,9 @@ const AddressBook = () => {
               </div>
             ))}
             <button
-                type="button"
-                onClick={handleAddNew}
-                className={`bg-black mt-4 text-white font-medium py-2 px-4 rounded-md shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black ${jost.className}`}
+              type="button"
+              onClick={handleAddNew}
+              className={`bg-black mt-4 text-white font-medium py-2 px-4 rounded-md shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black ${jost.className}`}
             >
               Add New Address
             </button>
