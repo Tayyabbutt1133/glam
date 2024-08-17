@@ -10,12 +10,13 @@ import 'react-loading-skeleton/dist/skeleton.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './home-product.css'; // Custom CSS for styling
+// import { useRouter } from 'next/router';
 import { jost } from '../../ui/fonts';
-
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  // const router = useRouter();  // Initialize Next.js router
 
   useEffect(() => {
     axios
@@ -47,7 +48,7 @@ const ProductList = () => {
     autoplay: true,
     autoplaySpeed: 2000,
     arrows: true,
-    prevArrow: <IoIosArrowDropleft className="slick-prev"  />,
+    prevArrow: <IoIosArrowDropleft className="slick-prev" />,
     nextArrow: <IoIosArrowDropright className="slick-next" />,
     responsive: [
       {
@@ -74,41 +75,57 @@ const ProductList = () => {
     ],
   };
 
+  const handleProductClick = (productId) => {
+    router.push(`/products/${productId}`);
+  };
+
   return (
     <div className="max-w-screen-xl mx-auto px-4 py-16">
       <h2 className={`text-2xl font-semibold mx-4 my-8 ${jost.className}`}>TRENDING NOW</h2>
       {loading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"> {/* Reduced gap */}
-          {Array(4)
+        <Slider {...settings}>
+          {Array(4) // Adjusting the number of skeletons to match slidesToShow
             .fill(0)
             .map((_, index) => (
-              <div key={index} className="max-w-xs mx-auto">
-                <Skeleton height={200} />
-                <Skeleton count={3} />
-                <Skeleton width={100} />
+              <div key={index} className="px-2">
+                <div className="bg-white shadow-lg rounded-lg overflow-hidden relative flex flex-col h-full min-h-[420px] border border-gray-300">
+                  {/* Skeleton Image Placeholder */}
+                  <div className="w-full h-48">
+                    <Skeleton height="100%" />
+                  </div>
+                  
+                  {/* Skeleton Text Placeholder */}
+                  <div className="px-4 pb-4 flex-grow">
+                    <Skeleton height={24} width="80%" className="mb-2" />
+                    <Skeleton height={20} width="100%" className="mb-2" />
+                    <Skeleton height={20} width="90%" className="mb-2" />
+                    <Skeleton height={20} width="50%" className="mb-4" />
+                    <Skeleton height={32} width="100%" />
+                  </div>
+                </div>
               </div>
             ))}
-        </div>
+        </Slider>
       ) : (
         <Slider {...settings}>
           {products.map((product) => (
-            <div key={product.id} className="px-2"> {/* Reduced padding */}
-              <div className="bg-white shadow-lg rounded-lg overflow-hidden relative flex flex-col h-full min-h-[420px] border border-gray-300"> {/* Added border */}
-                {/* Sale Badge */}
+            <div key={product.id} className="px-2">
+              <div
+                className="bg-white shadow-lg rounded-lg overflow-hidden relative flex flex-col h-full min-h-[420px] border border-gray-300 cursor-pointer"
+                onClick={() => handleProductClick(product.id)}
+              >
                 {product.on_sale && (
                   <div className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
                     SALE
                   </div>
                 )}
 
-                {/* Heart Icon in the Top-Right Corner */}
                 <div className="absolute top-2 right-2">
                   <button className="focus:outline-none">
                     <FaHeart className="text-gray-400 hover:text-black w-6 h-6" />
                   </button>
                 </div>
 
-                {/* Product Image */}
                 <img
                   className="w-full h-48 object-contain p-4"
                   src={product.images[0]?.src}
@@ -116,13 +133,9 @@ const ProductList = () => {
                 />
 
                 <div className="px-4 pb-4 flex-grow">
-                  {/* Product Name */}
                   <h2 className="text-gray-900 font-semibold text-md">{product.name}</h2>
-
-                  {/* Product Short Description */}
                   <p className="text-gray-600 text-sm mb-1 line-clamp-2">{product.short_description}</p>
 
-                  {/* Star Ratings */}
                   <div className="flex items-center mb-2">
                     {[...Array(5)].map((_, index) => (
                       <span key={index}>
@@ -136,7 +149,6 @@ const ProductList = () => {
                     <span className="text-gray-600 text-sm ml-2">({product.rating_count})</span>
                   </div>
 
-                  {/* Price and Discount */}
                   <div className="flex items-center text-gray-600 text-sm mb-1">
                     {product.regular_price && (
                       <span className="line-through mr-2">RRP: £{product.regular_price}</span>
@@ -148,11 +160,9 @@ const ProductList = () => {
                     )}
                   </div>
 
-                  {/* Final Price */}
                   <p className="text-gray-900 font-bold text-lg mb-3">£{parseFloat(product.price).toFixed(2)}</p>
                 </div>
 
-                {/* Add to Bag Button */}
                 <button className="w-full bg-black text-white py-2 rounded-md hover:bg-gray-800 transition duration-200 add-to-bag-btn">
                   ADD TO BAG
                 </button>
