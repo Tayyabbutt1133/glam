@@ -37,13 +37,13 @@ const ProductList = () => {
   }, []);
 
   const settings = {
-    dots: false, // Disable the dots
+    dots: false,
     infinite: true,
-    speed: 300, // Faster transition speed (default is 500)
+    speed: 300,
     slidesToShow: 4,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 2000, // Faster autoplay speed (default is 3000)
+    autoplaySpeed: 2000,
     arrows: true,
     prevArrow: <IoIosArrowDropleft className="slick-prev"  />,
     nextArrow: <IoIosArrowDropright className="slick-next" />,
@@ -71,14 +71,12 @@ const ProductList = () => {
       },
     ],
   };
-  
-  
 
   return (
-    <div className="max-w-screen-xl mx-auto px-4 py-8">
-      <h2 className="text-2xl font-bold mb-6 ml-6">TRENDING NOW</h2>
+    <div className="max-w-screen-xl mx-auto px-4 py-16">
+      <h2 className="text-2xl font-bold mx-4 my-6">TRENDING NOW</h2>
       {loading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"> {/* Reduced gap */}
           {Array(4)
             .fill(0)
             .map((_, index) => (
@@ -92,8 +90,8 @@ const ProductList = () => {
       ) : (
         <Slider {...settings}>
           {products.map((product) => (
-            <div key={product.id} className="p-4 product-card">
-              <div className="bg-white shadow-lg rounded-lg overflow-hidden relative flex flex-col h-full min-h-[420px]">
+            <div key={product.id} className="px-2"> {/* Reduced padding */}
+              <div className="bg-white shadow-lg rounded-lg overflow-hidden relative flex flex-col h-full min-h-[420px] border border-gray-300"> {/* Added border */}
                 {/* Sale Badge */}
                 {product.on_sale && (
                   <div className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
