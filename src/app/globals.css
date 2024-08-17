@@ -55,3 +55,17 @@ ul.slick-dots.slick-thumb {
   background-color: rgb(0, 0, 0);
   width: 24px;
 }
+
+.slick-prev::before, .slick-next::before{
+  display: none;
+}
+
+.slick-arrow{
+  background-color: var(--color-border02);
+}
+
+.slick-arrow.slick-next,
+.slick-arrow.slick-prev{
+  height:0;
+  width: 0;
+}
