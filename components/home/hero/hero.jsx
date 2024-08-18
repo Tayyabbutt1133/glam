@@ -64,7 +64,7 @@ const Banner = ({ src }) => {
 export default function Hero() {
   const isMobile = useMediaQuery("(max-width: 1024px)");
   const settings = {
-    autoplay: false,
+    autoplay: true,
     dots: isMobile,
     dotsClass: "slick-dots slick-thumb", // Apply custom dots styling
     customPaging: function (i) {
