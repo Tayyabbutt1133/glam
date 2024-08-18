@@ -9,6 +9,10 @@ import brand_two from '../../../../public/home_banners/brand_two.svg';
 import brand_three from '../../../../public/home_banners/brand_three.svg';
 import brand_four from '../../../../public/home_banners/brand_four.svg';
 import brand_slide from '../../../../public/home_banners/brand_slide.svg';
+import Text from '../../../ui/Text';
+import { jost, lexendDeca } from '../../../ui/fonts';
+// import { jost } from '../../../ui/fonts';
+// import
 
 const HomeBrand = () => {
   const router = useRouter();
@@ -27,7 +31,7 @@ const HomeBrand = () => {
   return (
     <Container>
       <div className="px-4 py-16 space-y-10">
-        <h2 className="text-2xl font-semibold">SHOP BY BRAND</h2>
+        <h2 className={`text-2xl font-semibold ${jost.className}`}>SHOP BY BRAND</h2>
         <Image src={brand_slide}/>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {products.map((product) => (
@@ -43,9 +47,9 @@ const HomeBrand = () => {
 
               {/* Product Info */}
               <div className="px-4 py-6 text-left">
-                <h3 className="text-lg font-semibold text-gray-900">{product.name}</h3>
-                <p className="text-gray-600 text-sm my-2">{product.description}</p>
-                <button className="mt-4 bg-black text-white py-2 px-6 rounded-md hover:bg-gray-800 transition duration-200">
+                <h3 className={`text-lg font-semibold text-gray-900 ${jost.className}`}>{product.name}</h3>
+                <p className={`text-black text-sm my-2 ${lexendDeca.className}`}>{product.description}</p>
+                <button className={`mt-4 bg-black text-white py-2 px-6 rounded-md hover:bg-gray-800 transition duration-200 ${jost.className}`}>
                   SHOP NOW
                 </button>
               </div>

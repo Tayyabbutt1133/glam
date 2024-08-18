@@ -2,6 +2,8 @@ import React from "react";
 import Image from "next/image";
 import rimmle_banner from "../public/home_banners/olaplex_two.svg";
 import rimmle_logo from "../public/home_banners/Max-Factor-Logo-two.svg";
+import { jost } from "./ui/fonts";
+
 
 export default function Rimmel() {
   return (
@@ -16,12 +18,12 @@ export default function Rimmel() {
             src={rimmle_logo}
             alt="Rimmel Logo"
           />
-          <div className="text-center space-y-2">
-            <h1 className="uppercase font-medium text-2xl md:text-3xl">Up To</h1>
-            <h1 className="font-bold text-4xl md:text-5xl">50%</h1>
-            <h1 className="uppercase font-medium text-2xl md:text-3xl">Off</h1>
+            <div className={`text-center space-y-2`}>
+            <h1 className={`uppercase font-semibold text-3xl ${jost.className}`}>Up To</h1>
+            <h1 className={`font-bold text-6xl ${jost.className}`}>50%</h1>
+            <h1 className="uppercase font-semibold text-3xl">Off</h1>
           </div>
-          <button className="uppercase bg-black text-white w-full md:w-44 h-12 rounded-md mt-8 mx-auto block">
+          <button className={`uppercase bg-black text-white w-full md:w-44 h-12 rounded-md mt-8 mx-auto block ${jost.className}`}>
             Shop Now
           </button>
         </div>

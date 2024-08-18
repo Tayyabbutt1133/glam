@@ -6,13 +6,14 @@ import cat_three from '../../../../public/home_categories_banner/category_three.
 import cat_four from '../../../../public/home_categories_banner/category_four.svg';
 import Image from 'next/image';
 import Link from 'next/link';
+import { jost } from '../../../ui/fonts';
 
 export default function HomeCategory() {
   return (
     <>
           <Container>
               <div className=' py-16'>
-        <h1 className="text-2xl font-bold mb-4">Shop by Category</h1>
+          <h1 className={`text-2xl font-semibold mb-4 ${jost.className}`}>Shop by Category</h1>
         <div className="flex justify-between gap-4">
           <div className="w-1/4">
             <Image src={cat_one} alt="Makeup" className="rounded-lg object-cover cursor-pointer" />

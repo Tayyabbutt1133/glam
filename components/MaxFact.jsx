@@ -4,6 +4,7 @@ import Image from "next/image";
 import max_cosmetics from "../public/home_banners/olaplex_one.svg";
 import max_logo from "../public/home_banners/Max-Factor-Logo.svg";
 import Link from "next/link";
+import { jost } from "./ui/fonts";
 
 export default function MaxFact() {
   return (
@@ -24,13 +25,13 @@ export default function MaxFact() {
             className="mx-auto"
             src={max_logo}
           />
-          <div className="text-center space-y-2">
-            <h1 className="uppercase font-medium text-3xl">Up To</h1>
-            <h1 className="font-bold text-5xl">50%</h1>
-            <h1 className="uppercase font-medium text-3xl">Off</h1>
+          <div className={`text-center space-y-2`}>
+            <h1 className={`uppercase font-semibold text-3xl ${jost.className}`}>Up To</h1>
+            <h1 className={`font-bold text-6xl ${jost.className}`}>50%</h1>
+            <h1 className="uppercase font-semibold text-3xl">Off</h1>
           </div>
 
-          <button className="uppercase bg-black text-white w-44 h-12 rounded-md mt-10 mx-auto block">
+          <button className={`${jost.className} font-medium uppercase bg-black text-white w-44 h-12 rounded-md mt-10 mx-auto block`}>
             Shop Now
           </button>
         </div>
