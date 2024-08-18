@@ -5,7 +5,7 @@ import Container from "../../container";
 export default function Promo() {
   return (
     <>
-      <div name="promo-parent" className="promo-parent bg-black">
+      <div name="promo-parent" className="hidden lg:flex promo-parent bg-black">
         <Container>
           <div className="flex justify-between items-center px-28 h-12">
             <h1 className=" text-white text-[13px]">
