@@ -13,7 +13,7 @@ import { jost } from "../ui/fonts";
 
 export default function Instagram() {
   return (
-    <div className="flex w-full mb-10">
+    <div className="flex w-full mb-20">
       <Container>
         <div className="flex flex-col w-full mt-10 overflow-hidden">
           <h1
