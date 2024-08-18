@@ -30,7 +30,7 @@ const NextArrow = ({ className, style, onClick }) => {
     <div
       className={`arrow ${className}`}
       onClick={onClick}
-      style={{ ...style, right: "80px" }}
+      style={{ ...style, right: "80px", display: "block" }}
     >
       <NextArrowIcon />
     </div>
@@ -42,7 +42,7 @@ const PrevArrow = ({ className, style, onClick }) => {
     <div
       className={`arrow ${className}`}
       onClick={onClick}
-      style={{ ...style, left: "20px", zIndex: 1 }}
+      style={{ ...style, left: "20px", zIndex: 1, display: "block" }}
     >
       <PrevArrowIcon />
     </div>
@@ -93,7 +93,7 @@ export default function Hero() {
 
       {/* For large screens */}
       <div className="hidden lg:block">
-        <Slider {...settings}>
+        <Slider {...settings} className="flex items-center">
           {images.map((img, idx) => (
             <Banner key={idx} src={img.src} />
           ))}
