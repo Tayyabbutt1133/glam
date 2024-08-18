@@ -1,40 +1,55 @@
-"use client"
+"use client";
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { FaRegStar, FaStar, FaHeart } from 'react-icons/fa';
-import { CiHeart } from 'react-icons/ci'
-import { IoIosArrowDropleft, IoIosArrowDropright } from 'react-icons/io';
+import { CiHeart } from 'react-icons/ci';
 import Slider from 'react-slick';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import './home-product.css'; // Custom CSS for styling
-import { jost, lexendDeca} from '../../ui/fonts';
+import { jost, lexendDeca } from '../../ui/fonts';
 import Container from '../../container';
 import NextArrowIcon from '../../../public/hero-banners/next-arrow';
 import PrevArrowIcon from '../../../public/hero-banners/prev-arrow';
 
+// Arrow styles
+const arrowStyles = {
+  width: "40px",
+  height: "40px",
+  zIndex: 1,
+  transition: "all 0.3s ease-in-out", // Smooth transition
+};
 
+// Next Arrow component
 const NextArrow = ({ className, style, onClick }) => {
   return (
     <div
-      className={`arrow ${className}`}
+      className={`absolute top-1/2 transform -translate-y-1/2 right-4 ${className}`}
       onClick={onClick}
-      style={{...style, right: "-3%", display: "block" }}
+      style={{
+        ...style,
+        ...arrowStyles,
+        right: "10px", // Adjust right position as needed
+      }}
     >
-      <NextArrowIcon shadow={false}/>
+      <NextArrowIcon />
     </div>
   );
 };
 
+// Previous Arrow component
 const PrevArrow = ({ className, style, onClick }) => {
   return (
     <div
-      className={`arrow ${className}`}
+      className={`absolute top-1/2 transform -translate-y-1/2 left-4 ${className}`}
       onClick={onClick}
-      style={{...style, left: "-5%", top: "50%", transform: "translateY(-50%)", zIndex: 1, display: "block" }}
+      style={{
+        ...style,
+        ...arrowStyles,
+        left: "", // Adjust left position as needed
+      }}
     >
       <PrevArrowIcon />
     </div>
@@ -45,7 +60,7 @@ const ProductList = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [favorites, setFavorites] = useState({}); // State to track favorited products
-  
+
   useEffect(() => {
     axios
       .get('https://glam.clickable.site/wp-json/wc/v3/products/', {
@@ -79,6 +94,14 @@ const ProductList = () => {
     prevArrow: <PrevArrow />,
     nextArrow: <NextArrow />,
     responsive: [
+      {
+        breakpoint: 1280,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 1,
+          arrows: true,
+        },
+      },
       {
         breakpoint: 1024,
         settings: {
