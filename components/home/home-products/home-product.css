@@ -12,38 +12,7 @@
     margin-top: auto;
   }
   
-  /* Arrow Styles */
-  .slick-prev, .slick-next {
-    font-size: 100px; /* Further increase font size for bigger arrows */
-    color: rgba(0, 0, 0, 0.7);
-    z-index: 1;
-    top: 50%;
-    transform: translateY(-50%);
-  }
   
-  .slick-prev:hover, .slick-next:hover {
-    color: black;
-  }
   
-  @media (max-width: 768px) {
-    .slick-slider {
-      padding: 0 30px; /* Maintain increased padding to bring arrows more into view */
-    }
-  }
   
-  .slick-list {
-    overflow: hidden;
-  }
-  
-  .slick-slide > div {
-    margin: 0 8px;
-  }
-  
-  .slick-prev {
-    left: 5px; /* Keep the arrows closer to the screen edges */
-  }
-  
-  .slick-next {
-    right: 5px; /* Keep the arrows closer to the screen edges */
-  }
   

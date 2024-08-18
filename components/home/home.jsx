@@ -9,7 +9,7 @@ import HomeCategory from "./home-products/shop_by_category/HomeCategory";
 
 export default function HomePage() {
   return (
-    <div className="home">
+    <>
       <Hero />
       <ProductList />
       <MaxFact />
@@ -18,6 +18,6 @@ export default function HomePage() {
       <HomeCategory />
       {/* <Instagram/> */}
       <Trustpilot/>
-    </div>
+    </>
   );
 }
