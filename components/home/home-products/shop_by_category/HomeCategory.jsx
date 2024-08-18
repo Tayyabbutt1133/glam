@@ -102,7 +102,7 @@ export default function HomeCategory() {
     <>
       <Container>
         <div className="py-16 relative">
-          <h1 className={`text-2xl font-semibold mb-8 text-left ${jost.className}`}>Shop by Category</h1>
+          <h1 className={`text-2xl font-semibold mb-8 text-left ${jost.className} uppercase`}>Shop by Category</h1>
           <Slider {...settings}>
             <div className="px-2 lg:w-44 xl:w-56">
               <Image src={cat_one} alt="Makeup" className="rounded-lg object-cover cursor-pointer w-full" />

@@ -8,15 +8,16 @@ import ig_five from "../../public/home_banners/feeds/IG_animation_five.svg";
 import ig_six from "../../public/home_banners/feeds/IG_animation_six.svg";
 import ig_seven from "../../public/home_banners/feeds/IG_animation_seven.svg";
 import Container from "../container";
-import Text from "../ui/Text";
+// import Text from "../ui/Text";
+import { jost } from "../ui/fonts";
 
 export default function Instagram() {
   return (
     <Container>
       <div className="flex flex-col w-full mt-10 overflow-hidden">
-        <Text style={"h1"} className="mb-10">
+        <h1 className={`mb-10 text-2xl xl:text-3xl font-semibold ${jost.className}`}>
           SHOP OUR IG
-        </Text>
+        </h1>
         <div className="angry-grid">
           {/* Grid of 4 pics */}
           <Image src={ig_one} alt="IG One" id="item-0" />

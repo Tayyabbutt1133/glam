@@ -141,7 +141,7 @@ const ProductList = () => {
   return (
     <Container>
       <div className="py-16">
-        <h2 className={`text-2xl font-semibold mx-4 my-8 ${jost.className}`}>TRENDING NOW</h2>
+        <h2 className={`text-2xl font-semibold mx-4 my-8 ${jost.className} uppercase`}>TRENDING NOW</h2>
         {loading ? (
           <Slider {...settings}>
             {Array(4) // Adjusting the number of skeletons to match slidesToShow
