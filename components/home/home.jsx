@@ -16,7 +16,7 @@ export default function HomePage() {
       <HomeBrand />
       <Rimmel />
       <HomeCategory />
-      {/* <Instagram/> */}
+      <Instagram/>
       <Trustpilot/>
     </>
   );
