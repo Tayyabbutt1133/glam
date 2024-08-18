@@ -25,7 +25,7 @@ export default function Navigation() {
   return (
     <>
       <div
-        className={`${jost.className} flex items-center h-[52px] font-normal lg:text-base xl:text-sm bg-white text-sm 2xl:text-lg`}
+        className={`${jost.className} hidden lg:flex items-center h-[52px] font-normal lg:text-base xl:text-sm bg-white text-sm 2xl:text-lg`}
       >
         <Container>
           <nav className="flex flex-row w-full justify-between items-center py-3">

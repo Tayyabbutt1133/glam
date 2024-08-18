@@ -85,7 +85,7 @@ export default function NewsBannerNav() {
   }
 
   return (
-    <div className={`${lexendDeca.className} w-full bg-[#F7EBE0]`}>
+    <div className={`hidden lg:flex ${lexendDeca.className} w-full bg-[#F7EBE0]`}>
       <Container>
         <div className="flex w-full justify-center items-center relative py-2">
           <p className="text-center text-base font-medium">

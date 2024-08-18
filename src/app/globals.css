@@ -197,10 +197,10 @@ ul.slick-dots.slick-thumb {
 
 @media (max-width: 1024px) {
   .angry-grid {
-    overflow-x: scroll;
     display: grid;
     grid-template-rows: 1fr 1fr;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    overflow: auto;
     min-width: 1024px; /* Set a minimum width to maintain the grid size */
   }
 
