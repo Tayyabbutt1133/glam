@@ -1,3 +1,3 @@
 export default function Container({ children }) {
-    return <div className="container w-[95%] mx-auto">{children}</div>;
+    return <div className="container w-[92%] mx-auto">{children}</div>;
 }
