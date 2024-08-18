@@ -13,6 +13,33 @@ import 'slick-carousel/slick/slick-theme.css';
 import './home-product.css'; // Custom CSS for styling
 import { jost, lexendDeca} from '../../ui/fonts';
 import Container from '../../container';
+import NextArrowIcon from '../../../public/hero-banners/next-arrow';
+import PrevArrowIcon from '../../../public/hero-banners/prev-arrow';
+
+
+const NextArrow = ({ className, style, onClick }) => {
+  return (
+    <div
+      className={`arrow ${className}`}
+      onClick={onClick}
+      style={{...style, right: "-3%", display: "block" }}
+    >
+      <NextArrowIcon shadow={false}/>
+    </div>
+  );
+};
+
+const PrevArrow = ({ className, style, onClick }) => {
+  return (
+    <div
+      className={`arrow ${className}`}
+      onClick={onClick}
+      style={{...style, left: "-5%", top: "50%", transform: "translateY(-50%)", zIndex: 1, display: "block" }}
+    >
+      <PrevArrowIcon />
+    </div>
+  );
+};
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -49,8 +76,8 @@ const ProductList = () => {
     autoplay: true,
     autoplaySpeed: 2000,
     arrows: true,
-    prevArrow: <IoIosArrowDropleft className="slick-prev" />,
-    nextArrow: <IoIosArrowDropright className="slick-next" />,
+    prevArrow: <PrevArrow />,
+    nextArrow: <NextArrow />,
     responsive: [
       {
         breakpoint: 1024,
