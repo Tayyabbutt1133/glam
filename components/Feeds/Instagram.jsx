@@ -1,4 +1,3 @@
-import Container from '../container';
 import React from "react";
 import Image from "next/image";
 import ig_one from "../../public/home_banners/feeds/IG_animation_one.svg";
