@@ -1,4 +1,4 @@
-export default function NextArrowIcon({ className, shadow = true }) {
+export default function NextArrowIcon({ className, shadow = false }) {
   return shadow ? (
     <svg
       width="64"
