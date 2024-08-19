@@ -28,7 +28,7 @@ const NextArrow = ({ className, style, onClick }) => {
       style={{
         ...style,
         ...arrowStyles,
-        right: "10px",  // Adjusted to match left arrow
+        right: "2px",  // Adjusted to match left arrow
         display: "block",
       }}
     >
