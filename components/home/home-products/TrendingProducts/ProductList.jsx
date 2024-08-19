@@ -31,7 +31,7 @@ const NextArrow = ({ className, style, onClick }) => {
       style={{
         ...style,
         ...arrowStyles,
-        right: "0px", // Adjust right position as needed
+        right: "-34px",
       }}
     >
       <NextArrowIcon />
@@ -48,7 +48,7 @@ const PrevArrow = ({ className, style, onClick }) => {
       style={{
         ...style,
         ...arrowStyles,
-        left: "", // Adjust left position as needed
+        left: "-50px", // Adjust left position as needed
       }}
     >
       <PrevArrowIcon />
@@ -170,7 +170,7 @@ const ProductList = () => {
             {products.map((product) => (
               <div key={product.id} className="px-2">
                 <div
-                  className="bg-white shadow-lg rounded-lg overflow-hidden relative flex flex-col h-full min-h-[420px] border border-gray-300 cursor-pointer"
+                  className="bg-white border border-gray-300  rounded-lg overflow-hidden relative flex flex-col h-full min-h-[420px] w-[100%] cursor-pointer"
                   onClick={() => handleProductClick(product.id)}
                 >
                   {product.on_sale && (
@@ -238,7 +238,7 @@ const ProductList = () => {
           </Slider>
         )}
       </div>
-    </Container>
+     </Container>
   );
 };
 
