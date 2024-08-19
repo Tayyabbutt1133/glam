@@ -9,10 +9,10 @@ import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { jost, lexendDeca } from '../../ui/fonts';
-import Container from '../../container';
-import NextArrowIcon from '../../../public/hero-banners/next-arrow';
-import PrevArrowIcon from '../../../public/hero-banners/prev-arrow';
+import { jost, lexendDeca } from '../../../ui/fonts';
+import Container from '../../../container';
+import NextArrowIcon from '../../../../public/hero-banners/next-arrow';
+import PrevArrowIcon from '../../../../public/hero-banners/prev-arrow';
 
 // Arrow styles
 const arrowStyles = {
