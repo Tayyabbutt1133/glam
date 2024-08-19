@@ -8,9 +8,10 @@ import brand_one from '../../../../public/home_banners/brand_one.svg';
 import brand_two from '../../../../public/home_banners/brand_two.svg';
 import brand_three from '../../../../public/home_banners/brand_three.svg';
 import brand_four from '../../../../public/home_banners/brand_four.svg';
-import brand_slide from '../../../../public/home_banners/brand_slide.svg';
-import Text from '../../../ui/Text';
+// import brand_slide from '../../../../public/home_banners/brand_slide.svg';
+// import Text from '../../../ui/Text';
 import { jost, lexendDeca } from '../../../ui/fonts';
+import BrandSlide from './BrandSlide';
 // import { jost } from '../../../ui/fonts';
 // import
 
@@ -32,7 +33,8 @@ const HomeBrand = () => {
     <Container>
       <div className="px-4 py-16 space-y-10">
         <h2 className={`text-2xl font-semibold ${jost.className}`}>SHOP BY BRAND</h2>
-        <Image src={brand_slide}/>
+        {/* <Image src={brand_slide}/> */}
+        <BrandSlide/>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {products.map((product) => (
             <div
