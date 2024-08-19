@@ -192,9 +192,14 @@ const ProductList = () => {
                     src={product.images[0]?.src}
                     alt={product.images[0]?.alt || product.name}
                   />
-                  <div className="px-4 pb-4 flex-grow">
-                    <h2 className={`text-gray-900 font-bold text-sm ${lexendDeca.className}`}>{product.name}</h2>
-                    <div className="flex items-center mb-2 mt-4">
+                  <div className="px-4 pb-4 flex-grow flex flex-col">
+                    <h2
+                      className={`text-gray-900 font-bold text-sm ${lexendDeca.className} h-[40px] overflow-hidden`}
+                      style={{ textOverflow: "ellipsis", whiteSpace: "nowrap" }}
+                    >
+                      {product.name}
+                    </h2>
+                    <div className="flex items-center mb-2 mt-4 h-[20px]">
                       {[...Array(5)].map((_, index) => (
                         <span key={index}>
                           {index < Math.round(product.average_rating) ? (
@@ -206,7 +211,7 @@ const ProductList = () => {
                       ))}
                       <span className="text-gray-600 text-sm ml-2">({product.rating_count})</span>
                     </div>
-                    <div className="flex items-center text-gray-600 text-sm mb-1">
+                    <div className="flex items-center text-gray-600 text-sm mb-1 h-[20px]">
                       {product.regular_price && (
                         <span className={`line-through mr-2 ${lexendDeca.className}`}>
                           RRP: £{product.regular_price}
@@ -221,12 +226,12 @@ const ProductList = () => {
                     <p className={`text-gray-900 font-bold text-lg mb-3 ${lexendDeca.className}`}>
                       £{parseFloat(product.price).toFixed(2)}
                     </p>
+                    <button
+                      className={`w-[70%] md:w-[60%] lg:w-[85%] bg-black text-white py-2 mx-auto mt-auto rounded-md hover:bg-gray-800 font-normal transition duration-200 flex justify-center ${jost.className} uppercase`}
+                    >
+                      ADD TO BAG
+                    </button>
                   </div>
-                  <button
-                    className={`w-[70%] md:w-[60%] lg:w-[85%] bg-black text-white py-2 mb-4 mx-auto rounded-md hover:bg-gray-800 font-normal transition duration-200 flex justify-center ${jost.className} uppercase`}
-                  >
-                    ADD TO BAG
-                  </button>
                 </div>
               </div>
             ))}
