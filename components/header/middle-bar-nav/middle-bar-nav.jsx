@@ -84,7 +84,7 @@ export default function MiddleBarNav() {
               </div>
 
               <div>
-                <div className="flex flex-row justify-center items-center gap-2">
+                <div className="flex flex-row justify-center items-center gap-2 cursor-pointer">
                   <CartIcon className={"w-7"} />
                   <span className="capitalize text-nowrap lg:text-base xl:text-lg">My Bag</span>
                 </div>
