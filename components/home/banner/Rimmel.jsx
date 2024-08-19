@@ -2,6 +2,8 @@ import React from "react";
 import Image from "next/image";
 import rimmle_banner from "/public/home_banners/olaplex_two.svg";
 import rimmle_logo from "/public/home_banners/Max-Factor-Logo-two.svg";
+import MobRimmel from "/public/home_banners/mob-rimmel.svg";
+
 import { jost } from "../../ui/fonts";
 import Button from "../../ui/button";
 import Text from "../../ui/Text";
@@ -9,6 +11,20 @@ import Text from "../../ui/Text";
 export default function Rimmel() {
   return (
     <>
+      {/* Mobile */}
+      <div className="flex w-full lg:hidden">
+        <div className="relative w-full h-[191px] max-h-[300px]">
+          {/* Background Image */}
+          <Image
+            src={MobRimmel}
+            alt="Background Image"
+            layout="fill"
+            objectFit="cover"
+            objectPosition="right" // Aligns the image to the right edge
+            className="absolute inset-0"
+          />
+        </div>
+      </div>
       <div className="hidden lg:flex items-center justify-between bg-white">
         {/* Left Section */}
         <div className="bg-[#EEDDD5] lg:w-[30%] lg:h-[450px] xl:h-[600px] 2xl:h-[693px] p-8 flex flex-col justify-center items-center">
