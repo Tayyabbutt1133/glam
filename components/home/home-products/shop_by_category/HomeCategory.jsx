@@ -13,6 +13,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import NextArrowIcon from "/public/hero-banners/next-arrow";
 import PrevArrowIcon from "/public/hero-banners/prev-arrow";
 
+// Arrow styles
 const arrowStyles = {
   width: "40px",
   height: "40px",
@@ -20,16 +21,16 @@ const arrowStyles = {
   transition: "all 0.3s ease-in-out", // Smooth transition
 };
 
+// Next Arrow component
 const NextArrow = ({ className, style, onClick }) => {
   return (
     <div
-      className={`arrow ${className}`}
+      className={`absolute top-1/2 transform -translate-y-1/2 right-4 ${className}`}
       onClick={onClick}
       style={{
         ...style,
         ...arrowStyles,
-        right: "0px",  // Adjusted to match left arrow
-        display: "block",
+        right: "-34px",
       }}
     >
       <NextArrowIcon />
@@ -37,16 +38,16 @@ const NextArrow = ({ className, style, onClick }) => {
   );
 };
 
+// Previous Arrow component
 const PrevArrow = ({ className, style, onClick }) => {
   return (
     <div
-      className={`arrow ${className}`}
+      className={`absolute top-1/2 transform -translate-y-1/2 left-4 ${className}`}
       onClick={onClick}
       style={{
         ...style,
         ...arrowStyles,
-        left: "",  // Adjusted to match right arrow
-        display: "block",
+        left: "-50px", // Adjust left position as needed
       }}
     >
       <PrevArrowIcon />
