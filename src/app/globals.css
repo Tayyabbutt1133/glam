@@ -115,10 +115,8 @@ ul.slick-dots.slick-thumb {
 
 .angry-grid {
   display: grid; 
-
   grid-template-rows: 1fr 1fr;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  
   gap: 0px;
   height: 100%;
   width: 100%;
@@ -128,71 +126,56 @@ ul.slick-dots.slick-thumb {
   height: 100%;
   object-fit: cover;
 }
- 
+
 #item-0 {
-
   grid-row-start: 1;
   grid-column-start: 1;
-
   grid-row-end: 2;
   grid-column-end: 2;
-  
 }
+
 #item-1 {
-
   grid-row-start: 1;
   grid-column-start: 2;
-
   grid-row-end: 2;
   grid-column-end: 3;
-  
 }
-#item-2 {
 
+#item-2 {
   grid-row-start: 2;
   grid-column-start: 1;
-
   grid-row-end: 3;
   grid-column-end: 2;
-  
 }
-#item-3 {
 
+#item-3 {
   grid-row-start: 2;
   grid-column-start: 2;
-
   grid-row-end: 3;
   grid-column-end: 3;
-  
 }
-#item-4 {
 
+#item-4 {
   height: 100%;
   object-fit: cover;
   grid-row-start: 1;
   grid-column-start: 3;
-
   grid-row-end: 3;
   grid-column-end: 5;
-  
 }
-#item-5 {
 
+#item-5 {
   grid-row-start: 1;
   grid-column-start: 5;
-
   grid-row-end: 2;
   grid-column-end: 6;
-  
 }
-#item-6 {
 
+#item-6 {
   grid-row-start: 2;
   grid-column-start: 5;
-
   grid-row-end: 3;
   grid-column-end: 6;
-  
 }
 
 @media (max-width: 1024px) {
@@ -200,8 +183,9 @@ ul.slick-dots.slick-thumb {
     display: grid;
     grid-template-rows: 1fr 1fr;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    overflow: auto;
-    min-width: 1024px; /* Set a minimum width to maintain the grid size */
+    min-width: 1024px; /* Ensures grid maintains width */
+    overflow-x: auto; /* Horizontal scrolling */
+    overflow-y: hidden; /* Prevent vertical scrolling */
   }
 
   /* Adjust item heights to maintain visibility on small screens */
@@ -213,5 +197,9 @@ ul.slick-dots.slick-thumb {
   #item-4 {
     height: 400px; /* Larger image */
     object-fit: cover;
+  }
+  .ig-container {
+    width: 100%;
+    overflow-x: auto; /* Ensure the parent container allows scrolling */
   }
 }
