@@ -5,7 +5,7 @@ import { lexendDeca, jost } from '../../ui/fonts';
 
 const AddressBook = () => {
   const [addresses, setAddresses] = useState([]);
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState(true); // Directly start in editing mode
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -82,20 +82,6 @@ const AddressBook = () => {
     if (updatedAddresses.length === 0) {
       setIsEditing(true);
     }
-  };
-
-  const handleAddNew = () => {
-    setIsEditing(true);
-    setFormData({
-      firstName: '',
-      lastName: '',
-      phone: '',
-      country: '',
-      addressLine1: '',
-      addressLine2: '',
-      city: '',
-      postalCode: ''
-    });
   };
 
   return (
@@ -245,42 +231,24 @@ const AddressBook = () => {
                     Set as Default Delivery Address
                   </span>
                 </div>
-                <div className="flex items-center space-x-2 mt-2">
-                  <input
-                    type="checkbox"
-                    className="form-checkbox h-4 w-4 text-black border-black"
-                    checked
-                    readOnly
-                  />
-                  <span className={`text-sm text-gray-700 ${jost.className}`}>
-                    Set as Default Billing Address
-                  </span>
-                </div>
-                <div className="flex justify-end space-x-4 mt-6">
+                <div className="flex space-x-4 mt-4">
                   <button
                     type="button"
                     onClick={() => handleEdit(index)}
-                    className={`text-sm text-gray-700 hover:underline ${jost.className}`}
+                    className={`text-black font-medium ${jost.className}`}
                   >
                     Edit
                   </button>
                   <button
                     type="button"
                     onClick={() => handleDelete(index)}
-                    className={`text-sm text-gray-700 hover:underline ${jost.className}`}
+                    className={`text-red-600 font-medium ${jost.className}`}
                   >
-                    Remove
+                    Delete
                   </button>
                 </div>
               </div>
             ))}
-            <button
-              type="button"
-              onClick={handleAddNew}
-              className={`bg-black mt-4 text-white font-medium py-2 px-4 rounded-md shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black ${jost.className}`}
-            >
-              Add New Address
-            </button>
           </div>
         </>
       )}
