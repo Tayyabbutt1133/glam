@@ -2,38 +2,52 @@ import React from "react";
 import Image from "next/image";
 import rimmle_banner from "/public/home_banners/olaplex_two.svg";
 import rimmle_logo from "/public/home_banners/Max-Factor-Logo-two.svg";
-import { jost } from "../../ui/fonts"; 
-
+import { jost } from "../../ui/fonts";
+import Button from "../../ui/button";
+import Text from "../../ui/Text";
 
 export default function Rimmel() {
   return (
     <>
-      <div name="parent" className="flex items-center justify-between bg-white">
+      <div className="hidden lg:flex items-center justify-between bg-white">
         {/* Left Section */}
-        <div className="bg-[#EEDDD5] w-[400px] h-[450px] p-8 flex flex-col justify-center">
+        <div className="bg-[#EEDDD5] lg:w-[30%] lg:h-[450px] xl:h-[600px] 2xl:h-[693px] p-8 flex flex-col justify-center items-center">
           <Image
-            width={200}
+            width={280}
             height={50}
-            className="mx-auto mb-4"
+            objectFit="contain"
             src={rimmle_logo}
             alt="Rimmel Logo"
+            className="-mt-14"
           />
-            <div className={`text-center space-y-2`}>
-            <h1 className={`uppercase font-semibold text-3xl ${jost.className}`}>Up To</h1>
-            <h1 className={`font-bold text-6xl ${jost.className}`}>50%</h1>
-            <h1 className="uppercase font-semibold text-3xl">Off</h1>
+          <div className="text-center space-y-2">
+            <Text
+              style={"h1"}
+              className="uppercase lg:font-bold lg:text-3xl 2xl:font-medium 2xl:text-5xl"
+            >
+              Up To
+            </Text>
+            <Text style={"h1"} className="lg:text-6xl 2xl:text-8xl">
+              50%
+            </Text>
+            <Text
+              style={"h1"}
+              className="uppercase lg:font-bold lg:text-3xl 2xl:font-medium 2xl:text-5xl"
+            >
+              Off
+            </Text>
           </div>
-          <button className={`uppercase bg-black text-white w-full md:w-44 h-12 rounded-md mt-8 mx-auto block ${jost.className}`}>
+          <Button className="mt-10 uppercase w-max mx-auto ${jost.className}">
             Shop Now
-          </button>
+          </Button>
         </div>
 
         {/* Right Section with Banner */}
         <div className="flex-1">
           <Image
-            className="object-cover w-full h-[450px]"
-            width={1000} // Adjusted width to fill the space
-            height={450} // Ensured it matches the height of the left section
+            className="object-cover w-full lg:h-[450px] xl:h-[600px] 2xl:h-[693px]"
+            width={1000}
+            height={450}
             src={rimmle_banner}
             alt="Rimmel Banner"
           />

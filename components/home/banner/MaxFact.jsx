@@ -10,36 +10,39 @@ import Button from "../../ui/button";
 export default function MaxFact() {
   return (
     <>
-      <div className="flex flex-row w-full justify-center">
-        <div className="flex items-end justify-center bg-gradient-to-b from-[rgba(177,98,120,0.20)] to-[rgba(255,0,0,0.20)] h-[693px] w-full">
-          <Image
-            width={1000}
-            height={671}
-            src={max_cosmetics}
-            alt="max cosmetics"
-            objectFit="contain"
-          />
+      <div className="hidden lg:flex flex-row w-full justify-center">
+        <div className="flex items-end justify-center bg-gradient-to-b from-[rgba(177,98,120,0.20)] to-[rgba(255,0,0,0.20)] xl:h-[600px] 2xl:h-[693px] w-full">
+          <Image src={max_cosmetics} alt="max cosmetics" objectFit="contain" />
         </div>
 
-        <div className="flex flex-col justify-center items-center bg-[#FFEEF0] max-w-[655px] w-full h-[693px] p-8">
+        {/* Right section */}
+        <div className="flex flex-col justify-center items-center bg-[#FFEEF0] w-[35%] xl:h-[600px] 2xl:h-[693px] p-8">
           <Image
             width={358}
             height={50}
             alt="max logo"
             src={max_logo}
-            className="-mt-20"
+            className="-mt-14"
           />
           <div className="text-center space-y-2">
-            <Text style={"h1"} className="uppercase font-medium text-5xl">Up To</Text>
-            <Text style={"h1"} className="text-8xl">50%</Text>
-            <Text style={"h1"} className="uppercase font-medium text-5xl">Off</Text>
+            <Text
+              style={"h1"}
+              className="uppercase lg:font-bold lg:text-3xl 2xl:font-medium 2xl:text-5xl"
+            >
+              Up To
+            </Text>
+            <Text style={"h1"} className="lg:text-6xl 2xl:text-8xl">
+              50%
+            </Text>
+            <Text
+              style={"h1"}
+              className="uppercase lg:font-bold lg:text-3xl 2xl:font-medium 2xl:text-5xl"
+            >
+              Off
+            </Text>
           </div>
 
-          <Button 
-            className="mt-10"
-          >
-            Shop Now
-          </Button>
+          <Button className="mt-10">Shop Now</Button>
         </div>
       </div>
     </>
