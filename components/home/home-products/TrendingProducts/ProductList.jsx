@@ -31,7 +31,7 @@ const NextArrow = ({ className, style, onClick }) => {
       style={{
         ...style,
         ...arrowStyles,
-        right: "10px", // Adjust right position as needed
+        right: "0px", // Adjust right position as needed
       }}
     >
       <NextArrowIcon />
