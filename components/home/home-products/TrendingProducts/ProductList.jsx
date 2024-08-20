@@ -150,7 +150,7 @@ const ProductList = () => {
                 <div key={index} className="px-2">
                   <div className="bg-white shadow-lg rounded-lg overflow-hidden relative flex flex-col h-full min-h-[420px] border border-gray-300">
                     {/* Skeleton Image Placeholder */}
-                    <div className="w-full h-48">
+                    <div className="w-[90%] 2xl:w-[100%] h-48">
                       <Skeleton height="100%" />
                     </div>
                     {/* Skeleton Text Placeholder */}
