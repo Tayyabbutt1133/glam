@@ -1,7 +1,6 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Lexend_Deca } from "next/font/google";
 
 import Container from "./container";
 
@@ -17,13 +16,13 @@ import master from "../public/card-logos/master.svg"
 import maestro from "../public/card-logos/maestro.svg"
 import ae from "../public/card-logos/american-express.svg"
 import paypal from "../public/card-logos/paypal.svg"
+import { lexendDeca, jost} from "./ui/fonts";
 
-const ld = Lexend_Deca({subsets: ["latin"]});
 
 export default function Footer() {
   return (
     <Container>
-      <footer className={ld.className}>
+      <footer className="">
 
 
         <div className="mx-auto w-full ">
@@ -39,7 +38,7 @@ export default function Footer() {
                 <Image src={logo} />
                 <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"></span>
               </a>
-              <p className=" text-sm  text-[#7E7E7E] w-60">Lorem ipsum dolor sit amet consectetur Sit egestas facilisi porttitor leo dolor sit amet.</p>
+              <p className={`text-sm 2xl:text-[16px]  text-[#7E7E7E] w-60 ${lexendDeca.className} font-normal`}>Lorem ipsum dolor sit amet consectetur Sit egestas facilisi porttitor leo dolor sit amet.</p>
               <div name="socials" className=" flex gap-4">
                 <Image src={fb} />
                 <Image src={Insta} />
@@ -55,10 +54,10 @@ export default function Footer() {
             {/* Nav links */}
             <div className="grid grid-cols-1 space-y-10 sm:grid-cols-4 sm:space-y-0 ml-16">
               <div className="">
-                <h2 className="mb-4 text-sm font-semibold text-gray-900 uppercase ">
-                  Glam Beauty
+                <h2 className={`mb-4 text-sm 2xl:font-[20px] capitalize font-semibold text-black ${jost.className}`}>
+                  GlamBeauty
                 </h2>
-                <ul className="text-[#7E7E7E]  text-sm space-y-3">
+                <ul className={`text-[#8B929D]  text-sm 2xl:text-[16px] space-y-3 ${lexendDeca.className} font-normal`}>
                   <li className="">
                     <a href="#" className="hover:underline">
                       About us
@@ -78,10 +77,10 @@ export default function Footer() {
               </div>
               {/* Row 2 */}
               <div>
-                <h2 className="mb-4 text-sm font-semibold text-gray-900 uppercase">
-                  Help & Information
+              <h2 className={`mb-4 text-sm 2xl:font-[20px] capitalize font-semibold text-black ${jost.className}`}>
+              Help & Information
                 </h2>
-                <ul className="text-[#7E7E7E] text-sm space-y-3">
+                <ul className={`text-[#8B929D]  text-sm 2xl:text-[16px] space-y-3 ${lexendDeca.className} font-normal`}>
                   <li className="">
                     <a href="#" className="hover:underline">
                       Delivery Information
@@ -111,10 +110,10 @@ export default function Footer() {
               </div>
               {/* Row 3 */}
               <div>
-                <h2 className="mb-4 text-sm font-semibold text-gray-900 uppercase">
-                  Legal
+              <h2 className={`mb-4 text-sm 2xl:font-[20px] capitalize font-semibold text-black ${jost.className}`}>
+              Legal
                 </h2>
-                <ul className="text-[#7E7E7E] text-sm space-y-3">
+                <ul className={`text-[#8B929D]  text-sm 2xl:text-[16px] space-y-3 ${lexendDeca.className} font-normal`}>
                   <li className="">
                     <a href="#" className="hover:underline">
                       Terms &amp; Conditions
@@ -134,10 +133,10 @@ export default function Footer() {
               </div>
               {/* Row 4 */}
               <div>
-                <h2 className="mb-4 text-sm font-semibold text-gray-900 uppercase">
-                  Download App
+              <h2 className={`mb-4 text-sm 2xl:font-[20px] capitalize font-semibold text-black ${jost.className}`}>
+              Download App
                 </h2>
-                <p className="text-[#7E7E7E] text-sm mb-4">
+                <p className={`text-[#8B929D]  text-sm 2xl:text-[16px] space-y-3 ${lexendDeca.className} font-normal mb-4`}>
                   Download the App and get an extra 10% off your first order...!
                 </p>
                 <div className="flex sm:flex-col xl:flex-row gap-6">
@@ -151,7 +150,7 @@ export default function Footer() {
           <hr className=" border-gray-200 sm:mx-auto dark:border-gray-700" />
 
           <div className="sm:flex sm:items-center sm:justify-between my-4">
-            <span className="text-sm text-[#7E7E7E] sm:text-center">
+            <span className="text-sm 2xl:text-[16px] text-[#8B929D] font-normal sm:text-center">
               GLAMBEAUTY © 2024. All Rights Reserved.
             </span>
             <div className="flex justify-between items-center gap-3">

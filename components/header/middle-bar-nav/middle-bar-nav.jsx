@@ -8,9 +8,10 @@ import SearchBarWithDropdown from "./searchbar";
 import Container from "../../container";
 import Image from "next/image";
 import { useState, useRef } from 'react';
-import { Jost } from "next/font/google";
+// import { Jost } from "next/font/google";
+import { jost } from "../../ui/fonts";
 
-const jost = Jost({subsets: ['latin']});
+// const jost = Jost({subsets: ['latin']});
 
 export default function MiddleBarNav() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -60,9 +61,9 @@ export default function MiddleBarNav() {
                   onMouseLeave={handleMouseLeaveAccount}
                 >
                   <Link href="/signup">
-                    <div className="flex flex-row justify-center items-center gap-2">
+                    <div className="flex flex-row justify-center items-center gap-3 ">
                       <UserIcon className={"w-4"} />
-                      <span className="capitalize text-nowrap lg:text-base xl:text-lg">my account</span>
+                      <span className={`capitalize text-nowrap font-normal lg:text-base xl:text-lg ${jost.className}`}>my account</span>
                     </div>
                   </Link>
                 </div>
@@ -84,9 +85,9 @@ export default function MiddleBarNav() {
               </div>
 
               <div>
-                <div className="flex flex-row justify-center items-center gap-2 cursor-pointer">
+                <div className="flex flex-row justify-center items-center gap-3 cursor-pointer">
                   <CartIcon className={"w-7"} />
-                  <span className="capitalize text-nowrap lg:text-base xl:text-lg">My Bag</span>
+                  <span className={`capitalize text-nowrap lg:text-base font-normal xl:text-lg ${jost.className}`}>My Bag</span>
                 </div>
               </div>
             </section>

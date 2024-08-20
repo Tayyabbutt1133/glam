@@ -1,5 +1,6 @@
 import React from "react";
 import Container from "./container";
+import { jost } from "./ui/fonts";
 
 export default function Newsletter() {
   return (
@@ -10,7 +11,7 @@ export default function Newsletter() {
 
             <div className="sm:text-center flex flex-col sm:flex-row space-y-6 sm:space-y-0 sm:gap-16">
               <div className="flex items-center">
-                <h2 className="text-3xl tracking-tight font-normal text-gray-900 sm:text-2xl">
+                <h2 className={`text-[24px] ${jost.className} capitalize font-medium text-black sm:text-2xl`}>
                   <span className="text-[#CF8562]">SIGN UP</span> TO RECEIVE
                   OFFERS AND UPDATES
                 </h2>
@@ -22,13 +23,13 @@ export default function Newsletter() {
                   <div className="relative w-full">
                     <label
                       htmlFor="email"
-                      className="hidden mb-2 text-sm font-medium text-gray-900"
+                      className={`hidden mb-2 text-sm 2xl:text-[20px] font-normal text-black ${jost.className}`}
                     >
                       Email address
                     </label>
                     
                     <input
-                      className="block box-border p-3 pl-4 bg-transparent w-full sm:min-w-80 text-sm text-black rounded-lg outline outline-1 outline-black  focus:ring-primary-500 focus:border-primary-500 placeholder:text-gray-500"
+                      className={`block box-border p-3 pl-4 bg-transparent w-full sm:min-w-80 text-sm text-black rounded-lg outline outline-1 outline-black  focus:ring-primary-500 focus:border-primary-500 placeholder:text-black ${jost.className} 2xl:text-[20px]`}
                       placeholder="Enter your email"
                       type="email"
                       id="email"
@@ -39,7 +40,7 @@ export default function Newsletter() {
                   <div>
                     <button
                       type="submit"
-                      className="box-border py-3 px-8 w-full text-sm font-medium text-center text-white rounded-lg border cursor-pointer bg-primary-700 border-primary-600 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 bg-black"
+                      className={`box-border h-[54px] w-[194px]   text-sm 2xl:text-[20px] font-medium text-center text-white rounded-lg border cursor-pointer bg-primary-700 border-primary-600 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 bg-black ${jost.className}`}
                     >
                       Subscribe
                     </button>

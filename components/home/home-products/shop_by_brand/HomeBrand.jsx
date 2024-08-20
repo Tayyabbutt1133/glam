@@ -8,12 +8,9 @@ import brand_one from '../../../../public/home_banners/brand_one.svg';
 import brand_two from '../../../../public/home_banners/brand_two.svg';
 import brand_three from '../../../../public/home_banners/brand_three.svg';
 import brand_four from '../../../../public/home_banners/brand_four.svg';
-// import brand_slide from '../../../../public/home_banners/brand_slide.svg';
-// import Text from '../../../ui/Text';
 import { jost, lexendDeca } from '../../../ui/fonts';
 import BrandSlide from './BrandSlide';
-// import { jost } from '../../../ui/fonts';
-// import
+
 
 const HomeBrand = () => {
   const router = useRouter();
@@ -40,11 +37,11 @@ const HomeBrand = () => {
             <div
               key={product.id}
               onClick={() => handleProductClick(product.id)}
-              className="cursor-pointer bg-transparent rounded-lg overflow-hidden transition-shadow duration-300"
+              className="cursor-pointer bg-transparent overflow-hidden transition-shadow duration-300"
             >
               {/* Product Image */}
-              <div className="relative w-full h-64">
-                <Image src={product.image} alt={product.name} layout="fill" objectFit="cover" />
+              <div className="relative w-full h-72 2xl:h-[390px]">
+                <Image className='rounded-md 2xl:rounded-lg' src={product.image} alt={product.name} layout="fill" objectFit="cover" />
               </div>
 
               {/* Product Info */}

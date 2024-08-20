@@ -26,7 +26,7 @@ const arrowStyles = {
 const NextArrow = ({ className, style, onClick }) => {
   return (
     <div
-      className={`absolute top-1/2 transform -translate-y-1/2 right-4 ${className}`}
+      className={`absolute top-1/2 transform -translate-y-1/2 right-4 2xl:mr-8 ${className}`}
       onClick={onClick}
       style={{
         ...style,
@@ -148,7 +148,7 @@ const ProductList = () => {
               .fill(0)
               .map((_, index) => (
                 <div key={index} className="px-2">
-                  <div className="bg-white shadow-lg rounded-lg overflow-hidden relative flex flex-col h-full min-h-[420px] border border-gray-300">
+                  <div className="bg-white shadow-lg rounded-lg overflow-hidden relative flex flex-col h-full min-h-[420px]  border border-gray-300">
                     {/* Skeleton Image Placeholder */}
                     <div className="w-[90%] 2xl:w-[100%] h-48">
                       <Skeleton height="100%" />
@@ -170,7 +170,7 @@ const ProductList = () => {
             {products.map((product) => (
               <div key={product.id} className="px-2 mx-4 2xl:mx-0">
                 <div
-                  className="bg-white border border-gray-300 rounded-lg overflow-hidden relative flex flex-col h-full min-h-[430px] w-[90%] 2xl:w-[100%]  cursor-pointer"
+                  className="bg-white border border-gray-300 rounded-lg overflow-hidden relative flex flex-col h-full min-h-[430px] w-[90%]   cursor-pointer"
                   onClick={() => handleProductClick(product.id)}
                 >
                   {product.on_sale && (
@@ -203,9 +203,9 @@ const ProductList = () => {
                       {[...Array(5)].map((_, index) => (
                         <span key={index}>
                           {index < Math.round(product.average_rating) ? (
-                            <FaStar className="text-yellow-500 w-4 h-4" />
+                            <FaStar className="text-[#7E7E7E] w-4 h-4" />
                           ) : (
-                            <FaRegStar className="text-yellow-500 w-4 h-4" />
+                            <FaRegStar className="text-[#7E7E7E] w-4 h-4" />
                           )}
                         </span>
                       ))}
@@ -218,7 +218,7 @@ const ProductList = () => {
                         </span>
                       )}
                       {product.regular_price && product.price && (
-                        <span className={`text-green-500 ${lexendDeca.className}`}>
+                        <span className={`text-black ${lexendDeca.className}`}>
                           Save £{(product.regular_price - product.price).toFixed(2)}
                         </span>
                       )}

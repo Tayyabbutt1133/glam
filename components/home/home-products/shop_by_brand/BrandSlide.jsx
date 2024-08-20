@@ -53,48 +53,48 @@ export default function BrandSlide() {
     <div className="my-8">
       <Slider {...settings}>
         {/* Wrap each Image with Link to make it clickable */}
-        <div className="px-4"> {/* Add horizontal padding between slides */}
-          <Link href="/brand1-page"> {/* Update the href for routing */}
+        <div className="mx-10"> {/* Balanced gap between slides */}
+          <Link href="/brand1-page">
             <Image
               src={brand1}
               alt="Brand 1"
-              className="h-12 w-auto hover:brightness-75 transition duration-300 cursor-pointer"
+              className="h-8 md:h-10 w-auto hover:brightness-75 transition duration-300 cursor-pointer"
             />
           </Link>
         </div>
-        <div className="px-4">
+        <div className="mx-8">
           <Link href="/brand2-page">
             <Image
               src={brand2}
               alt="Brand 2"
-              className="h-12 w-auto hover:brightness-75 transition duration-300 cursor-pointer"
+              className="h-8 md:h-10 w-auto hover:brightness-75 transition duration-300 cursor-pointer"
             />
           </Link>
         </div>
-        <div className="px-4">
+        <div className="">
           <Link href="/brand3-page">
             <Image
               src={brand3}
               alt="Brand 3"
-              className="h-12 w-auto hover:brightness-75 transition duration-300 cursor-pointer"
+              className="h-8 md:h-10 w-auto hover:brightness-75 transition duration-300 cursor-pointer"
             />
           </Link>
         </div>
-        <div className="px-4">
+        <div className="mx-8">
           <Link href="/brand4-page">
             <Image
               src={brand4}
               alt="Brand 4"
-              className="h-12 w-auto hover:brightness-75 transition duration-300 cursor-pointer"
+              className="h-8 md:h-10 w-auto hover:brightness-75 transition duration-300 cursor-pointer"
             />
           </Link>
         </div>
-        <div className="px-4">
+        <div className="">
           <Link href="/brand5-page">
             <Image
               src={brand5}
               alt="Brand 5"
-              className="h-12 w-auto hover:brightness-75 transition duration-300 cursor-pointer"
+              className="h-8 xl:h-10 w-auto hover:brightness-75 transition duration-300 cursor-pointer"
             />
           </Link>
         </div>
