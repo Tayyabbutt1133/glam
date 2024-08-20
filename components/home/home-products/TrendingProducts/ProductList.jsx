@@ -168,9 +168,9 @@ const ProductList = () => {
         ) : (
           <Slider {...settings}>
             {products.map((product) => (
-              <div key={product.id} className="px-2">
+              <div key={product.id} className="px-2 mx-4 2xl:mx-0">
                 <div
-                  className="bg-white border border-gray-300  rounded-lg overflow-hidden relative flex flex-col h-full min-h-[420px] w-[100%] cursor-pointer"
+                  className="bg-white border border-gray-300 rounded-lg overflow-hidden relative flex flex-col h-full min-h-[430px] w-[90%] 2xl:w-[100%]  cursor-pointer"
                   onClick={() => handleProductClick(product.id)}
                 >
                   {product.on_sale && (

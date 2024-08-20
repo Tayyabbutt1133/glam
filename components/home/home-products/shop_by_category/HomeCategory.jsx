@@ -105,16 +105,16 @@ export default function HomeCategory() {
         <div className="py-16 relative">
           <h1 className={`text-2xl font-semibold mb-8 text-left ${jost.className} uppercase`}>Shop by Category</h1>
           <Slider {...settings}>
-            <div className="px-2 lg:w-44 xl:w-56">
+            <div className="px-2 lg:w-44 xl:w-56 2xl:w-[100%]">
               <Image src={cat_one} alt="Makeup" className="rounded-lg object-cover cursor-pointer w-full" />
             </div>
-            <div className="px-2 lg:w-44 xl:w-full">
+            <div className="px-2 lg:w-44 xl:w-56 2xl:w-[100%]">
               <Image src={cat_two} alt="Lips" className="rounded-lg object-cover cursor-pointer w-full" />
             </div>
-            <div className="px-2 lg:w-44 xl:w-full">
+            <div className="px-2 lg:w-44 xl:w-56 2xl:w-[100%]">
               <Image src={cat_three} alt="Hair" className="rounded-lg object-cover cursor-pointer w-full" />
             </div>
-            <div className="px-2 lg:w-44 xl:w-full">
+            <div className="px-2 lg:w-44 xl:w-56 2xl:w-[100%]">
               <Image src={cat_four} alt="Fragrance" className="rounded-lg object-cover cursor-pointer w-full" />
             </div>
           </Slider>
