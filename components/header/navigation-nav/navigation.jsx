@@ -7,19 +7,20 @@ import Container from "../../container";
 const jost = Jost({ subsets: ["latin"] });
 
 let links = [
-  "Sale",
-  "New In",
-  "Brands",
-  "Makeup",
-  "Skincare",
-  "Hair",
-  "Nails",
-  "Fragrance",
-  "Bath & Body",
-  "Home",
-  "Wellness",
-  "Electrics",
+  { name: "Sale", link: "/sale" },
+  { name: "New In", link: "/new-in" },
+  { name: "Brands", link: "/brands" },
+  { name: "Makeup", link: "/makeup" },
+  { name: "Skincare", link: "/skincare" },
+  { name: "Hair", link: "/hair" },
+  { name: "Nails", link: "/nails" },
+  { name: "Fragrance", link: "/fragrance" },
+  { name: "Bath & Body", link: "/bath-&-body" },
+  { name: "Home", link: "/home" },
+  { name: "Wellness", link: "/wellness" },
+  { name: "Electrics", link: "/electrics" },
 ];
+
 
 export default function Navigation() {
   return (
@@ -35,7 +36,7 @@ export default function Navigation() {
                   index === 0 ? "text-sale" : ""
                 }`}
                 key={index}
-                href={"#"}
+                href={link.link}
                 style={{
                   boxShadow: "inset 0 -2px 0 0 transparent",
                   transition: "box-shadow 0.3s ease",
@@ -44,7 +45,7 @@ export default function Navigation() {
                 onMouseEnter={(e) => e.currentTarget.style.boxShadow = 'inset 0px -2px 0px var(--color-hover)'}
                 onMouseLeave={(e) => e.currentTarget.style.boxShadow = 'inset 0 -2px 0 transparent'}
               >
-                <div>{link}</div>
+                <div>{link.name}</div>
               </Link>
             ))}
           </nav>
