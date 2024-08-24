@@ -7,18 +7,18 @@ import Container from "../../container";
 const jost = Jost({ subsets: ["latin"] });
 
 let links = [
-  { name: "Sale", link: "/sale" },
-  { name: "New In", link: "/new-in" },
-  { name: "Brands", link: "/brands" },
-  { name: "Makeup", link: "/makeup" },
-  { name: "Skincare", link: "/skincare" },
-  { name: "Hair", link: "/hair" },
-  { name: "Nails", link: "/nails" },
-  { name: "Fragrance", link: "/fragrance" },
-  { name: "Bath & Body", link: "/bath-&-body" },
-  { name: "Home", link: "/home" },
-  { name: "Wellness", link: "/wellness" },
-  { name: "Electrics", link: "/electrics" },
+  { name: "Sale", link: "/product-categories/sale" },
+  { name: "New In", link: "/product-categories/new-in" },
+  { name: "Brands", link: "/product-categories/brands" },
+  { name: "Makeup", link: "/product-categories/makeup" },
+  { name: "Skincare", link: "/product-categories/skincare" },
+  { name: "Hair", link: "/product-categories/hair" },
+  { name: "Nails", link: "/product-categories/nails" },
+  { name: "Fragrance", link: "/product-categories/fragrance" },
+  { name: "Bath & Body", link: "/product-categories/bath-&-body" },
+  { name: "Home", link: "/product-categories/homes" },
+  { name: "Wellness", link: "/product-categories/wellness" },
+  { name: "Electrics", link: "/product-categories/electrics" },
 ];
 
 
