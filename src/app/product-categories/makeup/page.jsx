@@ -1,14 +1,15 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import Container from '../../../../components/container';
-import Menucategory from '../../../../components/lifecycle/category/MenucategoryLandingPage';
-import Bestseller from '../../../../components/lifecycle/category/categoriescomponents/Bestseller';
-import bannerimg from '../../../../public/product_category_landing/olaplex 1.svg';
-import Staffpicks from '../../../../components/lifecycle/category/categoriescomponents/Staffpicks';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Container from "../../../../components/container";
+import Menucategory from "../../../../components/lifecycle/category/MenucategoryLandingPage";
+import bannerimg from "../../../../public/product_category_landing/olaplex 1.svg";
+import SliderComponent from "../../../../components/lifecycle/mutual-components/slider";
 
-export default function Page() {
+import Olaplex from "/public/lifecycle/Olaplex 1.png";
+
+const Compo = () => {
   const [mainCategory, setMainCategory] = useState(null);
   const [subCategories, setSubCategories] = useState([]);
   const [hotSellingProducts, setHotSellingProducts] = useState([]);
@@ -19,29 +20,29 @@ export default function Page() {
       try {
         const skincareCategoryId = 147;
 
-        // Fetch main category
         const mainCategoryResponse = await axios.get(
-          `https://glam.clickable.site/wp-json/wc/v3/products/categories/${skincareCategoryId}`, 
+          `https://glam.clickable.site/wp-json/wc/v3/products/categories/${skincareCategoryId}`,
           {
             params: {
               consumer_key: "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d",
               consumer_secret: "cs_3f70ee2600a3ac17a5692d7ac9c358d47275d6fc",
             },
-          }
+          },
         );
+
         setMainCategory(mainCategoryResponse.data);
 
-        // Fetch subcategories
         const subCategoryResponse = await axios.get(
-          'https://glam.clickable.site/wp-json/wc/v3/products/categories/',
+          "https://glam.clickable.site/wp-json/wc/v3/products/categories/",
           {
             params: {
               consumer_key: "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d",
               consumer_secret: "cs_3f70ee2600a3ac17a5692d7ac9c358d47275d6fc",
               parent: skincareCategoryId,
             },
-          }
+          },
         );
+
         setSubCategories(subCategoryResponse.data);
 
         // Fetch hot-selling products
@@ -75,29 +76,45 @@ export default function Page() {
         );
         setStaffPicks(staffPicksResponse.data);
       } catch (error) {
-        console.error('Error fetching categories and products:', error);
+        console.error("Error fetching categories:", error);
+        setLoading(false);
       }
     };
-
-    fetchCategoriesAndProducts();
+    
+    fetchCategories();
+    
+    return () => {setLoading(true)}
   }, []);
 
   const bannerData = {
     title: mainCategory?.name || "Default Title",
-    description: "Receive a free gift when you spend £30 on " + (mainCategory?.name || "products"),
+    description:
+      "Receive a free gift when you spend £30 on " +
+      (mainCategory?.name || "products"),
     buttonText: "Shop Now",
     image: bannerimg.src,
   };
 
   return (
-    <Container>
-      {mainCategory && subCategories.length > 0 && hotSellingProducts.length > 0 && (
-        <div className="">
-          <Menucategory mainCategory={mainCategory} subCategories={subCategories} />
-          <Bestseller hotSellingProducts={hotSellingProducts} />
-          <Staffpicks staffPicks={staffPicks} />
-        </div>
-      )}
-    </Container>
+    <Menucategory mainCategory={mainCategory} subCategories={subCategories} />
+  );
+};
+
+
+
+export default function Page() {
+  const bannerObject = [
+    {
+      src: Olaplex,
+      title: "DISCOVER MAC STUDIO RADIANCE",
+      description: "Discover MAC Beauty’s latest Radiance Foundation Range",
+    },
+  ];
+
+  return (
+    <>
+      <Compo />
+      <SliderComponent bannerObject={bannerObject} />
+    </>
   );
 }
