@@ -1,72 +1,113 @@
 "use client";
+
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Container from '../../../../components/container';
 import Menucategory from '../../../../components/lifecycle/category/MenucategoryLandingPage';
+import Bestseller from '../../../../components/lifecycle/category/categoriescomponents/Bestseller';
+import bannerimg from '../../../../public/product_category_landing/olaplex 1.svg';
+import Staffpicks from '../../../../components/lifecycle/category/categoriescomponents/Staffpicks';
 
 export default function Page() {
   const [mainCategory, setMainCategory] = useState(null);
   const [subCategories, setSubCategories] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [hotSellingProducts, setHotSellingProducts] = useState([]);
+  const [staffPicks, setStaffPicks] = useState([]); // New state for Staff Picks
 
   useEffect(() => {
-    const fetchCategories = async () => {
+    const fetchCategoriesAndProducts = async () => {
       try {
-        // Define the category ID for hair
         const skincareCategoryId = 484;
-        
-        // Fetch the main category (skincare) directly using its ID
-        const mainCategoryResponse = await axios.get(`https://glam.clickable.site/wp-json/wc/v3/products/categories/${skincareCategoryId}`, {
-          params: {
-            consumer_key: "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d",
-            consumer_secret: "cs_3f70ee2600a3ac17a5692d7ac9c358d47275d6fc",
-          },
-        });
 
-        let mainCategoryData = mainCategoryResponse.data;
+        // Fetch main category
+        const mainCategoryResponse = await axios.get(
+          `https://glam.clickable.site/wp-json/wc/v3/products/categories/${skincareCategoryId}`, 
+          {
+            params: {
+              consumer_key: "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d",
+              consumer_secret: "cs_3f70ee2600a3ac17a5692d7ac9c358d47275d6fc",
+            },
+          }
+        );
 
-        // Check and replace &amp; with &
-        if (mainCategoryData.name.includes("&amp;")) {
-          mainCategoryData.name = mainCategoryData.name.replace(/&amp;/g, '&');
-        }
-
+        // Replace &amp; with & in the main category name
+        const mainCategoryData = mainCategoryResponse.data;
+        mainCategoryData.name = mainCategoryData.name.replace(/&amp;/g, '&');
         setMainCategory(mainCategoryData);
 
-        // Fetch subcategories based on the main category ID
-        const subCategoryResponse = await axios.get('https://glam.clickable.site/wp-json/wc/v3/products/categories/', {
-          params: {
-            consumer_key: "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d",
-            consumer_secret: "cs_3f70ee2600a3ac17a5692d7ac9c358d47275d6fc",
-            parent: skincareCategoryId,
-          },
-        });
-
-        let subCategoryData = subCategoryResponse.data.map(subCat => {
-          // Check and replace &amp; with &
-          if (subCat.name.includes("&amp;")) {
-            subCat.name = subCat.name.replace(/&amp;/g, '&');
+        // Fetch subcategories
+        const subCategoryResponse = await axios.get(
+          'https://glam.clickable.site/wp-json/wc/v3/products/categories/',
+          {
+            params: {
+              consumer_key: "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d",
+              consumer_secret: "cs_3f70ee2600a3ac17a5692d7ac9c358d47275d6fc",
+              parent: skincareCategoryId,
+            },
           }
-          return subCat;
-        });
+        );
 
+        // Replace &amp; with & in each subcategory name
+        const subCategoryData = subCategoryResponse.data.map(subCat => ({
+          ...subCat,
+          name: subCat.name.replace(/&amp;/g, '&')
+        }));
         setSubCategories(subCategoryData);
-        setLoading(false);
+
+        // Fetch hot-selling products
+        const hotSellingResponse = await axios.get(
+          'https://glam.clickable.site/wp-json/wc/v3/products',
+          {
+            params: {
+              consumer_key: "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d",
+              consumer_secret: "cs_3f70ee2600a3ac17a5692d7ac9c358d47275d6fc",
+              category: skincareCategoryId,
+              orderby: 'popularity',  // Assuming 'popularity' or similar can be used to get hot-selling products
+              per_page: 10, // Number of products to fetch
+            },
+          }
+        );
+        setHotSellingProducts(hotSellingResponse.data);
+
+        // Fetch most expensive products for Staff Picks
+        const staffPicksResponse = await axios.get(
+          'https://glam.clickable.site/wp-json/wc/v3/products',
+          {
+            params: {
+              consumer_key: "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d",
+              consumer_secret: "cs_3f70ee2600a3ac17a5692d7ac9c358d47275d6fc",
+              category: skincareCategoryId,
+              orderby: 'price',  // Sorting by price to get the most expensive products
+              order: 'desc',  // Descending order
+              per_page: 10, // Number of products to fetch
+            },
+          }
+        );
+        setStaffPicks(staffPicksResponse.data);
       } catch (error) {
-        console.error('Error fetching categories:', error);
-        setLoading(false);
+        console.error('Error fetching categories and products:', error);
       }
     };
 
-    fetchCategories();
+    fetchCategoriesAndProducts();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
+  const bannerData = {
+    title: mainCategory?.name || "Default Title",
+    description: "Receive a free gift when you spend £30 on " + (mainCategory?.name || "products"),
+    buttonText: "Shop Now",
+    image: bannerimg.src,
+  };
 
   return (
     <Container>
-    <div className="p-28">
-      <Menucategory mainCategory={mainCategory} subCategories={subCategories} />
-    </div>
-  </Container>
+      {mainCategory && subCategories.length > 0 && hotSellingProducts.length > 0 && (
+        <div className="">
+          <Menucategory mainCategory={mainCategory} subCategories={subCategories} />
+          <Bestseller hotSellingProducts={hotSellingProducts} />
+          <Staffpicks staffPicks={staffPicks} />
+        </div>
+      )}
+    </Container>
   );
 }
