@@ -21,7 +21,7 @@ export default function Page() {
           `https://glam.clickable.site/wp-json/wc/v3/products?consumer_key=ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d&consumer_secret=cs_3f70ee2600a3ac17a5692d7ac9c358d47275d6fc`,
           {
             params: {
-              per_page: 10, // Number of products to fetch per page
+              per_page: 12, // Number of products to fetch per page
               page: currentPage, // Current page number
               brand: brandFilter, // Apply brand filter
               category: categoryFilter, // Apply category filter
@@ -62,7 +62,7 @@ export default function Page() {
     <Container>
       <div className="flex flex-col lg:flex-row gap-4 mb-32 mt-32">
         {/* Sidebar for Filters */}
-        <div className="w-full lg:w-1/4 p-4 border rounded">
+        <div className="w-full lg:w-1/4 p-4 rounded">
           <h3 className="text-lg font-bold mb-4">Filters</h3>
           <div className="mb-4">
             <h4 className="font-semibold">Brand</h4>
