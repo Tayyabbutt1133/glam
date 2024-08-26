@@ -7,8 +7,8 @@ import Container from "../../container";
 const jost = Jost({ subsets: ["latin"] });
 
 let links = [
-  { name: "Sale", link: "/product-categories/sale" },
-  { name: "New In", link: "/product-categories/new-in" },
+  { name: "Sale", link: "/sale" },
+  { name: "New In", link: "/new-in" },
   { name: "Brands", link: "/product-categories/brands" },
   { name: "Makeup", link: "/product-categories/makeup" },
   { name: "Skincare", link: "/product-categories/skincare" },
