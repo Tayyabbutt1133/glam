@@ -49,7 +49,9 @@ const PrevArrow = ({ className, style, onClick }) => (
 
 // Utility function to decode HTML entities
 const decodeHtmlEntities = (text) => {
-  return text.replace(/&amp;/g, '&');
+  const textarea = document.createElement("textarea");
+  textarea.innerHTML = text;
+  return textarea.value;
 };
 
 const Staffpicks = ({ staffPicks = [] }) => {

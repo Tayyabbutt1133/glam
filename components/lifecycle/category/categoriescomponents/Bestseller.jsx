@@ -106,7 +106,6 @@ const Bestseller = ({ hotSellingProducts = [] }) => {
   };
 
   const sanitizeText = (text) => {
-    // Replace &amp; with &
     return text.replace(/&amp;/g, '&');
   };
 
@@ -159,7 +158,7 @@ const Bestseller = ({ hotSellingProducts = [] }) => {
                 <img
                   className="w-full h-48 object-contain p-4"
                   src={product.images[0]?.src}
-                  alt={product.images[0]?.alt || product.name}
+                  alt={sanitizeText(product.images[0]?.alt || product.name)}
                 />
                 <div className="px-4 pb-4 flex-grow flex flex-col">
                   <h2
