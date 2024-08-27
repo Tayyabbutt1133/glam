@@ -9,7 +9,7 @@ const MenucategoryLandingPage = ({ mainCategory, subCategories }) => {
   };
 
   return (
-    <div>
+    <div className='my-14'>
       {/* Display main category name */}
       <h1 className="text-2xl font-bold text-center mt-10">
         {sanitizeText(mainCategory?.name)}
