@@ -43,7 +43,7 @@ const MenucategoryLandingPage = ({ mainCategory, subCategories }) => {
                   <Image 
                     src={logos[index]} 
                     alt={sanitizeText(subCat.name)} 
-                    className="object-cover w-full h-full"
+                    className="object-cover w-full h-full cursor-pointer"
                   />
                 </div>
                 <p className="mt-2 text-sm font-medium">{sanitizeText(subCat.name)}</p>
