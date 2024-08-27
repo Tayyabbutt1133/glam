@@ -26,7 +26,7 @@ export default function Navigation() {
   const [hoveredLink, setHoveredLink] = useState(null);
 
   // Updated condition to exclude additional categories
-  const shouldShowMegaMenu = hoveredLink && !["Sale", "New In", "Wellness", "Electrics"].includes(hoveredLink);
+  // const shouldShowMegaMenu = hoveredLink && !["Sale", "New In", "Wellness", "Electrics"].includes(hoveredLink);
 
   return (
     <>
@@ -55,9 +55,10 @@ export default function Navigation() {
           </nav>
         </Container>
       </div>
-      <div className={`absolute top-full left-0 w-full transition-all duration-300 ease-in-out ${shouldShowMegaMenu ? 'translate-y-0 opacity-100' : 'translate-y-[-20px] opacity-0'}`}>
-        {/* <MegaMenu /> */}
-      </div>
+      {/* <div className={`absolute top-full left-0 w-full transition-all duration-300 ease-in-out ${shouldShowMegaMenu ? 'translate-y-0 opacity-100' : 'translate-y-[-20px] opacity-0'}`}>
+        <MegaMenu />
+      </div> 
+      */}
     </>
   );
 }
