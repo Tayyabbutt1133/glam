@@ -8,6 +8,11 @@ import Bestseller from '../../../../components/lifecycle/category/categoriescomp
 import bannerimg from '../../../../public/product_category_landing/olaplex 1.svg';
 import Staffpicks from '../../../../components/lifecycle/category/categoriescomponents/Staffpicks';
 
+import Olaplex from '/public/product_category_landing/olaplex 1.svg';
+import SliderComponent from '../../../../components/lifecycle/mutual-components/slider';
+import TrendingBrand from '../../../../components/lifecycle/category/categoriescomponents/trending-brand/trending-brand';
+import BrandInFocus from '../../../../components/lifecycle/category/categoriescomponents/brand-in-focus';
+
 export default function Page() {
   const [mainCategory, setMainCategory] = useState(null);
   const [subCategories, setSubCategories] = useState([]);
@@ -82,16 +87,32 @@ export default function Page() {
     fetchCategoriesAndProducts();
   }, []);
 
+  let bannerObject = [
+    {
+      title: "NARS FREE GIFT COLLECTION",
+      description: "Receive a free gift when you spend £30 on NARS.  ",
+      src: Olaplex,
+    }
+  ]
 
   return (
-    <Container>
+    <>
       {mainCategory && subCategories.length > 0 && hotSellingProducts.length > 0 && (
-        <div className="">
+        <div>
+        <Container>
           <Menucategory mainCategory={mainCategory} subCategories={subCategories} />
+        </Container>
+          <SliderComponent bannerObject={bannerObject}/>
+          <TrendingBrand />
+        <Container>
           <Bestseller hotSellingProducts={hotSellingProducts} />
+        </Container>
+        <BrandInFocus />
+        <Container>
           <Staffpicks staffPicks={staffPicks} />
+        </Container>
         </div>
       )}
-    </Container>
+    </>
   );
 }
