@@ -2,11 +2,11 @@
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Container from '../../../../components/container';
-import Menucategory from '../../../../components/lifecycle/category/MenucategoryLandingPage';
-import Bestseller from '../../../../components/lifecycle/category/categoriescomponents/Bestseller';
-import bannerimg from '../../../../public/product_category_landing/olaplex 1.svg';
-import Staffpicks from '../../../../components/lifecycle/category/categoriescomponents/Staffpicks';
+import Container from '../../../components/container';
+import Menucategory from '../../../components/lifecycle/category/MenucategoryLandingPage';
+import Bestseller from '../../../components/lifecycle/brand/Brandbestseller';
+// import bannerimg from '../../../../public/product_category_landing/olaplex 1.svg';
+import Staffpicks from '../../../components/lifecycle/brand/Brandfocus';
 
 export default function Page() {
   const [mainCategory, setMainCategory] = useState(null);
@@ -21,7 +21,7 @@ export default function Page() {
 
         // Fetch main category
         const mainCategoryResponse = await axios.get(
-          `https://glam.clickable.site/wp-json/wc/v3/products/categories/${makeupID}`, 
+          `https://glam.clickable.site/wp-json/wc/v3/products/attributes/1`, 
           {
             params: {
               consumer_key: "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d",
@@ -33,12 +33,13 @@ export default function Page() {
 
         // Fetch subcategories
         const subCategoryResponse = await axios.get(
-          'https://glam.clickable.site/wp-json/wc/v3/products/categories/',
+          ' https://glam.clickable.site/wp-json/wc/v3/products/attributes/1/terms?per_page=100&page=1',
           {
             params: {
               consumer_key: "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d",
-              consumer_secret: "cs_3f70ee2600a3ac17a5692d7ac9c358d47275d6fc",
-              parent: makeupID,
+                  consumer_secret: "cs_3f70ee2600a3ac17a5692d7ac9c358d47275d6fc",
+                  per_page: 5, // Limit to 5 subcategories
+                  page: 1,
             },
           }
         );
@@ -51,7 +52,6 @@ export default function Page() {
             params: {
               consumer_key: "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d",
               consumer_secret: "cs_3f70ee2600a3ac17a5692d7ac9c358d47275d6fc",
-              category: makeupID,
               orderby: 'popularity',  // Assuming 'popularity' or similar can be used to get hot-selling products
               per_page: 10, // Number of products to fetch
             },
