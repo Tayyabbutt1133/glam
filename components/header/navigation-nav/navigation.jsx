@@ -3,7 +3,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { Jost } from "next/font/google";
 import Container from "../../container";
-// import MegaMenu from "./megamenu"; // Make sure the path is correct
+import MegaMenu from "./megamenu"; // Make sure the path is correct
 
 const jost = Jost({ subsets: ["latin"] });
 
@@ -26,7 +26,7 @@ export default function Navigation() {
   const [hoveredLink, setHoveredLink] = useState(null);
 
   // Updated condition to exclude additional categories
-  // const shouldShowMegaMenu = hoveredLink && !["Sale", "New In", "Wellness", "Electrics"].includes(hoveredLink);
+  const shouldShowMegaMenu = hoveredLink && !["Sale", "New In", "Wellness", "Electrics"].includes(hoveredLink);
 
   return (
     <>
@@ -55,10 +55,10 @@ export default function Navigation() {
           </nav>
         </Container>
       </div>
-      {/* <div className={`absolute top-full left-0 w-full transition-all duration-300 ease-in-out ${shouldShowMegaMenu ? 'translate-y-0 opacity-100' : 'translate-y-[-20px] opacity-0'}`}>
+      <div className={`absolute top-full left-0 w-full transition-all duration-300 ease-in-out ${shouldShowMegaMenu ? 'translate-y-0 opacity-100' : 'translate-y-[-20px] opacity-0'}`}>
         <MegaMenu />
       </div> 
-      */}
+     
     </>
   );
 }
