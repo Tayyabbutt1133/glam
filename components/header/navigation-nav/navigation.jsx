@@ -3,7 +3,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { Jost } from "next/font/google";
 import Container from "../../container";
-import MegaMenu from "./MegaMenu"; // Make sure the path is correct
+// import MegaMenu from "./megamenu"; // Make sure the path is correct
 
 const jost = Jost({ subsets: ["latin"] });
 
