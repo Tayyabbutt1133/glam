@@ -28,6 +28,10 @@ export default function Navigation() {
   // Updated condition to exclude additional categories
   const shouldShowMegaMenu = hoveredLink && !["Sale", "New In", "Wellness", "Electrics"].includes(hoveredLink);
 
+  const handleLinkClick = () => {
+    setHoveredLink(null);
+  };
+
   return (
     <>
       <div
@@ -48,6 +52,7 @@ export default function Navigation() {
                 }}
                 onMouseEnter={() => setHoveredLink(link.name)}
                 onMouseLeave={() => setHoveredLink(null)}
+                onClick={handleLinkClick}
               >
                 <div>{link.name}</div>
               </Link>
@@ -58,7 +63,6 @@ export default function Navigation() {
       <div className={`absolute top-full left-0 w-full transition-all duration-300 ease-in-out ${shouldShowMegaMenu ? 'translate-y-0 opacity-100' : 'translate-y-[-20px] opacity-0'}`}>
         <MegaMenu />
       </div> 
-     
     </>
   );
 }
