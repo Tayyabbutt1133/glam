@@ -203,3 +203,10 @@ ul.slick-dots.slick-thumb {
     overflow-x: auto; /* Ensure the parent container allows scrolling */
   }
 }
+
+.tips-overlay {
+  position: absolute;
+  inset: 0; /* This positions the overlay to cover the entire parent container */
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.46), transparent);
+  border-radius: 8px;
+}

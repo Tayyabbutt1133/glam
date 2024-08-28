@@ -16,6 +16,7 @@ import BrandInFocus from "../../../../components/lifecycle/category/categoriesco
 import Loading from "./loading";
 import MakeupPicks from "../../../../components/lifecycle/category/categoriescomponents/makeup-picks/makeup-picks";
 import GetGlam from "../../../../components/lifecycle/category/categoriescomponents/get-glam/get-glam";
+import MakeupTips from "../../../../components/lifecycle/mutual-components/makeup-tips";
 
 
 export default function Page() {
@@ -129,6 +130,7 @@ export default function Page() {
             </Container>
             
             <MakeupPicks />
+            <MakeupTips />
             <GetGlam />
           </div>
         )}

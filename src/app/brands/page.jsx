@@ -12,6 +12,7 @@ import Faqsbrand from '../../../components/lifecycle/brand/Faqsbrand';
 import olaplexbrand from '../../../public/about_brands/olaplexslide.svg'
 import SliderComponent from '../../../components/lifecycle/mutual-components/slider';
 import Newin from '../../../components/lifecycle/category/categoriescomponents/Newin';
+import MakeupTips from '../../../components/lifecycle/mutual-components/makeup-tips';
 
 export default function Page() {
   const [mainCategory, setMainCategory] = useState(null);
@@ -111,6 +112,7 @@ export default function Page() {
           <Newin />
           <Container>
           <Staffpicks staffPicks={staffPicks} />
+          <MakeupTips />
             <Faqsbrand />
             </Container>
         </div>
