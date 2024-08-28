@@ -9,7 +9,7 @@ export default function Text({ children, className = '', style }) {
       style = "font-semibold text-[32px] " + jost.className;
       return <h2 className={`${style} ${className}`}>{children}</h2>;
     case "h3":
-      style = "font-bold text-[24px]c" + jost.className;
+      style = "font-bold text-[24px] " + jost.className;
       return <h3 className={`${style} ${className}`}>{children}</h3>;
     case "h4":
       style = "font-bold text-[20px] " + jost.className;
