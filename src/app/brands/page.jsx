@@ -9,6 +9,9 @@ import Bestseller from '../../../components/lifecycle/brand/Brandbestseller';
 import Staffpicks from '../../../components/lifecycle/brand/Brandfocus';
 import Aboutbrand from '../../../components/lifecycle/brand/Aboutbrand';
 import Faqsbrand from '../../../components/lifecycle/brand/Faqsbrand';
+import olaplexbrand from '../../../public/about_brands/olaplexslide.svg'
+import SliderComponent from '../../../components/lifecycle/mutual-components/slider';
+import Newin from '../../../components/lifecycle/category/categoriescomponents/Newin';
 
 export default function Page() {
   const [mainCategory, setMainCategory] = useState(null);
@@ -84,18 +87,34 @@ export default function Page() {
     fetchCategoriesAndProducts();
   }, []);
 
+  let bannerObject = [
+    {
+      title: "DISCOVER MAC STUDIO RADIANCE",
+      description: "Discover MAC Beauty’s latest Radiance Foundation Range. ",
+      src: olaplexbrand,
+    },
+  ];
+
 
   return (
-    <Container>
+  <div>
       {mainCategory && subCategories.length > 0 && hotSellingProducts.length > 0 && (
         <div className="">
-          <Menucategory mainCategory={mainCategory} subCategories={subCategories} />
-          <Bestseller hotSellingProducts={hotSellingProducts} />
+          <Container>
+            <Menucategory mainCategory={mainCategory} subCategories={subCategories} />
+            </Container>
+          <SliderComponent bannerObject={bannerObject} />
+          <Container>
+            <Bestseller hotSellingProducts={hotSellingProducts} />
+            <Aboutbrand />
+            </Container>
+          <Newin />
+          <Container>
           <Staffpicks staffPicks={staffPicks} />
-          <Aboutbrand />
-          <Faqsbrand/>
+            <Faqsbrand />
+            </Container>
         </div>
       )}
-    </Container>
+      </div>
   );
 }
