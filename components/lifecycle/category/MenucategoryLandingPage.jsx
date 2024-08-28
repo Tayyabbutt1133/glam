@@ -8,6 +8,8 @@ import logo_four from '../../../public/product_category_landing/rounded_cat/four
 import logo_five from '../../../public/product_category_landing/rounded_cat/five.svg';
 import logo_six from '../../../public/product_category_landing/rounded_cat/six.svg';
 import logo_seven from '../../../public/product_category_landing/rounded_cat/seven.svg';
+import { jost } from '../../ui/fonts';
+
 
 const MenucategoryLandingPage = ({ mainCategory, subCategories }) => {
 
@@ -30,7 +32,7 @@ const MenucategoryLandingPage = ({ mainCategory, subCategories }) => {
   return (
     <div className='my-14'>
       {/* Display main category name */}
-      <h1 className="text-2xl font-bold text-center mt-10">
+      <h1 className={`text-2xl ${jost.className} uppercase font-bold text-center mt-10`}>
         {sanitizeText(mainCategory?.name)}
       </h1>
 
@@ -46,7 +48,7 @@ const MenucategoryLandingPage = ({ mainCategory, subCategories }) => {
                     className="object-cover w-full h-full cursor-pointer"
                   />
                 </div>
-                <p className="mt-2 text-sm font-medium">{sanitizeText(subCat.name)}</p>
+                <p className={`mt-2 text-sm font-semibold ${jost.className}`}>{sanitizeText(subCat.name)}</p>
               </li>
             ))}
           </ul>
