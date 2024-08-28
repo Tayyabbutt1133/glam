@@ -7,6 +7,8 @@ import Menucategory from '../../../components/lifecycle/category/MenucategoryLan
 import Bestseller from '../../../components/lifecycle/brand/Brandbestseller';
 // import bannerimg from '../../../../public/product_category_landing/olaplex 1.svg';
 import Staffpicks from '../../../components/lifecycle/brand/Brandfocus';
+import Aboutbrand from '../../../components/lifecycle/brand/Aboutbrand';
+import Faqsbrand from '../../../components/lifecycle/brand/Faqsbrand';
 
 export default function Page() {
   const [mainCategory, setMainCategory] = useState(null);
@@ -90,6 +92,8 @@ export default function Page() {
           <Menucategory mainCategory={mainCategory} subCategories={subCategories} />
           <Bestseller hotSellingProducts={hotSellingProducts} />
           <Staffpicks staffPicks={staffPicks} />
+          <Aboutbrand />
+          <Faqsbrand/>
         </div>
       )}
     </Container>
