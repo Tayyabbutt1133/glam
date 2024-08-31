@@ -120,3 +120,5 @@ export default function Page() {
       </div>
   );
 }
+/brand/mac
+/product-categories/makeup
