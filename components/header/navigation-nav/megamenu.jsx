@@ -1,76 +1,79 @@
 "use client";
 import React from "react";
-import { jost, lexendDeca } from "../../ui/fonts";
+import Image from "next/image";
+import Link from "next/link";
 
-export default function MegaMenu() {
+import Text from "../../ui/Text";
+import { jost, lexendDeca } from "../../ui/fonts";
+import img from "/public/nav-images/skincare-nav.png";
+
+export default function MegaMenu({ links, hoveredLink }) {
+  // const submenu = links.filter(link => link.parent === hoveredLink.toString())
+  // console.log(submenu)
+
+  const getSubMenu = (parentId) => {
+    return links.filter((link) => link.parent === parentId?.toString());
+  };
+
   return (
-    <div className="relative w-full bg-white shadow-lg z-50 transition duration-300 ease-in-out p-4">
+    <nav className="relative w-full bg-white shadow-lg z-50 transition duration-300 ease-in-out">
       {/* Horizontal line */}
       <div className="h-px bg-gray-300"></div>
-      <div className="py-8 overflow-x-auto mx-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6 lg:gap-8">
-          <div>
-            <h4 className={`font-semibold uppercase mb-2 text-lg ${jost.className}`}>Featured Brands</h4>
-            <ul className="space-y-4 text-sm">
-              <li className={`cursor-pointer ${lexendDeca.className}`}>7th Heaven</li>
-              <li className={`cursor-pointer ${lexendDeca.className}`}>Biotherm</li>
-              <li className={`cursor-pointer ${lexendDeca.className}`}>Bobbi Brown</li>
-              <li className={`cursor-pointer ${lexendDeca.className}`}>Clarins</li>
-              <li className={`cursor-pointer ${lexendDeca.className}`}>Clinique</li>
-              <li className={`cursor-pointer ${lexendDeca.className}`}>Delia</li>
-              <li className={`cursor-pointer ${lexendDeca.className}`}>Dr. Hauschka</li>
-            </ul>
+      <section className="flex flex-row w-full max-h-[386px]">
+        {/* Submenu container */}
+        <div className="w-[70%] flex justify-center py-5">
+          <div className="flex flex-row w-[80%] justify-between gap-4 md:gap-6 lg:gap-8">
+            {getSubMenu(hoveredLink).length > 0 &&
+              getSubMenu(hoveredLink).map((link, index) => (
+                <div key={index}>
+                  {/* Submenu title */}
+                  <Link href={link.href}>
+                    <Text
+                      style={"h4"}
+                      className={`font-semibold uppercase mb-5`}
+                    >
+                      {link.name}
+                    </Text>
+                  </Link>
+                  {/* Submenu items */}
+                  {getSubMenu(hoveredLink).length > 0 &&
+                    getSubMenu(link.id).map((subLink, index) => (
+                      <ul
+                        key={index}
+                        className="flex flex-wrap flex-col text-sm h-[300px] gap-4"
+                      >
+                        <Link href={subLink.href}>
+                          <li
+                            className={`flex flex-row items-center cursor-pointer ${lexendDeca.className} mr-10`}
+                          >
+                            {subLink.color ? (
+                              <div
+                                style={{
+                                  backgroundColor: subLink.color,
+                                }}
+                                className={`w-4 h-4 rounded-full mr-2`}
+                              ></div>
+                            ) : null}
+                            {subLink.name}
+                          </li>
+                        </Link>
+                      </ul>
+                    ))}
+                </div>
+              ))}
           </div>
-          <div>
-            <h4 className={`font-semibold uppercase mb-2 text-lg ${jost.className}`}>Moisturisers</h4>
-            <ul className="space-y-4 text-sm">
-              <li className={`cursor-pointer ${lexendDeca.className}`}>Balm</li>
-              <li className={`cursor-pointer ${lexendDeca.className}`}>Lotion</li>
-              <li className={`cursor-pointer ${lexendDeca.className}`}>Day Cream</li>
-              <li className={`cursor-pointer ${lexendDeca.className}`}>Night Cream</li>
-              <li className={`cursor-pointer ${lexendDeca.className}`}>Face Oil</li>
-              <li className={`cursor-pointer ${lexendDeca.className}`}>Face Serum</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className={`font-semibold uppercase mb-2 text-lg ${jost.className}`}>Eye Care</h4>
-            <ul className="space-y-4 text-sm">
-              <li className={`cursor-pointer ${lexendDeca.className}`}>Eye Serum</li>
-              <li className={`cursor-pointer ${lexendDeca.className}`}>Eye Cream</li>
-              <li className={`cursor-pointer ${lexendDeca.className}`}>Eye Gel</li>
-              <li className={`cursor-pointer ${lexendDeca.className}`}>Eye Patch</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className={`font-semibold uppercase mb-2 text-lg ${jost.className}`}>Cleansers</h4>
-            <ul className="space-y-4 text-sm cursor-pointer">
-              <li className={`cursor-pointer ${lexendDeca.className}`}>Face Wash & Cleanser</li>
-              <li className={`cursor-pointer ${lexendDeca.className}`}>Liquid Exfoliators</li>
-              <li className={`cursor-pointer ${lexendDeca.className}`}>Face Scrubs</li>
-              <li className={`cursor-pointer ${lexendDeca.className}`}>Micellar Water</li>
-              <li className={`cursor-pointer ${lexendDeca.className}`}>Wipes</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className={`font-semibold uppercase mb-2 text-lg ${jost.className}`}>Toners</h4>
-            <ul className="space-y-4 text-sm cursor-pointer">
-              <li className={`${lexendDeca.className}`}>Facial Spray</li>
-              <li className={`${lexendDeca.className}`}>Toner</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className={`font-semibold uppercase mb-2 text-lg ${jost.className}`}>Masks</h4>
-            <ul className="space-y-4 text-sm cursor-pointer">
-              <li className={`${lexendDeca.className}`}>Face Mask</li>
-              <li className={`${lexendDeca.className}`}>Sheet Mask</li>
-              <li className={`${lexendDeca.className}`}>Clay Mask</li>
-              <li className={`${lexendDeca.className}`}>Peel Off Mask</li>
-              <li className={`${lexendDeca.className}`}>Eye Mask</li>
-              <li className={`${lexendDeca.className}`}>Lip Mask</li>
-            </ul>
-          </div>
+        </div>{" "}
+        {/* Submenu container */}
+        {/* Image */}
+        <div className="grid w-[30%] h-auto justify-end">
+          <Image
+            src={img}
+            alt="nav image"
+            style={{ width: "100%", height: "100%", objectFit: "contain" }}
+            objectFit="contain"
+          />
         </div>
-      </div>
-    </div>
+      </section>
+    </nav>
   );
 }
