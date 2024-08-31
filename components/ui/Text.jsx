@@ -12,7 +12,7 @@ export default function Text({ children, className = '', style }) {
       style = "font-bold text-[24px] " + jost.className;
       return <h3 className={`${style} ${className}`}>{children}</h3>;
     case "h4":
-      style = "font-bold text-[20px] " + jost.className;
+      style = "xl:font-medium 2xl:font-bold text-[20px] " + jost.className;
       return <h4 className={`${style} ${className}`}>{children}</h4>;
     case "xs":
       style = "text-xs font-normal " + lexendDeca.className;

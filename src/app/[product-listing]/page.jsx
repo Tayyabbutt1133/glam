@@ -1,0 +1,1 @@
+// here new-in and sale products will be listed or any path like /sale
