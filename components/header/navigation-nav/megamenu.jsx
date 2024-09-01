@@ -22,7 +22,7 @@ export default function MegaMenu({ links, hoveredLink }) {
       <section className="flex flex-row w-full max-h-[386px]">
         {/* Submenu container */}
         <div className="w-[70%] flex justify-center py-5">
-          <div className="flex flex-row w-[80%] justify-between gap-4 md:gap-6 lg:gap-8">
+          <div className="flex flex-row w-[90%] justify-between gap-4 md:gap-6 lg:gap-8">
             {getSubMenu(hoveredLink).length > 0 &&
               getSubMenu(hoveredLink).map((link, index) => (
                 <div key={index}>
@@ -30,13 +30,13 @@ export default function MegaMenu({ links, hoveredLink }) {
                   <Link href={link.href}>
                     <Text
                       style={"h4"}
-                      className={`font-semibold uppercase mb-5`}
+                      className={`uppercase mb-5`}
                     >
                       {link.name}
                     </Text>
                   </Link>
                   {/* Submenu items */}
-                  <ul className="flex flex-wrap flex-col text-sm h-[300px] gap-4 border border-red-500">
+                  <ul className="flex flex-wrap flex-col text-sm h-[300px] gap-4">
                     {getSubMenu(hoveredLink).length > 0 &&
                       getSubMenu(link.id).map((subLink, index) => (
                         <Link key={index} href={subLink.href}>
