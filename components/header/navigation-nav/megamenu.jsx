@@ -14,6 +14,10 @@ export default function MegaMenu({ links, hoveredLink }) {
   const getSubMenu = (parentId) => {
     return links.filter((link) => link.parent === parentId?.toString());
   };
+  
+  // if(hoveredLink === 74038){
+  //  console.log()
+  // }
 
   return (
     <nav className="relative w-full bg-white shadow-lg z-50 transition duration-300 ease-in-out">
