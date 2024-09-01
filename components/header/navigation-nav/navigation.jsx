@@ -34,7 +34,7 @@ export default function Navigation() {
   useEffect(()=> {
     const fetchLinks = async () => {
       try{
-        const res = await fetch('/api/nav', {next: {revalidate: 60}})
+        const res = await fetch('/api/nav')
         const data = res.data
         setLinks(data)
       }
