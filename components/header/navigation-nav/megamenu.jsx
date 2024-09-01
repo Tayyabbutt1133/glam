@@ -36,13 +36,10 @@ export default function MegaMenu({ links, hoveredLink }) {
                     </Text>
                   </Link>
                   {/* Submenu items */}
-                  {getSubMenu(hoveredLink).length > 0 &&
-                    getSubMenu(link.id).map((subLink, index) => (
-                      <ul
-                        key={index}
-                        className="flex flex-wrap flex-col text-sm h-[300px] gap-4"
-                      >
-                        <Link href={subLink.href}>
+                  <ul className="flex flex-wrap flex-col text-sm h-[300px] gap-4 border border-red-500">
+                    {getSubMenu(hoveredLink).length > 0 &&
+                      getSubMenu(link.id).map((subLink, index) => (
+                        <Link key={index} href={subLink.href}>
                           <li
                             className={`flex flex-row items-center cursor-pointer ${lexendDeca.className} mr-10`}
                           >
@@ -57,8 +54,8 @@ export default function MegaMenu({ links, hoveredLink }) {
                             {subLink.name}
                           </li>
                         </Link>
-                      </ul>
-                    ))}
+                      ))}
+                  </ul>
                 </div>
               ))}
           </div>
