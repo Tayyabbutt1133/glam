@@ -27,15 +27,19 @@ const jost = Jost({ subsets: ["latin"] });
 export default function Navigation() {
   const [hoveredLink, setHoveredLink] = useState(null);
   const [links, setLinks] = useState([]);
-  const mainLinks = links.filter(link => link.parent === "0") 
+  const mainLinks = links?.filter(link => link.parent === "0") 
   
   
   
   useEffect(()=> {
     const fetchLinks = async () => {
       try{
-        const res = await axios.get('/api/nav')
-        const data = res.data
+        const res = await fetch(`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/test-6`, {
+          method: "GET",
+          next: { revalidate: 60 },
+        });
+        const data = await res.json()
+        console.log(data)
         setLinks(data)
       }
       catch(err){
@@ -46,7 +50,7 @@ export default function Navigation() {
   }, [])
   
   // no megamenu for sale and new-in
-  const shouldShowMegaMenu = links.find(link => {
+  const shouldShowMegaMenu = links?.find(link => {
     return link.id === hoveredLink && link.href !== "/sale" && link.href !== "/new-in"
   })
 
