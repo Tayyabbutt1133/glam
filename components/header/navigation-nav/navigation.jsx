@@ -36,7 +36,7 @@ export default function Navigation() {
       try{
         const res = await fetch(`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/test-6`, {
           method: "GET",
-          next: { revalidate: 60 },
+          cache: "no-store",
         });
         const data = await res.json()
         console.log(data)
