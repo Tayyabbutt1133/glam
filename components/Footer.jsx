@@ -38,7 +38,7 @@ export default function Footer() {
                 <Image src={logo} />
                 <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"></span>
               </a>
-              <p className={`text-sm 2xl:text-[16px]  text-[#7E7E7E] w-60 ${lexendDeca.className} font-normal`}>Lorem ipsum dolor sit amet consectetur Sit egestas facilisi porttitor leo dolor sit amet.</p>
+              <p className={`text-sm 2xl:text-[16px]  text-[#7E7E7E] w-60 ${lexendDeca.className} font-normal`}>We are the fastest-growing beauty retailer, always offering huge discounts off the RRP.</p>
               <div name="socials" className=" flex gap-4">
                 <Image src={fb} />
                 <Image src={Insta} />
