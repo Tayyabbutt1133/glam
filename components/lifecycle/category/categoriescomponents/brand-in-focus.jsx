@@ -16,12 +16,12 @@ export default function BrandInFocus() {
       <div className="flex w-full relative">
         <div className="w-1/2 relative">
           {/* Content */}
-          <div className="ml-20 absolute lg:top-[25%] xl:top-[35%] 2xl:top-[40%] flex flex-col max-w-[70%] items-start ">
+          <div className="ml-20 absolute bottom-[10%] flex flex-col max-w-[70%] items-start ">
             <div className="text-start text-white">
               <h1 className="lg:text-xl xl:text-2xl 2xl:text-3xl font-bold">
                 ESTEE LAUDER
               </h1>
-              <p className="mt-2 lg:text-sm xl:text-base 2xl:text-lg">
+              <p className="mt-2 lg:text-sm xl:text-base 2xl:text-xl">
                 Lorem ipsum dolor sit amet consectetur. Commodo ipsum viverra
                 eget urna nunc duis. Hendrerit arcu mi nulla suspendisse ssed
                 pulvinar fames amet. Nisl eleifend solis sed id pellentesque

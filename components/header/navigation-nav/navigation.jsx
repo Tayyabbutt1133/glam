@@ -20,7 +20,6 @@ export default function Navigation() {
           cache: "no-store",
         });
         const data = await res.json()
-        console.log(data)
         setLinks(data)
       }
       catch(err){
