@@ -26,6 +26,13 @@ export default function BrandSlide() {
     autoplaySpeed: 3000, // Speed for autoplay
     responsive: [
       {
+        breakpoint: 1280,
+        settings: {
+          slidesToShow: 4, // 3 slides for tablet screens
+          slidesToScroll: 1,
+        },
+      },
+      {
         breakpoint: 1024,
         settings: {
           slidesToShow: 3, // 3 slides for tablet screens
