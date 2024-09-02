@@ -8,16 +8,16 @@ import { jost, lexendDeca } from "../../ui/fonts";
 import img from "/public/nav-images/skincare-nav.png";
 
 export default function MegaMenu({ links, hoveredLink }) {
-  // const submenu = links.filter(link => link.parent === hoveredLink.toString())
-  // console.log(submenu)
 
   const getSubMenu = (parentId) => {
     return links.filter((link) => link.parent === parentId?.toString());
   };
   
-  // if(hoveredLink === 74038){
-  //  console.log()
-  // }
+  console.log(links)
+  
+  if(hoveredLink.href === "/brands"){
+    // console.log("brands")
+  }
 
   return (
     <nav className="relative w-full bg-white shadow-lg z-50 transition duration-300 ease-in-out">
@@ -27,8 +27,8 @@ export default function MegaMenu({ links, hoveredLink }) {
         {/* Submenu container */}
         <div className="w-[70%] flex justify-center py-5">
           <div className="flex flex-row w-[90%] justify-between gap-4 md:gap-6 lg:gap-8">
-            {getSubMenu(hoveredLink).length > 0 &&
-              getSubMenu(hoveredLink).map((link, index) => (
+            {getSubMenu(hoveredLink.id).length > 0 &&
+              getSubMenu(hoveredLink.id).map((link, index) => (
                 <div key={index}>
                   {/* Submenu title */}
                   <Link href={link.href}>
@@ -41,7 +41,7 @@ export default function MegaMenu({ links, hoveredLink }) {
                   </Link>
                   {/* Submenu items */}
                   <ul className="flex flex-wrap flex-col text-sm h-[300px] gap-4">
-                    {getSubMenu(hoveredLink).length > 0 &&
+                    {getSubMenu(hoveredLink.id).length > 0 &&
                       getSubMenu(link.id).map((subLink, index) => (
                         <Link key={index} href={subLink.href}>
                           <li
