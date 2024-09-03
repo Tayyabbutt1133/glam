@@ -26,7 +26,7 @@ export default function Page() {
     const fetchCategoriesAndProducts = async () => {
       try {
         setLoading(true);
-        const fragranceId = 457; // Replace with the correct category ID for Fragrance
+        const fragranceId = 483; // Replace with the correct category ID for Fragrance
 
         const [mainCategoryResponse, subCategoryResponse, hotSellingResponse, staffPicksResponse] = await Promise.all([
           axios.get(`https://glam.clickable.site/wp-json/wc/v3/products/categories/${fragranceId}`, {
