@@ -7,11 +7,11 @@ import MegaMenu from "./megamenu";
 
 const jost = Jost({ subsets: ["latin"] });
 
-export default function Navigation() {
+export default function Navigation({ setSelectedCategory }) {
   const [hoveredLink, setHoveredLink] = useState({ id: null, href: null});
   const [links, setLinks] = useState([]);
   const mainLinks = links?.filter(link => link.parent === "0") 
-  
+
   useEffect(()=> {
     const fetchLinks = async () => {
       try{
@@ -34,10 +34,12 @@ export default function Navigation() {
     return link.id === hoveredLink.id && link.href !== "/sale" && link.href !== "/new-in"
   })
 
-  const handleLinkClick = () => {
-    setHoveredLink(
-      { id: null, href: null}
-    );
+  const handleLinkClick = (link) => {
+    console.log("Clicked Link:", link);
+    setHoveredLink({ id: null, href: null });
+    if (setSelectedCategory) {
+      setSelectedCategory({ id: link.id, name: link.name });
+    }
   };
 
   return (
@@ -55,11 +57,14 @@ export default function Navigation() {
               key={link.id}
               href={link.href}
               style={{
-                boxShadow: hoveredLink.id === link.id ? `inset 0 -2px 0 0 var(--color-hover)` : "inset 0 -2px 0 0 transparent",
+                boxShadow:
+                  hoveredLink.id === link.id
+                    ? `inset 0 -2px 0 0 var(--color-hover)`
+                    : "inset 0 -2px 0 0 transparent",
                 transition: "box-shadow 0.3s ease",
               }}
-              onMouseEnter={() => setHoveredLink({ id: link.id, href: link.href})}
-              onClick={handleLinkClick}
+              onMouseEnter={() => setHoveredLink({ id: link.id, href: link.href })}
+              onClick={() => handleLinkClick(link)}  // Pass the link object to the click handler
             >
               <div>{link.name}</div>
             </Link>
