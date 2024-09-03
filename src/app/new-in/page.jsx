@@ -3,6 +3,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Container from "../../../components/container";
+import { FaStar, FaRegStar, FaHeart } from "react-icons/fa";
+import { CiHeart } from "react-icons/ci";
 
 export default function Page() {
   const [products, setProducts] = useState([]); // State for All Products
@@ -11,6 +13,7 @@ export default function Page() {
   const [brandFilter, setBrandFilter] = useState(""); // State for Brand Filter
   const [priceRangeFilter, setPriceRangeFilter] = useState(""); // State for Price Range Filter
   const [loading, setLoading] = useState(true); // State for Loading
+  const [favorites, setFavorites] = useState({}); // State to track favorited products
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -57,15 +60,26 @@ export default function Page() {
     }
   };
 
+  const handleFavoriteClick = (productId) => {
+    setFavorites((prevFavorites) => ({
+      ...prevFavorites,
+      [productId]: !prevFavorites[productId],
+    }));
+  };
+
   return (
     <Container>
       <div className="flex flex-col lg:flex-row gap-4 mb-32 mt-32">
         {/* Sidebar for Filters */}
-        <div className="w-full lg:w-1/4 p-4 rounded">
+        <div className="w-full lg:w-1/4 p-4 rounded bg-gray-100 shadow-md">
           <h3 className="text-lg font-bold mb-4">Filters</h3>
           <div className="mb-4">
-            <h4 className="font-semibold">Brand</h4>
-            <select name="brand" onChange={handleFilterChange} className="w-full p-2 border rounded">
+            <h4 className="font-semibold mb-2">Brand</h4>
+            <select
+              name="brand"
+              onChange={handleFilterChange}
+              className="w-full p-2 border rounded"
+            >
               <option value="">All</option>
               <option value="Brand1">Brand1</option>
               <option value="Brand2">Brand2</option>
@@ -73,8 +87,12 @@ export default function Page() {
             </select>
           </div>
           <div className="mb-4">
-            <h4 className="font-semibold">Price Range</h4>
-            <select name="priceRange" onChange={handleFilterChange} className="w-full p-2 border rounded">
+            <h4 className="font-semibold mb-2">Price Range</h4>
+            <select
+              name="priceRange"
+              onChange={handleFilterChange}
+              className="w-full p-2 border rounded"
+            >
               <option value="">All</option>
               <option value="0-20">£0 - £20</option>
               <option value="20-50">£20 - £50</option>
@@ -92,26 +110,68 @@ export default function Page() {
                   .map((_, index) => (
                     <div
                       key={index}
-                      className="border p-4 rounded shadow relative animate-pulse"
+                      className="border p-4 rounded-lg shadow-lg relative bg-white animate-pulse"
                     >
-                      <div className="w-full h-48 bg-gray-200 mb-4"></div>
-                      <div className="h-6 bg-gray-200 mb-2"></div>
-                      <div className="h-4 bg-gray-200 w-1/2"></div>
+                      <div className="w-full h-48 bg-gray-300 mb-4"></div>
+                      <div className="h-6 bg-gray-300 mb-2"></div>
+                      <div className="h-4 bg-gray-300 w-1/2"></div>
                     </div>
                   ))
               : products.map((product) => (
                   <div
                     key={product.id}
-                    className="border p-4 rounded shadow relative"
+                    className="border p-4 rounded-lg shadow-lg relative bg-white"
                   >
+                    {product.sale_price && (
+                      <span className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                        Sale
+                      </span>
+                    )}
+                    <div className="absolute top-2 right-2">
+                      <button
+                        className="focus:outline-none"
+                        onClick={() => handleFavoriteClick(product.id)}
+                      >
+                        {favorites[product.id] ? (
+                          <FaHeart className="text-red-500 w-6 h-6" />
+                        ) : (
+                          <CiHeart className="text-black w-6 h-6" />
+                        )}
+                      </button>
+                    </div>
                     <img
                       src={product.images[0]?.src}
                       alt={product.name}
                       className="w-full h-48 object-cover mb-4"
                     />
-                    <h3 className="text-lg font-bold mb-2">{product.name}</h3>
-                    <p className="font-bold">{`£${product.price}`}</p>
-                    <button className="mt-4 bg-black text-white py-2 px-4 rounded hover:bg-gray-700 transition">
+                    <h3 className="text-lg font-bold mb-2 h-[40px] overflow-hidden text-ellipsis whitespace-nowrap">
+                      {product.name}
+                    </h3>
+                    <div className="flex items-center mb-2">
+                      {[...Array(5)].map((_, index) => (
+                        <span key={index}>
+                          {index < Math.round(product.average_rating) ? (
+                            <FaStar className="text-[#7E7E7E] w-4 h-4" />
+                          ) : (
+                            <FaRegStar className="text-[#7E7E7E] w-4 h-4" />
+                          )}
+                        </span>
+                      ))}
+                      <span className="text-gray-600 text-sm ml-2">({product.rating_count})</span>
+                    </div>
+                    <p className="font-bold text-lg mb-3">
+                      {product.sale_price ? (
+                        <>
+                          <span className="line-through text-gray-600 mr-2">
+                            £{product.regular_price}
+                          </span>
+                          £{product.sale_price}
+                        </>
+                      ) : (
+                        `£${product.price}`
+                      )}
+                    </p>
+                    <button className="w-[70%] md:w-[60%] lg:w-[85%] bg-black text-white py-2 mx-auto mt-auto rounded-md hover:bg-gray-800 transition">
                       ADD TO BAG
                     </button>
                   </div>
@@ -123,7 +183,9 @@ export default function Page() {
             <button
               onClick={() => handlePageChange(currentPage - 1)}
               disabled={currentPage === 1}
-              className={`px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition disabled:bg-transparent`}
+              className={`px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition ${
+                currentPage === 1 ? "disabled:bg-transparent" : ""
+              }`}
             >
               &lt;
             </button>
@@ -170,7 +232,9 @@ export default function Page() {
             <button
               onClick={() => handlePageChange(currentPage + 1)}
               disabled={currentPage === totalPages}
-              className={`px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition disabled:bg-transparent`}
+              className={`px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition ${
+                currentPage === totalPages ? "disabled:bg-transparent" : ""
+              }`}
             >
               &gt;
             </button>
