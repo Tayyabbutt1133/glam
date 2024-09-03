@@ -33,8 +33,8 @@ export default function Navigation({ initialLinks }) {
           cache: "no-store",
         });
         const data = await res.json();
-        cachedLinks = data; // Cache in memory
-        localStorage.setItem('linksCache', JSON.stringify(data)); // Cache in localStorage
+        cachedLinks = data; // store Cache in memory for same use again and again
+        localStorage.setItem('linksCache', JSON.stringify(data)); // Cache in localStorage to prevent from slow loading of same data
         setLinks(data);
       } catch (err) {
         console.error(err);
