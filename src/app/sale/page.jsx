@@ -171,7 +171,7 @@ export default function Page() {
                         `£${product.price}`
                       )}
                     </p>
-                    <button className="w-[70%] md:w-[60%] lg:w-[85%] bg-black text-white py-2 mx-auto mt-auto rounded-md hover:bg-gray-800 transition">
+                    <button className="w-[70%] md:w-[60%] lg:w-[100%] bg-black text-white py-2 mx-auto mt-auto rounded-md hover:bg-gray-800 transition">
                       ADD TO BAG
                     </button>
                   </div>
