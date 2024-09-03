@@ -26,10 +26,10 @@ export default function Page() {
     const fetchCategoriesAndProducts = async () => {
       try {
         setLoading(true);
-        const fragranceId = 457; // Replace with the correct category ID for Fragrance
+        const bathbodyId = 487;
 
         const [mainCategoryResponse, subCategoryResponse, hotSellingResponse, staffPicksResponse] = await Promise.all([
-          axios.get(`https://glam.clickable.site/wp-json/wc/v3/products/categories/${fragranceId}`, {
+          axios.get(`https://glam.clickable.site/wp-json/wc/v3/products/categories/${bathbodyId}`, {
             params: {
               consumer_key: "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d",
               consumer_secret: "cs_3f70ee2600a3ac17a5692d7ac9c358d47275d6fc",
@@ -39,14 +39,14 @@ export default function Page() {
             params: {
               consumer_key: "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d",
               consumer_secret: "cs_3f70ee2600a3ac17a5692d7ac9c358d47275d6fc",
-              parent: fragranceId,
+              parent: bathbodyId,
             },
           }),
           axios.get("https://glam.clickable.site/wp-json/wc/v3/products", {
             params: {
               consumer_key: "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d",
               consumer_secret: "cs_3f70ee2600a3ac17a5692d7ac9c358d47275d6fc",
-              category: fragranceId,
+              category: bathbodyId,
               orderby: "popularity",
               per_page: 10,
             },
@@ -55,7 +55,7 @@ export default function Page() {
             params: {
               consumer_key: "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d",
               consumer_secret: "cs_3f70ee2600a3ac17a5692d7ac9c358d47275d6fc",
-              category: fragranceId,
+              category: bathbodyId,
               orderby: "price",
               order: "desc",
               per_page: 10,
