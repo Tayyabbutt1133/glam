@@ -1,3 +1,4 @@
+
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -7,11 +8,12 @@ import MegaMenu from "./megamenu";
 
 const jost = Jost({ subsets: ["latin"] });
 
-export default function Navigation({ setSelectedCategory }) {
+export default function Navigation() {
   const [hoveredLink, setHoveredLink] = useState({ id: null, href: null});
   const [links, setLinks] = useState([]);
   const mainLinks = links?.filter(link => link.parent === "0") 
-
+  
+  // fetching data from URL
   useEffect(()=> {
     const fetchLinks = async () => {
       try{
@@ -29,18 +31,20 @@ export default function Navigation({ setSelectedCategory }) {
     fetchLinks()
   }, [])
   
+  // condition of mega menu
   // no megamenu for sale and new-in
   const shouldShowMegaMenu = links?.find(link => {
     return link.id === hoveredLink.id && link.href !== "/sale" && link.href !== "/new-in"
   })
 
+
+  // handling clicking
   const handleLinkClick = (link) => {
-    console.log("Clicked Link:", link);
+    console.log("Clicked Link:", link);  // Log the full link object
+    console.log("Parent ID:", link.parent);  // Log the parent ID specifically
     setHoveredLink({ id: null, href: null });
-    if (setSelectedCategory) {
-      setSelectedCategory({ id: link.id, name: link.name });
-    }
   };
+
 
   return (
     <div
@@ -57,14 +61,12 @@ export default function Navigation({ setSelectedCategory }) {
               key={link.id}
               href={link.href}
               style={{
-                boxShadow:
-                  hoveredLink.id === link.id
-                    ? `inset 0 -2px 0 0 var(--color-hover)`
-                    : "inset 0 -2px 0 0 transparent",
+                boxShadow: hoveredLink.id === link.id ? `inset 0 -2px 0 0 var(--color-hover)` : "inset 0 -2px 0 0 transparent",
                 transition: "box-shadow 0.3s ease",
               }}
               onMouseEnter={() => setHoveredLink({ id: link.id, href: link.href })}
-              onClick={() => handleLinkClick(link)}  // Pass the link object to the click handler
+              // this is will show the data on console and pass data of clicked link category
+              onClick={()=>handleLinkClick(link)}
             >
               <div>{link.name}</div>
             </Link>
