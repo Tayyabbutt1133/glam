@@ -11,6 +11,8 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { jost, lexendDeca } from "../../../ui/fonts";
 import NextArrowIcon from "../../../../public/hero-banners/next-arrow";
 import PrevArrowIcon from "../../../../public/hero-banners/prev-arrow";
+import Text from "../../../ui/Text";
+import Image from "next/image";
 
 const arrowStyles = {
   width: "40px",
@@ -114,7 +116,7 @@ const Staffpicks = ({ staffPicks = [] }) => {
 
   return (
     <div className="py-16">
-      <h2 className={`text-2xl font-semibold mx-4 my-8 ${jost.className} uppercase`}>Staff Picks</h2>
+      <Text style={"h1"} className="uppercase mb-10">Staff Picks</Text>
       {!staffPicks.length ? (
         <Slider {...settings}>
           {Array(4)

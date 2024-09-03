@@ -11,6 +11,8 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { jost, lexendDeca } from "../../../ui/fonts";
 import NextArrowIcon from "../../../../public/hero-banners/next-arrow";
 import PrevArrowIcon from "../../../../public/hero-banners/prev-arrow";
+import Image from "next/image";
+import Text from "../../../ui/Text";
 
 const arrowStyles = {
   width: "40px",
@@ -111,7 +113,7 @@ const Bestseller = ({ hotSellingProducts = [] }) => {
 
   return (
     <div className="py-16">
-      <h2 className={`text-2xl font-semibold mx-4 my-8 ${jost.className} uppercase`}>Bestsellers</h2>
+      <Text style={"h1"} className="uppercase mb-10">Bestsellers</Text>
       {!hotSellingProducts.length ? (
         <Slider {...settings}>
           {Array(4)
