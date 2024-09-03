@@ -22,35 +22,37 @@ export default function Page() {
   const [staffPicks, setStaffPicks] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const fragranceId = 483; // Replace with the correct category ID for Fragrance
+
   useEffect(() => {
     const fetchCategoriesAndProducts = async () => {
       try {
         setLoading(true);
-        const fragranceId = 483; // Replace with the correct category ID for Fragrance
 
-        const [mainCategoryResponse, subCategoryResponse, hotSellingResponse, staffPicksResponse] = await Promise.all([
-          axios.get(`https://glam.clickable.site/wp-json/wc/v3/products/categories/${fragranceId}`, {
-            params: {
-              consumer_key: "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d",
-              consumer_secret: "cs_3f70ee2600a3ac17a5692d7ac9c358d47275d6fc",
+        const [
+          mainCategoryResponse,
+          subCategoryResponse,
+          staffPicksResponse,
+        ] = await Promise.all([
+          axios.get(
+            `https://glam.clickable.site/wp-json/wc/v3/products/categories/${fragranceId}`,
+            {
+              params: {
+                consumer_key: "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d",
+                consumer_secret: "cs_3f70ee2600a3ac17a5692d7ac9c358d47275d6fc",
+              },
             },
-          }),
-          axios.get("https://glam.clickable.site/wp-json/wc/v3/products/categories/", {
-            params: {
-              consumer_key: "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d",
-              consumer_secret: "cs_3f70ee2600a3ac17a5692d7ac9c358d47275d6fc",
-              parent: fragranceId,
+          ),
+          axios.get(
+            "https://glam.clickable.site/wp-json/wc/v3/products/categories/",
+            {
+              params: {
+                consumer_key: "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d",
+                consumer_secret: "cs_3f70ee2600a3ac17a5692d7ac9c358d47275d6fc",
+                parent: fragranceId,
+              },
             },
-          }),
-          axios.get("https://glam.clickable.site/wp-json/wc/v3/products", {
-            params: {
-              consumer_key: "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d",
-              consumer_secret: "cs_3f70ee2600a3ac17a5692d7ac9c358d47275d6fc",
-              category: fragranceId,
-              orderby: "popularity",
-              per_page: 10,
-            },
-          }),
+          ),
           axios.get("https://glam.clickable.site/wp-json/wc/v3/products", {
             params: {
               consumer_key: "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d",
@@ -65,7 +67,6 @@ export default function Page() {
 
         setMainCategory(mainCategoryResponse.data);
         setSubCategories(subCategoryResponse.data);
-        setHotSellingProducts(hotSellingResponse.data);
         setStaffPicks(staffPicksResponse.data);
         setLoading(false);
       } catch (error) {
@@ -87,24 +88,26 @@ export default function Page() {
 
   return (
     <>
-      {loading && <Loading />}
-
-      {mainCategory && subCategories.length > 0 && hotSellingProducts.length > 0 && (
-        <div>
-          <Container>
-            <Menucategory mainCategory={mainCategory} subCategories={subCategories} />
-          </Container>
-        </div>
-      )}
+      {mainCategory &&
+        subCategories.length > 0 &&(
+          <div>
+            <Container>
+              <Menucategory
+                mainCategory={mainCategory}
+                subCategories={subCategories}
+              />
+            </Container>
+          </div>
+        )}
 
       <SliderComponent bannerObject={bannerObject} />
       <TrendingBrand />
 
-      {hotSellingProducts.length > 0 && (
+      
         <Container>
-          <Bestseller hotSellingProducts={hotSellingProducts} />
+          <Bestseller fragranceId={fragranceId} />
         </Container>
-      )}
+      
 
       <BrandInFocus />
 
