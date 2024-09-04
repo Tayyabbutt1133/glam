@@ -68,7 +68,6 @@ const Bestseller = ({ fragranceId }) => {
           },
           
         });
-        console.log(res)
         setHotSellingProducts(res.data)
       } catch (error) {
         console.error("Error fetching hot selling products: ", error);
