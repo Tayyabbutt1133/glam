@@ -87,9 +87,7 @@ export default function Page() {
   ];
 
   return (
-    <>
-      {loading && <Loading />}
-      
+    <>    
       {mainCategory && subCategories.length > 0 && hotSellingProducts.length > 0 && (
         <div>
           <Container>
