@@ -94,6 +94,11 @@ export default function Page() {
       description: "Discover MAC Beauty’s latest Radiance Foundation Range. ",
       src: olaplexbrand,
     },
+    {
+      title: "DISCOVER MAC STUDIO RADIANCE",
+      description: "Discover MAC Beauty’s latest Radiance Foundation Range. ",
+      src: olaplexbrand,
+    },
   ];
 
   return (
