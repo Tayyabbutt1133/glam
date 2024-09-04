@@ -35,6 +35,11 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&display=swap');
 
+.hero-title{
+    line-height: 3.5rem !important;
+}
+
+
 ul.slick-dots.slick-thumb {
   display: flex !important;
   flex-direction: row;
