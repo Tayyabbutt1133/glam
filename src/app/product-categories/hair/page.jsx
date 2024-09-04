@@ -83,6 +83,11 @@ export default function Page() {
       description: "Receive a free gift when you spend £30 on NARS.",
       src: bannerimg,
     },
+    {
+      title: "NARS FREE GIFT COLLECTION",
+      description: "Receive a free gift when you spend £30 on NARS.",
+      src: bannerimg,
+    },
   ];
 
   return (
