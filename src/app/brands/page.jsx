@@ -20,6 +20,7 @@ export default function Page() {
   const [hotSellingProducts, setHotSellingProducts] = useState([]);
   const [staffPicks, setStaffPicks] = useState([]); // New state for Staff Picks
 
+
   useEffect(() => {
     const fetchCategoriesAndProducts = async () => {
       try {
