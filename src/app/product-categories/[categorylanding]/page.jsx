@@ -14,9 +14,7 @@ import MakeupTips from "../../../../components/lifecycle/mutual-components/makeu
 import Staffpicks from "../../../../components/lifecycle/category/categoriescomponents/Staffpicks";
 import MenucategoryLandingPage from "../../../../components/lifecycle/category/MenucategoryLandingPage";
 
-
-
-const Page = ({ params }) => {
+const Page = () => {
   const [data, setData] = useState({
     mainCategory: null,
     subCategories: [],
@@ -24,68 +22,72 @@ const Page = ({ params }) => {
     staffPicks: [],
     loading: false,
   });
-  console.log(params.categorylanding);
 
+  // useEffect(() => {
+  //   if(!categoryID) return;
 
+  //   const fetchData = async () => {
+  //     setData(prevState => ({ ...prevState, loading: true }));
+  //     try {
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setData(prevState => ({ ...prevState, loading: true }));
-      try {
-        const categoryID = 147; // Use a variable for category ID if it's static
+  //       const [mainCategoryResponse, subCategoryResponse, hotSellingResponse, staffPicksResponse] = await Promise.all([
+  //         axios.get(`https://glam.clickable.site/wp-json/wc/v3/products/categories/${categoryID}`, {
+  //           params: {
+  //             consumer_key: "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d",
+  //             consumer_secret: "cs_3f70ee2600a3ac17a5692d7ac9c358d47275d6fc",
+  //           },
+  //         }),
+  //         axios.get("https://glam.clickable.site/wp-json/wc/v3/products/categories/", {
+  //           params: {
+  //             consumer_key: "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d",
+  //             consumer_secret: "cs_3f70ee2600a3ac17a5692d7ac9c358d47275d6fc",
+  //             parent: categoryID,
+  //           },
+  //         }),
+  //         axios.get("https://glam.clickable.site/wp-json/wc/v3/products", {
+  //           params: {
+  //             consumer_key: "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d",
+  //             consumer_secret: "cs_3f70ee2600a3ac17a5692d7ac9c358d47275d6fc",
+  //             category: categoryID,
+  //             orderby: "popularity",
+  //             per_page: 10,
+  //           },
+  //         }),
+  //         axios.get("https://glam.clickable.site/wp-json/wc/v3/products", {
+  //           params: {
+  //             consumer_key: "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d",
+  //             consumer_secret: "cs_3f70ee2600a3ac17a5692d7ac9c358d47275d6fc",
+  //             category: categoryID,
+  //             orderby: "price",
+  //             order: "desc",
+  //             per_page: 10,
+  //           },
+  //         }),
+  //       ]);
 
-        const [mainCategoryResponse, subCategoryResponse, hotSellingResponse, staffPicksResponse] = await Promise.all([
-          axios.get(`https://glam.clickable.site/wp-json/wc/v3/products/categories/${categoryID}`, {
-            params: {
-              consumer_key: "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d",
-              consumer_secret: "cs_3f70ee2600a3ac17a5692d7ac9c358d47275d6fc",
-            },
-          }),
-          axios.get("https://glam.clickable.site/wp-json/wc/v3/products/categories/", {
-            params: {
-              consumer_key: "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d",
-              consumer_secret: "cs_3f70ee2600a3ac17a5692d7ac9c358d47275d6fc",
-              parent: categoryID,
-            },
-          }),
-          axios.get("https://glam.clickable.site/wp-json/wc/v3/products", {
-            params: {
-              consumer_key: "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d",
-              consumer_secret: "cs_3f70ee2600a3ac17a5692d7ac9c358d47275d6fc",
-              category: categoryID,
-              orderby: "popularity",
-              per_page: 10,
-            },
-          }),
-          axios.get("https://glam.clickable.site/wp-json/wc/v3/products", {
-            params: {
-              consumer_key: "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d",
-              consumer_secret: "cs_3f70ee2600a3ac17a5692d7ac9c358d47275d6fc",
-              category: categoryID,
-              orderby: "price",
-              order: "desc",
-              per_page: 10,
-            },
-          }),
-        ]);
+  //       setData({
+  //         mainCategory: mainCategoryResponse.data,
+  //         subCategories: subCategoryResponse.data,
+  //         hotSellingProducts: hotSellingResponse.data,
+  //         staffPicks: staffPicksResponse.data,
+  //         loading: false,
+  //       });
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //       setData(prevState => ({ ...prevState, loading: false }));
+  //     }
+  //   };
 
-        setData({
-          mainCategory: mainCategoryResponse.data,
-          subCategories: subCategoryResponse.data,
-          hotSellingProducts: hotSellingResponse.data,
-          staffPicks: staffPicksResponse.data,
-          loading: false,
-        });
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        setData(prevState => ({ ...prevState, loading: false }));
-      }
-    };
+  //   fetchData();
+  // }, [categoryID]);
 
-    fetchData();
-  }, []);
-
-  const { mainCategory, subCategories, hotSellingProducts, staffPicks, loading } = data;
+  const {
+    mainCategory,
+    subCategories,
+    hotSellingProducts,
+    staffPicks,
+    loading,
+  } = data;
 
   const bannerObject = [
     {
@@ -97,15 +99,11 @@ const Page = ({ params }) => {
 
   return (
     <>
-      {loading && <div>Loading...</div>}
-      
-      {mainCategory && subCategories.length > 0 && hotSellingProducts.length > 0 && (
-        <div>
-          <Container>
-            <MenucategoryLandingPage mainCategory={mainCategory} subCategories={subCategories} />
-          </Container>
-        </div>
-      )}
+      <div>
+        <Container>
+          <MenucategoryLandingPage />
+        </Container>
+      </div>
 
       <SliderComponent bannerObject={bannerObject} />
       <TrendingBrand />
