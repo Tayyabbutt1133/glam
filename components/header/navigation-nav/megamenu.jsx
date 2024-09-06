@@ -66,14 +66,14 @@ export default function MegaMenu({ links, hoveredLink }) {
         </div>{" "}
         {/* Submenu container */}
         {/* Image */}
-        <div className="grid w-[30%] h-auto justify-end">
+        {/* <div className="grid w-[30%] h-auto justify-end">
           <Image
             src={img}
             alt="nav image"
             style={{ width: "100%", height: "100%", objectFit: "contain" }}
             objectFit="contain"
           />
-        </div>
+        </div> */}
       </section>
     </nav>
   );
