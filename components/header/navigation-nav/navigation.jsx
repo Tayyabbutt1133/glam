@@ -7,44 +7,31 @@ import MegaMenu from "./megamenu";
 
 const jost = Jost({ subsets: ["latin"] });
 
-let cachedLinks = null; // In-memory cache
 
-export default function Navigation({ initialLinks }) {
+
+export default function Navigation() {
   const [hoveredLink, setHoveredLink] = useState({ id: null, href: null });
-  const [links, setLinks] = useState(initialLinks || []);
+  const [links, setLinks] = useState([]);
   const mainLinks = links?.filter(link => link.parent === "0");
 
   useEffect(() => {
     const fetchLinks = async () => {
-      const cachedData = localStorage.getItem('linksCache');
-      if (cachedData) {
-        setLinks(JSON.parse(cachedData));
-        return;
-      }
-
-      if (cachedLinks) {
-        setLinks(cachedLinks);
-        return;
-      }
-
       try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/test-6`, {
           method: "GET",
           cache: "no-store",
         });
         const data = await res.json();
-        cachedLinks = data; // store Cache in memory for same use again and again
-        localStorage.setItem('linksCache', JSON.stringify(data)); // Cache in localStorage to prevent from slow loading of same data
         setLinks(data);
       } catch (err) {
         console.error(err);
       }
     };
 
-    if (!initialLinks) {
+    
       fetchLinks();
-    }
-  }, [initialLinks]);
+    
+  }, []);
 
   const shouldShowMegaMenu = links?.find(link => {
     return link.id === hoveredLink.id && link.href !== "/sale" && link.href !== "/new-in";
