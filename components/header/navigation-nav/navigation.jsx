@@ -1,3 +1,4 @@
+
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -7,44 +8,48 @@ import MegaMenu from "./megamenu";
 
 const jost = Jost({ subsets: ["latin"] });
 
-
-
 export default function Navigation() {
-  const [hoveredLink, setHoveredLink] = useState({ id: null, href: null });
+  const [hoveredLink, setHoveredLink] = useState({ id: null, href: null});
   const [links, setLinks] = useState([]);
-  const mainLinks = links?.filter(link => link.parent === "0");
-
-  useEffect(() => {
+  const mainLinks = links?.filter(link => link.parent === "0") 
+  
+  // fetching data from URL
+  useEffect(()=> {
     const fetchLinks = async () => {
-      try {
+      try{
         const res = await fetch(`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/test-6`, {
           method: "GET",
           cache: "no-store",
         });
-        const data = await res.json();
-        setLinks(data);
-      } catch (err) {
-        console.error(err);
+        const data = await res.json()
+        setLinks(data)
       }
-    };
-
-    
-      fetchLinks();
-    
-  }, []);
-
+      catch(err){
+        console.error(err)
+      }
+    }
+    fetchLinks()
+  }, [])
+  
+  // condition of mega menu
+  // no megamenu for sale and new-in
   const shouldShowMegaMenu = links?.find(link => {
-    return link.id === hoveredLink.id && link.href !== "/sale" && link.href !== "/new-in";
-  });
+    return link.id === hoveredLink.id && link.href !== "/sale" && link.href !== "/new-in"
+  })
 
-  const handleLinkClick = () => {
+
+  // handling clicking
+  const handleLinkClick = (link) => {
+    console.log("Clicked Link:", link);  // Log the full link object
+    console.log("Parent ID:", link.parent);  // Log the parent ID specifically
     setHoveredLink({ id: null, href: null });
   };
+
 
   return (
     <div
       className={`${jost.className} hidden lg:flex items-center h-[52px] font-normal lg:text-base xl:text-sm bg-white text-sm 2xl:text-lg relative`}
-      onMouseLeave={() => setHoveredLink({ id: null, href: null })}
+      onMouseLeave={() => setHoveredLink({ id: null, href: null})} // Close mega menu when mouse leaves the entire navigation area
     >
       <Container>
         <nav className="flex flex-row w-full justify-between items-center py-3">
@@ -60,7 +65,8 @@ export default function Navigation() {
                 transition: "box-shadow 0.3s ease",
               }}
               onMouseEnter={() => setHoveredLink({ id: link.id, href: link.href })}
-              onClick={handleLinkClick}
+              // this is will show the data on console and pass data of clicked link category
+              onClick={()=>handleLinkClick(link)}
             >
               <div>{link.name}</div>
             </Link>
@@ -74,20 +80,4 @@ export default function Navigation() {
       )}
     </div>
   );
-}
-
-export async function getServerSideProps() {
-  let links = cachedLinks;
-
-  if (!links) {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/test-6`);
-    links = await res.json();
-    cachedLinks = links; // Cache the data for subsequent requests
-  }
-
-  return {
-    props: {
-      initialLinks: links,
-    },
-  };
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { FaRegStar, FaStar, FaHeart } from "react-icons/fa";
 import { CiHeart } from "react-icons/ci";
 import Slider from "react-slick";
@@ -11,9 +11,6 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { jost, lexendDeca } from "../../../ui/fonts";
 import NextArrowIcon from "../../../../public/hero-banners/next-arrow";
 import PrevArrowIcon from "../../../../public/hero-banners/prev-arrow";
-import Image from "next/image";
-import Text from "../../../ui/Text";
-import axios from "axios";
 
 const arrowStyles = {
   width: "40px",
@@ -50,32 +47,8 @@ const PrevArrow = ({ className, style, onClick }) => (
   </div>
 );
 
-const Bestseller = ({ fragranceId }) => {
+const Bestseller = ({ hotSellingProducts = [] }) => {
   const [favorites, setFavorites] = useState({});
-  const [hotSellingProducts, setHotSellingProducts] = useState([]);
-  
- 
-  useEffect(() => {
-    const fetchHotSellingProducts = async () => {
-      try {
-        const res = await axios.get("https://glam.clickable.site/wp-json/wc/v3/products", {
-          params: {
-            consumer_key: "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d",
-            consumer_secret: "cs_3f70ee2600a3ac17a5692d7ac9c358d47275d6fc",
-            category: fragranceId,
-            orderby: "popularity",
-            per_page: 10,
-          },
-          
-        });
-        setHotSellingProducts(res.data)
-      } catch (error) {
-        console.error("Error fetching hot selling products: ", error);
-      }
-    };
-    
-    fetchHotSellingProducts()
-  }, []);
 
   const settings = {
     dots: false,
@@ -133,15 +106,13 @@ const Bestseller = ({ fragranceId }) => {
   };
 
   const sanitizeText = (text) => {
-    return text.replace(/&amp;/g, "&");
+    return text.replace(/&amp;/g, '&');
   };
 
   return (
     <div className="py-16">
-      <Text style={"h1"} className="uppercase mb-10">
-        Bestsellers
-      </Text>
-      {!hotSellingProducts ? (
+      <h2 className={`text-2xl font-semibold mx-4 my-8 ${jost.className} uppercase`}>Bestsellers</h2>
+      {!hotSellingProducts.length ? (
         <Slider {...settings}>
           {Array(4)
             .fill(0)
@@ -176,10 +147,7 @@ const Bestseller = ({ fragranceId }) => {
                   </div>
                 )}
                 <div className="absolute top-2 right-2">
-                  <button
-                    className="focus:outline-none"
-                    onClick={() => handleFavoriteClick(product.id)}
-                  >
+                  <button className="focus:outline-none" onClick={() => handleFavoriteClick(product.id)}>
                     {favorites[product.id] ? (
                       <FaHeart className="text-red-500 w-6 h-6" />
                     ) : (
@@ -213,28 +181,21 @@ const Bestseller = ({ fragranceId }) => {
                         )}
                       </span>
                     ))}
-                    <span className="text-gray-600 text-sm ml-2">
-                      ({product.rating_count})
-                    </span>
+                    <span className="text-gray-600 text-sm ml-2">({product.rating_count})</span>
                   </div>
                   <div className="flex items-center text-gray-600 text-sm mb-2">
                     {product.regular_price && (
-                      <span
-                        className={`line-through mr-2 ${lexendDeca.className}`}
-                      >
+                      <span className={`line-through mr-2 ${lexendDeca.className}`}>
                         RRP: £{product.regular_price}
                       </span>
                     )}
                     {product.regular_price && product.price && (
                       <span className={`text-black ${lexendDeca.className}`}>
-                        Save £
-                        {(product.regular_price - product.price).toFixed(2)}
+                        Save £{(product.regular_price - product.price).toFixed(2)}
                       </span>
                     )}
                   </div>
-                  <p
-                    className={`text-gray-900 font-bold text-lg mb-3 ${lexendDeca.className}`}
-                  >
+                  <p className={`text-gray-900 font-bold text-lg mb-3 ${lexendDeca.className}`}>
                     £{parseFloat(product.price).toFixed(2)}
                   </p>
                   <button

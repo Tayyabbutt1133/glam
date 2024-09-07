@@ -20,7 +20,6 @@ export default function Page() {
   const [hotSellingProducts, setHotSellingProducts] = useState([]);
   const [staffPicks, setStaffPicks] = useState([]); // New state for Staff Picks
 
-
   useEffect(() => {
     const fetchCategoriesAndProducts = async () => {
       try {
@@ -90,11 +89,6 @@ export default function Page() {
   }, []);
 
   let bannerObject = [
-    {
-      title: "DISCOVER MAC STUDIO RADIANCE",
-      description: "Discover MAC Beauty’s latest Radiance Foundation Range. ",
-      src: olaplexbrand,
-    },
     {
       title: "DISCOVER MAC STUDIO RADIANCE",
       description: "Discover MAC Beauty’s latest Radiance Foundation Range. ",
