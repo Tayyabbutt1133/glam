@@ -3,6 +3,8 @@ import Image from "next/image";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import SliderBanner from "../../slider-banner";
+import banner_img from "/public/slider-image/Olaplex 1.png"
 
 import mob_image_path from "/public/hero-banners/mob-banner.png";
 import NextArrowIcon from "/public/hero-banners/next-arrow";
@@ -18,6 +20,20 @@ const images = [
   { src: Banner2 },
   { src: Banner2 },
 ];
+
+const bannerData = [
+  {
+    title: "Enjoy 33% off the entire OLAPLEX range!",
+    description: "Free UK delivery on all orders over £10",
+    src: banner_img,
+  },
+  {
+    title: "Enjoy 33% off the entire OLAPLEX range!",
+    description: "Free UK delivery on all orders over £10",
+    src: banner_img,
+  }
+]
+
 
 const mobImages = [
   { src: mob_image_path },
@@ -94,8 +110,8 @@ export default function Hero() {
       {/* For large screens */}
       <div className="hidden lg:block">
         <Slider {...settings} className="flex items-center">
-          {images.map((img, idx) => (
-            <Banner key={idx} src={img.src} />
+          {bannerData.map((data, idx) => (
+            <SliderBanner key={idx} bannerObject={data} hero={true} />
           ))}
         </Slider>
       </div>

@@ -13,7 +13,7 @@ export default function MegaMenu({ links, hoveredLink }) {
     return links.filter((link) => link.parent === parentId?.toString());
   };
   
-  console.log(links)
+
   
   if(hoveredLink.href === "/brands"){
     // console.log("brands")
