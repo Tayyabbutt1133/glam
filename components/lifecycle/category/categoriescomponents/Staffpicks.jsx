@@ -1,6 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+
+import Container from "../../../container";
 import { FaRegStar, FaStar, FaHeart } from "react-icons/fa";
 import { CiHeart } from "react-icons/ci";
 import Slider from "react-slick";
@@ -11,6 +14,8 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { jost, lexendDeca } from "../../../ui/fonts";
 import NextArrowIcon from "../../../../public/hero-banners/next-arrow";
 import PrevArrowIcon from "../../../../public/hero-banners/prev-arrow";
+import { useCategoryIdState } from "../../../../states/use-category-id";
+import Product from "../../../product";
 
 const arrowStyles = {
   width: "40px",
@@ -54,8 +59,26 @@ const decodeHtmlEntities = (text) => {
   return textarea.value;
 };
 
-const Staffpicks = ({ staffPicks = [] }) => {
+const Staffpicks = () => {
   const [favorites, setFavorites] = useState({});
+  const [staffPicks, setStaffPicks] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const categoryId = useCategoryIdState((state) => state.categoryId);
+
+  useEffect(() => {
+    const fetchStaffPicks = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(`/api/staffpicks/${categoryId}`);
+        setStaffPicks(response.data);
+      } catch (error) {
+        console.error("Error fetching staff picks:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    if(categoryId) fetchStaffPicks();
+  }, [categoryId]);
 
   const settings = {
     dots: false,
@@ -111,11 +134,17 @@ const Staffpicks = ({ staffPicks = [] }) => {
       [productId]: !prevFavorites[productId],
     }));
   };
-
+  
+  if (!categoryId) return;
+  
   return (
-    <div className="py-16">
-      <h2 className={`text-2xl font-semibold mx-4 my-8 ${jost.className} uppercase`}>Staff Picks</h2>
-      {!staffPicks.length ? (
+    <Container className="mb-16">
+      <h2
+        className={`text-2xl font-semibold mx-4 my-8 ${jost.className} uppercase`}
+      >
+        Staff Picks
+      </h2>
+      {loading ? (
         <Slider {...settings}>
           {Array(4)
             .fill(0)
@@ -138,81 +167,12 @@ const Staffpicks = ({ staffPicks = [] }) => {
         </Slider>
       ) : (
         <Slider {...settings}>
-          {staffPicks.map((product) => (
-            <div key={product.id} className="px-2 mx-4 2xl:mx-0">
-              <div
-                className="bg-white border border-gray-300 rounded-lg overflow-hidden relative flex flex-col h-full min-h-[470px] w-[90%] cursor-pointer"
-                onClick={() => handleProductClick(product.id)}
-              >
-                {product.on_sale && (
-                  <div className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
-                    SALE
-                  </div>
-                )}
-                <div className="absolute top-2 right-2">
-                  <button className="focus:outline-none" onClick={() => handleFavoriteClick(product.id)}>
-                    {favorites[product.id] ? (
-                      <FaHeart className="text-red-500 w-6 h-6" />
-                    ) : (
-                      <CiHeart className="text-black w-6 h-6" />
-                    )}
-                  </button>
-                </div>
-                <img
-                  className="w-full h-48 object-contain p-4"
-                  src={product.images[0]?.src}
-                  alt={product.images[0]?.alt || product.name}
-                />
-                <div className="px-4 pb-4 flex-grow flex flex-col">
-                  <h2
-                    className={`text-gray-900 font-bold text-sm ${lexendDeca.className} h-auto`}
-                    style={{
-                      whiteSpace: "normal",
-                      overflow: "visible",
-                      textOverflow: "clip",
-                    }}
-                  >
-                    {decodeHtmlEntities(product.name)}
-                  </h2>
-                  <div className="flex items-center mb-2 mt-4 h-[20px]">
-                    {[...Array(5)].map((_, index) => (
-                      <span key={index}>
-                        {index < Math.round(product.average_rating) ? (
-                          <FaStar className="text-[#7E7E7E] w-4 h-4" />
-                        ) : (
-                          <FaRegStar className="text-[#7E7E7E] w-4 h-4" />
-                        )}
-                      </span>
-                    ))}
-                    <span className="text-gray-600 text-sm ml-2">({product.rating_count})</span>
-                  </div>
-                  <div className="flex items-center text-gray-600 text-sm mb-1 h-[20px]">
-                    {product.regular_price && (
-                      <span className={`line-through mr-2 ${lexendDeca.className}`}>
-                        RRP: £{product.regular_price}
-                      </span>
-                    )}
-                    {product.regular_price && product.price && (
-                      <span className={`text-black ${lexendDeca.className}`}>
-                        Save £{(product.regular_price - product.price).toFixed(2)}
-                      </span>
-                    )}
-                  </div>
-                  <p className={`text-gray-900 font-bold text-lg mb-3 ${lexendDeca.className}`}>
-                    £{parseFloat(product.price).toFixed(2)}
-                  </p>
-                  <button
-                    className={`w-[70%] md:w-[60%] lg:w-[85%] bg-black text-white py-2 mx-auto mt-auto rounded-md hover:bg-gray-800 font-normal transition duration-200 flex justify-center items-center text-center ${lexendDeca.className}`}
-                  >
-                    ADD TO BASKET
-                  </button>
-                </div>
-              </div>
-            </div>
+          {staffPicks?.map((product) => (
+            <Product key={product.id} product={product} />
           ))}
         </Slider>
       )}
-    </div>
+    </Container>
   );
 };
 
