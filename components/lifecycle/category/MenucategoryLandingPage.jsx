@@ -1,22 +1,72 @@
 "use client";
-import React from 'react';
-import Image from 'next/image';
-import logo_one from '../../../public/product_category_landing/rounded_cat/one.svg';
-import logo_two from '../../../public/product_category_landing/rounded_cat/two.svg';
-import logo_three from '../../../public/product_category_landing/rounded_cat/three.svg';
-import logo_four from '../../../public/product_category_landing/rounded_cat/four.svg';
-import logo_five from '../../../public/product_category_landing/rounded_cat/five.svg';
-import logo_six from '../../../public/product_category_landing/rounded_cat/six.svg';
-import logo_seven from '../../../public/product_category_landing/rounded_cat/seven.svg';
-import { jost } from '../../ui/fonts';
+import React, { useState, useEffect, memo } from "react";
+import Image from "next/image";
+import logo_one from "../../../public/product_category_landing/rounded_cat/one.svg";
+import logo_two from "../../../public/product_category_landing/rounded_cat/two.svg";
+import logo_three from "../../../public/product_category_landing/rounded_cat/three.svg";
+import logo_four from "../../../public/product_category_landing/rounded_cat/four.svg";
+import logo_five from "../../../public/product_category_landing/rounded_cat/five.svg";
+import logo_six from "../../../public/product_category_landing/rounded_cat/six.svg";
+import logo_seven from "../../../public/product_category_landing/rounded_cat/seven.svg";
+import { jost } from "../../ui/fonts";
+import axios from "axios";
+import { useParams } from "next/navigation";
+
+import { useCategoryIdState } from "../../../states/use-category-id";
 
 
+const MenucategoryLandingPage = () => {
+  const [mainCategory, setMainCategory] = useState(null);
+  const [subCategories, setSubCategories] = useState([]);
+  const { categorylanding } = useParams();
 
-const MenucategoryLandingPage = ({ mainCategory, subCategories }) => {
+  const setCategoryId = useCategoryIdState((state) => state.setCategoryId);
+
+  useEffect(() => {
+    const controller = new AbortController(); // Create a new AbortController instance
+    const signal = controller.signal; // Get the signal to attach to the fetch request
+
+    const fetchData = async () => {
+      try {
+        // Clear the state before fetching new data
+        setMainCategory(null);
+        setSubCategories([]);
+        setCategoryId(null);
+
+        // Fetch the category ID based on the current slug (categorylanding)
+        const cateId = await axios.get(`/api/${categorylanding}`, { signal });
+        setCategoryId(cateId.data);
+
+        // Fetch category data only after the category ID is set
+        if (cateId.data) {
+          const mainCateData = await axios.get(
+            `/api/categoryData/${cateId.data}`,
+            { signal },
+          );
+          setMainCategory(mainCateData.data.mainCategory);
+          setSubCategories(mainCateData.data.subCategories);
+        }
+      } catch (error) {
+        if (axios.isCancel(error)) {
+          console.log("Request canceled", error.message);
+        } else {
+          console.log("Error fetching data:", error);
+        }
+      }
+    };
+
+    fetchData();
+
+    // Cleanup function to abort previous requests when the component unmounts or re-renders
+    return () => {
+      controller.abort(); // Abort any ongoing requests
+    };
+  }, [categorylanding, setCategoryId]);
+
 
   const sanitizeText = (text) => {
     // Replace &amp; with &
-    return text.replace(/&amp;/g, '&');
+    return text?.replace(/&amp;/g, "&");
   };
 
   // Mapping the images to the respective subcategories
@@ -27,41 +77,43 @@ const MenucategoryLandingPage = ({ mainCategory, subCategories }) => {
     logo_four,
     logo_five,
     logo_six,
-    logo_seven
+    logo_seven,
   ];
 
   return (
 
-    <div className='my-14'>
-
+    <div className="my-14">
 
       {/* Display main category name */}
-      <h1 className={`text-2xl ${jost.className} uppercase font-bold text-center mt-10`}>
+      <h1
+        className={`text-2xl ${jost.className} uppercase font-bold text-center mt-10`}
+      >
         {sanitizeText(mainCategory?.name)}
       </h1>
 
       <div className="mt-10">
-        {subCategories.length > 0 ? (
-          <ul className="flex justify-center gap-8">
-            {subCategories.map((subCat, index) => (
-              <li key={subCat.id} className="flex flex-col items-center text-center">
-                <div className="flex justify-center items-center w-24 h-24 rounded-full overflow-hidden border-4 border-transparent hover:border-blue-500 transition-all duration-300 ease-in-out">
-                  <Image 
-                    src={logos[index]} 
-                    alt={sanitizeText(subCat.name)} 
-                    className="object-cover w-full h-full cursor-pointer"
-                  />
-                </div>
-                <p className={`mt-2 text-sm font-semibold ${jost.className}`}>{sanitizeText(subCat.name)}</p>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No subcategories found.</p>
-        )}
+        <ul className="flex justify-center gap-8">
+          {subCategories.map((subCat, index) => (
+            <li
+              key={subCat.id}
+              className="flex flex-col items-center text-center"
+            >
+              <div className="flex justify-center items-center w-24 h-24 rounded-full overflow-hidden border-4 border-transparent hover:border-blue-500 transition-all duration-300 ease-in-out">
+                <Image
+                  src={logos[index]}
+                  alt={sanitizeText(subCat.name)}
+                  className="object-cover w-full h-full cursor-pointer"
+                />
+              </div>
+              <p className={`mt-2 text-sm font-semibold ${jost.className}`}>
+                {sanitizeText(subCat.name)}
+              </p>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
 };
 
-export default MenucategoryLandingPage;
+export default memo(MenucategoryLandingPage);
