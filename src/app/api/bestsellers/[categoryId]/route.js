@@ -3,7 +3,6 @@ import axios from "axios";
 export async function GET(request, { params }) {
   const { categoryId } = params;
   
-  console.log("categoryId", categoryId);
   if (!categoryId)
     return new Response("Category ID is required", {
       status: 400,
@@ -22,7 +21,6 @@ export async function GET(request, { params }) {
     });
     
     const data = res.data;
-    console.log(res);
     return new Response(JSON.stringify(data), {
       status: 200,
       headers: { "Content-Type": "application/json" },
