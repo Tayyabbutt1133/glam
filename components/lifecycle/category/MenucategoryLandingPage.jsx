@@ -11,6 +11,7 @@ import logo_seven from '../../../public/product_category_landing/rounded_cat/sev
 import { jost } from '../../ui/fonts';
 
 
+
 const MenucategoryLandingPage = ({ mainCategory, subCategories }) => {
 
   const sanitizeText = (text) => {
@@ -30,7 +31,10 @@ const MenucategoryLandingPage = ({ mainCategory, subCategories }) => {
   ];
 
   return (
+
     <div className='my-14'>
+
+
       {/* Display main category name */}
       <h1 className={`text-2xl ${jost.className} uppercase font-bold text-center mt-10`}>
         {sanitizeText(mainCategory?.name)}
