@@ -13,7 +13,7 @@ import axios from "axios";
 import { useParams } from "next/navigation";
 
 import { useCategoryIdState } from "../../../states/use-category-id";
-
+import Container from "../../container";
 
 const MenucategoryLandingPage = () => {
   const [mainCategory, setMainCategory] = useState(null);
@@ -23,28 +23,28 @@ const MenucategoryLandingPage = () => {
   const setCategoryId = useCategoryIdState((state) => state.setCategoryId);
 
   useEffect(() => {
-    const controller = new AbortController(); // Create a new AbortController instance
-    const signal = controller.signal; // Get the signal to attach to the fetch request
+    const controller = new AbortController();
+    const signal = controller.signal;
 
     const fetchData = async () => {
       try {
-        // Clear the state before fetching new data
-        setMainCategory(null);
-        setSubCategories([]);
-        setCategoryId(null);
+        // Reset states only if `categorylanding` changes
+        if (categorylanding) {
+          setMainCategory(null);
+          setSubCategories([]);
+          setCategoryId(null);
 
-        // Fetch the category ID based on the current slug (categorylanding)
-        const cateId = await axios.get(`/api/${categorylanding}`, { signal });
-        setCategoryId(cateId.data);
+          const cateId = await axios.get(`/api/${categorylanding}`, { signal });
+          setCategoryId(cateId.data);
 
-        // Fetch category data only after the category ID is set
-        if (cateId.data) {
-          const mainCateData = await axios.get(
-            `/api/categoryData/${cateId.data}`,
-            { signal },
-          );
-          setMainCategory(mainCateData.data.mainCategory);
-          setSubCategories(mainCateData.data.subCategories);
+          if (cateId.data) {
+            const mainCateData = await axios.get(
+              `/api/categoryData/${cateId.data}`,
+              { signal },
+            );
+            setMainCategory(mainCateData.data.mainCategory);
+            setSubCategories(mainCateData.data.subCategories);
+          }
         }
       } catch (error) {
         if (axios.isCancel(error)) {
@@ -57,12 +57,10 @@ const MenucategoryLandingPage = () => {
 
     fetchData();
 
-    // Cleanup function to abort previous requests when the component unmounts or re-renders
     return () => {
-      controller.abort(); // Abort any ongoing requests
+      controller.abort();
     };
   }, [categorylanding, setCategoryId]);
-
 
   const sanitizeText = (text) => {
     // Replace &amp; with &
@@ -81,9 +79,7 @@ const MenucategoryLandingPage = () => {
   ];
 
   return (
-
-    <div className="my-14">
-
+    <Container className="my-14">
       {/* Display main category name */}
       <h1
         className={`text-2xl ${jost.className} uppercase font-bold text-center mt-10`}
@@ -112,7 +108,7 @@ const MenucategoryLandingPage = () => {
           ))}
         </ul>
       </div>
-    </div>
+    </Container>
   );
 };
 
