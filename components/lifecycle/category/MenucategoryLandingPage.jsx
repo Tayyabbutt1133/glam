@@ -13,6 +13,7 @@ import axios from "axios";
 import { useParams } from "next/navigation";
 
 import { useCategoryIdState } from "../../../states/use-category-id";
+import Link from "next/link";
 
 const MenucategoryLandingPage = () => {
   const [mainCategory, setMainCategory] = useState(null);
@@ -22,25 +23,22 @@ const MenucategoryLandingPage = () => {
   const setCategoryId = useCategoryIdState((state) => state.setCategoryId);
 
   useEffect(() => {
-    const controller = new AbortController(); // Create a new AbortController instance
-    const signal = controller.signal; // Get the signal to attach to the fetch request
+    const controller = new AbortController();
+    const signal = controller.signal;
 
     const fetchData = async () => {
       try {
-        // Clear the state before fetching new data
         setMainCategory(null);
         setSubCategories([]);
         setCategoryId(null);
 
-        // Fetch the category ID based on the current slug (categorylanding)
         const cateId = await axios.get(`/api/${categorylanding}`, { signal });
         setCategoryId(cateId.data);
 
-        // Fetch category data only after the category ID is set
         if (cateId.data) {
           const mainCateData = await axios.get(
             `/api/categoryData/${cateId.data}`,
-            { signal },
+            { signal }
           );
           setMainCategory(mainCateData.data.mainCategory);
           setSubCategories(mainCateData.data.subCategories);
@@ -56,18 +54,20 @@ const MenucategoryLandingPage = () => {
 
     fetchData();
 
-    // Cleanup function to abort previous requests when the component unmounts or re-renders
     return () => {
-      controller.abort(); // Abort any ongoing requests
+      controller.abort();
     };
   }, [categorylanding, setCategoryId]);
 
   const sanitizeText = (text) => {
-    // Replace &amp; with &
     return text?.replace(/&amp;/g, "&");
   };
 
-  // Mapping the images to the respective subcategories
+  const handleClick = (subCatId, subCatName) => {
+    console.log(`Clicked ${subCatName} ID:`, subCatId);
+    // You can navigate to a different page or perform any other actions here
+  };
+
   const logos = [
     logo_one,
     logo_two,
@@ -87,12 +87,13 @@ const MenucategoryLandingPage = () => {
         {sanitizeText(mainCategory?.name)}
       </h1>
 
-      <div className="mt-10">
+      <div className="mt-10 ">
         <ul className="flex justify-center gap-8">
           {subCategories.map((subCat, index) => (
-            <li
+            <Link href={`./${subCat.slug}`}
               key={subCat.id}
               className="flex flex-col items-center text-center"
+              onClick={() => handleClick(subCat.id, subCat.slug)} // Add onClick to handle the subcategory click
             >
               <div className="flex justify-center items-center w-24 h-24 rounded-full overflow-hidden border-4 border-transparent hover:border-blue-500 transition-all duration-300 ease-in-out">
                 <Image
@@ -104,7 +105,7 @@ const MenucategoryLandingPage = () => {
               <p className={`mt-2 text-sm font-semibold ${jost.className}`}>
                 {sanitizeText(subCat.name)}
               </p>
-            </li>
+            </Link>
           ))}
         </ul>
       </div>
