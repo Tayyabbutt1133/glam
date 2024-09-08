@@ -90,22 +90,23 @@ const MenucategoryLandingPage = () => {
       <div className="mt-10 ">
         <ul className="flex justify-center gap-8">
           {subCategories.map((subCat, index) => (
-            <Link href={`./${subCat.slug}`}
-              key={subCat.id}
-              className="flex flex-col items-center text-center"
-              onClick={() => handleClick(subCat.id, subCat.slug)} // Add onClick to handle the subcategory click
-            >
-              <div className="flex justify-center items-center w-24 h-24 rounded-full overflow-hidden border-4 border-transparent hover:border-blue-500 transition-all duration-300 ease-in-out">
-                <Image
-                  src={logos[index]}
-                  alt={sanitizeText(subCat.name)}
-                  className="object-cover w-full h-full cursor-pointer"
-                />
-              </div>
-              <p className={`mt-2 text-sm font-semibold ${jost.className}`}>
-                {sanitizeText(subCat.name)}
-              </p>
-            </Link>
+            <Link
+            href={`/product-categories/${categorylanding}/${subCat.slug}`}
+            key={subCat.id}
+            className="flex flex-col items-center text-center"
+            onClick={() => handleClick(subCat.id, subCat.slug)}
+          >
+            <div className="flex justify-center items-center w-24 h-24 rounded-full overflow-hidden border-4 border-transparent hover:border-blue-500 transition-all duration-300 ease-in-out">
+              <Image
+                src={logos[index]}
+                alt={sanitizeText(subCat.name)}
+                className="object-cover w-full h-full cursor-pointer"
+              />
+            </div>
+            <p className={`mt-2 text-sm font-semibold ${jost.className}`}>
+              {sanitizeText(subCat.name)}
+            </p>
+          </Link>
           ))}
         </ul>
       </div>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { CiHeart } from "react-icons/ci";
 import { FaHeart, FaRegStar, FaStar } from "react-icons/fa";
-import { lexendDeca } from "./ui/fonts"
+import { jost, lexendDeca } from "./ui/fonts"
 
 export default function Product({product}){
   const [favorites, setFavorites] = useState({});
@@ -20,6 +20,16 @@ export default function Product({product}){
     return text.replace(/&amp;/g, '&');
   };
   
+  const getBrandName = (attributes) => {
+    const brandAttr = attributes.find((attr) => attr.name === "Brand");
+    return brandAttr ? (brandAttr.options[0] || "Unknown Brand") : "Unknown Brand";
+  };
+
+
+
+
+
+
   return (
     <div key={product.id} className="px-2 mx-0 2xl:mx-0">
       <div
@@ -46,8 +56,11 @@ export default function Product({product}){
           alt={sanitizeText(product.images[0]?.alt || product.name)}
         />
         <div className="px-4 pb-4 flex-grow flex flex-col">
+        <p className={`text-gray-900 font-bold text-[16px] mb-2 ${jost.className}`}>
+                    {getBrandName(product.attributes)}
+                  </p>
           <h2
-            className={`text-gray-900 font-bold text-sm ${lexendDeca.className} h-auto`}
+            className={`text-gray-900 font-normal text-sm ${lexendDeca.className} h-auto`}
             style={{
               whiteSpace: "normal",
               overflow: "visible",
@@ -86,7 +99,7 @@ export default function Product({product}){
           <button
             className={`w-full bg-black text-white py-2 mx-auto mt-auto rounded-md hover:bg-gray-800 font-normal transition duration-200 flex justify-center items-center text-center ${lexendDeca.className}`}
           >
-            ADD TO BASKET
+            ADD TO BAG
           </button>
         </div>
       </div>

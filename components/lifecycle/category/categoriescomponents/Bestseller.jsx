@@ -119,6 +119,14 @@ const Bestseller = ({ s = [] }) => {
 
   if (!categoryId) return;
 
+
+
+  const getBrandName = (attributes) => {
+    const brandAttr = attributes.find((attr) => attr.name === "Brand");
+    return brandAttr ? (brandAttr.options[0] || "Unknown Brand") : "Unknown Brand";
+  };
+
+
   return (
     <Container className="py-16">
       <Text

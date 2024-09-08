@@ -6,10 +6,14 @@ import Container from "../../../components/container"
 import { FaStar, FaRegStar, FaHeart } from "react-icons/fa"
 import { CiHeart } from "react-icons/ci"
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io"
+import { IoCloseCircleOutline } from "react-icons/io5"
 import Image from "next/image"
 import { lexendDeca, jost } from "../../../components/ui/fonts"
 import filter from '../../../public/filter.svg'
+import { RxCross2 } from "react-icons/rx";
 
+
+// Base URl + woCommerce Secure Key
 const API_BASE_URL = "https://glam.clickable.site/wp-json/wc/v3"
 const CONSUMER_KEY = "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d"
 const CONSUMER_SECRET = "cs_3f70ee2600a3ac17a5692d7ac9c358d47275d6fc"
@@ -27,6 +31,7 @@ export default function Component() {
   const [isBrandFilterOpen, setIsBrandFilterOpen] = useState(true)
   const [isCategoryFilterOpen, setIsCategoryFilterOpen] = useState(true)
   const [isPriceRangeFilterOpen, setIsPriceRangeFilterOpen] = useState(true)
+  const [sortOption, setSortOption] = useState("popularity")
 
   const [filters, setFilters] = useState({
     brands: [],
@@ -45,10 +50,17 @@ export default function Component() {
       }
 
       const productsResponse = await axios.get(`${API_BASE_URL}/products`, { params })
-      const fetchedProducts = productsResponse.data.map(product => ({
-        ...product,
-        name: product.name.replace(/&amp;/g, '&')
-      }))
+      const fetchedProducts = productsResponse.data
+        .map(product => ({
+          ...product,
+          name: product.name.replace(/&amp;/g, '&')
+        }))
+        .filter(product => 
+          product.images.length > 0 && 
+          product.attributes.some(attr => attr.name === "Brand") &&
+          product.name &&
+          product.price
+        )
       setProducts(fetchedProducts)
       setTotalPages(Math.ceil(fetchedProducts.length / PRODUCTS_PER_PAGE))
       setCurrentPage(page)
@@ -62,7 +74,6 @@ export default function Component() {
   }
 
   const updateFilters = (fetchedProducts) => {
-    // Update brands
     const brandMap = new Map()
     fetchedProducts.forEach(product => {
       const brandAttr = product.attributes.find(attr => attr.name === "Brand")
@@ -73,7 +84,6 @@ export default function Component() {
     })
     setBrands(Array.from(brandMap, ([name, count]) => ({ name, count })))
 
-    // Update categories
     const categoryMap = new Map()
     fetchedProducts.forEach(product => {
       product.categories.forEach(category => {
@@ -87,7 +97,6 @@ export default function Component() {
     })
     setCategories(Array.from(categoryMap.values()))
 
-    // Update price ranges
     const prices = fetchedProducts.map(product => parseFloat(product.price))
     const minPrice = Math.floor(Math.min(...prices))
     const maxPrice = Math.ceil(Math.max(...prices))
@@ -133,8 +142,32 @@ export default function Component() {
     }))
   }
 
-  const filteredProducts = useMemo(() => {
-    return products.filter(product => {
+  const handleSortChange = (event) => {
+    setSortOption(event.target.value)
+  }
+
+  const sortProducts = (products) => {
+    switch (sortOption) {
+      case "popularity":
+        return [...products].sort((a, b) => b.total_sales - a.total_sales)
+      case "price-low-to-high":
+        return [...products].sort((a, b) => parseFloat(a.price) - parseFloat(b.price))
+      case "price-high-to-low":
+        return [...products].sort((a, b) => parseFloat(b.price) - parseFloat(a.price))
+      default:
+        return products
+    }
+  }
+
+
+
+
+
+
+
+// this is use when you have to show products even if there price is zero
+  const filteredAndSortedProducts = useMemo(() => {
+    const filtered = products.filter(product => {
       const brandMatch = filters.brands.length === 0 || 
         product.attributes.some(attr => 
           attr.name === "Brand" && filters.brands.includes(attr.options[0])
@@ -149,12 +182,44 @@ export default function Component() {
         })
       return brandMatch && categoryMatch && priceMatch
     })
-  }, [products, filters])
+    return sortProducts(filtered)
+  }, [products, filters, sortOption])
+
+
+
+  // this is use when you do not have to show products if there price is zero
+  // const filteredAndSortedProducts = useMemo(() => {
+  //   const filtered = products.filter(product => {
+  //     const brandMatch = filters.brands.length === 0 || 
+  //       product.attributes.some(attr => 
+  //         attr.name === "Brand" && filters.brands.includes(attr.options[0])
+  //       )
+  //     const categoryMatch = filters.categories.length === 0 || 
+  //       product.categories.some(cat => filters.categories.includes(cat.id.toString()))
+  //     const priceMatch = filters.priceRange.length === 0 || 
+  //       filters.priceRange.some(range => {
+  //         const [min, max] = range.split('-').map(Number)
+  //         const price = parseFloat(product.price)
+  //         return price >= min && price <= max
+  //       })
+        
+  //     // New condition: Exclude products with a price of 0
+  //     const priceIsNotZero = parseFloat(product.price) !== 0
+  
+  //     return brandMatch && categoryMatch && priceMatch && priceIsNotZero
+  //   })
+  
+  //   return sortProducts(filtered)
+  // }, [products, filters, sortOption])
+  
+
+
+
 
   const paginatedProducts = useMemo(() => {
     const startIndex = (currentPage - 1) * PRODUCTS_PER_PAGE
-    return filteredProducts.slice(startIndex, startIndex + PRODUCTS_PER_PAGE)
-  }, [filteredProducts, currentPage])
+    return filteredAndSortedProducts.slice(startIndex, startIndex + PRODUCTS_PER_PAGE)
+  }, [filteredAndSortedProducts, currentPage])
 
   const getFilteredCount = (filterType, value) => {
     return products.filter(product => {
@@ -197,21 +262,149 @@ export default function Component() {
     setCurrentPage(1)
   }
 
+  const removeFilter = (filterType, value) => {
+    setFilters(prevFilters => ({
+      ...prevFilters,
+      [filterType]: prevFilters[filterType].filter(item => item !== value)
+    }))
+  }
+
+  const renderPagination = () => (
+    <div className="flex justify-end items-center">
+    <button
+      onClick={() => handlePageChange(currentPage - 1)}
+      disabled={currentPage === 1}
+      className={`px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition ${
+        currentPage === 1 ? "disabled:bg-transparent" : ""
+      }`}
+    >
+      &lt;
+    </button>
+    {currentPage > 2 && (
+      <button
+        onClick={() => handlePageChange(1)}
+        className="px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition"
+      >
+        1
+      </button>
+    )}
+    {currentPage > 3 && <span className="px-4 py-2">...</span>}
+    {currentPage > 1 && (
+      <button
+        onClick={() => handlePageChange(currentPage - 1)}
+        className="px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition"
+      >
+        {currentPage - 1}
+      </button>
+    )}
+    <button
+      onClick={() => handlePageChange(currentPage)}
+      className="px-4 py-2 mx-1 bg-black text-white rounded"
+    >
+      {currentPage}
+    </button>
+    {currentPage < totalPages && (
+      <button
+        onClick={() => handlePageChange(currentPage + 1)}
+        className="px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition"
+      >
+        {currentPage + 1}
+      </button>
+    )}
+    {currentPage < totalPages - 2 && <span className="px-4 py-2">...</span>}
+    {currentPage < totalPages - 1 && (
+      <button
+        onClick={() => handlePageChange(totalPages)}
+        className="px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition"
+      >
+        {totalPages}
+      </button>
+    )}
+    <button
+      onClick={() => handlePageChange(currentPage + 1)}
+      disabled={currentPage === totalPages}
+      className={`px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition ${
+        currentPage === totalPages ? "disabled:bg-transparent" : ""
+      }`}
+    >
+      &gt;
+    </button>
+  </div>
+  )
+
   return (
-    <Container>
-      <div className="flex flex-col lg:flex-row gap-4 mb-32 mt-32">
-        <div className="w-full lg:w-1/4 p-4 sticky top-0 bg-white">
-          <h3 className={`text-lg font-normal mb-4 flex items-center gap-4 ${lexendDeca.className}`}>
-            <Image src={filter} width={24} height={24} alt="Filter icon" />
-            Filters
-          </h3>
-          <hr className="bg-[#8B929D73] h-[1px]" />
-          {/* <button 
-            onClick={clearAllFilters}
-            className="mb-4 px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition"
+    <Container className="min-h-screen py-32">
+      {/* <div className=""> */}
+      <div className="flex justify-between items-center">
+  <div className="flex items-center ml-[20rem]">
+    <select
+      value={sortOption}
+      onChange={handleSortChange}
+      className={`px-4 py-2 border border-gray-300 ${lexendDeca.className} rounded-md font-jost text-black`} // Apply font classes to the select itself
           >
-            Clear All Filters
-          </button> */}
+            {/* we set popularity filter by total sales, the higher the sales of product is the popular that product is */}
+      <option value="popularity" className="text-black">Sort by: Popularity</option>
+      <option value="price-low-to-high" className="text-black">Price: Low to High</option>
+      <option value="price-high-to-low" className="text-black">Price: High to Low</option>
+    </select>
+  </div>
+  {renderPagination()}
+</div>
+
+
+      
+
+      {/* side filter */}
+      <div className="flex flex-col lg:flex-row gap-4 mb-32">
+        <div className="w-full lg:w-1/4 p-4 sticky top-0 bg-white">
+          <div className="flex justify-between items-center mb-4">
+            <h3 className={`text-lg font-normal flex items-center gap-4 ${lexendDeca.className}`}>
+              <Image src={filter} width={24} height={24} alt="Filter icon" />
+              Filters
+            </h3>
+            {(filters.brands.length > 0 || filters.categories.length > 0 || filters.priceRange.length > 0) && (
+              <button
+                onClick={clearAllFilters}
+                className={`text-sm text-[#8B929D] underline ${lexendDeca.className}`}
+              >
+                Clear All
+              </button>
+            )}
+          </div>
+          
+          {(filters.brands.length > 0 || filters.categories.length > 0 || filters.priceRange.length > 0) && (
+            <div className="mb-4">
+              {filters.brands.map(brand => (
+                <span key={brand} className={`inline-flex items-center bg-[#F7EBE0] rounded-lg px-3 py-1 text-sm font-bold text-black mr-2 mb-2 ${lexendDeca.className}`}>
+                  <span className={`${lexendDeca.className} font-normal mr-1 text-black`}>Category: </span>   {brand}
+                  <button onClick={() => removeFilter('brands', brand)} className="ml-2 text-red-600 hover:text-red-700">
+                    <RxCross2 />
+                  </button>
+                </span>
+              ))}
+              {filters.categories.map(categoryId => {
+                const category = categories.find(c => c.id.toString() === categoryId)
+                return category ? (
+                  <span key={categoryId} className="inline-flex items-center bg-gray-200 rounded-full px-3 py-1 text-sm font-medium text-gray-700 mr-2 mb-2">
+                    {category.name}
+                    <button onClick={() => removeFilter('categories', categoryId)} className="ml-2 text-gray-500 hover:text-gray-700">
+                      <IoCloseCircleOutline />
+                    </button>
+                  </span>
+                ) : null
+              })}
+              {filters.priceRange.map(range => (
+                <span key={range} className="inline-flex items-center bg-gray-200 rounded-full px-3 py-1 text-sm font-medium text-gray-700 mr-2 mb-2">
+                  £{range}
+                  <button onClick={() => removeFilter('priceRange', range)} className="ml-2 text-gray-500 hover:text-gray-700">
+                    <IoCloseCircleOutline />
+                  </button>
+                </span>
+              ))}
+            </div>
+          )}
+
+          <hr className="bg-[#8B929D73] h-[1px]" />
           <div className="mb-6 mt-4">
             <h4
               className={`font-bold text-lg mb-2 flex justify-between items-center cursor-pointer ${jost.className}`}
@@ -310,6 +503,12 @@ export default function Component() {
           </div>
         </div>
 
+        
+
+
+        
+
+{/* product grid listing */}
         <div className="w-full lg:w-3/4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
             {loading
@@ -384,7 +583,7 @@ export default function Component() {
                           `£${product.price}`
                         )}
                       </p>
-                      <button className={`w-[70%] md:w-[60%] lg:w-[100%] bg-black text-white py-2 mx-auto mt-auto rounded-md hover:bg-gray-800 transition ${jost.className}`}>
+                      <button className={`w-full bg-black text-white py-2 rounded-md hover:bg-gray-800 transition ${jost.className}`}>
                         ADD TO BAG
                       </button>
                     </div>
@@ -392,68 +591,14 @@ export default function Component() {
                 })}
           </div>
 
-          <div className="flex justify-end items-center mt-8">
-            <button
-              onClick={() => handlePageChange(currentPage - 1)}
-              disabled={currentPage === 1}
-              className={`px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition ${
-                currentPage === 1 ? "disabled:bg-transparent" : ""
-              }`}
-            >
-              &lt;
-            </button>
-            {currentPage > 2 && (
-              <button
-                onClick={() => handlePageChange(1)}
-                className="px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition"
-              >
-                1
-              </button>
-            )}
-            {currentPage > 3 && <span className="px-4 py-2">...</span>}
-            {currentPage > 1 && (
-              <button
-                onClick={() => handlePageChange(currentPage - 1)}
-                className="px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition"
-              >
-                {currentPage - 1}
-              </button>
-            )}
-            <button
-              onClick={() => handlePageChange(currentPage)}
-              className="px-4 py-2 mx-1 bg-black text-white rounded"
-            >
-              {currentPage}
-            </button>
-            {currentPage < totalPages && (
-              <button
-                onClick={() => handlePageChange(currentPage + 1)}
-                className="px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition"
-              >
-                {currentPage + 1}
-              </button>
-            )}
-            {currentPage < totalPages - 2 && <span className="px-4 py-2">...</span>}
-            {currentPage < totalPages - 1 && (
-              <button
-                onClick={() => handlePageChange(totalPages)}
-                className="px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition"
-              >
-                {totalPages}
-              </button>
-            )}
-            <button
-              onClick={() => handlePageChange(currentPage + 1)}
-              disabled={currentPage === totalPages}
-              className={`px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition ${
-                currentPage === totalPages ? "disabled:bg-transparent" : ""
-              }`}
-            >
-              &gt;
-            </button>
+          {/* pagination rendering */}
+          <div className="mt-8 flex justify-end">
+            {renderPagination()}
           </div>
         </div>
-      </div>
+        </div>
+        {/* </div> */}
     </Container>
+    
   )
 }
