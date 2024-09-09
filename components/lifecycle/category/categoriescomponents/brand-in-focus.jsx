@@ -8,10 +8,10 @@ import Container from "../../../container";
 
 export default function BrandInFocus() {
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-5 mb-10">
       
       <Container>
-      <Text style={"h1"}>Brand In Focus</Text>
+        <Text style={"h1"}>Brand In Focus</Text>
       </Container>
       <div className="flex w-full relative">
         <div className="w-1/2 relative">

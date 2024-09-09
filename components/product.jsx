@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { CiHeart } from "react-icons/ci";
 import { FaHeart, FaRegStar, FaStar } from "react-icons/fa";
@@ -5,6 +7,7 @@ import { jost, lexendDeca } from "./ui/fonts"
 
 export default function Product({product}){
   const [favorites, setFavorites] = useState({});
+  
   const handleProductClick = (productId) => {
     console.log(`Product clicked: ${productId}`);
   };

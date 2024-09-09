@@ -13,7 +13,7 @@ import axios from "axios";
 import { useParams } from "next/navigation";
 
 import { useCategoryIdState } from "../../../states/use-category-id";
-import Link from "next/link";
+import Container from "../../container";
 
 const MenucategoryLandingPage = () => {
   const [mainCategory, setMainCategory] = useState(null);
@@ -28,20 +28,23 @@ const MenucategoryLandingPage = () => {
 
     const fetchData = async () => {
       try {
-        setMainCategory(null);
-        setSubCategories([]);
-        setCategoryId(null);
+        // Reset states only if `categorylanding` changes
+        if (categorylanding) {
+          setMainCategory(null);
+          setSubCategories([]);
+          setCategoryId(null);
 
-        const cateId = await axios.get(`/api/${categorylanding}`, { signal });
-        setCategoryId(cateId.data);
+          const cateId = await axios.get(`/api/${categorylanding}`, { signal });
+          setCategoryId(cateId.data);
 
-        if (cateId.data) {
-          const mainCateData = await axios.get(
-            `/api/categoryData/${cateId.data}`,
-            { signal }
-          );
-          setMainCategory(mainCateData.data.mainCategory);
-          setSubCategories(mainCateData.data.subCategories);
+          if (cateId.data) {
+            const mainCateData = await axios.get(
+              `/api/categoryData/${cateId.data}`,
+              { signal },
+            );
+            setMainCategory(mainCateData.data.mainCategory);
+            setSubCategories(mainCateData.data.subCategories);
+          }
         }
       } catch (error) {
         if (axios.isCancel(error)) {
@@ -79,7 +82,7 @@ const MenucategoryLandingPage = () => {
   ];
 
   return (
-    <div className="my-14">
+    <Container className="my-14">
       {/* Display main category name */}
       <h1
         className={`text-2xl ${jost.className} uppercase font-bold text-center mt-10`}
@@ -110,7 +113,7 @@ const MenucategoryLandingPage = () => {
           ))}
         </ul>
       </div>
-    </div>
+    </Container>
   );
 };
 
