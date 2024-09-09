@@ -11,6 +11,7 @@ import logo_seven from "../../../public/product_category_landing/rounded_cat/sev
 import { jost } from "../../ui/fonts";
 import axios from "axios";
 import { useParams } from "next/navigation";
+import Skeleton from "react-loading-skeleton"; // Skeleton component import
 
 import { useCategoryIdState } from "../../../states/use-category-id";
 import Container from "../../container";
@@ -28,7 +29,6 @@ const MenucategoryLandingPage = () => {
 
     const fetchData = async () => {
       try {
-        // Reset states only if `categorylanding` changes
         if (categorylanding) {
           setMainCategory(null);
           setSubCategories([]);
@@ -63,11 +63,9 @@ const MenucategoryLandingPage = () => {
   }, [categorylanding, setCategoryId]);
 
   const sanitizeText = (text) => {
-    // Replace &amp; with &
     return text?.replace(/&amp;/g, "&");
   };
 
-  // Mapping the images to the respective subcategories
   const logos = [
     logo_one,
     logo_two,
@@ -80,32 +78,55 @@ const MenucategoryLandingPage = () => {
 
   return (
     <Container className="my-14">
-      {/* Display main category name */}
+      {/* Display main category name or skeleton loader */}
       <h1
         className={`text-2xl ${jost.className} uppercase font-bold text-center mt-10`}
       >
-        {sanitizeText(mainCategory?.name)}
+        {mainCategory ? (
+          sanitizeText(mainCategory?.name)
+        ) : (
+          <Skeleton width={200} height={30} />  // Skeleton for the main category
+        )}
       </h1>
 
       <div className="mt-10">
         <ul className="flex justify-center gap-8">
-          {subCategories.map((subCat, index) => (
-            <li
-              key={subCat.id}
-              className="flex flex-col items-center text-center"
-            >
-              <div className="flex justify-center items-center w-24 h-24 rounded-full overflow-hidden border-4 border-transparent hover:border-blue-500 transition-all duration-300 ease-in-out">
-                <Image
-                  src={logos[index]}
-                  alt={sanitizeText(subCat.name)}
-                  className="object-cover w-full h-full cursor-pointer"
-                />
-              </div>
-              <p className={`mt-2 text-sm font-semibold ${jost.className}`}>
-                {sanitizeText(subCat.name)}
-              </p>
-            </li>
-          ))}
+          {subCategories.length > 0 ? (
+            subCategories.map((subCat, index) => (
+              <li
+                key={subCat.id}
+                className="flex flex-col items-center text-center"
+              >
+                <div className="flex justify-center items-center w-24 h-24 rounded-full overflow-hidden border-4 border-transparent hover:border-blue-500 transition-all duration-300 ease-in-out">
+                  <Image
+                    src={logos[index]}
+                    alt={sanitizeText(subCat.name)}
+                    className="object-cover w-full h-full cursor-pointer"
+                  />
+                </div>
+                <p className={`mt-2 text-sm font-semibold ${jost.className}`}>
+                  {sanitizeText(subCat.name)}
+                </p>
+              </li>
+            ))
+          ) : (
+            // Display skeleton loaders for subcategory images
+            Array(7)
+              .fill(null)
+              .map((_, index) => (
+                <li
+                  key={index}
+                  className="flex flex-col items-center text-center"
+                >
+                  <div className="flex justify-center items-center w-24 h-24 rounded-full overflow-hidden border-4 border-transparent">
+                    <Skeleton circle={true} width={96} height={96} />
+                  </div>
+                  <p className={`mt-2 text-sm font-semibold ${jost.className}`}>
+                    <Skeleton width={80} height={15} />
+                  </p>
+                </li>
+              ))
+          )}
         </ul>
       </div>
     </Container>
