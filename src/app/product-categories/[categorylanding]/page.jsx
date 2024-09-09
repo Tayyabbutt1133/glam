@@ -1,16 +1,32 @@
-import React, { memo } from "react";
+import React, { memo, Suspense, lazy } from "react";
 
-import Bestseller from "../../../../components/lifecycle/category/categoriescomponents/Bestseller";
-import Olaplex from "/public/product_category_landing/olaplex 1.svg";
-import SliderComponent from "../../../../components/lifecycle/mutual-components/slider";
-import TrendingBrand from "../../../../components/lifecycle/category/categoriescomponents/trending-brand/trending-brand";
-import BrandInFocus from "../../../../components/lifecycle/category/categoriescomponents/brand-in-focus";
-import MakeupPicks from "../../../../components/lifecycle/category/categoriescomponents/makeup-picks/makeup-picks";
-import GetGlam from "../../../../components/lifecycle/category/categoriescomponents/get-glam/get-glam";
-import MakeupTips from "../../../../components/lifecycle/mutual-components/makeup-tips";
-import Staffpicks from "../../../../components/lifecycle/category/categoriescomponents/Staffpicks";
+// Import immediately visible components (above the fold)
 import MenucategoryLandingPage from "../../../../components/lifecycle/category/MenucategoryLandingPage";
-import Container from "../../../../components/container";
+import SliderComponent from "../../../../components/lifecycle/mutual-components/slider";
+import Olaplex from "/public/product_category_landing/olaplex 1.svg";
+
+// Lazy-load components that are below the fold
+const TrendingBrand = lazy(() =>
+  import("../../../../components/lifecycle/category/categoriescomponents/trending-brand/trending-brand")
+);
+const Bestseller = lazy(() =>
+  import("../../../../components/lifecycle/category/categoriescomponents/Bestseller")
+);
+const BrandInFocus = lazy(() =>
+  import("../../../../components/lifecycle/category/categoriescomponents/brand-in-focus")
+);
+const MakeupPicks = lazy(() =>
+  import("../../../../components/lifecycle/category/categoriescomponents/makeup-picks/makeup-picks")
+);
+const GetGlam = lazy(() =>
+  import("../../../../components/lifecycle/category/categoriescomponents/get-glam/get-glam")
+);
+const MakeupTips = lazy(() =>
+  import("../../../../components/lifecycle/mutual-components/makeup-tips")
+);
+const Staffpicks = lazy(() =>
+  import("../../../../components/lifecycle/category/categoriescomponents/Staffpicks")
+);
 
 const Page = () => {
   const bannerObject = [
@@ -23,20 +39,38 @@ const Page = () => {
 
   return (
     <>
+      {/* Non-lazy-loaded components (immediately visible to the user) */}
       <MenucategoryLandingPage />
-
       <SliderComponent bannerObject={bannerObject} />
-      <TrendingBrand />
 
-      <Bestseller />
+      {/* Use Suspense with fallback for lazy-loaded components */}
+      <Suspense fallback={<div>Loading Trending Brand...</div>}>
+        <TrendingBrand />
+      </Suspense>
 
-      <BrandInFocus />
+      <Suspense fallback={<div>Loading Bestseller...</div>}>
+        <Bestseller />
+      </Suspense>
 
-      <Staffpicks />
+      <Suspense fallback={<div>Loading Brand In Focus...</div>}>
+        <BrandInFocus />
+      </Suspense>
 
-      <MakeupPicks />
-      <MakeupTips />
+      <Suspense fallback={<div>Loading Staff Picks...</div>}>
+        <Staffpicks />
+      </Suspense>
+
+      <Suspense fallback={<div>Loading Makeup Picks...</div>}>
+        <MakeupPicks />
+      </Suspense>
+
+      <Suspense fallback={<div>Loading Makeup Tips...</div>}>
+        <MakeupTips />
+      </Suspense>
+
+      <Suspense fallback={<div>Loading Get Glam...</div>}>
         <GetGlam />
+      </Suspense>
     </>
   );
 };

@@ -1,23 +1,48 @@
-import Instagram from "../Feeds/Instagram";
-import Trustpilot from "../Trustpilot";
-import MaxFact from "./banner/MaxFact";
-import Rimmel from "./banner/Rimmel";
+import React, { Suspense, lazy } from "react";
+
+// Immediately visible components (non-lazy loaded)
 import Hero from "./hero/hero";
 import ProductList from "./home-products/TrendingProducts/ProductList";
-import HomeBrand from "./home-products/shop_by_brand/HomeBrand";
-import HomeCategory from "./home-products/shop_by_category/HomeCategory";
+
+// Lazy-loaded components (below the fold)
+const MaxFact = lazy(() => import("./banner/MaxFact"));
+const HomeBrand = lazy(() => import("./home-products/shop_by_brand/HomeBrand"));
+const Rimmel = lazy(() => import("./banner/Rimmel"));
+const HomeCategory = lazy(() => import("./home-products/shop_by_category/HomeCategory"));
+const Instagram = lazy(() => import("../Feeds/Instagram"));
+const Trustpilot = lazy(() => import("../Trustpilot"));
 
 export default function HomePage() {
   return (
     <>
+      {/* Immediately visible components */}
       <Hero />
       <ProductList />
-      <MaxFact />
-      <HomeBrand />
-      <Rimmel />
-      <HomeCategory />
-      <Instagram/>
-      <Trustpilot/>
+
+      {/* Lazy-loaded components wrapped in Suspense */}
+      <Suspense fallback={<div>Loading MaxFact...</div>}>
+        <MaxFact />
+      </Suspense>
+
+      <Suspense fallback={<div>Loading HomeBrand...</div>}>
+        <HomeBrand />
+      </Suspense>
+
+      <Suspense fallback={<div>Loading Rimmel...</div>}>
+        <Rimmel />
+      </Suspense>
+
+      <Suspense fallback={<div>Loading HomeCategory...</div>}>
+        <HomeCategory />
+      </Suspense>
+
+      <Suspense fallback={<div>Loading Instagram...</div>}>
+        <Instagram />
+      </Suspense>
+
+      <Suspense fallback={<div>Loading Trustpilot...</div>}>
+        <Trustpilot />
+      </Suspense>
     </>
   );
 }
