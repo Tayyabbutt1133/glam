@@ -5,6 +5,7 @@ import { CiHeart } from "react-icons/ci";
 import { FaHeart, FaRegStar, FaStar } from "react-icons/fa";
 import { jost, lexendDeca } from "./ui/fonts"
 import Image from "next/image";
+import { useCartStore } from "../states/Cardstore";
 
 
 
@@ -31,6 +32,9 @@ export default function Product({product}){
     const brandAttr = attributes.find((attr) => attr.name === "Brand");
     return brandAttr ? (brandAttr.options[0] || "Unknown Brand") : "Unknown Brand";
   };
+
+
+  const addToCart = useCartStore((state) => state.addToCart);
 
 
 
@@ -105,7 +109,7 @@ export default function Product({product}){
           </p>
           <button
             className={`w-full bg-black text-white py-2 mx-auto mt-auto rounded-md hover:bg-gray-800 font-normal transition duration-200 flex justify-center items-center text-center ${lexendDeca.className}`}
-          >
+          onClick={()=>addToCart(product)}>
             ADD TO BAG
           </button>
         </div>
