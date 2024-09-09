@@ -1,59 +1,116 @@
-import { useCartStore } from '../states/Cardstore'; // adjust the import based on your file structure
-import Image from 'next/image';
-import Link from 'next/link';
+'use client'
 
-const Cartdropdown = () => {
-  const { cartItems, removeItem } = useCartStore();
+import { useCartStore } from '../states/Cardstore'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useEffect, useRef, useState } from 'react'
+import { jost } from './ui/fonts'
 
-  // Helper function to ensure price is a number
+export default function Cartdropdown() {
+  const { cartItems, removeFromCart, updateQuantity } = useCartStore()
+  const [isOpen, setIsOpen] = useState(true)
+  const dropdownRef = useRef(null)
+
   const calculateSubtotal = () => {
     return cartItems.reduce((acc, item) => {
-      const price = parseFloat(item.price); // Ensure price is a number
-      return acc + (isNaN(price) ? 0 : price);
-    }, 0);
-  };
+      const price = parseFloat(item.price)
+      return acc + (isNaN(price) ? 0 : price) * item.quantity
+    }, 0)
+  }
+
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setIsOpen(false)
+    }
+  }
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [])
+
+  const getItemSize = (item) => {
+    const sizeAttribute = item.attributes.find(attr => attr.name === 'Size' || attr.slug === 'Size')
+    return sizeAttribute && sizeAttribute.options.length > 0 ? sizeAttribute.options[0] : 'N/A'
+  }
+
+  if (!isOpen) return null
 
   return (
-    <div className="absolute top-full right-0 mt-2 w-96 bg-white shadow-lg rounded-md p-6 z-50">
-      <h2 className="text-lg font-bold mb-4">Your Bag ({cartItems.length})</h2>
-      {cartItems.length > 0 ? (
-        <>
+    <div 
+      ref={dropdownRef} 
+      className="absolute top-full right-0 mt-2 w-[450px] bg-white shadow-lg rounded-md overflow-hidden z-50 border border-gray-200 max-h-[80vh] flex flex-col"
+    >
+      <div className="p-4 border-b border-gray-200">
+        <h2 className={`text-xl font-normal ${jost.className}`}>Your Bag ({cartItems.length})</h2>
+      </div>
+      <div className="flex-grow overflow-y-auto">
+        {cartItems.length > 0 ? (
           <ul>
             {cartItems.map((item) => (
-              <li key={item.id} className="flex justify-between items-center mb-4">
-                <Image src={item.image} alt={item.name} width={80} height={80} className="rounded-md" />
-                <div className="ml-4 flex-1">
-                  <p className="font-semibold">{item.name}</p>
-                  <p className="text-gray-500 text-sm">Shade: {item.shade}</p>
-                  <p className="text-gray-500 text-sm">Size: {item.size}</p>
-                  <p className="text-gray-500 text-sm">Qty: {item.quantity}</p>
+              <li key={item.id} className="p-4 border-b border-gray-200">
+                <div className="flex items-start justify-between">
+                  <div className="flex items-start">
+                    <div className="w-28 flex flex-col items-center">
+                      <Image 
+                        src={item.images[0].src} 
+                        alt={item.name} 
+                        width={80} 
+                        height={80} 
+                        className="rounded-md object-cover"
+                      />
+                      <button
+                        className={`text-sm font-medium text-[#8B929D] hover:text-black mt-2 ${jost.className}`}
+                        onClick={() => removeFromCart(item.id)}
+                      >
+                        Remove
+                      </button>
+                    </div>
+                    <div className="ml-4">
+                      <h3 className={`font-semibold text-base ${jost.className}`}>{item.name}</h3>
+                      <p className={`text-sm text-black ${jost.className} mt-1`}>Shade: {item.attributes.find(attr => attr.name === 'Shade')?.options[0] || 'N/A'}</p>
+                      <p className={`text-sm text-black ${jost.className}`}>Size: {getItemSize(item)}</p>
+                      <div className="flex items-center mt-2">
+                        <button
+                          className="text-sm bg-gray-200 px-2 py-1 rounded"
+                          onClick={() => updateQuantity(item.id, Math.max(1, item.quantity - 1))}
+                        >
+                          -
+                        </button>
+                        <span className="text-sm mx-2">{item.quantity}</span>
+                        <button
+                          className="text-sm bg-gray-200 px-2 py-1 rounded"
+                          onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <p className={`font-medium text-lg mt-24 ${jost.className}`}>£{(parseFloat(item.price) * item.quantity).toFixed(2)}</p>
                 </div>
-                <p className="font-semibold text-right">£{item.price}</p>
               </li>
             ))}
           </ul>
-          <button
-            className="text-blue-500 text-sm hover:underline mb-4"
-            onClick={() => removeItem(item.id)}
-          >
-            Remove
-          </button>
-          <hr className="my-4" />
-          <div className="flex justify-between font-semibold">
-            <p>Estimated Subtotal ({cartItems.length}):</p>
-            <p>£{calculateSubtotal().toFixed(2)}</p>
+        ) : (
+          <p className="text-center text-gray-500 p-4">Your bag is empty.</p>
+        )}
+      </div>
+      {cartItems.length > 0 && (
+        <div className="p-4 bg-white border-t border-gray-200">
+          <div className="flex justify-between text-lg font-semibold mb-4">
+            <p className={`${jost.className} font-semibold`}>Estimated Subtotal ({cartItems.length}):</p>
+            <p className={`${jost.className} font-medium`}>£{calculateSubtotal().toFixed(2)}</p>
           </div>
-          <Link href="/cart">
-            <button className="mt-4 w-full bg-black text-white py-3 rounded-md text-center font-semibold hover:bg-gray-900">
+          <Link href="/cart" className="block">
+            <button className={`w-full bg-black text-white py-3 rounded-md text-center text-base font-semibold hover:bg-gray-900 transition duration-200 ${jost.className}`}>
               VIEW BAG
             </button>
           </Link>
-        </>
-      ) : (
-        <p className="text-center text-gray-500">Your bag is empty.</p>
+        </div>
       )}
     </div>
-  );
-};
-
-export default Cartdropdown;
+  )
+}
