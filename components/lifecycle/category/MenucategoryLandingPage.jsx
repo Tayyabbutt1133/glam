@@ -11,9 +11,10 @@ import logo_seven from "../../../public/product_category_landing/rounded_cat/sev
 import { jost } from "../../ui/fonts";
 import axios from "axios";
 import { useParams } from "next/navigation";
+import Link from "next/link";
 
 import { useCategoryIdState } from "../../../states/use-category-id";
-import Link from "next/link";
+import Container from "../../container";
 
 const MenucategoryLandingPage = () => {
   const [mainCategory, setMainCategory] = useState(null);
@@ -28,20 +29,23 @@ const MenucategoryLandingPage = () => {
 
     const fetchData = async () => {
       try {
-        setMainCategory(null);
-        setSubCategories([]);
-        setCategoryId(null);
+        // Reset states only if `categorylanding` changes
+        if (categorylanding) {
+          setMainCategory(null);
+          setSubCategories([]);
+          setCategoryId(null);
 
-        const cateId = await axios.get(`/api/${categorylanding}`, { signal });
-        setCategoryId(cateId.data);
+          const cateId = await axios.get(`/api/${categorylanding}`, { signal });
+          setCategoryId(cateId.data);
 
-        if (cateId.data) {
-          const mainCateData = await axios.get(
-            `/api/categoryData/${cateId.data}`,
-            { signal }
-          );
-          setMainCategory(mainCateData.data.mainCategory);
-          setSubCategories(mainCateData.data.subCategories);
+          if (cateId.data) {
+            const mainCateData = await axios.get(
+              `/api/categoryData/${cateId.data}`,
+              { signal },
+            );
+            setMainCategory(mainCateData.data.mainCategory);
+            setSubCategories(mainCateData.data.subCategories);
+          }
         }
       } catch (error) {
         if (axios.isCancel(error)) {
@@ -79,7 +83,7 @@ const MenucategoryLandingPage = () => {
   ];
 
   return (
-    <div className="my-14">
+    <Container className="my-14">
       {/* Display main category name */}
       <h1
         className={`text-2xl ${jost.className} uppercase font-bold text-center mt-10`}
@@ -90,26 +94,27 @@ const MenucategoryLandingPage = () => {
       <div className="mt-10 ">
         <ul className="flex justify-center gap-8">
           {subCategories.map((subCat, index) => (
-            <Link href={`./${subCat.slug}`}
-              key={subCat.id}
-              className="flex flex-col items-center text-center"
-              onClick={() => handleClick(subCat.id, subCat.slug)} // Add onClick to handle the subcategory click
-            >
-              <div className="flex justify-center items-center w-24 h-24 rounded-full overflow-hidden border-4 border-transparent hover:border-blue-500 transition-all duration-300 ease-in-out">
-                <Image
-                  src={logos[index]}
-                  alt={sanitizeText(subCat.name)}
-                  className="object-cover w-full h-full cursor-pointer"
-                />
-              </div>
-              <p className={`mt-2 text-sm font-semibold ${jost.className}`}>
-                {sanitizeText(subCat.name)}
-              </p>
-            </Link>
+            <Link
+            href={`/product-categories/${categorylanding}/${subCat.slug}`}
+            key={subCat.id}
+            className="flex flex-col items-center text-center"
+            onClick={() => handleClick(subCat.id, subCat.slug)}
+          >
+            <div className="flex justify-center items-center w-24 h-24 rounded-full overflow-hidden border-4 border-transparent hover:border-blue-500 transition-all duration-300 ease-in-out">
+              <Image
+                src={logos[index]}
+                alt={sanitizeText(subCat.name)}
+                className="object-cover w-full h-full cursor-pointer"
+              />
+            </div>
+            <p className={`mt-2 text-sm font-semibold ${jost.className}`}>
+              {sanitizeText(subCat.name)}
+            </p>
+          </Link>
           ))}
         </ul>
       </div>
-    </div>
+    </Container>
   );
 };
 

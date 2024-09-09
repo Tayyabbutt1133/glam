@@ -40,8 +40,6 @@ export default function Navigation() {
 
   // handling clicking
   const handleLinkClick = (link) => {
-    console.log("Clicked Link:", link);  // Log the full link object
-    console.log("Parent ID:", link.parent);  // Log the parent ID specifically
     setHoveredLink({ id: null, href: null });
   };
 

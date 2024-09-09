@@ -25,19 +25,22 @@ const arrowStyles = {
   transition: "all 0.3s ease-in-out",
 };
 
-const NextArrow = ({ className, style, onClick }) => (
-  <div
-    className={`absolute top-1/2 transform -translate-y-1/2 right-4 2xl:mr-8 ${className}`}
-    onClick={onClick}
-    style={{
-      ...style,
-      ...arrowStyles,
-      right: "-34px",
-    }}
-  >
-    <NextArrowIcon />
-  </div>
-);
+// Next Arrow component
+const NextArrow = ({ className, style, onClick }) => {
+  return (
+    <div
+      className={`absolute top-1/2 transform -translate-y-1/2 right-4 2xl:mr-8 ${className}`}
+      onClick={onClick}
+      style={{
+        ...style,
+        ...arrowStyles,
+        right: "-14px",
+      }}
+    >
+      <NextArrowIcon />
+    </div>
+  );
+};
 
 const PrevArrow = ({ className, style, onClick }) => (
   <div
@@ -118,6 +121,14 @@ const Bestseller = ({ s = [] }) => {
   };
 
   if (!categoryId) return;
+
+
+
+  const getBrandName = (attributes) => {
+    const brandAttr = attributes.find((attr) => attr.name === "Brand");
+    return brandAttr ? (brandAttr.options[0] || "Unknown Brand") : "Unknown Brand";
+  };
+
 
   return (
     <Container className="py-16">

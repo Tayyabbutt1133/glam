@@ -2,6 +2,8 @@ import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Image from "next/image";
+
 
 const Categoryslider = ({ bannerData }) => {
   const settings = {
@@ -26,7 +28,7 @@ const Categoryslider = ({ bannerData }) => {
               <button className="shop-now-btn">{buttonText}</button>
             </div>
             <div className="image-section">
-              {image && <img src={image} alt={title} />}
+              {Image && <Image src={Image} alt={title} />}
             </div>
           </div>
         </div>
