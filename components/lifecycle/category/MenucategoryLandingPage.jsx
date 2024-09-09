@@ -11,6 +11,7 @@ import logo_seven from "../../../public/product_category_landing/rounded_cat/sev
 import { jost } from "../../ui/fonts";
 import axios from "axios";
 import { useParams } from "next/navigation";
+import Link from "next/link";
 
 import { useCategoryIdState } from "../../../states/use-category-id";
 import Container from "../../container";
