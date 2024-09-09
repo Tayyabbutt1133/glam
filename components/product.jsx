@@ -4,6 +4,10 @@ import { useState } from "react";
 import { CiHeart } from "react-icons/ci";
 import { FaHeart, FaRegStar, FaStar } from "react-icons/fa";
 import { jost, lexendDeca } from "./ui/fonts"
+import Image from "next/image";
+
+
+
 
 export default function Product({product}){
   const [favorites, setFavorites] = useState({});
@@ -36,7 +40,7 @@ export default function Product({product}){
   return (
     <div key={product.id} className="px-2 mx-0 2xl:mx-0">
       <div
-        className="bg-white border border-gray-300 rounded-lg overflow-hidden relative flex flex-col h-full min-h-[470px] w-[90%] cursor-pointer"
+        className="bg-white border border-gray-300 rounded-lg overflow-hidden relative flex flex-col h-full min-h-[490px] w-[90%] cursor-pointer"
         onClick={() => handleProductClick(product.id)}
       >
         {product.on_sale && (
@@ -53,8 +57,8 @@ export default function Product({product}){
             )}
           </button>
         </div>
-        <img
-          className="w-full h-48 object-contain p-4"
+        <Image width={250} height={250}
+          className="object-contain p-4"
           src={product.images[0]?.src}
           alt={sanitizeText(product.images[0]?.alt || product.name)}
         />

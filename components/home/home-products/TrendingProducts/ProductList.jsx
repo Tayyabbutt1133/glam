@@ -13,6 +13,7 @@ import { jost, lexendDeca } from '../../../ui/fonts';
 import Container from '../../../container';
 import NextArrowIcon from '../../../../public/hero-banners/next-arrow';
 import PrevArrowIcon from '../../../../public/hero-banners/prev-arrow';
+import {useCartStore} from '../../../../states/Cardstore'
 
 // Arrow styles
 const arrowStyles = {
@@ -60,6 +61,9 @@ const ProductList = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [favorites, setFavorites] = useState({}); // State to track favorited products
+
+  const addToCart = useCartStore((state) => state.addToCart);
+
 
   useEffect(() => {
     axios
@@ -243,7 +247,7 @@ const ProductList = () => {
                       </p>
                       <button
                       className={`w-[70%] mt-4 md:w-[60%] lg:w-[85%] bg-black text-white py-2 mx-auto rounded-md hover:bg-gray-800 font-normal transition duration-200 flex justify-center ${jost.className} uppercase`}
-                    >
+                      onClick={() => addToCart(product)}  >
                       ADD TO BAG
                     </button>
                       

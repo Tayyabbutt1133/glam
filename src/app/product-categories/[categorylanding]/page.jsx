@@ -10,6 +10,7 @@ import GetGlam from "../../../../components/lifecycle/category/categoriescompone
 import MakeupTips from "../../../../components/lifecycle/mutual-components/makeup-tips";
 import Staffpicks from "../../../../components/lifecycle/category/categoriescomponents/Staffpicks";
 import MenucategoryLandingPage from "../../../../components/lifecycle/category/MenucategoryLandingPage";
+import Container from "../../../../components/container";
 
 const Page = () => {
   const bannerObject = [
@@ -35,7 +36,7 @@ const Page = () => {
 
       <MakeupPicks />
       <MakeupTips />
-      <GetGlam />
+        <GetGlam />
     </>
   );
 };
