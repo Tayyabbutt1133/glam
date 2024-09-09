@@ -418,7 +418,7 @@ export default function Component() {
                   <span
                     className={`${lexendDeca.className} font-normal mr-1 text-black`}
                   >
-                    Category:{" "}
+                    Brand:{" "}
                   </span>{" "}
                   {brand}
                   <button
@@ -429,6 +429,13 @@ export default function Component() {
                   </button>
                 </span>
               ))}
+
+
+
+
+
+
+
               {filters.categories.map((categoryId) => {
                 const category = categories.find(
                   (c) => c.id.toString() === categoryId
@@ -436,29 +443,54 @@ export default function Component() {
                 return category ? (
                   <span
                     key={categoryId}
-                    className="inline-flex items-center bg-gray-200 rounded-full px-3 py-1 text-sm font-medium text-gray-700 mr-2 mb-2"
+                    className={`inline-flex items-center bg-[#F7EBE0] rounded-lg px-3 py-1 text-sm font-bold text-black mr-2 mb-2 ${lexendDeca.className}`}
                   >
+                     <span
+                    className={`${lexendDeca.className} font-normal mr-1 text-black`}
+                  >
+                    Category:{" "}
+                  </span>{" "}
                     {category.name}
                     <button
-                      onClick={() => removeFilter("categories", categoryId)}
-                      className="ml-2 text-gray-500 hover:text-gray-700"
-                    >
-                      <IoCloseCircleOutline />
-                    </button>
+                    onClick={() => removeFilter("Category", categoryId)}
+                    className="ml-2 text-red-600 hover:text-red-700"
+                  >
+                    <RxCross2 />
+                  </button>
                   </span>
                 ) : null;
               })}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              
               {filters.priceRange.map((range) => (
                 <span
                   key={range}
-                  className="inline-flex items-center bg-gray-200 rounded-full px-3 py-1 text-sm font-medium text-gray-700 mr-2 mb-2"
+                  className={`inline-flex items-center bg-[#F7EBE0] rounded-lg px-3 py-1 text-sm font-bold text-black mr-2 mb-2 ${lexendDeca.className}`}
                 >
+                      <span
+                    className={`${lexendDeca.className} font-normal mr-1 text-black`}
+                  >
+                    Price:{" "}
+                  </span>{" "}
                   £{range}
                   <button
-                    onClick={() => removeFilter("priceRange", range)}
-                    className="ml-2 text-gray-500 hover:text-gray-700"
+                    onClick={() => removeFilter("Price", range)}
+                    className="ml-2 text-red-600 hover:text-red-700"
                   >
-                    <IoCloseCircleOutline />
+                    <RxCross2 />
                   </button>
                 </span>
               ))}
