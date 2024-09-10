@@ -6,6 +6,9 @@ import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { jost } from './ui/fonts'
 
+
+
+
 export default function Cartdropdown() {
   const { cartItems, removeFromCart, updateQuantity } = useCartStore()
   const [isOpen, setIsOpen] = useState(true)
@@ -41,7 +44,7 @@ export default function Cartdropdown() {
   return (
     <div 
       ref={dropdownRef} 
-      className="absolute top-full right-0 mt-2 w-[450px] bg-white shadow-lg rounded-md overflow-hidden z-50 border border-gray-200 max-h-[80vh] flex flex-col"
+      className="absolute top-full right-0 mt-2 w-[450px] bg-white shadow-lg rounded-md overflow-hidden z-[100] border border-gray-200 max-h-[80vh] flex flex-col"
     >
       <div className="p-4 border-b border-gray-200">
         <h2 className={`text-xl font-normal ${jost.className}`}>Your Bag ({cartItems.length})</h2>
@@ -104,11 +107,12 @@ export default function Cartdropdown() {
             <p className={`${jost.className} font-semibold`}>Estimated Subtotal ({cartItems.length}):</p>
             <p className={`${jost.className} font-medium`}>£{calculateSubtotal().toFixed(2)}</p>
           </div>
-          <Link href="/cart" className="block">
-            <button className={`w-full bg-black text-white py-3 rounded-md text-center text-base font-semibold hover:bg-gray-900 transition duration-200 ${jost.className}`}>
-              VIEW BAG
-            </button>
-          </Link>
+          <Link href="/mybag" className="block">
+  <button className={`w-full bg-black text-white py-3 rounded-md text-center text-base font-semibold hover:bg-gray-900 transition duration-200 ${jost.className}`}>
+    VIEW BAG
+  </button>
+</Link>
+
         </div>
       )}
     </div>
