@@ -138,7 +138,7 @@ export default function MegaMenu({ links, hoveredLink }) {
           <>
             {/* Submenu container */}
             <div className="w-[70%] flex justify-center py-5 px-[2%]">
-              <div className="flex flex-row w-full justify-start gap-4 md:gap-6 lg:gap-8 overflow-x-auto">
+              <div className="flex flex-row w-full justify-start gap-4 md:gap-6 lg:gap-8 overflow-x-auto overflow-y-hidden">
                 {getSubMenu(hoveredLink.id).length > 0 &&
                   getSubMenu(hoveredLink.id).map((link, index) => (
                     <div key={index} className="min-w-fit mr-0">
