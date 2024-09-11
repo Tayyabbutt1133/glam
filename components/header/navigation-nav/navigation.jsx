@@ -25,7 +25,7 @@ export default function Navigation() {
           {
             method: "GET",
             cache: "no-store",
-          },
+          }
         );
         const data = await res.json();
         setLinks(data);
@@ -46,17 +46,17 @@ export default function Navigation() {
     );
   });
 
-  
+  // Function to handle mouse leave from both link and megamenu
+  const handleMouseLeave = () => {
+    setHoveredLink({ id: null, href: null, img: '' });
+  };
 
   return (
-    <div className="relative">
+    <div className="relative" onMouseLeave={handleMouseLeave}>
       <div
         className={`${jost.className} hidden lg:flex items-center h-[52px] font-normal lg:text-base xl:text-sm bg-white text-sm 2xl:text-lg relative`}
         style={{ boxShadow: '0px 0px 6px rgba(0, 0, 0, 0.1)', zIndex: '10' }} // Shadow with no x or y offset, just blur
-        onMouseLeave={() => setHoveredLink({ id: null, href: null, img: '' })} // Close mega menu when mouse leaves the entire navigation area
       >
-
-
         <Container>
           <nav className="flex flex-row w-full justify-between items-center py-3">
             {mainLinks?.map((link, index) => (
@@ -87,8 +87,13 @@ export default function Navigation() {
           </nav>
         </Container>
       </div>
+      {/* Add onMouseEnter and onMouseLeave to the MegaMenu to keep it visible when hovering */}
       {shouldShowMegaMenu && (
-        <div className="absolute top-full left-0 w-full">
+        <div
+          className="absolute top-full left-0 w-full"
+          onMouseEnter={() => clearTimeout()} // Prevent resetting state when entering MegaMenu
+          onMouseLeave={handleMouseLeave} // Reset state when leaving MegaMenu
+        >
           <MegaMenu hoveredLink={hoveredLink} links={links} />
         </div>
       )}
