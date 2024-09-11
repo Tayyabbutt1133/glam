@@ -338,8 +338,8 @@ export default function SubcategoryPage() {
   return (
     <Container className="min-h-screen py-32">
       <div className="mb-8">
-        <h1 className={`text-3xl font-bold ${jost.className}`}>
-          {categorylanding} / {subcategories}
+        <h1 className={`text-3xl text-center uppercase font-bold ${jost.className}`}>
+        {subcategories} {categorylanding}
         </h1>
       </div>
 

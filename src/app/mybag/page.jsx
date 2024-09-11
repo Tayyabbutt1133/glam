@@ -117,16 +117,16 @@ export default function MyBag() {
         <div className="md:w-1/3 -mt-32 bg-[#f7f7f7]">
                   <div className=" p-2 rounded-lg">
                       <div className='bg-white p-4 rounded-lg mt-4'>
-            <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
-            <div className="flex justify-between mb-2">
+              <h2 className={`text-xl font-normal mb-4 ${jost.className}`}>Order Summary</h2>
+              <div className={`flex justify-between mb-2 ${jost.className}`}>
               <span>Subtotal ({cartItems.length}):</span>
               <span>£{subtotal.toFixed(2)}</span>
             </div>
-            <div className="flex justify-between mb-2">
+              <div className={`flex justify-between mb-2 ${jost.className}`}>
               <span>Estimated Shipping:</span>
-              <span className="text-blue-500 cursor-pointer">Enter shipping address</span>
+              <span className="text-[#8B929D] cursor-pointer">Enter shipping address</span>
             </div>
-            <p className="text-sm text-gray-600 mb-4">(Spend £0.01 more for FREE DELIVERY)</p>
+              <p className={`text-sm text-black mb-4 ${jost.className}`}>(Spend <span className='font-semibold'>£0.01 </span>more for <span className='font-semibold'>FREE DELIVERY</span>)</p>
             <div className="flex justify-between font-semibold">
               <span>Estimated Total:</span>
               <span>£{total.toFixed(2)}</span>
@@ -152,8 +152,8 @@ export default function MyBag() {
             </div>
 
             <div className="mt-6 bg-white p-6 rounded-lg">
-              <p className="mb-2">Payment Mode</p>
-                          <div className="flex space-x-2 mb-4">
+              <p className={`mb-2 ${jost.className}`}>Payment Mode</p>
+                          <div className={`flex space-x-2 mb-4 ${jost.cl}`}>
                               <p>Pay by Card/Pay Later</p>
                 <Image src={visa} alt="Visa" width={40} height={25} />
                 <Image src={master} alt="Master" width={40} height={25} />
