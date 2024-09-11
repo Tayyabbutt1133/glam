@@ -9,7 +9,7 @@ import MegaMenu from "./megamenu";
 const jost = Jost({ subsets: ["latin"] });
 
 export default function Navigation() {
-  const [hoveredLink, setHoveredLink] = useState({ id: null, href: null});
+  const [hoveredLink, setHoveredLink] = useState({ id: null, href: null, img: ''});
   const [links, setLinks] = useState([]);
   const mainLinks = links?.filter(link => link.parent === "0") 
   
@@ -40,7 +40,7 @@ export default function Navigation() {
 
   // handling clicking
   const handleLinkClick = (link) => {
-    setHoveredLink({ id: null, href: null });
+    setHoveredLink({ id: null, href: null , img: ''});
   };
 
 
@@ -62,7 +62,7 @@ export default function Navigation() {
                 boxShadow: hoveredLink.id === link.id ? `inset 0 -2px 0 0 var(--color-hover)` : "inset 0 -2px 0 0 transparent",
                 transition: "box-shadow 0.3s ease",
               }}
-              onMouseEnter={() => setHoveredLink({ id: link.id, href: link.href })}
+              onMouseEnter={() => setHoveredLink({ id: link.id, href: link.href, img: link.menu_img })}
               // this is will show the data on console and pass data of clicked link category
               onClick={()=>handleLinkClick(link)}
             >
