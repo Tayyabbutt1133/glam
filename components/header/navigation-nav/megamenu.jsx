@@ -126,7 +126,9 @@ export default function MegaMenu({ links, hoveredLink }) {
   // }
 
   return (
-    <nav className="relative w-full bg-white shadow-lg z-50 transition duration-300 ease-in-out">
+    <nav className="relative w-full bg-white shadow-lg z-50 transition duration-300 ease-in-out"
+      style={{zIndex: '9'}}
+    >
       {/* Horizontal line */}
       <div className=" w-full border border-b-02"></div>
       <section className="flex flex-row w-full h-full max-h-[386px]">
