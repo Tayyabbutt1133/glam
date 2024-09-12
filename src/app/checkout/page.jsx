@@ -450,16 +450,16 @@ export default function Checkout() {
 
               {/* Terms */}
               <p className={`text-sm text-gray-600 mt-4 text-center ${lexendDeca.className}`}>
-                By placing this order, you are confirming that you agree to our{' '}
-                <a href="#" className="text-black underline">
-                  Terms and Conditions
-                </a>{' '}
-                and{' '}
-                <a href="#" className="text-black underline">
-                  Privacy Policy
-                </a>
-                .
-              </p>
+  By placing this order, you are confirming that you agree to our{' '}
+  <a href="#" className="text-black underline">
+    Terms and Conditions
+  </a>{' '}
+  and{' '}
+  <a href="#" className="text-black underline">
+    Privacy Policy
+  </a>
+  .
+</p>
             </div>
           </div>
 
