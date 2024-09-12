@@ -14,7 +14,7 @@ import master from "../../../public/card-logos/master.svg"
 import maestro from "../../../public/card-logos/maestro.svg"
 import ae from "../../../public/card-logos/american-express.svg"
 import paypal from "../../../public/card-logos/paypal.svg"
-import klarna_wallet from '../../../public/klarnawallet.svg'
+import klarna_wal from '../../../public/Klarnawallet.svg'
 import klarna_pink from '../../../public/klarn_pink.svg';
 
 const shippingOptions = [
@@ -416,7 +416,7 @@ export default function Checkout() {
                           <span className={`font-medium ${jost.className}`}>Klarna - Flexible payments</span>
                           <Image src={klarna_pink} alt="Klarna" width={64} height={20} />
                         </div>
-                        <Image src={klarna_wallet} alt="Klarna Wallet" width={200} height={200} className="mx-auto" />
+                        <Image src={klarna_wal} alt="Klarna Wallet" width={200} height={200} className="mx-auto" />
                         <p className={`${lexendDeca.className} mt-4 text-sm text-center mx-auto w-[80%]`}>
                           After clicking "Pay now", you will be redirected to Klarna to set up your flexible payment plan.
                         </p>
