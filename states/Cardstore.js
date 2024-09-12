@@ -5,6 +5,7 @@ export const useCartStore = create(
   persist(
     (set) => ({
       cartItems: [],
+      savedItems: [],
       addToCart: (product) =>
         set((state) => {
           const existingItem = state.cartItems.find((item) => item.id === product.id)
@@ -30,6 +31,23 @@ export const useCartStore = create(
           ),
         })),
       clearCart: () => set({ cartItems: [] }),
+      saveForLater: (productId) =>
+        set((state) => {
+          const itemToSave = state.cartItems.find((item) => item.id === productId)
+          if (itemToSave) {
+            return {
+              cartItems: state.cartItems.filter((item) => item.id !== productId),
+              savedItems: [...state.savedItems, itemToSave],
+            }
+          }
+          return state
+        }),
+      editItem: (updatedItem) =>
+        set((state) => ({
+          cartItems: state.cartItems.map((item) =>
+            item.id === updatedItem.id ? { ...item, ...updatedItem } : item
+          ),
+        })),
     }),
     {
       name: 'cart-storage',
