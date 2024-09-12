@@ -1,36 +1,44 @@
-"use client";
+'use client'
 
-import Image from "next/image";
-import { useState } from "react";
-import { useCartStore } from "../../../states/Cardstore";
-import visa from "../../../public/card-logos/visa.svg";
-import master from "../../../public/card-logos/master.svg";
-import maestro from "../../../public/card-logos/maestro.svg";
-import ae from "../../../public/card-logos/american-express.svg";
-import paypal from "../../../public/card-logos/paypal.svg";
-import { jost, lexendDeca } from "../../../components/ui/fonts";
-import Link from "next/link";
-import Container from "../../../components/container";
-import ProductList from "../../../components/home/home-products/TrendingProducts/ProductList";
-
+import Image from "next/image"
+import { useState } from "react"
+import { useCartStore } from "../../../states/Cardstore"
+import visa from "../../../public/card-logos/visa.svg"
+import master from "../../../public/card-logos/master.svg"
+import maestro from "../../../public/card-logos/maestro.svg"
+import ae from "../../../public/card-logos/american-express.svg"
+import paypal from "../../../public/card-logos/paypal.svg"
+import { jost, lexendDeca } from "../../../components/ui/fonts"
+import Link from "next/link"
+import Container from "../../../components/container"
+import ProductList from "../../../components/home/home-products/TrendingProducts/ProductList"
 
 export default function MyBag() {
-  const { cartItems, removeFromCart, updateQuantity, saveForLater, editItem } =
-    useCartStore();
-  const [promoCode, setPromoCode] = useState("");
-  const [shippingAddress, setShippingAddress] = useState("");
+  const { cartItems, removeFromCart, updateQuantity, saveForLater, editItem } = useCartStore()
+  const [promoCode, setPromoCode] = useState("")
+  const [shippingAddress, setShippingAddress] = useState("")
+  const [editingItem, setEditingItem] = useState(null)
 
   const calculateSubtotal = () => {
-    return cartItems.reduce(
-      (acc, item) => acc + parseFloat(item.price) * item.quantity,
-      0
-    );
-  };
+    return cartItems.reduce((acc, item) => acc + parseFloat(item.price) * item.quantity, 0)
+  }
 
-  const subtotal = calculateSubtotal();
-  const shipping = 0; // Free shipping
-  const total = subtotal + shipping;
+  const subtotal = calculateSubtotal()
+  const shipping = 0 // Free shipping
+  const total = subtotal + shipping
 
+  const handleEdit = (item) => {
+    setEditingItem(item)
+  }
+
+  const handleSaveEdit = (item) => {
+    editItem(item)
+    setEditingItem(null)
+  }
+
+  const handleSaveForLater = (itemId) => {
+    saveForLater(itemId)
+  }
 
   return (
     <Container>
@@ -66,10 +74,7 @@ export default function MyBag() {
         <div className="flex flex-col md:flex-row gap-8">
           <div className="md:w-2/3">
             {cartItems.map((item) => (
-              <div
-                key={item.id}
-                className="flex items-start md:items-center border-b border-gray-200 py-6"
-              >
+              <div key={item.id} className="flex items-start md:items-center border-b border-gray-200 py-6">
                 <Image
                   src={item.images[0].src}
                   alt={item.name}
@@ -78,121 +83,85 @@ export default function MyBag() {
                   className="rounded-md object-cover"
                 />
                 <div className="ml-4 flex-grow">
-                  {/* Product Name and Price */}
-                  <div className="flex justify-between items-start mb-4">
+                  {editingItem?.id === item.id ? (
                     <div>
-                      <h2
-                        className={`text-lg font-medium w-[80%] ${jost.className}`}
-                      >
-                        {item.name}
-                      </h2>
-                      <p
-                        className={`text-sm text-black ${jost.className} font-normal`}
-                      >
-                        Shade:{" "}
-                        {item.attributes.find((attr) => attr.name === "Shade")
-                          ?.options[0] || "N/A"}
-                      </p>
-                      <p
-                        className={`text-sm text-black ${jost.className} font-normal`}
-                      >
-                        Size:{" "}
-                        {item.attributes.find((attr) => attr.name === "Size")
-                          ?.options[0] || "N/A"}
-                      </p>
-                    </div>
-                    <p className={`font-semibold text-lg ${jost.className}`}>
-                      £{(parseFloat(item.price) * item.quantity).toFixed(2)}
-                    </p>
-                  </div>
-
-                  {/* Product Quantity Controls and Action Buttons */}
-                  <div className="mt-24 flex items-center justify-between">
-                    {/* Add/Subtract Product Buttons */}
-                    <div className="flex items-center space-x-2">
+                      <input
+                        type="text"
+                        value={editingItem.name}
+                        onChange={(e) => setEditingItem({ ...editingItem, name: e.target.value })}
+                        className="border rounded px-2 py-1 mb-2 w-full"
+                      />
                       <button
-                        className="text-sm border border-gray-300 px-3 py-1 rounded-md"
-                        onClick={() =>
-                          updateQuantity(
-                            item.id,
-                            Math.max(1, item.quantity - 1)
-                          )
-                        }
+                        onClick={() => handleSaveEdit(editingItem)}
+                        className="bg-blue-500 text-white px-4 py-2 rounded"
                       >
-                        -
-                      </button>
-                      <span className="text-sm mx-2">{item.quantity}</span>
-                      <button
-                        className="text-sm border border-gray-300 px-3 py-1 rounded-md"
-                        onClick={() =>
-                          updateQuantity(item.id, item.quantity + 1)
-                        }
-                      >
-                        +
+                        Save
                       </button>
                     </div>
+                  ) : (
+                    <>
+                      <div className="flex justify-between items-start mb-4">
+                        <div>
+                          <h2 className={`text-lg font-medium w-[80%] ${jost.className}`}>{item.name}</h2>
+                          <p className={`text-sm text-black ${jost.className} font-normal`}>
+                            Shade: {item.attributes.find((attr) => attr.name === "Shade")?.options[0] || "N/A"}
+                          </p>
+                          <p className={`text-sm text-black ${jost.className} font-normal`}>
+                            Size: {item.attributes.find((attr) => attr.name === "Size")?.options[0] || "N/A"}
+                          </p>
+                        </div>
+                        <p className={`font-semibold text-lg ${jost.className}`}>
+                          £{(parseFloat(item.price) * item.quantity).toFixed(2)}
+                        </p>
+                      </div>
 
-                    {/* Action Buttons */}
-                    <div className="ml-auto space-x-4">
-                      {/* Save For Later */}
-                      <button
-                        className={`text-sm text-black ${jost.className} font-medium`}
-                        onClick={() => saveForLater(item.id)}
-                      >
-                        Save For Later
-                      </button>
+                      <div className="mt-24 flex items-center justify-between">
+                        <div className="flex items-center space-x-2">
+                          <button
+                            className="text-sm border border-gray-300 px-3 py-1 rounded-md"
+                            onClick={() => updateQuantity(item.id, Math.max(1, item.quantity - 1))}
+                          >
+                            -
+                          </button>
+                          <span className="text-sm mx-2">{item.quantity}</span>
+                          <button
+                            className="text-sm border border-gray-300 px-3 py-1 rounded-md"
+                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                          >
+                            +
+                          </button>
+                        </div>
 
-                      {/* Edit */}
-                      <button
-                        className={`text-sm text-black ${jost.className} font-medium`}
-                        onClick={() => editItem(item.id)}
-                      >
-                        Edit
-                      </button>
-
-                      {/* Remove */}
-                      <button
-                        className={`text-sm text-black ${jost.className} font-medium`}
-                        onClick={() => removeFromCart(item.id)}
-                      >
-                        Remove
-                      </button>
-                    </div>
-                  </div>
+                        <div className="ml-auto space-x-4">
+                          <button
+                            className={`text-sm text-black ${jost.className} font-medium`}
+                            onClick={() => handleSaveForLater(item.id)}
+                          >
+                            Save For Later
+                          </button>
+                          <button
+                            className={`text-sm text-black ${jost.className} font-medium`}
+                            onClick={() => handleEdit(item)}
+                          >
+                            Edit
+                          </button>
+                          <button
+                            className={`text-sm text-black ${jost.className} font-medium`}
+                            onClick={() => removeFromCart(item.id)}
+                          >
+                            Remove
+                          </button>
+                        </div>
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
             ))}
- {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                {recommendedProducts.map((product) => (
-                  <div key={product.id} className="border rounded-md p-4">
-                    <Image
-                      src={product.image}
-                      alt={product.name}
-                      width={200}
-                      height={200}
-                      className="mx-auto mb-2 object-cover"
-                    />
-                    <p className="font-semibold">{product.brand}</p>
-                    <p className="text-sm">{product.name}</p>
-                    <div className="flex justify-between items-center mt-2">
-                      {product.oldPrice && (
-                        <span className="text-xs line-through text-gray-500">
-                          {product.oldPrice}
-                        </span>
-                      )}
-                      <span className="text-sm font-semibold">
-                        {product.price}
-                      </span>
-                    </div>
-                    <button className="w-full bg-gray-800 text-white py-2 mt-2 rounded-md">
-                      ADD TO BAG
-                    </button>
-                  </div>
-                ))}
-              </div> */}
+
             <div className="mt-8">
-              {/* <h2 className="text-xl font-semibold mb-4">You May Also Like</h2> */}
-             <ProductList/>
+              <h2 className="text-xl font-semibold mb-4">You May Also Like</h2>
+              <ProductList limit={3}  />
             </div>
           </div>
 
@@ -281,5 +250,5 @@ export default function MyBag() {
         </div>
       </div>
     </Container>
-  );
+  )
 }

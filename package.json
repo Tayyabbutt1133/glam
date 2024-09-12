@@ -10,6 +10,10 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^5.3.0",
+    "@radix-ui/react-checkbox": "^1.1.1",
+    "@radix-ui/react-label": "^2.1.0",
+    "@radix-ui/react-radio-group": "^1.2.0",
+    "@radix-ui/react-slot": "^1.1.0",
     "antd": "^5.20.0",
     "axios": "^1.7.3",
     "credit-card-type": "^10.0.1",
