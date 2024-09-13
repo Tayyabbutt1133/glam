@@ -5,18 +5,29 @@ import Link from "next/link"
 import { useEffect, useState } from "react"
 import { useCartStore } from "../../../states/Cardstore"
 import { jost, lexendDeca } from "../../../components/ui/fonts"
+import Slider from "react-slick"
+import "slick-carousel/slick/slick.css"
+import "slick-carousel/slick/slick-theme.css"
 import Container from "../../../components/container"
 import cart from '../../../public/CartSuccess.svg'
 import visa from "../../../public/card-logos/visa.svg"
 import master from "../../../public/card-logos/master.svg"
 import maestro from "../../../public/card-logos/maestro.svg"
 import ae from "../../../public/card-logos/american-express.svg"
+import klarna_pink from '../../../public/Klarn_pink.svg'
+import paypal from '../../../public/PayPal.svg'
+
+const API_URL = 'https://glam.clickable.site/wp-json/wc/v3/products'
+const CK = 'ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d'
+const CS = 'cs_3f70ee2600a3ac17a5692d7ac9c358d47275d6fc'
 
 export default function OrderConfirmation() {
-  const { clearCart, getOrderDetails } = useCartStore()
+  const { clearCart, getOrderDetails, addToCart } = useCartStore()
   const [orderNumber, setOrderNumber] = useState("")
   const [orderDate, setOrderDate] = useState("")
   const [orderDetails, setOrderDetails] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [products, setProducts] = useState([])
 
   useEffect(() => {
     setOrderNumber(Math.floor(100000 + Math.random() * 900000).toString())
@@ -24,25 +35,97 @@ export default function OrderConfirmation() {
     const details = getOrderDetails()
     setOrderDetails(details)
     clearCart()
+
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch(`${API_URL}?consumer_key=${CK}&consumer_secret=${CS}`)
+        const data = await response.json()
+        const filteredProducts = data.filter(product => 
+          product.images[0]?.src && 
+          product.price && 
+          getBrand(product) !== 'Unknown Brand' && 
+          product.name
+        )
+        setProducts(filteredProducts)
+        setLoading(false)
+      } catch (error) {
+        console.error('Error fetching products:', error)
+        setLoading(false)
+      }
+    }
+
+    fetchProducts()
   }, [clearCart, getOrderDetails])
 
-  if (!orderDetails) {
-    return <div className="flex justify-center items-center h-screen">Loading...</div>
-  }
-
-  const getCardLogo = (cardType) => {
-    switch (cardType) {
-      case "visa":
-        return visa
-      case "mastercard":
-        return master
-      case "maestro":
-        return maestro
-      case "american-express":
-        return ae
+  const getPaymentMethodLogo = (paymentMethod, cardType) => {
+    switch (paymentMethod) {
+      case "card":
+        switch (cardType) {
+          case "visa":
+            return visa
+          case "mastercard":
+            return master
+          case "maestro":
+            return maestro
+          case "american-express":
+            return ae
+          default:
+            return null
+        }
+      case "paypal":
+        return paypal
+      case "klarna":
+        return klarna_pink
       default:
         return null
     }
+  }
+
+  const ProductSkeleton = () => (
+    <div className="bg-white rounded-lg shadow-md overflow-hidden animate-pulse">
+      <div className="relative pb-[100%] bg-gray-300"></div>
+      <div className="p-4">
+        <div className="h-4 bg-gray-300 rounded w-1/2 mb-2"></div>
+        <div className="h-4 bg-gray-300 rounded w-3/4 mb-2"></div>
+        <div className="h-6 bg-gray-300 rounded w-1/4 mb-4"></div>
+        <div className="h-10 bg-gray-300 rounded"></div>
+      </div>
+    </div>
+  )
+
+  const sliderSettings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    pauseOnHover: true,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        }
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
+    ]
+  }
+
+  const getBrand = (product) => {
+    return product.attributes.find(attr => attr.name === 'Brand')?.options[0] || 'Unknown Brand'
+  }
+
+  if (!orderDetails) {
+    return null
   }
 
   return (
@@ -116,22 +199,21 @@ export default function OrderConfirmation() {
               <div>
                 <h3 className={`font-semibold mb-2 ${jost.className}`}>Payment Method</h3>
                 <div className={`text-sm ${lexendDeca.className} flex items-center`}>
-                  {orderDetails.paymentMethod === 'card' && orderDetails.cardType && (
+                  {orderDetails.paymentMethod && (
                     <>
                       <Image 
-                        src={getCardLogo(orderDetails.cardType)} 
-                        alt={orderDetails.cardType} 
-                        width={32} 
-                        height={20} 
+                        src={getPaymentMethodLogo(orderDetails.paymentMethod, orderDetails.cardType)} 
+                        alt={orderDetails.paymentMethod} 
+                        width={50} 
+                        height={50} 
                         className="mr-2"
                       />
                       <span>
-                        {orderDetails.cardType.charAt(0).toUpperCase() + orderDetails.cardType.slice(1)} ending in {orderDetails.cardLastFour}
+                        {orderDetails.paymentMethod === 'card' 
+                          ? `${orderDetails.cardType.charAt(0).toUpperCase() + orderDetails.cardType.slice(1)} ending in ${orderDetails.cardLastFour}`
+                          : orderDetails.paymentMethod.charAt(0).toUpperCase() + orderDetails.paymentMethod.slice(1)}
                       </span>
                     </>
-                  )}
-                  {orderDetails.paymentMethod !== 'card' && (
-                    <span>{orderDetails.paymentMethod}</span>
                   )}
                 </div>
               </div>
@@ -172,6 +254,47 @@ export default function OrderConfirmation() {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Product listing */}
+        <div className="container mx-auto px-4 py-8">
+          <h2 className={`text-2xl font-bold mb-14 ${jost.className}`}>Customers Also Bought</h2>
+          {loading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {Array(3).fill(0).map((_, index) => (
+                <ProductSkeleton key={index} />
+              ))}
+            </div>
+          ) : (
+            <Slider {...sliderSettings}>
+              {products.map(product => (
+                <div key={product.id} className="px-2">
+                  <div className="bg-white rounded-lg shadow-md overflow-hidden">
+                    <div className="relative pb-[100%]">
+                      <Image
+                        src={product.images[0]?.src || '/placeholder.svg'}
+                        alt={product.name}
+                        layout="fill"
+                        objectFit="cover"
+                      />
+                    </div>
+                    <div className="p-4">
+                      <h3 className={`text-sm font-bold mb-1 ${jost.className}`}>{getBrand(product)}</h3>
+                      <p className={`text-sm mb-2 h-10 overflow-hidden ${lexendDeca.className}`}>{product.name}</p>
+                      <p className={`text-lg font-bold mb-3 ${lexendDeca.className}`}>£{product.price}</p>
+                      
+                      <button 
+                        className={`w-full bg-black text-white py-2 rounded-md hover:bg-gray-800 transition ${jost.className}`}
+                        onClick={() => addToCart(product)}
+                      >
+                        ADD TO BAG
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </Slider>
+          )}
         </div>
 
         <div className="mt-8 text-center">
