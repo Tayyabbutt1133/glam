@@ -1,21 +1,21 @@
-"use client";
+'use client'
 
-import Image from "next/image";
-import Link from "next/link";
-import { useState, useEffect, useRef } from "react";
-import creditCardType from "credit-card-type";
-import { useCartStore } from "../../../states/Cardstore";
-import { jost, lexendDeca } from "../../../components/ui/fonts";
-import Container from "../../../components/container";
-import PayPal from "../../../public/PayPal.svg";
-import Klarna from "../../../public/Klarna.svg";
-import visa from "../../../public/card-logos/visa.svg";
-import master from "../../../public/card-logos/master.svg";
-import maestro from "../../../public/card-logos/maestro.svg";
-import ae from "../../../public/card-logos/american-express.svg";
-import paypal from "../../../public/card-logos/paypal.svg";
-import klarna_wal from "../../../public/Klarnawallet.svg";
-import klarna_pink from "../../../public/klarn_pink.svg";
+import Image from "next/image"
+import Link from "next/link"
+import { useState, useEffect, useRef } from "react"
+import creditCardType from "credit-card-type"
+import { useCartStore } from "../../../states/Cardstore"
+import { jost, lexendDeca } from "../../../components/ui/fonts"
+import Container from "../../../components/container"
+import PayPal from "../../../public/PayPal.svg"
+import Klarna from "../../../public/Klarna.svg"
+import visa from "../../../public/card-logos/visa.svg"
+import master from "../../../public/card-logos/master.svg"
+import maestro from "../../../public/card-logos/maestro.svg"
+import ae from "../../../public/card-logos/american-express.svg"
+import paypal from "../../../public/card-logos/paypal.svg"
+import klarna_wal from "../../../public/Klarnawallet.svg"
+import klarna_pink from "../../../public/klarn_pink.svg"
 
 const shippingOptions = [
   {
@@ -48,10 +48,10 @@ const shippingOptions = [
     time: "(Arrives tomorrow, 20 June before 11:00am)",
     price: 5.99,
   },
-];
+]
 
 export default function Checkout() {
-  const { cartItems } = useCartStore();
+  const { cartItems } = useCartStore()
   const [formData, setFormData] = useState({
     email: "",
     firstName: "",
@@ -65,92 +65,234 @@ export default function Checkout() {
     securityCode: "",
     nameOnCard: "",
     promoCode: "",
-  });
-  const [saveInfo, setSaveInfo] = useState(false);
-  const [subscribeToNews, setSubscribeToNews] = useState(false);
-  const [useSameAddress, setUseSameAddress] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState("");
-  const [shippingMethod, setShippingMethod] = useState(null);
-  const [showShippingDropdown, setShowShippingDropdown] = useState(false);
-  const [filteredShippingOptions, setFilteredShippingOptions] =
-    useState(shippingOptions);
-  const [showPaymentOptions, setShowPaymentOptions] = useState(true);
-  const shippingRef = useRef(null);
-  const paymentRef = useRef(null);
-  const [cardType, setCardType] = useState("");
+  })
+  const [errors, setErrors] = useState({})
+  const [touched, setTouched] = useState({})
+  const [saveInfo, setSaveInfo] = useState(false)
+  const [cardNumber, setCardNumber] = useState("")
+  const [subscribeToNews, setSubscribeToNews] = useState(false)
+  const [useSameAddress, setUseSameAddress] = useState(false)
+  const [paymentMethod, setPaymentMethod] = useState("")
+  const [shippingMethod, setShippingMethod] = useState(null)
+  const [showShippingDropdown, setShowShippingDropdown] = useState(false)
+  const [filteredShippingOptions, setFilteredShippingOptions] = useState(shippingOptions)
+  const [showPaymentOptions, setShowPaymentOptions] = useState(true)
+  const shippingRef = useRef(null)
+  const paymentRef = useRef(null)
+  const [cardType, setCardType] = useState("")
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-
-    if (name === "cardNumber") {
-      const detectedTypes = creditCardType(value);
-      if (detectedTypes.length > 0) {
-        setCardType(detectedTypes[0].type);
-      } else {
-        setCardType("");
-      }
+  const validateField = (name, value) => {
+    let error = ""
+    switch (name) {
+      case "email":
+        if (!value) {
+          error = "Email is required"
+        } else if (!/\S+@\S+\.\S+/.test(value)) {
+          error = "Enter a valid email address"
+        }
+        break
+      case "firstName":
+      case "lastName":
+      case "address":
+      case "city":
+      case "postcode":
+      case "phone":
+        if (!value) {
+          error = `${name.charAt(0).toUpperCase() + name.slice(1)} is required`
+        }
+        break
+      case "cardNumber":
+        if (!value) {
+          error = "Card number is required"
+        } else {
+          const cleanedValue = value.replace(/\s/g, '')
+          if (!/^\d{15,16}$/.test(cleanedValue)) {
+            error = "Enter a valid 15 or 16-digit card number"
+          } else if (cleanedValue.length === 15 && cardType !== "american-express") {
+            error = "This card number is invalid for the detected card type"
+          } else if (cleanedValue.length === 16 && cardType === "american-express") {
+            error = "American Express cards should have 15 digits"
+          }
+        }
+        break
+      case "expirationDate":
+        if (!value) {
+          error = "Expiration date is required"
+        } else if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(value)) {
+          error = "Enter a valid expiration date (MM/YY)"
+        }
+        break
+      case "securityCode":
+        if (!value) {
+          error = "Security code is required"
+        } else if (!/^\d{3,4}$/.test(value)) {
+          error = "Enter a valid 3 or 4-digit security code"
+        }
+        break
+      case "nameOnCard":
+        if (!value) {
+          error = "Name on card is required"
+        }
+        break
     }
+    return error
+  }
+
+  const handlePayNow = () => {
+    const orderDetails = {
+      customerInfo: {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        address: formData.address,
+        city: formData.city,
+        postcode: formData.postcode,
+        phone: formData.phone,
+      },
+      paymentMethod: paymentMethod,
+      cardType: cardType, // Add this line
+      cardLastFour: formData.cardNumber.slice(-4), // Add this line
+      cartItems: cartItems,
+      subtotal: subtotal,
+      shipping: shipping,
+      total: total,
+    };
+    
+    useCartStore.getState().setOrderDetails(orderDetails);
   };
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target
+    setFormData((prev) => ({ ...prev, [name]: value }))
+    setErrors((prev) => ({ ...prev, [name]: validateField(name, value) }))
+
+    if (name === "cardNumber") {
+      handleCardNumberChange(e)
+    }
+  }
+
+  const handleBlur = (e) => {
+    const { name } = e.target
+    setTouched((prev) => ({ ...prev, [name]: true }))
+  }
+
   const handleShippingSearch = (e) => {
-    const searchTerm = e.target.value.toLowerCase();
+    const searchTerm = e.target.value.toLowerCase()
     const filtered = shippingOptions.filter(
       (option) =>
         option.name.toLowerCase().includes(searchTerm) ||
         option.time.toLowerCase().includes(searchTerm)
-    );
-    setFilteredShippingOptions(filtered);
-  };
+    )
+    setFilteredShippingOptions(filtered)
+  }
 
   const selectShippingMethod = (method) => {
-    setShippingMethod(method);
-    setShowShippingDropdown(false);
-  };
+    setShippingMethod(method)
+    setShowShippingDropdown(false)
+  }
 
   const calculateSubtotal = () => {
     return cartItems.reduce(
       (acc, item) => acc + (parseFloat(item.price) || 0) * item.quantity,
       0
-    );
-  };
+    )
+  }
 
-  const subtotal = calculateSubtotal();
-  const shipping = shippingMethod ? shippingMethod.price : 0;
-  const total = subtotal + shipping;
+  const subtotal = calculateSubtotal()
+  const shipping = shippingMethod ? shippingMethod.price : 0
+  const total = subtotal + shipping
 
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (shippingRef.current && !shippingRef.current.contains(event.target)) {
-        setShowShippingDropdown(false);
+        setShowShippingDropdown(false)
       }
-    };
+    }
 
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside)
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
+  }, [])
 
+  const handleCardNumberChange = (e) => {
+    const value = e.target.value.replace(/\s/g, '')
+    setCardNumber(value)
+    setFormData((prev) => ({ ...prev, cardNumber: formatCardNumber(value) }))
+    
+    if (value) {
+      const detectedTypes = creditCardType(value)
+      if (detectedTypes.length > 0) {
+        setCardType(detectedTypes[0].type)
+      } else {
+        setCardType("")
+      }
+    } else {
+      setCardType("")
+    }
+
+    setErrors((prev) => ({ ...prev, cardNumber: validateField("cardNumber", value) }))
+  }
   const getCardLogo = () => {
     switch (cardType) {
       case "visa":
-        return visa;
+        return visa
       case "mastercard":
-        return master;
+        return master
       case "maestro":
-        return maestro;
+        return maestro
       case "american-express":
-        return ae;
+        return ae
       default:
-        return null;
+        return null
     }
-  };
+  }
+
+  const formatCardNumber = (value) => {
+    const v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '')
+    const matches = v.match(/\d{4,16}/g)
+    const match = matches && matches[0] || ''
+    const parts = []
+
+    for (let i = 0, len = match.length; i < len; i += 4) {
+      parts.push(match.substring(i, i + 4))
+    }
+
+    if (parts.length) {
+      return parts.join(' ')
+    } else {
+      return value
+    }
+  }
 
   const handlePaymentMethodChange = (method) => {
-    setPaymentMethod(method);
-    setShowPaymentOptions(false);
-  };
+    setPaymentMethod(method)
+    setShowPaymentOptions(false)
+  }
+
+  const renderInput = (name, placeholder, type = "text") => (
+    <div className="relative">
+      <input
+        type={type}
+        name={name}
+        placeholder={placeholder}
+        value={formData[name]}
+        onChange={handleInputChange}
+        onBlur={handleBlur}
+        className={`w-full border rounded px-3 py-2 ${lexendDeca.className} ${
+          touched[name] && errors[name] ? 'border-red-500' : ''
+        } ${name === 'cardNumber' ? 'pr-10' : ''}`}
+        maxLength={name === 'cardNumber' ? (cardType === 'american-express' ? 17 : 19) : undefined}
+      />
+      {name === 'cardNumber' && cardType && (
+        <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+          <Image src={getCardLogo()} alt={cardType} width={32} height={20} />
+        </div>
+      )}
+      {touched[name] && errors[name] && (
+        <p className="text-red-500 text-sm mt-1">{errors[name]}</p>
+      )}
+    </div>
+  )
 
   return (
     <Container>
@@ -209,14 +351,7 @@ export default function Checkout() {
                 <h2 className={`text-xl font-semibold mb-2 ${jost.className}`}>
                   Contact
                 </h2>
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Email*"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  className={`w-full border rounded px-3 py-2 ${lexendDeca.className}`}
-                />
+                {renderInput("email", "Email*", "email")}
                 <div className="flex items-center mt-2">
                   <input
                     type="checkbox"
@@ -241,59 +376,17 @@ export default function Checkout() {
                 >
                   Delivery
                 </h2>
-                <input
-                  name="country"
-                  placeholder="Country/Region*"
-                  value={formData.country}
-                  onChange={handleInputChange}
-                  className={`w-full border rounded px-3 py-2 mb-4 ${lexendDeca.className}`}
-                />
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <input
-                    name="firstName"
-                    placeholder="First Name*"
-                    value={formData.firstName}
-                    onChange={handleInputChange}
-                    className={`w-full border ${lexendDeca.className} rounded px-3 py-2`}
-                  />
-                  <input
-                    name="lastName"
-                    placeholder="Last Name*"
-                    value={formData.lastName}
-                    onChange={handleInputChange}
-                    className={`w-full border rounded px-3 py-2 ${lexendDeca.className}`}
-                  />
+                {renderInput("country", "Country/Region*")}
+                <div className="grid grid-cols-1 sm:grid-cols-2 mt-4 mb-4 gap-4">
+                  {renderInput("firstName", "First Name*")}
+                  {renderInput("lastName", "Last Name*")}
                 </div>
-                <input
-                  name="address"
-                  placeholder="Address*"
-                  className={`w-full border rounded px-3 py-2 mt-4 ${lexendDeca.className}`}
-                  value={formData.address}
-                  onChange={handleInputChange}
-                />
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
-                  <input
-                    name="city"
-                    placeholder="City*"
-                    value={formData.city}
-                    onChange={handleInputChange}
-                    className={`w-full border rounded px-3 py-2 ${lexendDeca.className}`}
-                  />
-                  <input
-                    name="postcode"
-                    placeholder="Postcode*"
-                    value={formData.postcode}
-                    onChange={handleInputChange}
-                    className={`w-full ${lexendDeca.className} border rounded px-3 py-2`}
-                  />
+                {renderInput("address", "Address*")}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4 mb-4">
+                  {renderInput("city", "City*")}
+                  {renderInput("postcode", "Postcode*")}
                 </div>
-                <input
-                  name="phone"
-                  placeholder="Phone*"
-                  className={`w-full border rounded px-3 py-2 ${lexendDeca.className} mt-4`}
-                  value={formData.phone}
-                  onChange={handleInputChange}
-                />
+                {renderInput("phone", "Phone*")}
                 <div className="flex items-center mt-2">
                   <input
                     type="checkbox"
@@ -486,52 +579,12 @@ export default function Checkout() {
                             />
                           </div>
                         </div>
-                        <div className="relative">
-                          <input
-                            type="text"
-                            name="cardNumber"
-                            placeholder="Card number*"
-                            value={formData.cardNumber}
-                            onChange={handleInputChange}
-                            className={`w-full p-3 pr-12 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-600 ${lexendDeca.className}`}
-                          />
-                          {cardType && (
-                            <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-                              <Image
-                                src={getCardLogo()}
-                                alt={cardType}
-                                width={32}
-                                height={20}
-                              />
-                            </div>
-                          )}
-                        </div>
+                        {renderInput("cardNumber", "Card number*")}
                         <div className="flex space-x-4">
-                          <input
-                            type="text"
-                            name="expirationDate"
-                            placeholder="Expiration date (MM/YY)*"
-                            value={formData.expirationDate}
-                            onChange={handleInputChange}
-                            className={`w-1/2 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-600 ${lexendDeca.className}`}
-                          />
-                          <input
-                            type="text"
-                            name="securityCode"
-                            placeholder="Security code*"
-                            value={formData.securityCode}
-                            onChange={handleInputChange}
-                            className={`w-1/2 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-600 ${lexendDeca.className}`}
-                          />
+                          {renderInput("expirationDate", "Expiration date (MM/YY)*")}
+                          {renderInput("securityCode", "Security code*")}
                         </div>
-                        <input
-                          type="text"
-                          name="nameOnCard"
-                          placeholder="Name on card*"
-                          value={formData.nameOnCard}
-                          onChange={handleInputChange}
-                          className={`w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-600 ${lexendDeca.className}`}
-                        />
+                        {renderInput("nameOnCard", "Name on card*")}
                         <label className="flex items-center space-x-2">
                           <input
                             type="checkbox"
@@ -546,17 +599,25 @@ export default function Checkout() {
                       </div>
                     )}
                     {paymentMethod === "paypal" && (
-                      <div className="flex items-center justify-between">
-                        <span className={`font-medium ${jost.className}`}>
-                          PayPal
-                        </span>
-                        <Image
-                          src={paypal}
-                          alt="PayPal"
-                          width={64}
-                          height={20}
-                        />
-                      </div>
+                       <div>
+                       <div className="flex items-center justify-between mb-4">
+                         <span className={`font-medium ${jost.className}`}>
+                           Paypal
+                         </span>
+                         <Image
+                           src={PayPal}
+                           alt="PayPal"
+                           width={64}
+                           height={20}
+                         />
+                       </div>
+                       <p
+                         className={`${lexendDeca.className} mt-4 text-sm text-center mx-auto w-[80%]`}
+                       >
+                         After clicking &quot;Pay now&quot;, you will be redirected to
+                         PayPal to complete your payment.
+                       </p>
+                     </div>
                     )}
                     {paymentMethod === "klarna" && (
                       <div>
@@ -602,7 +663,6 @@ export default function Checkout() {
                   onChange={(e) => setSaveInfo(e.target.checked)}
                   className="mr-2"
                 />
-
                 <label
                   htmlFor="save-info"
                   className={` text-[#8B929D] ${lexendDeca.className}`}
@@ -612,12 +672,13 @@ export default function Checkout() {
               </div>
 
               {/* Pay Now Button */}
-              <button
-                className={`w-full bg-black text-white hover:bg-gray-800 py-3 rounded ${jost.className} uppercase`}
-              >
-                PAY NOW
-              </button>
-
+              <Link href="./confirmation-successful">
+                <button onClick={handlePayNow}
+                  className={`w-full bg-black text-white mt-4 hover:bg-gray-800 py-3 rounded ${jost.className} uppercase`}
+                >
+                  PAY NOW
+                </button>
+              </Link>
               {/* Terms */}
               <p
                 className={`text-sm text-gray-600 mt-4 text-center ${lexendDeca.className}`}
@@ -666,14 +727,23 @@ export default function Checkout() {
 
               {/* Bag Summary */}
               <div className="bg-white rounded-lg p-6 shadow-sm mt-12">
-                <h2 className={`text-lg  font-semibold mb-2 ${jost.className}`}>
+                <h2 className={`text-lg font-semibold mb-2 ${jost.className}`}>
                   Bag Summary
                 </h2>
-                <ul className="space-y-4">
+                <div 
+                  className={`
+                    ${cartItems.length > 1 ? 'max-h-[300px] overflow-y-auto pr-2' : ''}
+                    space-y-4
+                  `}
+                  style={{
+                    scrollbarWidth: 'thin',
+                    scrollbarColor: '#888 #f1f1f1'
+                  }}
+                >
                   {cartItems.map((item, index) => (
-                    <li
+                    <div
                       key={index}
-                      className="flex flex-col justify-between border-b py-2"
+                      className="flex justify-between border-b py-2"
                     >
                       <div className="flex">
                         {item.images && item.images[0] && item.images[0].src ? (
@@ -721,14 +791,14 @@ export default function Checkout() {
                           </div>
                         </div>
                       </div>
-                    </li>
+                    </div>
                   ))}
-                </ul>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </Container>
-  );
+  )
 }

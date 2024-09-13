@@ -3,9 +3,10 @@ import { persist } from 'zustand/middleware'
 
 export const useCartStore = create(
   persist(
-    (set) => ({
+    (set, get) => ({
       cartItems: [],
       savedItems: [],
+      orderDetails: null,
       addToCart: (product) =>
         set((state) => {
           const existingItem = state.cartItems.find((item) => item.id === product.id)
@@ -48,6 +49,9 @@ export const useCartStore = create(
             item.id === updatedItem.id ? { ...item, ...updatedItem } : item
           ),
         })),
+      setOrderDetails: (details) => set({ orderDetails: details }),
+      getOrderDetails: () => get().orderDetails,
+      clearOrderDetails: () => set({ orderDetails: null }),
     }),
     {
       name: 'cart-storage',
