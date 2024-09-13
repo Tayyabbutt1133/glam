@@ -7,8 +7,8 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import NextArrowIcon from "public/hero-banners/next-arrow";
-import PrevArrowIcon from "public/hero-banners/prev-arrow";
+import NextArrowIcon from "/public/hero-banners/next-arrow";
+import PrevArrowIcon from "/public/hero-banners/prev-arrow";
 
 import img1 from "/public/product-slider/img1.png";
 

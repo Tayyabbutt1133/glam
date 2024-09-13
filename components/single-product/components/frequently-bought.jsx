@@ -36,7 +36,7 @@ export default function FrequentlyBoughtTogether() {
       {/* container */}
       <div className="flex flex-row justify-between w-full gap-8">
         {products.map((product, index) => (
-          <div key={index} className="relative flex w-full max-w-[222px]" >
+          <div key={index} className="relative flex w-full max-w-[222px]">
             <div key={index} className="flex flex-col w-full">
               <Image
                 src={product.image}

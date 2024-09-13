@@ -22,7 +22,6 @@ const paymentOptions = [
   },
 ];
 
-
 export default function PaymentOptions() {
   return (
     <section className="flex flex-row flex-wrap gap-3 mb-10">

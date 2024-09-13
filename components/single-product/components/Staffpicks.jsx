@@ -76,7 +76,7 @@ const Staffpicks = () => {
         setLoading(false);
       }
     };
-    if(categoryId) fetchStaffPicks();
+    if (categoryId) fetchStaffPicks();
   }, [categoryId]);
 
   const settings = {
@@ -133,9 +133,9 @@ const Staffpicks = () => {
       [productId]: !prevFavorites[productId],
     }));
   };
-  
+
   if (!categoryId) return;
-  
+
   return (
     <Container className="mb-16">
       <h2
