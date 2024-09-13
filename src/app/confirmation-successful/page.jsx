@@ -256,7 +256,6 @@ export default function OrderConfirmation() {
           ))}
         </div>
 
-        {/* Product listing */}
         <div className="container mx-auto px-4 py-8">
           <h2 className={`text-2xl font-bold mb-14 ${jost.className}`}>Customers Also Bought</h2>
           {loading ? (
