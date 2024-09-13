@@ -106,7 +106,7 @@ const MenucategoryLandingPage = () => {
                       className="object-cover w-full h-full cursor-pointer"
                     />
                   </div>
-                  <p className={`mt-2 text-sm font-semibold ${jost.className}`}>
+                  <p className={`mt-2 text-sm text-center font-semibold ${jost.className}`}>
                     {sanitizeText(subCat.name)}
                   </p>
                 </Link>
