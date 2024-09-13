@@ -14,7 +14,7 @@ import visa from "../../../public/card-logos/visa.svg"
 import master from "../../../public/card-logos/master.svg"
 import maestro from "../../../public/card-logos/maestro.svg"
 import ae from "../../../public/card-logos/american-express.svg"
-import klarna_pink from '../../../public/Klarn_pink.svg'
+// import klarna_pink from '../../../public/Klarn_pink.svg'
 import paypal from '../../../public/PayPal.svg'
 
 const API_URL = 'https://glam.clickable.site/wp-json/wc/v3/products'
@@ -74,8 +74,8 @@ export default function OrderConfirmation() {
         }
       case "paypal":
         return paypal
-      case "klarna":
-        return klarna_pink
+      // case "klarna":
+      //   return klarna_pink
       default:
         return null
     }
