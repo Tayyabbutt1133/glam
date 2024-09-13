@@ -6,7 +6,7 @@ import ProductSlider from "./components/product-slider";
 
 import demo1 from "/public/product-slider/demo1.png";
 import demo2 from "/public/product-slider/demo2.png";
-import Staffpicks from "./components/staffpicks";
+import Staffpicks from "./components/Staffpicks";
 
 const demo = [
   { src: demo1, alt: "Image 1" },

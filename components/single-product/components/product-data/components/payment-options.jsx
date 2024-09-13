@@ -1,9 +1,10 @@
 import Image from "next/image";
 import clearpay from "/public/product-payment/clearpay.png";
 import klarna from "/public/product-payment/klarna.svg";
-import laybuy from "/public/product-payment/laybuy.png";
+import laybuy from "/public/product-payment/LayBuy.png";
 import Text from "@/components/ui/Text";
 import { IoIosInformationCircleOutline } from "react-icons/io";
+
 const paymentOptions = [
   {
     title: "3 interest-free payments of £3.33 with ",
