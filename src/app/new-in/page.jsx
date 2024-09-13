@@ -11,6 +11,7 @@ import Image from "next/image";
 import { lexendDeca, jost } from "../../../components/ui/fonts";
 import filter from "../../../public/filter.svg";
 import { RxCross2 } from "react-icons/rx";
+import { useCartStore } from "../../../states/Cardstore";
 
 // Base URl + woCommerce Secure Key
 const API_BASE_URL = "https://glam.clickable.site/wp-json/wc/v3";
@@ -31,6 +32,14 @@ export default function Component() {
   const [isCategoryFilterOpen, setIsCategoryFilterOpen] = useState(true);
   const [isPriceRangeFilterOpen, setIsPriceRangeFilterOpen] = useState(true);
   const [sortOption, setSortOption] = useState("popularity");
+
+
+
+
+
+
+  const addToCart = useCartStore((state) => state.addToCart);
+
 
   const [filters, setFilters] = useState({
     brands: [],
@@ -700,7 +709,7 @@ export default function Component() {
                       </p>
                       <button
                         className={`w-full bg-black text-white py-2 rounded-md hover:bg-gray-800 transition ${jost.className}`}
-                      >
+                    onClick={()=>addToCart(product)}  >
                         ADD TO BAG
                       </button>
                     </div>
