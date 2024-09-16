@@ -14,7 +14,7 @@ const Trustpilot = lazy(() => import("../Trustpilot"));
 
 export default function HomePage() {
   return (
-    <>
+    <main className="overflow-hidden">
       {/* Immediately visible components */}
       <Hero />
       <ProductList />
@@ -43,6 +43,6 @@ export default function HomePage() {
       <Suspense fallback={<div>Loading Trustpilot...</div>}>
         <Trustpilot />
       </Suspense>
-    </>
+    </main>
   );
 }

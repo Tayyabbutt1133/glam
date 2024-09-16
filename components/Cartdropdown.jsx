@@ -6,11 +6,12 @@ import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { jost } from './ui/fonts'
 
-
+import { usePopupStore } from 'states/use-popup-store'
 
 
 export default function Cartdropdown() {
   const { cartItems, removeFromCart, updateQuantity } = useCartStore()
+  const { rate ,currencySymbol} = usePopupStore();
   const [isOpen, setIsOpen] = useState(true)
   const dropdownRef = useRef(null)
 
@@ -44,7 +45,7 @@ export default function Cartdropdown() {
   return (
     <div 
       ref={dropdownRef} 
-      className="absolute top-full right-0 mt-2 w-[450px] bg-white shadow-lg rounded-md overflow-hidden z-[100] border border-gray-200 max-h-[80vh] flex flex-col"
+      className="absolute top-full right-0 mt-2 w-[300px] sm:w-[450px] bg-white shadow-lg rounded-md overflow-hidden z-[100] border border-gray-200 max-h-[80vh] flex flex-col"
     >
       <div className="p-4 border-b border-gray-200">
         <h2 className={`text-xl font-normal ${jost.className}`}>Your Bag ({cartItems.length})</h2>
@@ -52,13 +53,16 @@ export default function Cartdropdown() {
       <div className="flex-grow overflow-y-auto">
         {cartItems.length > 0 ? (
           <ul>
-            {cartItems.map((item) => (
+            {cartItems.map((item) =>{
+              // console.log(item)
+              const image = item.images ? item.images[0].src : item.image.src
+              return (
               <li key={item.id} className="p-4 border-b border-gray-200">
                 <div className="flex items-start justify-between">
                   <div className="flex items-start">
                     <div className="w-28 flex flex-col items-center">
                       <Image 
-                        src={item.images[0].src} 
+                        src={image} //changes here 
                         alt={item.name} 
                         width={80} 
                         height={80} 
@@ -92,10 +96,10 @@ export default function Cartdropdown() {
                       </div>
                     </div>
                   </div>
-                  <p className={`font-medium text-lg mt-24 ${jost.className}`}>£{(parseFloat(item.price) * item.quantity).toFixed(2)}</p>
+                  <p className={`font-medium text-lg mt-24 ${jost.className}`}>{currencySymbol}{(parseFloat(item.price  * rate ) * item.quantity).toFixed(2)}</p>
                 </div>
               </li>
-            ))}
+            )})}
           </ul>
         ) : (
           <p className="text-center text-gray-500 p-4">Your bag is empty.</p>
@@ -105,7 +109,7 @@ export default function Cartdropdown() {
         <div className="p-4 bg-white border-t border-gray-200">
           <div className="flex justify-between text-lg font-semibold mb-4">
             <p className={`${jost.className} font-semibold`}>Estimated Subtotal ({cartItems.length}):</p>
-            <p className={`${jost.className} font-medium`}>£{calculateSubtotal().toFixed(2)}</p>
+            <p className={`${jost.className} font-medium`}>{currencySymbol}{parseFloat(calculateSubtotal() * rate).toFixed(2)}</p>
           </div>
           <Link href="/mybag" className="block">
   <button className={`w-full bg-black text-white py-3 rounded-md text-center text-base font-semibold hover:bg-gray-900 transition duration-200 ${jost.className}`}>

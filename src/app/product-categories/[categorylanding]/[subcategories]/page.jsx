@@ -1,56 +1,62 @@
-'use client'
+"use client";
 
-import React, { useEffect, useState, useMemo } from "react"
-import { useParams } from "next/navigation"
-import axios from "axios"
-import Image from "next/image"
-import { FaStar, FaRegStar, FaHeart } from "react-icons/fa"
-import { CiHeart } from "react-icons/ci"
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io"
-import { RxCross2 } from "react-icons/rx"
-import { lexendDeca, jost } from "../../../../../components/ui/fonts"
-import Container from "../../../../../components/container"
-import filter from '../../../../../public/filter.svg'
+import React, { useEffect, useState, useMemo } from "react";
+import { useParams } from "next/navigation";
+import axios from "axios";
+import Image from "next/image";
+import { FaStar, FaRegStar, FaHeart } from "react-icons/fa";
+import { CiHeart } from "react-icons/ci";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { RxCross2 } from "react-icons/rx";
+import { lexendDeca, jost } from "../../../../../components/ui/fonts";
+import Container from "../../../../../components/container";
+import filter from "../../../../../public/filter.svg";
+import { IoFilterOutline } from "react-icons/io5";
+import { usePopupStore } from "states/use-popup-store";
+import Link from "next/link";
 
-const API_BASE_URL = "https://glam.clickable.site/wp-json/wc/v3"
-const CONSUMER_KEY = "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d"
-const CONSUMER_SECRET = "cs_3f70ee2600a3ac17a5692d7ac9c358d47275d6fc"
-const PRODUCTS_PER_PAGE = 12
+const API_BASE_URL = "https://glam.clickable.site/wp-json/wc/v3";
+const CONSUMER_KEY = "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d";
+const CONSUMER_SECRET = "cs_3f70ee2600a3ac17a5692d7ac9c358d47275d6fc";
+const PRODUCTS_PER_PAGE = 12;
 
 export default function SubcategoryPage() {
-  const { categorylanding, subcategories } = useParams()
-  const [products, setProducts] = useState([])
-  const [currentPage, setCurrentPage] = useState(1)
-  const [totalPages, setTotalPages] = useState(1)
-  const [loading, setLoading] = useState(true)
-  const [favorites, setFavorites] = useState({})
-  const [brands, setBrands] = useState([])
-  const [categories, setCategories] = useState([])
-  const [priceRanges, setPriceRanges] = useState([])
-  const [isBrandFilterOpen, setIsBrandFilterOpen] = useState(true)
-  const [isCategoryFilterOpen, setIsCategoryFilterOpen] = useState(true)
-  const [isPriceRangeFilterOpen, setIsPriceRangeFilterOpen] = useState(true)
-  const [sortOption, setSortOption] = useState("popularity")
+  const {rate,currencySymbol} = usePopupStore();
+  const { categorylanding, subcategories } = useParams();
+  const [products, setProducts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const [favorites, setFavorites] = useState({});
+  const [brands, setBrands] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [priceRanges, setPriceRanges] = useState([]);
+  const [isBrandFilterOpen, setIsBrandFilterOpen] = useState(true);
+  const [isCategoryFilterOpen, setIsCategoryFilterOpen] = useState(true);
+  const [isPriceRangeFilterOpen, setIsPriceRangeFilterOpen] = useState(true);
+  const [sortOption, setSortOption] = useState("popularity");
+
+  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
 
   const [filters, setFilters] = useState({
     brands: [],
     categories: [],
     priceRange: [],
-  })
+  });
 
   const fetchProducts = async (page = 1) => {
-    setLoading(true)
+    setLoading(true);
     try {
       const params = {
         per_page: 100,
         page,
         consumer_key: CONSUMER_KEY,
         consumer_secret: CONSUMER_SECRET,
-      }
+      };
 
       const productsResponse = await axios.get(`${API_BASE_URL}/products`, {
         params,
-      })
+      });
       const fetchedProducts = productsResponse.data
         .map((product) => ({
           ...product,
@@ -59,120 +65,127 @@ export default function SubcategoryPage() {
         .filter(
           (product) =>
             product.images.length > 0 &&
-            product.attributes.some((attr) => attr.name.toLowerCase() === "brand") &&
+            product.attributes.some(
+              (attr) => attr.name.toLowerCase() === "brand"
+            ) &&
             product.name &&
             product.price &&
-            product.categories.some((cat) => cat.slug.toLowerCase() === subcategories.toLowerCase())
-        )
-      setProducts(fetchedProducts)
-      setTotalPages(Math.ceil(fetchedProducts.length / PRODUCTS_PER_PAGE))
-      setCurrentPage(page)
+            product.categories.some(
+              (cat) => cat.slug.toLowerCase() === subcategories.toLowerCase()
+            )
+        );
+      setProducts(fetchedProducts);
+      setTotalPages(Math.ceil(fetchedProducts.length / PRODUCTS_PER_PAGE));
+      setCurrentPage(page);
 
-      updateFilters(fetchedProducts)
+      updateFilters(fetchedProducts);
     } catch (error) {
-      console.error("Error fetching products:", error)
+      console.error("Error fetching products:", error);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   const updateFilters = (fetchedProducts) => {
-    const brandMap = new Map()
+    const brandMap = new Map();
     fetchedProducts.forEach((product) => {
       const brandAttr = product.attributes.find(
         (attr) => attr.name.toLowerCase() === "brand"
-      )
+      );
       if (brandAttr) {
-        const brandName = brandAttr.options[0].replace(/&amp;/g, "&")
-        brandMap.set(brandName.toLowerCase(), (brandMap.get(brandName.toLowerCase()) || 0) + 1)
+        const brandName = brandAttr.options[0].replace(/&amp;/g, "&");
+        brandMap.set(
+          brandName.toLowerCase(),
+          (brandMap.get(brandName.toLowerCase()) || 0) + 1
+        );
       }
-    })
-    setBrands(Array.from(brandMap, ([name, count]) => ({ name, count })))
+    });
+    setBrands(Array.from(brandMap, ([name, count]) => ({ name, count })));
 
-    const categoryMap = new Map()
+    const categoryMap = new Map();
     fetchedProducts.forEach((product) => {
       product.categories.forEach((category) => {
-        const categoryName = category.name.replace(/&amp;/g, "&")
+        const categoryName = category.name.replace(/&amp;/g, "&");
         if (categoryMap.has(category.id)) {
-          categoryMap.get(category.id).count++
+          categoryMap.get(category.id).count++;
         } else {
           categoryMap.set(category.id, {
             ...category,
             name: categoryName,
             count: 1,
-          })
+          });
         }
-      })
-    })
-    setCategories(Array.from(categoryMap.values()))
+      });
+    });
+    setCategories(Array.from(categoryMap.values()));
 
-    const prices = fetchedProducts.map((product) => parseFloat(product.price))
-    const minPrice = Math.floor(Math.min(...prices))
-    const maxPrice = Math.ceil(Math.max(...prices))
-    const range = maxPrice - minPrice
-    const step = Math.ceil(range / 4)
+    const prices = fetchedProducts.map((product) => parseFloat(product.price));
+    const minPrice = Math.floor(Math.min(...prices));
+    const maxPrice = Math.ceil(Math.max(...prices));
+    const range = maxPrice - minPrice;
+    const step = Math.ceil(range / 4);
 
     setPriceRanges([
       `${minPrice}-${minPrice + step}`,
       `${minPrice + step + 1}-${minPrice + 2 * step}`,
       `${minPrice + 2 * step + 1}-${minPrice + 3 * step}`,
       `${minPrice + 3 * step + 1}-${maxPrice}`,
-    ])
-  }
+    ]);
+  };
 
   useEffect(() => {
-    fetchProducts(1)
-  }, [subcategories])
+    fetchProducts(1);
+  }, [subcategories]);
 
   const handlePageChange = (page) => {
     if (page >= 1 && page <= totalPages) {
-      setCurrentPage(page)
+      setCurrentPage(page);
     }
-  }
+  };
 
   const handleFilterChange = (filterType, value) => {
     setFilters((prevFilters) => {
-      const updatedFilters = { ...prevFilters }
-      const index = updatedFilters[filterType].indexOf(value)
+      const updatedFilters = { ...prevFilters };
+      const index = updatedFilters[filterType].indexOf(value);
       if (index > -1) {
         updatedFilters[filterType] = updatedFilters[filterType].filter(
           (item) => item !== value
-        )
+        );
       } else {
-        updatedFilters[filterType] = [...updatedFilters[filterType], value]
+        updatedFilters[filterType] = [...updatedFilters[filterType], value];
       }
-      return updatedFilters
-    })
-    setCurrentPage(1)
-  }
+      return updatedFilters;
+    });
+    setCurrentPage(1);
+  };
 
   const handleFavoriteClick = (productId) => {
     setFavorites((prevFavorites) => ({
       ...prevFavorites,
       [productId]: !prevFavorites[productId],
-    }))
-  }
+    }));
+  };
 
   const handleSortChange = (event) => {
-    setSortOption(event.target.value)
-  }
+    setSortOption(event.target.value);
+  };
 
   const sortProducts = (products) => {
     switch (sortOption) {
       case "popularity":
-        return [...products].sort((a, b) => b.total_sales - a.total_sales)
+        return [...products].sort((a, b) => b.total_sales - a.total_sales);
       case "price-low-to-high":
         return [...products].sort(
           (a, b) => parseFloat(a.price) - parseFloat(b.price)
-        )
+        );
       case "price-high-to-low":
         return [...products].sort(
           (a, b) => parseFloat(b.price) - parseFloat(a.price)
-        )
+        );
       default:
-        return products
+        return products;
     }
-  }
+  };
 
   const filteredAndSortedProducts = useMemo(() => {
     const filtered = products.filter((product) => {
@@ -181,32 +194,34 @@ export default function SubcategoryPage() {
         product.attributes.some(
           (attr) =>
             attr.name.toLowerCase() === "brand" &&
-            filters.brands.map(b => b.toLowerCase()).includes(attr.options[0].toLowerCase())
-        )
+            filters.brands
+              .map((b) => b.toLowerCase())
+              .includes(attr.options[0].toLowerCase())
+        );
       const categoryMatch =
         filters.categories.length === 0 ||
         product.categories.some((cat) =>
           filters.categories.includes(cat.id.toString())
-        )
+        );
       const priceMatch =
         filters.priceRange.length === 0 ||
         filters.priceRange.some((range) => {
-          const [min, max] = range.split("-").map(Number)
-          const price = parseFloat(product.price)
-          return price >= min && price <= max
-        })
-      return brandMatch && categoryMatch && priceMatch
-    })
-    return sortProducts(filtered)
-  }, [products, filters, sortOption])
+          const [min, max] = range.split("-").map(Number);
+          const price = parseFloat(product.price);
+          return price >= min && price <= max;
+        });
+      return brandMatch && categoryMatch && priceMatch;
+    });
+    return sortProducts(filtered);
+  }, [products, filters, sortOption]);
 
   const paginatedProducts = useMemo(() => {
-    const startIndex = (currentPage - 1) * PRODUCTS_PER_PAGE
+    const startIndex = (currentPage - 1) * PRODUCTS_PER_PAGE;
     return filteredAndSortedProducts.slice(
       startIndex,
       startIndex + PRODUCTS_PER_PAGE
-    )
-  }, [filteredAndSortedProducts, currentPage])
+    );
+  }, [filteredAndSortedProducts, currentPage]);
 
   const getFilteredCount = (filterType, value) => {
     return products.filter((product) => {
@@ -215,62 +230,66 @@ export default function SubcategoryPage() {
         product.attributes.some(
           (attr) =>
             attr.name.toLowerCase() === "brand" &&
-            (filters.brands.map(b => b.toLowerCase()).includes(attr.options[0].toLowerCase()) ||
+            (filters.brands
+              .map((b) => b.toLowerCase())
+              .includes(attr.options[0].toLowerCase()) ||
               attr.options[0].toLowerCase() === value.toLowerCase())
-        )
+        );
       const categoryMatch =
         filters.categories.length === 0 ||
         product.categories.some(
           (cat) =>
             filters.categories.includes(cat.id.toString()) ||
             cat.id.toString() === value
-        )
+        );
       const priceMatch =
         filters.priceRange.length === 0 ||
         filters.priceRange.some((range) => {
-          const [min, max] = range.split("-").map(Number)
-          const price = parseFloat(product.price)
-          return (price >= min && price <= max) || range === value
-        })
+          const [min, max] = range.split("-").map(Number);
+          const price = parseFloat(product.price);
+          return (price >= min && price <= max) || range === value;
+        });
 
       if (filterType === "brands") {
         return (
           categoryMatch &&
           priceMatch &&
           product.attributes.some(
-            (attr) => attr.name.toLowerCase() === "brand" && attr.options[0].toLowerCase() === value.toLowerCase()
+            (attr) =>
+              attr.name.toLowerCase() === "brand" &&
+              attr.options[0].toLowerCase() === value.toLowerCase()
           )
-        )
+        );
       } else if (filterType === "categories") {
         return (
           brandMatch &&
           priceMatch &&
           product.categories.some((cat) => cat.id.toString() === value)
-        )
+        );
       } else if (filterType === "priceRange") {
-        const [min, max] = value.split("-").map(Number)
-        const price = parseFloat(product.price)
-        return brandMatch && categoryMatch && price >= min && price <= max
+        const [min, max] = value.split("-").map(Number);
+        const price = parseFloat(product.price);
+        return brandMatch && categoryMatch && price >= min && price <= max;
       }
-      return false
-    }).length
-  }
+      return false;
+    }).length;
+  };
 
   const clearAllFilters = () => {
     setFilters({
       brands: [],
       categories: [],
       priceRange: [],
-    })
-    setCurrentPage(1)
-  }
+    });
+    setCurrentPage(1);
+  };
 
   const removeFilter = (filterType, value) => {
     setFilters((prevFilters) => ({
       ...prevFilters,
       [filterType]: prevFilters[filterType].filter((item) => item !== value),
-    }))
-  }
+    }));
+  };
 
   const renderPagination = () => (
     <div className="flex justify-end items-center">
@@ -333,22 +352,33 @@ export default function SubcategoryPage() {
         &gt;
       </button>
     </div>
-  )
+  );
 
   return (
     <Container className="min-h-screen py-32">
       <div className="mb-8">
-        <h1 className={`text-3xl text-center uppercase font-bold ${jost.className}`}>
-        {subcategories} {categorylanding}
+        <h1
+          className={`text-3xl text-center uppercase font-bold ${jost.className}`}
+        >
+          {subcategories} {categorylanding}
         </h1>
       </div>
 
       <div className="flex justify-between items-center">
-        <div className="flex items-center ml-[20rem]">
+        <div className="flex items-center  lg:hidden mr-10">
+          <button onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}>
+            <span
+              className={` flex items-center gap-2 text-md ${jost.className}`}
+            >
+              Filters <IoFilterOutline className="w-6 h-6" />
+            </span>
+          </button>
+        </div>
+        <div className=" flex flex-col md:flex-row items-center lg:ml-[20rem] mr-auto">
           <select
             value={sortOption}
             onChange={handleSortChange}
-            className={`px-4 py-2 border border-gray-300 ${lexendDeca.className} rounded-md font-jost text-black`}
+            className={`px-4 py-2 border border-gray-300 ${lexendDeca.className} rounded-md font-jost text-black`} // Apply font classes to the select itself
           >
             <option value="popularity" className="text-black">
               Sort by: Popularity
@@ -361,24 +391,45 @@ export default function SubcategoryPage() {
             </option>
           </select>
         </div>
-        {renderPagination()}
+        <span className="hidden lg:block">{renderPagination()}</span>
       </div>
 
+
+
+
       <div className="flex flex-col lg:flex-row gap-4 mb-32">
-        <div className="w-full lg:w-1/4 p-4 sticky top-0 bg-white">
+
+
+        
+        <div
+          className={`w-full  transition-all duration-300 ease-in-out ${
+            isMobileFilterOpen
+              ? "z-[90] lg:z-auto h-screen overflow-y-auto lg:overflow-y-auto  translate-x-[0] lg:translate-x-0"
+              : " translate-x-[300%] lg:translate-x-0"
+          }   lg:w-1/4 p-4   fixed lg:static md:block top-0 bg-white`}
+        >
           <div className="flex justify-between items-center mb-4">
             <h3
-              className={`text-lg font-normal flex items-center gap-4 ${lexendDeca.className}`}
+              className={`text-lg font-normal flex w-full items-center gap-4 ${lexendDeca.className}`}
             >
-              <Image src={filter} width={24} height={24} alt="Filter icon" />
-              Filters
+              <Image
+                src={filter}
+                width={24}
+                height={24}
+                alt="Filter icon"
+                onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
+              />
+              <span className=" hidden lg:block">Filters</span>
+              <p className=" lg:hidden mx-auto block text-center flex-grow">
+                Filter By
+              </p>
             </h3>
             {(filters.brands.length > 0 ||
               filters.categories.length > 0 ||
               filters.priceRange.length > 0) && (
               <button
                 onClick={clearAllFilters}
-                className={`text-sm text-[#8B929D] underline ${lexendDeca.className}`}
+                className={` hidden lg:block text-sm text-[#8B929D] pl-4 underline ${lexendDeca.className}`}
               >
                 Clear All
               </button>
@@ -412,7 +463,7 @@ export default function SubcategoryPage() {
               {filters.categories.map((categoryId) => {
                 const category = categories.find(
                   (c) => c.id.toString() === categoryId
-                )
+                );
                 return category ? (
                   <span
                     key={categoryId}
@@ -425,13 +476,13 @@ export default function SubcategoryPage() {
                     </span>{" "}
                     {category.name}
                     <button
-                      onClick={() => removeFilter("categories", categoryId)}
+                      onClick={() => removeFilter("Category", categoryId)}
                       className="ml-2 text-red-600 hover:text-red-700"
                     >
                       <RxCross2 />
                     </button>
                   </span>
-                ) : null
+                ) : null;
               })}
 
               {filters.priceRange.map((range) => (
@@ -446,7 +497,7 @@ export default function SubcategoryPage() {
                   </span>{" "}
                   £{range}
                   <button
-                    onClick={() => removeFilter("priceRange", range)}
+                    onClick={() => removeFilter("Price", range)}
                     className="ml-2 text-red-600 hover:text-red-700"
                   >
                     <RxCross2 />
@@ -459,7 +510,7 @@ export default function SubcategoryPage() {
           <hr className="bg-[#8B929D73] h-[1px]" />
           <div className="mb-6 mt-4">
             <h4
-              className={`font-bold text-lg mb-2 flex justify-between items-center cursor-pointer ${jost.className}`}
+              className={`font-bold text-lg mb-2 flex justify-between items-center cursor-pointer pr-4 ${jost.className}`}
               onClick={() => setIsBrandFilterOpen(!isBrandFilterOpen)}
             >
               Brand
@@ -496,7 +547,7 @@ export default function SubcategoryPage() {
 
           <div className="mb-6">
             <h4
-              className={`font-bold ${jost.className} text-lg mb-2 flex justify-between items-center cursor-pointer`}
+              className={`font-bold ${jost.className} text-lg mb-2 flex justify-between items-center cursor-pointer pr-4`}
               onClick={() => setIsCategoryFilterOpen(!isCategoryFilterOpen)}
             >
               Category
@@ -538,7 +589,7 @@ export default function SubcategoryPage() {
 
           <div className="mb-6">
             <h4
-              className={`font-bold ${jost.className} text-lg mb-2 flex justify-between items-center cursor-pointer`}
+              className={`font-bold ${jost.className} text-lg mb-2 flex justify-between items-center cursor-pointer pr-4`}
               onClick={() => setIsPriceRangeFilterOpen(!isPriceRangeFilterOpen)}
             >
               Price Range
@@ -567,7 +618,31 @@ export default function SubcategoryPage() {
               </div>
             )}
           </div>
+
+          <section className="flex  justify-around  mt-auto gap-4 lg:hidden">
+            <button
+              onClick={clearAllFilters}
+              className={`  text-sm text-[#8B929D] pl-4 underline ${lexendDeca.className}`}
+            >
+              Clear All
+            </button>
+
+            <button
+              disabled={
+                filters.brands.length === 0 &&
+                filters.categories.length === 0 &&
+                filters.priceRange.length === 0
+              }
+              className=" basis-1/2 bg-black text-white w-full py-2 rounded-md"
+              onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
+            >
+              Apply Filter
+            </button>
+          </section>
         </div>
+
+
+
 
         <div className="w-full lg:w-3/4">
           {loading ? (
@@ -589,8 +664,9 @@ export default function SubcategoryPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
               {paginatedProducts.map((product) => {
                 const brand =
-                  product.attributes.find((attr) => attr.name.toLowerCase() === "brand")
-                    ?.options[0] || "Unknown Brand"
+                  product.attributes.find(
+                    (attr) => attr.name.toLowerCase() === "brand"
+                  )?.options[0] || "Unknown Brand";
                 return (
                   <div
                     key={product.id}
@@ -613,16 +689,18 @@ export default function SubcategoryPage() {
                         )}
                       </button>
                     </div>
-                    <img
-                      src={product.images[0]?.src}
-                      alt={product.name}
-                      className="w-full h-64 object-cover mb-4"
-                    />
-                    <h1
-                      className={`text-sm ${jost.className} font-bold mb-2`}
-                    >
-                      {brand}
-                    </h1>
+                    <Link href={`/product/${product.id}`}>
+                      <img
+                        src={product.images[0]?.src}
+                        alt={product.name}
+                        className="w-full h-64 object-cover mb-4"
+                      />
+                    </Link>
+                    <Link href={`/product/${product.id}`}>
+                      <h1 className={`text-sm ${jost.className} cursor-pointer font-bold mb-2`}>
+                        {brand}
+                      </h1>
+                    </Link>
                     <h3
                       className={`text-sm ${lexendDeca.className} font-normal mb-2 h-[60px] overflow-hidden`}
                     >
@@ -648,12 +726,12 @@ export default function SubcategoryPage() {
                       {product.sale_price ? (
                         <>
                           <span className="line-through text-gray-600 mr-2">
-                            £{product.regular_price}
+                            {currencySymbol}{(product.regular_price * rate).toFixed(2)}
                           </span>
-                          £{product.sale_price}
+                          {currencySymbol}{(product.sale_price * rate).toFixed(2)}
                         </>
                       ) : (
-                        `£${product.price}`
+                        `${currencySymbol}${(product.price * rate).toFixed(2)}`
                       )}
                     </p>
                     <button
@@ -662,7 +740,7 @@ export default function SubcategoryPage() {
                       ADD TO BAG
                     </button>
                   </div>
-                )
+                );
               })}
             </div>
           ) : (
@@ -679,5 +757,5 @@ export default function SubcategoryPage() {
         </div>
       </div>
     </Container>
-  )
+  );
 }

@@ -59,6 +59,10 @@ const decodeHtmlEntities = (text) => {
 };
 
 const Staffpicks = () => {
+
+  
+
+
   const [favorites, setFavorites] = useState({});
   const [staffPicks, setStaffPicks] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -69,6 +73,7 @@ const Staffpicks = () => {
       try {
         setLoading(true);
         const response = await axios.get(`/api/staffpicks/${categoryId}`);
+        console.log(response.data)
         setStaffPicks(response.data);
       } catch (error) {
         console.error("Error fetching staff picks:", error);
@@ -82,7 +87,7 @@ const Staffpicks = () => {
   const settings = {
     dots: false,
     infinite: true,
-    speed: 300,
+    speed: 500,
     slidesToShow: 4,
     slidesToScroll: 1,
     autoplay: true,
@@ -109,15 +114,23 @@ const Staffpicks = () => {
       {
         breakpoint: 768,
         settings: {
+          dots: true,
+          arrows: false,
           slidesToShow: 2,
           slidesToScroll: 1,
         },
       },
       {
         breakpoint: 480,
+        
         settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          arrows: false,
+          dots: true,
+          rows: 2,
+          
+          
         },
       },
     ],
@@ -149,7 +162,7 @@ const Staffpicks = () => {
             .fill(0)
             .map((_, index) => (
               <div key={index} className="px-2">
-                <div className="bg-white shadow-lg rounded-lg overflow-hidden relative flex flex-col h-full min-h-[420px] border border-gray-300">
+                <div className="bg-white shadow-lg rounded-lg overflow-hidden relative flex flex-col h-full min-h-[350px] border border-gray-300">
                   <div className="w-[90%] 2xl:w-[100%] h-48">
                     <Skeleton height="100%" />
                   </div>

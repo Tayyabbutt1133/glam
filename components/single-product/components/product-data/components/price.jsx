@@ -1,20 +1,30 @@
+"use client"
 import { lexendDeca } from "@/components/ui/fonts";
 import Text from "@/components/ui/Text";
+import { usePopupStore } from "states/use-popup-store";
 
-export default function Price() {
+export default function Price({price, regularPrice, salePrice,isOnsale}) {
+  //`Get the rates from the popup store
+  const { rate,currencySymbol,loading,error,selectedCountry } = usePopupStore();
+  console.log(rate,currencySymbol,loading,error,selectedCountry)
+  const displayPrice = isOnsale ? salePrice : price;
+  const savings = isOnsale ? regularPrice - salePrice : 0;
+
+
+
   return (
     <section className="flex flex-col gap-2 mb-5">
       <Text style={"large"} className="text-2xl text-sale">
-        £9.99
+      {currencySymbol}{(displayPrice * rate).toFixed(2)}
       </Text>
       <div className="flex items-center space-x-4">
         <Text style={"sm"} className="text-light line-through text-xl">
-          £19.99
+          {currencySymbol}{(regularPrice * rate).toFixed(2) || (price * rate).toFixed(2)}
         </Text>
         <span
           className={`${lexendDeca.className} text-black font-medium text-base rounded-md bg-bg-01 px-2 py-1`}
         >
-          SAVE £10.00
+          SAVE {currencySymbol}{(savings * rate).toFixed(2)}
         </span>
       </div>
     </section>

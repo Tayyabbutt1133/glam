@@ -64,8 +64,8 @@ export default function HomeCategory() {
     autoplay: true,
     autoplaySpeed: 3000,
     arrows: true,
-    nextArrow: <NextArrow />,
-    prevArrow: <PrevArrow />,
+    nextArrow: <div className='hidden sm:block'><NextArrow /></div>,
+    prevArrow: <div className='hidden sm:block'><PrevArrow /></div>,
     dots: false,
     responsive: [
       {
@@ -92,7 +92,7 @@ export default function HomeCategory() {
       {
         breakpoint: 480,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 2,
           slidesToScroll: 1,
         },
       },
@@ -105,16 +105,16 @@ export default function HomeCategory() {
         <div className="py-16 relative">
           <h1 className={`text-2xl font-semibold mb-8 text-left ${jost.className} uppercase`}>Shop by Category</h1>
           <Slider {...settings}>
-            <div className="px-2 lg:w-44 xl:w-56 2xl:w-[100%]">
+            <div className="px-2  w-[45%] lg:w-44 xl:w-56 2xl:w-[100%]">
               <Image src={cat_one} alt="Makeup" className="rounded-lg object-cover cursor-pointer w-full" />
             </div>
-            <div className="px-2 lg:w-44 xl:w-56 2xl:w-[100%]">
+            <div className="px-2  w-[45%] lg:w-44 xl:w-56 2xl:w-[100%]">
               <Image src={cat_two} alt="Lips" className="rounded-lg object-cover cursor-pointer w-full" />
             </div>
-            <div className="px-2 lg:w-44 xl:w-56 2xl:w-[100%]">
+            <div className="px-2  w-[45%] lg:w-44 xl:w-56 2xl:w-[100%]">
               <Image src={cat_three} alt="Hair" className="rounded-lg object-cover cursor-pointer w-full" />
             </div>
-            <div className="px-2 lg:w-44 xl:w-56 2xl:w-[100%]">
+            <div className="px-2  w-[45%] lg:w-44 xl:w-56 2xl:w-[100%]">
               <Image src={cat_four} alt="Fragrance" className="rounded-lg object-cover cursor-pointer w-full" />
             </div>
           </Slider>

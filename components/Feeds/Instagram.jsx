@@ -13,7 +13,7 @@ import { jost } from "../ui/fonts";
 
 export default function Instagram() {
   return (
-    <div className="flex w-full mb-20">
+    <div className="flex w-full mb-20 ">
       <Container>
         <div className="flex flex-col w-full mt-10 overflow-hidden">
           <h1
@@ -21,8 +21,8 @@ export default function Instagram() {
           >
             SHOP OUR IG
           </h1>
-          <div className="ig-container">
-            <div className="angry-grid">
+          <div className="ig-container scrollbar-hide">
+            <div className="angry-grid ">
               {/* Grid of 4 pics */}
               <Image src={ig_one} alt="IG One" id="item-0" />
               <Image src={ig_three} alt="IG Three" id="item-1" />

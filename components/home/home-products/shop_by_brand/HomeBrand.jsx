@@ -32,23 +32,25 @@ const HomeBrand = () => {
         <h2 className={`text-2xl font-semibold ${jost.className}`}>SHOP BY BRAND</h2>
         {/* <Image src={brand_slide}/> */}
         <BrandSlide/>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="flex overflow-x-auto pb-4 space-x-4 lg:grid lg:grid-cols-4 lg:gap-8 lg:space-x-0 scrollbar-hide">
           {products.map((product) => (
             <div
               key={product.id}
               onClick={() => handleProductClick(product.id)}
-              className="cursor-pointer bg-transparent overflow-hidden transition-shadow duration-300"
+              className="cursor-pointer bg-transparent overflow-hidden transition-shadow duration-300 flex-shrink-0 w-[calc(50%-8px)] sm:w-[calc(33.333%-16px)] lg:w-full "
             >
               {/* Product Image */}
-              <div className="relative w-full h-72 2xl:h-[390px]">
-                <Image className='rounded-md 2xl:rounded-lg' src={product.image} alt={product.name} layout="fill" objectFit="cover" />
+              <div className="relative sm:w-full h-[120px] sm:h-72 2xl:h-[390px] w-[150px]">
+                <Image className='rounded-md 2xl:rounded-lg brightness-75 sm:brightness-100' src={product.image} alt={product.name} layout="fill" objectFit="cover" />
+                <h3 className={` sm:hidden text-md absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 font-semibold text-gray-50 ${jost.className}`}>{product.name}</h3>
+
               </div>
 
               {/* Product Info */}
               <div className="px-4 py-6 text-left">
-                <h3 className={`text-lg font-semibold text-gray-900 ${jost.className}`}>{product.name}</h3>
-                <p className={`text-black text-sm my-2 ${lexendDeca.className}`}>{product.description}</p>
-                <button className={`mt-4 bg-black text-white py-2 px-6 rounded-md hover:bg-gray-800 transition duration-200 ${jost.className}`}>
+                <h3 className={`hidden sm:block text-lg font-semibold text-gray-900 ${jost.className}`}>{product.name}</h3>
+                <p className={`text-black text-xs sm:text-sm my-2  ${lexendDeca.className}`}>{product.description}</p>
+                <button className={`sm:mt-4 bg-black text-white text-xs sm:text-sm py-2 sm:px-6 px-2 rounded-md hover:bg-gray-800 transition duration-200 ${jost.className}`}>
                   SHOP NOW
                 </button>
               </div>

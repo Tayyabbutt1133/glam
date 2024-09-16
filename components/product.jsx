@@ -3,16 +3,18 @@
 import { useState } from "react";
 import { CiHeart } from "react-icons/ci";
 import { FaHeart, FaRegStar, FaStar } from "react-icons/fa";
-import { jost, lexendDeca } from "./ui/fonts"
+import { jost, lexendDeca } from "./ui/fonts";
 import Image from "next/image";
 import { useCartStore } from "../states/Cardstore";
+import { usePopupStore } from "../states/use-popup-store";
 
 
 
-
-export default function Product({product}){
+export default function Product({ product }) {
   const [favorites, setFavorites] = useState({});
-  
+  const { rate,currencySymbol } = usePopupStore();
+// console.log(product)
+
   const handleProductClick = (productId) => {
     console.log(`Product clicked: ${productId}`);
   };
@@ -25,26 +27,22 @@ export default function Product({product}){
   };
 
   const sanitizeText = (text) => {
-    return text.replace(/&amp;/g, '&');
-  };
-  
-  const getBrandName = (attributes) => {
-    const brandAttr = attributes.find((attr) => attr.name === "Brand");
-    return brandAttr ? (brandAttr.options[0] || "Unknown Brand") : "Unknown Brand";
+    return text.replace(/&amp;/g, "&");
   };
 
+  const getBrandName = (attributes) => {
+    const brandAttr = attributes.find((attr) => attr.name === "Brand");
+    return brandAttr
+      ? brandAttr.options[0] || "Unknown Brand"
+      : "Unknown Brand";
+  };
 
   const addToCart = useCartStore((state) => state.addToCart);
 
-
-
-
-
-
   return (
-    <div key={product.id} className="px-2 mx-0 2xl:mx-0">
+    <div key={product.id} className=" mx-0 2xl:mx-0 mb-2">
       <div
-        className="bg-white border border-gray-300 rounded-lg overflow-hidden relative flex flex-col h-full min-h-[490px] w-[90%] cursor-pointer"
+        className="bg-white border border-gray-300 rounded-lg overflow-hidden relative flex flex-col h-full min-h-[392px] sm:min-h-[350px] md:min-h-[400px] w-[90%] cursor-pointer"
         onClick={() => handleProductClick(product.id)}
       >
         {product.on_sale && (
@@ -53,7 +51,10 @@ export default function Product({product}){
           </div>
         )}
         <div className="absolute top-2 right-2">
-          <button className="focus:outline-none" onClick={() => handleFavoriteClick(product.id)}>
+          <button
+            className="focus:outline-none"
+            onClick={() => handleFavoriteClick(product.id)}
+          >
             {favorites[product.id] ? (
               <FaHeart className="text-red-500 w-6 h-6" />
             ) : (
@@ -61,22 +62,21 @@ export default function Product({product}){
             )}
           </button>
         </div>
-        <Image width={250} height={250}
+        <Image
+          width={250}
+          height={250}
           className="object-contain p-4"
           src={product.images[0]?.src}
           alt={sanitizeText(product.images[0]?.alt || product.name)}
         />
-        <div className="px-4 pb-4 flex-grow flex flex-col">
-        <p className={`text-gray-900 font-bold text-[16px] mb-2 ${jost.className}`}>
-                    {getBrandName(product.attributes)}
-                  </p>
+        <div className="px-4 pb-4 flex-grow flex flex-col sm:min-h-[240px]">
+          <p
+            className={`text-gray-900 font-bold text-[16px] hidden sm:block mb-2 ${jost.className}`}
+          >
+            {getBrandName(product.attributes)}
+          </p>
           <h2
-            className={`text-gray-900 font-normal text-sm ${lexendDeca.className} h-auto`}
-            style={{
-              whiteSpace: "normal",
-              overflow: "visible",
-              textOverflow: "clip",
-            }}
+            className={`text-gray-900 font-normal text-sm ${lexendDeca.className} line-clamp-2`}
           >
             {sanitizeText(product.name)}
           </h2>
@@ -90,30 +90,38 @@ export default function Product({product}){
                 )}
               </span>
             ))}
-            <span className="text-gray-600 text-sm ml-2">({product.rating_count})</span>
+            <span className="text-gray-600 text-sm ml-2">
+              ({product.rating_count})
+            </span>
           </div>
-          <div className="flex items-center text-gray-600 text-sm mb-2">
+          <div className=" mt-auto flex items-center flex-col sm:flex-row text-gray-600 text-sm ">
             {product.regular_price && (
-              <span className={`line-through mr-2 ${lexendDeca.className}`}>
-                RRP: £{product.regular_price}
+              <span className={`line-through mr-2 text-xs flex ${lexendDeca.className}`}>
+                <span className=" hidden sm:block text-xs">RRP: </span>
+                {currencySymbol}{Number(product.regular_price * rate).toFixed(2)}
               </span>
             )}
             {product.regular_price && product.price && (
-              <span className={`text-black ${lexendDeca.className}`}>
-                Save £{(product.regular_price - product.price).toFixed(2)}
+              <span
+                className={` flex  justify-center text-red-700 text-xs items-center  ${lexendDeca.className}`}
+              >
+                Save {currencySymbol}{Number((product.regular_price - product.price) * rate).toFixed(2)}
               </span>
             )}
           </div>
-          <p className={`text-gray-900 font-bold text-lg mb-3 ${lexendDeca.className}`}>
-            £{parseFloat(product.price).toFixed(2)}
+          <p
+            className={`text-gray-900 font-bold mt-auto text-lg mb-3 ${lexendDeca.className}`}
+          >
+            {currencySymbol}{Number(product.price * rate).toFixed(2)}
           </p>
           <button
-            className={`w-full bg-black text-white py-2 mx-auto mt-auto rounded-md hover:bg-gray-800 font-normal transition duration-200 flex justify-center items-center text-center ${lexendDeca.className}`}
-          onClick={()=>addToCart(product)}>
+            className={`w-full bg-black text-white py-2 text-xs md:text-base mx-auto rounded-md hover:bg-gray-800 font-normal transition duration-200 flex justify-center items-center text-center ${lexendDeca.className}`}
+            onClick={() => addToCart(product)}
+          >
             ADD TO BAG
           </button>
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -12,16 +12,48 @@ export default function Rimmel() {
   return (
     <>
       {/* Mobile */}
-      <div className="flex w-full lg:hidden">
-        <div className="relative w-full h-[191px] max-h-[300px]">
-          {/* Background Image */}
+      {/* Mobile and md */}
+      <div className="grid grid-cols-6 w-full lg:hidden h-[200px] md:h-[300px]">
+        <div className="bg-[#EEDDD5] col-span-2 md:col-span-1 w-full p-4 md:p-6 flex flex-col justify-center items-center">
           <Image
-            src={MobRimmel}
-            alt="Background Image"
+            width={120}
+            height={30}
+            layout="fixed"
+            src={rimmle_logo}
+            alt="Rimmel Logo"
+            className="mb-1 md:mb-2"
+          />
+          <div className="text-center space-y-0 md:space-y-1">
+            <Text
+              style={"h4"}
+              className="uppercase font-bold text-xs md:text-2xl"
+            >
+              Up To
+            </Text>
+            <Text style={"h2"} className="text-2xl md:text-5xl">
+              50%
+            </Text>
+            <Text
+              style={"h4"}
+              className="uppercase font-bold text-xs md:text-2xl"
+            >
+              Off
+            </Text>
+          </div>
+          <Button
+            className={`mt-1 md:mt-3 px-2 md:px-4 text-xs md:text-sm py-1 md:py-2 uppercase w-max ${jost.className}`}
+          >
+            Shop Now
+          </Button>
+        </div>
+
+        {/* Banner Image */}
+        <div className="w-full h-[200px] col-span-4 md:col-span-5 md:h-[300px] relative">
+          <Image
             layout="fill"
             objectFit="cover"
-            objectPosition="right" // Aligns the image to the right edge
-            className="absolute inset-0"
+            src={rimmle_banner}
+            alt="Rimmel Banner"
           />
         </div>
       </div>
@@ -53,7 +85,7 @@ export default function Rimmel() {
               Off
             </Text>
           </div>
-          <Button className="mt-10 uppercase w-max mx-auto ${jost.className}">
+          <Button className={`mt-10 uppercase w-max mx-auto ${jost.className}`}>
             Shop Now
           </Button>
         </div>

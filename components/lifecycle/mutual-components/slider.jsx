@@ -54,7 +54,7 @@ export default function SliderComponent({bannerObject}) {
   };
 
   return (
-    <div className="hidden lg:block">
+    <div className="lg:w-[calc(100%-3rem)] lg:mx-auto">
       <Slider {...settings}>
         {bannerObject.map((data, idx) => (
           <SliderBanner key={idx} bannerObject={data} />

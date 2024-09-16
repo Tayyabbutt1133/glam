@@ -38,7 +38,7 @@ const Page = () => {
   ];
 
   return (
-    <>
+    <main className=" overflow-hidden">
       {/* Non-lazy-loaded components (immediately visible to the user) */}
       <MenucategoryLandingPage />
       <SliderComponent bannerObject={bannerObject} />
@@ -71,8 +71,8 @@ const Page = () => {
       <Suspense fallback={<div>Loading Get Glam...</div>}>
         <GetGlam />
       </Suspense>
-    </>
+    </main>
   );
 };
 
-export default memo(Page);
+export default memo(Page);

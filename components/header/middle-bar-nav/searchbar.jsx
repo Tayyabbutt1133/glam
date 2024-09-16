@@ -5,6 +5,8 @@ import SearchIcon from "../../../public/icons/search";
 import axios from "axios";
 import { lexendDeca, jost } from "../../ui/fonts";
 import debounce from "lodash.debounce";
+import { useRouter } from "next/navigation";
+// import { generateSlug } from "lib/utils";
 
 const axiosInstance = axios.create({
   baseURL: "https://glam.clickable.site/wp-json/wc/v3/",
@@ -14,7 +16,7 @@ const axiosInstance = axios.create({
   },
 });
 
-export default function FastSearchBarWithDropdown() {
+export default function FastSearchBarWithDropdown({formobile = false}) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [products, setProducts] = useState([]);
@@ -23,6 +25,8 @@ export default function FastSearchBarWithDropdown() {
   const [hasSearched, setHasSearched] = useState(false);
   const searchBarRef = useRef(null);
   const cancelTokenSource = useRef(null);
+
+  const router = useRouter();
 
   const handleSearch = useCallback(
     debounce(async (searchQuery) => {
@@ -97,11 +101,18 @@ export default function FastSearchBarWithDropdown() {
     };
   }, [handleClickOutside]);
 
+  const handleProductClick = (product) => {
+    // console.log(product);
+
+    
+    router.push(`/product/${product.id}`);
+  };
+
   return (
-    <div ref={searchBarRef} className="flex justify-center relative w-[768px]">
+   <div ref={searchBarRef} className={`flex justify-center relative ${formobile ? 'w-full' : 'w-[768px]'}`}>
       <section
-        className="flex flex-row w-[80%] max-w-[696px] h-10 border border-solid
-        border-b-03 rounded-[8px] px-1 focus-within:border-gray-700 transition-colors ease-in-out duration-100"
+        className={`flex flex-row ${formobile ? 'w-full' : 'w-[80%] max-w-[696px]'} h-10 border border-solid
+        border-b-03 rounded-[8px] px-1 focus-within:border-gray-700 transition-colors ease-in-out duration-100`}
       >
         <div className="grid place-items-center h-full w-12">
           <SearchIcon className="h-auto w-5" />
@@ -144,7 +155,8 @@ export default function FastSearchBarWithDropdown() {
               <li>Searching...</li>
             ) : products.length > 0 ? (
               products.map((product) => (
-                <li key={product.id} className="flex items-center cursor-pointer hover:bg-slate-100">
+                // Here is product
+                <li key={product.id} onClick={() => handleProductClick(product)} className="flex items-center cursor-pointer hover:bg-slate-100">
                   <div className="w-10 h-10 mr-4 bg-gray-100 rounded-md flex-shrink-0">
                     <img
                       src={product.images[0]?.src || "/placeholder.svg?height=40&width=40"}

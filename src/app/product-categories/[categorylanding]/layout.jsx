@@ -11,7 +11,7 @@ const Layout = ({ children }) => {
   if (!isMounted) return null;
 
   return (
-    <div className='min-h-screen w-screen'>
+    <div className='min-h-screen '>
       {/* Your layout structure, e.g. header, footer */}
       {children}
     </div>
