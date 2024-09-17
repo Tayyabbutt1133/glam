@@ -436,7 +436,7 @@ export default function Component() {
               filters.priceRange.length > 0) && (
                 <button
                 onClick={clearAllFilters}
-                className={` hidden lg:block text-sm text-[#8B929D] pl-4 underline ${lexendDeca.className}`}
+                className={` hidden min-w-fit lg:block text-sm text-[#8B929D] pl-4 underline ${lexendDeca.className}`}
               >
                 Clear All
               </button>
