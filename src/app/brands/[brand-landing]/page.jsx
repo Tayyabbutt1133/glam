@@ -101,14 +101,15 @@ export default function Page() {
       
           <div className="">
             <Container>
+              {/* Add brand page here  */}
               <MenucategoryLandingPage
               />
             </Container>
             <SliderComponent bannerObject={bannerObject} />
-            <Container>
+            <section>
               <Bestseller hotSellingProducts={hotSellingProducts} />
               <Aboutbrand />
-            </Container>
+            </section>
             <Newin />
             <Container>
               <Staffpicks staffPicks={staffPicks} />

@@ -53,7 +53,7 @@ const Tips = ({ data }) => {
 
 export default function MakeupTips() {
   return (
-    <Container className="my-28">
+    <Container className="my-3 lg:my-9">
       <Text style={"h1"} className="uppercase">
         makeup tips for you
       </Text>

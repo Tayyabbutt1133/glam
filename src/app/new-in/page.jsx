@@ -712,11 +712,13 @@ export default function Component() {
                         {brand}
                       </h1>
                     </Link>
-                      <h3
-                        className={`text-sm ${lexendDeca.className} font-normal mb-2 h-[60px] overflow-hidden`}
-                      >
-                        {product.name}
-                      </h3>
+                     <Link href={`/product/${product.id}`}>
+                        <h3
+                          className={`text-sm ${lexendDeca.className} font-normal mb-2 h-[60px] overflow-hidden`}
+                        >
+                          {product.name}
+                        </h3>
+                     </Link>
                       <div className="flex items-center mb-2">
                         {[...Array(5)].map((_, index) => (
                           <span key={index}>

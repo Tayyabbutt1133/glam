@@ -99,7 +99,7 @@ export default function ProductSlider({ images }) {
       console.log('Slider ref is null');
     }
   };
-  const Thumbnail = React.memo(({ image, index, currentIndex, onClick }) => (
+  const Thumbnail = (({ image, index, currentIndex, onClick }) => (
     <div
       className={`p-1 border rounded-md cursor-pointer ${
         index === currentIndex ? "border-bg-03" : "border-transparent"

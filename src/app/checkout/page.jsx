@@ -157,7 +157,7 @@ export default function Checkout() {
   const missingFields = requiredFields.filter(field => !formData[field]);
 
   if (missingFields.length > 0) {
-    toast.error(`Please fill in all required fields: ${missingFields.join(', ')}`);
+    toast.error(`Please fill in all required fields`);
     return;
   }
 

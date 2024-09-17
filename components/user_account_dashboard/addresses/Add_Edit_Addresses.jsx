@@ -7,7 +7,17 @@ import { CheckCircle2, Pencil, Trash2 } from "lucide-react";
 const AddressBook = () => {
   const [addresses, setAddresses] = useState([]);
   const [isEditing, setIsEditing] = useState(false); // Directly start in editing mode
-  const [formData, setFormData] = useState();
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    phone: "",
+    country: "United Kingdom",
+    addressLine1: "",
+    addressLine2: "",
+    city: "",
+    postalCode: "",
+    isDefault: false,
+  });
   // {
   //   firstName: '',
   //   lastName: '',
@@ -108,7 +118,7 @@ const AddressBook = () => {
       {isEditing ? (
         <>
           <h2 className={`text-2xl font-medium mb-4 md:mb-14 md:-mt-4 ${jost.className}`}>
-            {formData.firstName ? "Edit Address" : "Add New Address"}
+            {formData?.firstName ? "Edit Address" : "Add New Address"}
           </h2>
           <form className="space-y-6">
             <div>
@@ -120,7 +130,7 @@ const AddressBook = () => {
                   <input
                     type="text"
                     name="firstName"
-                    value={formData.firstName}
+                    value={formData?.firstName}
                     onChange={handleChange}
                     placeholder="First name"
                     className={`mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${lexendDeca.className}`}

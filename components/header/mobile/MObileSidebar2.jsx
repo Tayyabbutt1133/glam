@@ -104,6 +104,7 @@ export default function MobileSidebar({ isOpen, onClose }) {
           throw new Error("Failed to fetch navigation data");
         }
         const data = await res.json();
+        // console.log({linkdata:data})
         setLinks(data);
       } catch (err) {
         console.error(err);

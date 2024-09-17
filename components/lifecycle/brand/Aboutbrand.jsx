@@ -5,13 +5,13 @@ import { jost, lexendDeca } from '../../ui/fonts';
 
 export default function Aboutbrand() {
   return (
-    <>
+    <main className='px-4'>
       <h1 className={`text-2xl mt-8 font-semibold uppercase 2xl:text-[36px] ${jost.className}`}>About Cosmetics</h1>
-      <div className='flex gap-8 mt-6'>
-        <div className='w-1/2'>
+      <div className='flex flex-col md:flex-row gap-8 mt-6 px-4'>
+        <div className='w-full md:w-1/2'>
           <Image src={brand_img} alt="Brand Image" layout="responsive" className="rounded-md"/>
         </div>
-        <div className='w-1/2 space-y-6 leading-relaxed'>
+        <div className='w-full md:w-1/2 space-y-6 leading-relaxed'>
           <p className={`${lexendDeca.className} text-sm`}>
             Achieve your perfect makeup look every time with the incredible range of products at GLAMBEAUTY. Featuring all your favourite iconic designer brands, you&apos;ll find high-quality <strong>eye makeup</strong>, lip makeup, complexion makeup, and the best accessories to suit every personality, look, and occasion. Whether you’re gearing up for a date night, bridal makeup for the big day, or simply your everyday essentials, explore our collection to find your go-to items.
             <br />
@@ -29,6 +29,6 @@ export default function Aboutbrand() {
           </div>
         </div>
       </div>
-    </>
+    </main>
   );
 }

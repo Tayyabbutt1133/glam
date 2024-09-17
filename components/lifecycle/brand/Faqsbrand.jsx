@@ -29,7 +29,7 @@ export default function Faqsbrand() {
   return (
     <div>
       {/* <!-- component --> */}
-      <section className="py-24">
+      <section className=" py-4 lg:py-7">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-2">
             <h2
@@ -76,7 +76,7 @@ export default function Faqsbrand() {
                     maxHeight: openIndex === index ? '250px' : '0',
                   }}
                 >
-                        <p className={`text-base text-gray-900 leading-6 ${lexendDeca.className}`}>
+                        <p className={`text-sm opacity-85 sm:text-base text-gray-900 leading-6 ${lexendDeca.className}`}>
                     {faq.answer}
                   </p>
                 </div>

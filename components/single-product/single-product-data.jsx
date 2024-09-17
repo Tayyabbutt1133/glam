@@ -42,7 +42,7 @@ export default async function SingleProductData({ productId }) {
       <div className="flex flex-col items-center justify-center h-64 text-center">
         <AlertCircle className="w-16 h-16 text-red-500 mb-4" />
         <h2 className="text-2xl font-semibold text-gray-800 mb-2">Product Not Found</h2>
-        <p className="text-gray-600">Sorry, we couldn't find the product you're looking for.</p>
+        <p className="text-gray-600">Sorry, we could not find the product you are looking for.</p>
         
       </div>
     );

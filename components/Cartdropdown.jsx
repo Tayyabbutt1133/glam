@@ -45,7 +45,7 @@ export default function Cartdropdown() {
   return (
     <div 
       ref={dropdownRef} 
-      className="absolute top-full right-0 mt-2 w-[300px] sm:w-[450px] bg-white shadow-lg rounded-md overflow-hidden z-[100] border border-gray-200 max-h-[80vh] flex flex-col"
+      className="absolute top-full right-0 mt-2 w-[90vw] sm:w-[450px] bg-white shadow-lg rounded-md overflow-hidden z-[100] border border-gray-200 max-h-[80vh] flex flex-col"
     >
       <div className="p-4 border-b border-gray-200">
         <h2 className={`text-xl font-normal ${jost.className}`}>Your Bag ({cartItems.length})</h2>
