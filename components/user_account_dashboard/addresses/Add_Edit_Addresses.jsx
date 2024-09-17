@@ -3,6 +3,7 @@ import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { lexendDeca, jost } from "../../ui/fonts";
 import { CheckCircle2, Pencil, Trash2 } from "lucide-react";
+import { toast } from "react-toastify";
 
 const AddressBook = () => {
   const [addresses, setAddresses] = useState([]);
@@ -93,7 +94,7 @@ const AddressBook = () => {
         postalCode: "",
       });
     } else {
-      alert("Please fill in all required fields.");
+      toast.error("Please fill in all required fields.");
     }
   };
 

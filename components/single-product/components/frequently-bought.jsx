@@ -10,28 +10,57 @@ import Link from "next/link";
 import { usePopupStore } from "states/use-popup-store";
 
 const products = [
-  { id:74150,
+  {
+    id: 74150,
     brand: "BOURJOIS",
     name: "Bourjois 2 in 1 Khol & Contour Eyeliner, Eye Pencil",
     image: bourjois,
+    images: [
+      { src: bourjois.src, alt: "Bourjois 2 in 1 Khol & Contour Eyeliner" }
+    ],
     originalPrice: "12.00",
     salePrice: "8.40",
+    regular_price: "12.00",
+    price: "8.40",
+    attributes: [
+      { name: "Shade", options: ["Black"] },
+      { name: "Size", options: ["0.25g"] },
+    ],
   },
-  { id:74150,
+  {
+    id: 74150,
     brand: "LA COLORS",
     name: "5 Color Matte Eyeshadow",
     image: laColors,
+    images: [
+      { src: laColors.src, alt: "LA COLORS 5 Color Matte Eyeshadow" }
+    ],
     salePrice: "2.99",
+    regular_price: "2.99",
+    price: "2.99",
+    attributes: [
+      { name: "Shade", options: ["Black"] },
+      { name: "Size", options: ["0.25g"] },
+    ],
   },
-  { id:74150,
+  {
+    id: 74150,
     brand: "BENEFIT",
     name: "benefit BADgal BANG 24hr Eye Pencil 0.25g - Pitch Black",
     image: benefits,
+    images: [
+      { src: benefits.src, alt: "BENEFIT BADgal BANG 24hr Eye Pencil" }
+    ],
     originalPrice: "22.50",
     salePrice: "20.25",
+    regular_price: "22.50",
+    price: "20.25",
+    attributes: [
+      { name: "Shade", options: ["Black"] },
+      { name: "Size", options: ["0.25g"] },
+    ],
   },
 ];
-
 export default function FrequentlyBoughtTogether() {
   const { rate,currencySymbol } = usePopupStore();
 
