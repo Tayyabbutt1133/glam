@@ -10,7 +10,7 @@ import Text from "@/components/ui/Text";
 let alphabet = "abcdefghijklmnopqrstuvwxyz".toUpperCase().split("");
 alphabet = ["0-9", ...alphabet];
 
-export default function BrandMegaMenu ({ links }) {
+export default function BrandMegaMenu({ links }) {
   const [activeLetter, setActiveLetter] = useState(null);
 
   // Store refs for each brand category
@@ -22,10 +22,10 @@ export default function BrandMegaMenu ({ links }) {
     setActiveLetter(letter);
     // If the letter exists in categoryRefs, scroll to that section
     if (categoryRefs.current[letter]) {
-      categoryRefs.current[letter].scrollIntoView({ 
-        behavior: "smooth", 
-        block: "nearest",  // Prevents the page from scrolling vertically
-        inline: "start",   // Ensures horizontal scrolling if needed
+      categoryRefs.current[letter].scrollIntoView({
+        behavior: "smooth",
+        block: "nearest", // Prevents the page from scrolling vertically
+        inline: "start", // Ensures horizontal scrolling if needed
       });
     }
   };
@@ -62,7 +62,7 @@ export default function BrandMegaMenu ({ links }) {
             <Text style={"h4"} className={`uppercase mb-5`}>
               {category.label}
             </Text>
-            <ul className="flex flex-col flex-wrap text-sm h-[300px] gap-4">
+            <ul className="flex flex-col flex-wrap text-sm lg:h-[250px] xl:h-[300] gap-4">
               {category?.brands.map((brand, index) => (
                 <Link
                   href={`/brands/${brand.slug}`}
@@ -78,4 +78,4 @@ export default function BrandMegaMenu ({ links }) {
       </div>
     </div>
   );
-};
+}
