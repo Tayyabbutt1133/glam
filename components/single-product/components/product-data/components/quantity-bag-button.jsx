@@ -1,9 +1,10 @@
 "use client";
 import { useState } from "react";
+import { useCartStore } from '../../../../../states/Cardstore';
 
-export default function QuantityBag() {
+export default function QuantityBag({product}) {
   const [quantity, setQuantity] = useState(1);
-
+  const { addToCart } = useCartStore();
   // Handle decrease button click
   const decreaseQuantity = () => {
     if (quantity > 1) {
@@ -20,6 +21,8 @@ export default function QuantityBag() {
   const handleAddToBag = () => {
     alert(`Added ${quantity} items to the bag!`);
     // Add further logic like dispatching an action or API call here
+   
+    addToCart(product, quantity);
   };
 
   return (

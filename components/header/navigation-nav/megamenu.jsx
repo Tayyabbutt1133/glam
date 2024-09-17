@@ -104,7 +104,7 @@ import img from "/public/nav-images/skincare-nav.png";
 //                     </Link>
 //                   ))}
 //                 </ul>
-//               </div>
+//               </div>git remote add origin git@github.com:sibtycodes/testingglamstudio.git
 //             ) : null
 //           )}
 //         </ul>

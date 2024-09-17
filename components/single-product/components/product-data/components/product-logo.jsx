@@ -1,11 +1,11 @@
-export default function ProductLogo() {
+export default function ProductLogo({brand}) {
   return (
-    <section className="flex justify-between items-center mb-8">
-      <div className="text-2xl font-bold">
-        RIMMEL
-        <span className="text-sm font-normal block">LONDON</span>
+    <section className="flex sm:justify-between  items-center mb-5">
+      <div className="text-2xl font-bold w-[90%] sm:w-auto">
+        {brand}
+        <span className="text-sm font-normal block"> {brand || 'LONDON'}</span>
       </div>
-      <button className="p-2 bg-gray-50 rounded-full">
+      <button className="p-2 bg-gray-50  rounded-full">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

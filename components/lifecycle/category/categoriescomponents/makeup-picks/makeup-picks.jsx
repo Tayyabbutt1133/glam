@@ -36,26 +36,28 @@ const SingleMakeupPick = ({ data }) => {
   const { title, description, image } = data;
   return (
     <div className="flex flex-col items-start gap-5 h-full">
-      <div className="w-full flex items-center justify-center">
+      <div className=" aspect-square w-full flex items-center justify-center relative">
         <Image
           src={image}
           alt={title}
-          width={390}
-          height={390}
-          className="w-[390px]"
+          fill
+          className=" brightness-75 md:brightness-100"
         />
+        <Text style="h4" className="font-semibold md:hidden absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white">
+          {title}
+        </Text>
       </div>
 
       <div className="flex-grow flex flex-col gap-3 items-start justify-start">
-        <Text style="h3" className="font-semibold">
+        <Text style="h3" className="font-semibold hidden md:block">
           {title}
         </Text>
-        <Text style="sm" className="line-clamp-3">
+        <Text style="sm" className=" line-clamp-2 sm:line-clamp-3">
           {description}
         </Text>
       </div>
 
-      <div className="mt-auto">
+      <div className="mt-auto hidden md:block">
         <button
           className={`text-base font-medium uppercase text-white px-[15px] py-[13px] bg-button hover:bg-hover rounded-lg ${jost.className} `}
         >
@@ -72,10 +74,14 @@ export default function MakeupPicks() {
       <Text style="h1" className="uppercase">Makeup Picks</Text>
       {/* makeup items */}
 
-      <div className="grid grid-cols-4 justify-between gap-6">
-        {makeupPicks.map((makeupPick, index) => (
-          <SingleMakeupPick key={index} data={makeupPick} />
-        ))}
+      <div className="overflow-x-auto">
+        <div className="flex gap-6 min-w-max">
+          {makeupPicks.map((makeupPick, index) => (
+            <div key={index} className="w-40 sm:w-72 flex-shrink-0">
+              <SingleMakeupPick data={makeupPick} />
+            </div>
+          ))}
+        </div>
       </div>
     </Container>
   );

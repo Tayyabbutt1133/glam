@@ -48,7 +48,7 @@ const Overview = () => {
 
   return (
     <div>
-      <h1 className={`${lexendDeca.className} text-3xl -mt-4 mb-16`}>
+      <h1 className={`${lexendDeca.className} text-lg md:text-3xl md:-mt-4 mb-3 md:mb-16`}>
         Hello {submittedName || ""}
       </h1>
       <form
@@ -56,7 +56,7 @@ const Overview = () => {
         onSubmit={handleSubmit}
         ref={formRef} // Attach the ref to the form
       >
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid md:grid-cols-2 gap-4">
           <div>
             <input
               type="text"
@@ -78,7 +78,7 @@ const Overview = () => {
             />
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid md:grid-cols-2 gap-4">
           <div>
             <input
               type="email"
@@ -113,7 +113,7 @@ const Overview = () => {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-4 ">
+        <div className="grid md:grid-cols-2 gap-4 ">
           <div className="relative">
             <PhoneInput
               country={"gb"}
@@ -156,7 +156,7 @@ const Overview = () => {
       <button
         type="button"
         onClick={handleButtonClick}
-        className={`mt-32 px-6 py-3 bg-black text-white rounded-md shadow-sm w-[30%] ${jost.className}`}
+        className={`md:mt-32 mt-5 px-6 py-3 bg-black text-white rounded-md shadow-sm w-full md:w-[30%] ${jost.className}`}
       >
         SAVE CHANGES
       </button>

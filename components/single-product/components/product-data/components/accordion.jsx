@@ -1,18 +1,20 @@
 "use client";
+import { jost } from "@/components/ui/fonts";
 import React, { useState, useRef, useEffect } from "react";
 import { IoChevronDownOutline } from "react-icons/io5";
 
-const accordionData = [
-  { title: "Description", content: "Product description goes here." },
-  { title: "Benefits", content: "List of product benefits." },
-  { title: "How To Use", content: "Instructions on how to use the product." },
-  {
-    title: "Delivery & Returns",
-    content: "Information about delivery and return policies.",
-  },
-];
 
-export default function Accordion() {
+
+export default function Accordion({product}) {
+  const accordionData = [
+    { title: "Description", content: product.description,isHtml:true },
+    { title: "Benefits", content: "List of product benefits." },
+    { title: "How To Use", content: "Instructions on how to use the product." },
+    {
+      title: "Delivery & Returns",
+      content: "Information about delivery and return policies.",
+    },
+  ];
   const [openSection, setOpenSection] = useState(null);
   const contentRefs = useRef(accordionData.map(() => React.createRef()));
 
@@ -28,6 +30,8 @@ export default function Accordion() {
       }
     });
   }, [openSection]);
+
+
 
   return (
     <div>
@@ -53,7 +57,11 @@ export default function Accordion() {
             style={{ maxHeight: "0px" }}
           >
             <div className="px-2 pb-4">
-              <p>{section.content}</p>
+              {section.isHtml ? (
+                <div dangerouslySetInnerHTML={{ __html: section.content }} className={`${jost.className} text-sm`} />
+              ) : (
+                <p>{section.content}</p>
+              )}
             </div>
           </div>
         </div>

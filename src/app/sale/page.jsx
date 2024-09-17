@@ -6,13 +6,14 @@ import Container from "../../../components/container";
 import { FaStar, FaRegStar, FaHeart } from "react-icons/fa";
 import { CiHeart } from "react-icons/ci";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import { IoCloseCircleOutline } from "react-icons/io5";
+import { IoCloseCircleOutline, IoFilterOutline } from "react-icons/io5";
 import Image from "next/image";
 import { lexendDeca, jost } from "../../../components/ui/fonts";
 import filter from "../../../public/filter.svg";
 import { RxCross2 } from "react-icons/rx";
 import { useCartStore } from "../../../states/Cardstore";
-
+import { usePopupStore } from "../../../states/use-popup-store";
+import Link from "next/link";
 // Base URl + woCommerce Secure Key
 const API_BASE_URL = "https://glam.clickable.site/wp-json/wc/v3";
 const CONSUMER_KEY = "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d";
@@ -20,6 +21,7 @@ const CONSUMER_SECRET = "cs_3f70ee2600a3ac17a5692d7ac9c358d47275d6fc";
 const PRODUCTS_PER_PAGE = 12;
 
 export default function Component() {
+  const {rate,currencySymbol} = usePopupStore();
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -33,7 +35,7 @@ export default function Component() {
   const [isPriceRangeFilterOpen, setIsPriceRangeFilterOpen] = useState(true);
   const [sortOption, setSortOption] = useState("popularity");
 
-
+  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
 
 
 
@@ -368,11 +370,22 @@ export default function Component() {
     </div>
   );
 
+
   return (
     <Container className="min-h-screen py-32">
       {/* <div className=""> */}
       <div className="flex justify-between items-center">
-        <div className="flex items-center ml-[20rem]">
+        <div className="flex items-center  lg:hidden mr-10">
+          <button onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}>
+            <span
+              className={` flex items-center gap-2 text-md ${jost.className}`}
+            >
+              Filters <IoFilterOutline className="w-6 h-6" />
+            </span>
+          </button>
+        </div>
+
+        <div className=" flex flex-col md:flex-row items-center lg:ml-[20rem] mr-auto">
           <select
             value={sortOption}
             onChange={handleSortChange}
@@ -389,26 +402,41 @@ export default function Component() {
             </option>
           </select>
         </div>
-        {renderPagination()}
+        <span className="hidden lg:block">{renderPagination()}</span>
       </div>
 
     
       <div className="flex flex-col lg:flex-row gap-4 mb-32">
           {/* side filter */}
-        <div className="w-full lg:w-1/4 p-4 sticky top-0 bg-white">
+          <div
+          className={`w-full  transition-all duration-300 ease-in-out ${
+            isMobileFilterOpen
+              ? "z-[90] lg:z-auto h-screen overflow-y-auto lg:overflow-y-auto  translate-x-[0] lg:translate-x-0"
+              : " translate-x-[300%] lg:translate-x-0"
+          }   lg:w-1/4 p-4   fixed lg:static md:block top-0 bg-white`}
+        >
           <div className="flex justify-between items-center mb-4">
-            <h3
-              className={`text-lg font-normal flex items-center gap-4 ${lexendDeca.className}`}
+          <h3
+              className={`text-lg font-normal flex w-full items-center gap-4 ${lexendDeca.className}`}
             >
-              <Image src={filter} width={24} height={24} alt="Filter icon" />
-              Filters
+              <Image
+                src={filter}
+                width={24}
+                height={24}
+                alt="Filter icon"
+                onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
+              />
+              <span className=" hidden lg:block">Filters</span>
+              <p className=" lg:hidden mx-auto block text-center flex-grow">
+                Filter By
+              </p>
             </h3>
             {(filters.brands.length > 0 ||
               filters.categories.length > 0 ||
               filters.priceRange.length > 0) && (
-              <button
+                <button
                 onClick={clearAllFilters}
-                className={`text-sm text-[#8B929D] underline ${lexendDeca.className}`}
+                className={` hidden lg:block text-sm text-[#8B929D] pl-4 underline ${lexendDeca.className}`}
               >
                 Clear All
               </button>
@@ -617,6 +645,26 @@ export default function Component() {
               </div>
             )}
           </div>
+          <section className="flex  justify-around  mt-auto gap-4 lg:hidden">
+            <button
+              onClick={clearAllFilters}
+              className={`  text-sm text-[#8B929D] pl-4 underline ${lexendDeca.className}`}
+            >
+              Clear All
+            </button>
+
+            <button
+              disabled={
+                filters.brands.length === 0 &&
+                filters.categories.length === 0 &&
+                filters.priceRange.length === 0
+              }
+              className=" basis-1/2 bg-black text-white w-full py-2 rounded-md"
+              onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
+            >
+              Apply Filter
+            </button>
+          </section>
         </div>
 
         
@@ -664,16 +712,18 @@ export default function Component() {
                           )}
                         </button>
                       </div>
+                      <Link href={`/product/${product.id}`}>
                       <img
                         src={product.images[0]?.src}
                         alt={product.name}
                         className="w-full h-64 object-cover mb-4"
                       />
-                      <h1
-                        className={`text-sm ${jost.className} font-bold mb-2`}
-                      >
+                    </Link>
+                    <Link href={`/product/${product.id}`}>
+                      <h1 className={`text-sm ${jost.className} cursor-pointer font-bold mb-2`}>
                         {brand}
                       </h1>
+                    </Link>
                       <h3
                         className={`text-sm ${lexendDeca.className} font-normal mb-2 h-[60px] overflow-hidden`}
                       >
@@ -699,12 +749,12 @@ export default function Component() {
                         {product.sale_price ? (
                           <>
                             <span className="line-through text-gray-600 mr-2">
-                              £{product.regular_price}
+                              {currencySymbol}{(product.regular_price * rate).toFixed(2)}
                             </span>
-                            £{product.sale_price}
+                            {currencySymbol}{(product.sale_price * rate).toFixed(2)}
                           </>
                         ) : (
-                          `£${product.price}`
+                          `${currencySymbol}${(product.price * rate).toFixed(2)}`
                         )}
                       </p>
                       <button

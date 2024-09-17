@@ -6,13 +6,19 @@ import Container from "../../../components/container";
 import { FaStar, FaRegStar, FaHeart } from "react-icons/fa";
 import { CiHeart } from "react-icons/ci";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import { IoCloseCircleOutline } from "react-icons/io5";
+import {
+  IoCloseCircle,
+  IoCloseCircleOutline,
+  IoFilterOutline,
+} from "react-icons/io5";
+// import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import Image from "next/image";
 import { lexendDeca, jost } from "../../../components/ui/fonts";
 import filter from "../../../public/filter.svg";
 import { RxCross2 } from "react-icons/rx";
 import { useCartStore } from "../../../states/Cardstore";
-
+import Link from "next/link";
+import { usePopupStore } from "states/use-popup-store";
 // Base URl + woCommerce Secure Key
 const API_BASE_URL = "https://glam.clickable.site/wp-json/wc/v3";
 const CONSUMER_KEY = "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d";
@@ -20,6 +26,7 @@ const CONSUMER_SECRET = "cs_3f70ee2600a3ac17a5692d7ac9c358d47275d6fc";
 const PRODUCTS_PER_PAGE = 12;
 
 export default function Component() {
+  const {rate,currencySymbol} = usePopupStore();
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -33,13 +40,13 @@ export default function Component() {
   const [isPriceRangeFilterOpen, setIsPriceRangeFilterOpen] = useState(true);
   const [sortOption, setSortOption] = useState("popularity");
 
-
-
-
-
+  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
+  const [openAccordion, setOpenAccordion] = useState(null);
+  const toggleAccordion = (section) => {
+    setOpenAccordion(openAccordion === section ? null : section);
+  };
 
   const addToCart = useCartStore((state) => state.addToCart);
-
 
   const [filters, setFilters] = useState({
     brands: [],
@@ -369,10 +376,21 @@ export default function Component() {
   );
 
   return (
-    <Container className="min-h-screen py-32">
+    <Container className="min-h-screen py-32 relative">
       {/* <div className=""> */}
+
       <div className="flex justify-between items-center">
-        <div className="flex items-center ml-[20rem]">
+        <div className="flex items-center  lg:hidden mr-10">
+          <button onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}>
+            <span
+              className={` flex items-center gap-2 text-md ${jost.className}`}
+            >
+              Filters <IoFilterOutline className="w-6 h-6" />
+            </span>
+          </button>
+        </div>
+
+        <div className=" flex flex-col md:flex-row items-center lg:ml-[20rem] mr-auto">
           <select
             value={sortOption}
             onChange={handleSortChange}
@@ -389,26 +407,46 @@ export default function Component() {
             </option>
           </select>
         </div>
-        {renderPagination()}
+        <span className="hidden lg:block">{renderPagination()}</span>
       </div>
 
-    
+
+
+
+
+
+
       <div className="flex flex-col lg:flex-row gap-4 mb-32">
-          {/* side filter */}
-        <div className="w-full lg:w-1/4 p-4 sticky top-0 bg-white">
+        {/* side filter */}
+        <div
+          className={`w-full  transition-all duration-300 ease-in-out ${
+            isMobileFilterOpen
+              ? "z-[90] lg:z-auto h-screen overflow-y-auto lg:overflow-y-auto  translate-x-[0] lg:translate-x-0"
+              : " translate-x-[300%] lg:translate-x-0"
+          }   lg:w-1/4 p-4   fixed lg:static md:block top-0 bg-white`}
+        >
           <div className="flex justify-between items-center mb-4">
             <h3
-              className={`text-lg font-normal flex items-center gap-4 ${lexendDeca.className}`}
+              className={`text-lg font-normal flex w-full items-center gap-4 ${lexendDeca.className}`}
             >
-              <Image src={filter} width={24} height={24} alt="Filter icon" />
-              Filters
+              <Image
+                src={filter}
+                width={24}
+                height={24}
+                alt="Filter icon"
+                onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
+              />
+              <span className=" hidden lg:block">Filters</span>
+              <p className=" lg:hidden mx-auto block text-center flex-grow">
+                Filter By
+              </p>
             </h3>
             {(filters.brands.length > 0 ||
               filters.categories.length > 0 ||
               filters.priceRange.length > 0) && (
               <button
                 onClick={clearAllFilters}
-                className={`text-sm text-[#8B929D] underline ${lexendDeca.className}`}
+                className={` hidden lg:block text-sm text-[#8B929D] pl-4 underline ${lexendDeca.className}`}
               >
                 Clear All
               </button>
@@ -439,12 +477,6 @@ export default function Component() {
                 </span>
               ))}
 
-
-
-
-
-
-
               {filters.categories.map((categoryId) => {
                 const category = categories.find(
                   (c) => c.id.toString() === categoryId
@@ -454,42 +486,28 @@ export default function Component() {
                     key={categoryId}
                     className={`inline-flex items-center bg-[#F7EBE0] rounded-lg px-3 py-1 text-sm font-bold text-black mr-2 mb-2 ${lexendDeca.className}`}
                   >
-                     <span
-                    className={`${lexendDeca.className} font-normal mr-1 text-black`}
-                  >
-                    Category:{" "}
-                  </span>{" "}
+                    <span
+                      className={`${lexendDeca.className} font-normal mr-1 text-black`}
+                    >
+                      Category:{" "}
+                    </span>{" "}
                     {category.name}
                     <button
-                    onClick={() => removeFilter("Category", categoryId)}
-                    className="ml-2 text-red-600 hover:text-red-700"
-                  >
-                    <RxCross2 />
-                  </button>
+                      onClick={() => removeFilter("Category", categoryId)}
+                      className="ml-2 text-red-600 hover:text-red-700"
+                    >
+                      <RxCross2 />
+                    </button>
                   </span>
                 ) : null;
               })}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-              
               {filters.priceRange.map((range) => (
                 <span
                   key={range}
                   className={`inline-flex items-center bg-[#F7EBE0] rounded-lg px-3 py-1 text-sm font-bold text-black mr-2 mb-2 ${lexendDeca.className}`}
                 >
-                      <span
+                  <span
                     className={`${lexendDeca.className} font-normal mr-1 text-black`}
                   >
                     Price:{" "}
@@ -509,7 +527,7 @@ export default function Component() {
           <hr className="bg-[#8B929D73] h-[1px]" />
           <div className="mb-6 mt-4">
             <h4
-              className={`font-bold text-lg mb-2 flex justify-between items-center cursor-pointer ${jost.className}`}
+              className={`font-bold text-lg mb-2 flex justify-between items-center cursor-pointer pr-4 ${jost.className}`}
               onClick={() => setIsBrandFilterOpen(!isBrandFilterOpen)}
             >
               Brand
@@ -546,7 +564,7 @@ export default function Component() {
 
           <div className="mb-6">
             <h4
-              className={`font-bold ${jost.className} text-lg mb-2 flex justify-between items-center cursor-pointer`}
+              className={`font-bold ${jost.className} text-lg mb-2 flex justify-between items-center cursor-pointer pr-4`}
               onClick={() => setIsCategoryFilterOpen(!isCategoryFilterOpen)}
             >
               Category
@@ -588,7 +606,7 @@ export default function Component() {
 
           <div className="mb-6">
             <h4
-              className={`font-bold ${jost.className} text-lg mb-2 flex justify-between items-center cursor-pointer`}
+              className={`font-bold ${jost.className} text-lg mb-2 flex justify-between items-center cursor-pointer pr-4`}
               onClick={() => setIsPriceRangeFilterOpen(!isPriceRangeFilterOpen)}
             >
               Price Range
@@ -617,14 +635,32 @@ export default function Component() {
               </div>
             )}
           </div>
+
+          <section className="flex  justify-around  mt-auto gap-4 lg:hidden">
+            <button
+              onClick={clearAllFilters}
+              className={`  text-sm text-[#8B929D] pl-4 underline ${lexendDeca.className}`}
+            >
+              Clear All
+            </button>
+
+            <button
+              disabled={
+                filters.brands.length === 0 &&
+                filters.categories.length === 0 &&
+                filters.priceRange.length === 0
+              }
+              className=" basis-1/2 bg-black text-white w-full py-2 rounded-md"
+              onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
+            >
+              Apply Filter
+            </button>
+          </section>
         </div>
 
-        
-
-        
         {/* product grid listing */}
         <div className="w-full lg:w-3/4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
             {loading
               ? Array(PRODUCTS_PER_PAGE)
                   .fill("")
@@ -664,16 +700,18 @@ export default function Component() {
                           )}
                         </button>
                       </div>
+                      <Link href={`/product/${product.id}`}>
                       <img
                         src={product.images[0]?.src}
                         alt={product.name}
                         className="w-full h-64 object-cover mb-4"
                       />
-                      <h1
-                        className={`text-sm ${jost.className} font-bold mb-2`}
-                      >
+                    </Link>
+                    <Link href={`/product/${product.id}`}>
+                      <h1 className={`text-sm ${jost.className} cursor-pointer font-bold mb-2`}>
                         {brand}
                       </h1>
+                    </Link>
                       <h3
                         className={`text-sm ${lexendDeca.className} font-normal mb-2 h-[60px] overflow-hidden`}
                       >
@@ -699,17 +737,18 @@ export default function Component() {
                         {product.sale_price ? (
                           <>
                             <span className="line-through text-gray-600 mr-2">
-                              £{product.regular_price}
+                              {currencySymbol}{(product.regular_price * rate).toFixed(2)}
                             </span>
-                            £{product.sale_price}
+                            {currencySymbol}{(product.sale_price * rate).toFixed(2)}
                           </>
                         ) : (
-                          `£${product.price}`
+                          `${currencySymbol}${(product.price * rate).toFixed(2)}`
                         )}
                       </p>
                       <button
                         className={`w-full bg-black text-white py-2 rounded-md hover:bg-gray-800 transition ${jost.className}`}
-                    onClick={()=>addToCart(product)}  >
+                        onClick={() => addToCart(product)}
+                      >
                         ADD TO BAG
                       </button>
                     </div>
@@ -720,13 +759,140 @@ export default function Component() {
           {/* pagination rendering */}
           <div className="mt-8 flex justify-end">{renderPagination()}</div>
         </div>
-
-
-
-
-
       </div>
       {/* </div> */}
     </Container>
   );
+}
+
+{
+  /* <div
+          className={`${
+            isMobileFilterOpen ? "block" : "hidden"
+          } lg:hidden absolute inset-0 bg-black bg-opacity-50 z-50`}
+        >
+          <div className="fixed inset-y-0 left-0 w-64 bg-white p-4 overflow-y-auto">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-bold">Filter By</h2>
+              <button onClick={() => setIsMobileFilterOpen(false)}>
+                <IoCloseCircle className="w-6 h-6" />
+              </button>
+            </div>
+
+            <div className="mb-4 border-b pb-2">
+              <button
+                className="flex justify-between items-center w-full font-bold"
+                onClick={() => toggleAccordion("category")}
+              >
+                <span>Category</span>
+                {openAccordion === "category" ? (
+                  <IoIosArrowUp />
+                ) : (
+                  <IoIosArrowDown />
+                )}
+              </button>
+              {openAccordion === "category" && (
+                <div className="mt-2">
+                  {categories.map((category) => (
+                    <label key={category.id} className="flex items-center mb-2">
+                      <input
+                        type="checkbox"
+                        className="mr-2"
+                        checked={filters.categories.includes(
+                          category.id.toString()
+                        )}
+                        onChange={() =>
+                          handleFilterChange(
+                            "categories",
+                            category.id.toString()
+                          )
+                        }
+                      />
+                      <span>
+                        {category.name} ({category.count})
+                      </span>
+                    </label>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <div className="mb-4 border-b pb-2">
+              <button
+                className="flex justify-between items-center w-full font-bold"
+                onClick={() => toggleAccordion("brand")}
+              >
+                <span>Brand</span>
+                {openAccordion === "brand" ? (
+                  <IoIosArrowUp />
+                ) : (
+                  <IoIosArrowDown />
+                )}
+              </button>
+              {openAccordion === "brand" && (
+                <div className="mt-2">
+                  {brands.map((brand) => (
+                    <label key={brand.name} className="flex items-center mb-2">
+                      <input
+                        type="checkbox"
+                        className="mr-2"
+                        checked={filters.brands.includes(brand.name)}
+                        onChange={() =>
+                          handleFilterChange("brands", brand.name)
+                        }
+                      />
+                      <span>
+                        {brand.name} ({brand.count})
+                      </span>
+                    </label>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <div className="mb-4 border-b pb-2">
+              <button
+                className="flex justify-between items-center w-full font-bold"
+                onClick={() => toggleAccordion("price")}
+              >
+                <span>Price</span>
+                {openAccordion === "price" ? (
+                  <IoIosArrowUp />
+                ) : (
+                  <IoIosArrowDown />
+                )}
+              </button>
+              {openAccordion === "price" && (
+                <div className="mt-2">
+                  {priceRanges.map((range) => (
+                    <label key={range} className="flex items-center mb-2">
+                      <input
+                        type="checkbox"
+                        className="mr-2"
+                        checked={filters.priceRange.includes(range)}
+                        onChange={() => handleFilterChange("priceRange", range)}
+                      />
+                      <span>£{range}</span>
+                    </label>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <div className="flex justify-between mt-4">
+              <button
+                onClick={clearAllFilters}
+                className="px-4 py-2 bg-gray-200 rounded-md"
+              >
+                Clear All
+              </button>
+              <button
+                onClick={() => setIsMobileFilterOpen(false)}
+                className="px-4 py-2 bg-black text-white rounded-md"
+              >
+                Apply
+              </button>
+            </div>
+          </div>
+        </div> */
 }

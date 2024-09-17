@@ -91,7 +91,7 @@ const MenucategoryLandingPage = () => {
       </h1>
 
       <div className="mt-10">
-        <ul className="flex justify-center gap-8">
+        <ul className="flex justify-center gap-8 overflow-x-scroll md:overflow-x-auto pl-[500px]   md:pl-0">
           {subCategories.length > 0 ? (
             subCategories.map((subCat, index) => (
               <li
