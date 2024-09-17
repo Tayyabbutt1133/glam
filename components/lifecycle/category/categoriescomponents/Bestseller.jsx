@@ -79,14 +79,14 @@ const Bestseller = ({ s = [] }) => {
   const settings = {
     dots: false,
     infinite: true,
-    speed: 300,
+    speed: 900,
     slidesToShow: 4,
     slidesToScroll: 1,
-    autoplay: true,
+    autoplay: false,
     autoplaySpeed: 2000,
     arrows: true,
-    prevArrow: <PrevArrow />,
-    nextArrow: <NextArrow />,
+    prevArrow: <div className="hidden sm:block"><PrevArrow /></div>,
+    nextArrow: <div className="hidden sm:block"><NextArrow /></div>,
     responsive: [
       {
         breakpoint: 1280,
@@ -113,8 +113,10 @@ const Bestseller = ({ s = [] }) => {
       {
         breakpoint: 480,
         settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          rows: 2,
+          slidesPerRow: 1,
         },
       },
     ],
@@ -162,7 +164,9 @@ const Bestseller = ({ s = [] }) => {
       ) : (
         <Slider {...settings}>
           {bestSellers.map((product) => (
-            <Product key={product.id} product={product} />
+           <div key={product.id} className=" pb-2">
+              <Product product={product} />
+            </div>
           ))}
         </Slider>
       )}

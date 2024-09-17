@@ -83,14 +83,14 @@ const Staffpicks = () => {
   const settings = {
     dots: false,
     infinite: true,
-    speed: 300,
+    speed: 1000,
     slidesToShow: 4,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 2000,
     arrows: true,
-    prevArrow: <PrevArrow />,
-    nextArrow: <NextArrow />,
+    prevArrow:  <div className="hidden md:block"><PrevArrow /></div>,
+    nextArrow: <div className="hidden md:block"><NextArrow /></div>,
     responsive: [
       {
         breakpoint: 1280,
@@ -117,8 +117,10 @@ const Staffpicks = () => {
       {
         breakpoint: 480,
         settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          rows: 2,
+          slidesPerRow: 1,
         },
       },
     ],
@@ -168,7 +170,9 @@ const Staffpicks = () => {
       ) : (
         <Slider {...settings}>
           {staffPicks?.map((product) => (
-            <Product key={product.id} product={product} />
+             <div key={product.id} className=" pb-2">
+             <Product product={product} />
+           </div>
           ))}
         </Slider>
       )}
