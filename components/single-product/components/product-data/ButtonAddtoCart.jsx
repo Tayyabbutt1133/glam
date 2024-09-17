@@ -8,7 +8,7 @@ const ButtonAddToCart = ({ product }) => {
 
   const handleAddToCart = () => {
     console.log(product);
-    // addToCart(product);
+    addToCart(product);
   };
 
   return (

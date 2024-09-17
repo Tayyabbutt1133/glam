@@ -5,6 +5,7 @@ import Link from "next/link";
 import { FcGoogle } from "react-icons/fc"; // Google icon
 import { FaApple } from "react-icons/fa"; // Apple icon
 import { lexendDeca } from "../../../components/ui/fonts";
+import { toast } from "react-toastify";
 
 
 export default function SignUp() {
@@ -21,7 +22,7 @@ export default function SignUp() {
     e.preventDefault();
 
     if (!agreeToTerms) {
-      alert("You must agree to the Terms and Conditions and Privacy Policy.");
+      toast.error("You must agree to the Terms and Conditions and Privacy Policy.");
       return;
     }
 

@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useCartStore } from '../../../../../states/Cardstore';
+import { toast } from "react-toastify";
 
 export default function QuantityBag({product}) {
   const [quantity, setQuantity] = useState(1);
@@ -19,7 +20,7 @@ export default function QuantityBag({product}) {
 
   // Handle Add to Bag button click
   const handleAddToBag = () => {
-    alert(`Added ${quantity} items to the bag!`);
+    toast.success(`Added ${quantity} items to the bag!`);
     // Add further logic like dispatching an action or API call here
    
     addToCart(product, quantity);
