@@ -102,7 +102,7 @@ export default function Page() {
       
           <div className="">
             <Container>
-              <MenucategoryLandingPage/>
+              <MenucategoryLandingPage />
             </Container>
             <SliderComponent bannerObject={bannerObject} />
             <section>

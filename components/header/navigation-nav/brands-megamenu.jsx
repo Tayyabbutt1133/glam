@@ -77,4 +77,5 @@ export default function BrandMegaMenu({ links }) {
         ))}
       </div>
     </div>
-  )}
+  );
+}
