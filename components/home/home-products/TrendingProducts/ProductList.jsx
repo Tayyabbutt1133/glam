@@ -204,7 +204,7 @@ const ProductList = () => {
         <h2 className={`text-2xl font-semibold mx-4 my-8 ${jost.className} uppercase`}>TRENDING NOW</h2>
         {loading ? (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {Array(8).fill(0).map((_, index) => (
+            {Array(4).fill(0).map((_, index) => (
               <div key={index} className="bg-white shadow-lg rounded-lg overflow-hidden relative flex flex-col h-full min-h-[420px] border border-gray-300">
                 <div className="w-full h-48">
                   <Skeleton height="100%" />

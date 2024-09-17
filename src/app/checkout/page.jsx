@@ -18,7 +18,8 @@ import klarna_wal from "../../../public/Klarnawallet.svg";
 import klarna_pink from "../../../public/klarn_pink.svg";
 
 import { usePopupStore } from "states/use-popup-store";
-
+import { useRouter } from "next/navigation";
+import { toast } from 'react-toastify';
 
 const shippingOptions = [
   {
@@ -85,7 +86,7 @@ export default function Checkout() {
   const shippingRef = useRef(null);
   const paymentRef = useRef(null);
   const [cardType, setCardType] = useState("");
-
+  const router = useRouter();
   const validateField = (name, value) => {
     let error = "";
     switch (name) {
@@ -150,6 +151,49 @@ export default function Checkout() {
   };
 
   const handlePayNow = () => {
+
+  // Check if all required fields are filled
+  const requiredFields = ['firstName', 'lastName', 'address', 'city', 'postcode', 'phone', 'email'];
+  const missingFields = requiredFields.filter(field => !formData[field]);
+
+  if (missingFields.length > 0) {
+    toast.error(`Please fill in all required fields: ${missingFields.join(', ')}`);
+    return;
+  }
+
+  // Check if shipping method is selected
+  if (!shippingMethod) {
+    toast.error('Please select a shipping method');
+    return;
+  }
+
+  // Check if payment method is selected
+  if (!paymentMethod) {
+    toast.error('Please select a payment method');
+    return;
+  }
+
+  // Check payment method specific details
+  if (paymentMethod === 'card') {
+    const cardFields = ['cardNumber', 'expirationDate', 'securityCode', 'nameOnCard'];
+    const missingCardFields = cardFields.filter(field => !formData[field]);
+
+    if (missingCardFields.length > 0) {
+      toast.error(`Please fill in all card details: ${missingCardFields.join(', ')}`);
+      return;
+    }
+
+    // Additional card validation could be added here
+  }
+
+  // Check if cart is not empty
+  if (cartItems.length === 0) {
+    toast.error('Your cart is empty');
+    return;
+  }
+
+  // If all checks pass, proceed with order creation
+  try {
     const orderDetails = {
       customerInfo: {
         firstName: formData.firstName,
@@ -158,18 +202,27 @@ export default function Checkout() {
         city: formData.city,
         postcode: formData.postcode,
         phone: formData.phone,
+        email: formData.email,
       },
       paymentMethod: paymentMethod,
-      cardType: cardType, // Add this line
-      cardLastFour: formData.cardNumber.slice(-4), // Add this line
+      cardType: cardType,
+      cardLastFour: formData.cardNumber ? formData.cardNumber.slice(-4) : null,
       cartItems: cartItems,
       subtotal: subtotal,
       shipping: shipping,
       total: total,
+      shippingMethod: shippingMethod.name,
     };
 
     useCartStore.getState().setOrderDetails(orderDetails);
-  };
+    toast.success('Order placed successfully!');
+    
+    router.push('/confirmation-successful');
+  } catch (error) {
+    console.error('Error processing order:', error);
+    toast.error('There was an error processing your order. Please try again.');
+  }
+}
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -717,14 +770,14 @@ export default function Checkout() {
               </div>
 
               {/* Pay Now Button */}
-              <Link href="./confirmation-successful">
+              {/* <Link href="./confirmation-successful"> */}
                 <button
                   onClick={handlePayNow}
                   className={`w-full rounded-xl bg-black text-white mt-4 hover:bg-gray-800 py-3 md:rounded ${jost.className} uppercase`}
                 >
                   PAY NOW
                 </button>
-              </Link>
+              {/* </Link> */}
               {/* Terms */}
               <p
                 className={`text-sm text-gray-600 mt-4 text-center ${lexendDeca.className}`}

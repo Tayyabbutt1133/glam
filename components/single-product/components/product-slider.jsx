@@ -17,12 +17,12 @@ const arrowStyles = {
 
 const NextArrow = ({ className, style, onClick }) => (
   <div
-    className={`absolute top-1/2 transform -translate-y-1/2 right-4 ${className}`}
+    className={`absolute top-1/2 transform -translate-y-1/2 right-7 lg:right-9 ${className}`}
     onClick={onClick}
     style={{
       ...style,
       ...arrowStyles,
-      right: "10px",
+      right: "30px",
     }}
   >
     <NextArrowIcon />
@@ -36,7 +36,7 @@ const PrevArrow = ({ className, style, onClick }) => (
     style={{
       ...style,
       ...arrowStyles,
-      left: "0px",
+      left: "-4px",
     }}
   >
     <PrevArrowIcon />
@@ -76,8 +76,15 @@ export default function ProductSlider({ images }) {
   };
 
   const handleThumbnailClick = (index) => {
-    sliderRef.current?.slickGoTo(index);
+    // console.log('Thumbnail clicked:', index);
+    if (sliderRef.current) {
+      // console.log('Slider ref exists');
+      sliderRef.current.slickGoTo(index);
+    } else {
+      console.log('Slider ref is null');
+    }
   };
+
   const DesktopView = ({ images, currentIndex, handleThumbnailClick, sliderRef, settings }) => (
     <article className="flex flex-row items-center justify-center w-full h-full">
       <section className="flex flex-col h-full w-1/5 justify-start items-center space-y-2 pr-4">

@@ -4,6 +4,8 @@ import CurrencyLanguagePopUp from "../../components/currency-language-pop-up";
 import Header from "../../components/header/header";
 import Newsletter from "../../components/Newsletter";
 import Footer from "../../components/Footer";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const inter = Inter({ subsets: ["latin"] });
 
 
@@ -20,6 +22,7 @@ export default function RootLayout({ children }) {
         <CurrencyLanguagePopUp />
         <Header/>
         {children}
+        <ToastContainer position="top-right" />
         <Newsletter />
         <Footer/>
       </body>
