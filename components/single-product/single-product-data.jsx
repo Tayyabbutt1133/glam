@@ -8,6 +8,8 @@ import demo1 from "/public/product-slider/demo1.png";
 import demo2 from "/public/product-slider/demo2.png";
 import Staffpicks from "./components/Staffpicks";
 import Accordion from "./components/product-data/components/accordion";
+import { AlertCircle } from "lucide-react";
+import Review from "./components/Review";
 // import { product } from "../../demoproduct";
 // import Review from "./components/Review";
 
@@ -30,10 +32,23 @@ export default async function SingleProductData({ productId }) {
   );
   // console.log(productFromApi);
   const product = await productFromApi.json();
-  console.log(product);
-  
+  console.log({product});
+  // "message": "Invalid ID.",
+  //   "data": {
+  //       "status": 404
+  //   }
+  if (product?.message == "Invalid ID." || product?.data?.status === 404 ) {
+    return (
+      <div className="flex flex-col items-center justify-center h-64 text-center">
+        <AlertCircle className="w-16 h-16 text-red-500 mb-4" />
+        <h2 className="text-2xl font-semibold text-gray-800 mb-2">Product Not Found</h2>
+        <p className="text-gray-600">Sorry, we couldn't find the product you're looking for.</p>
+        
+      </div>
+    );
+  }
 
-  return (
+  else return (
     <>
       <div className="w-full  justify-between gap-[3%] overflow-hidden">
         <section className="grid md:grid-cols-2  justify-between   h-auto gap-5">
@@ -67,11 +82,11 @@ export default async function SingleProductData({ productId }) {
         </section>
       </div>
       <Staffpicks />
-      {/* <Review
+      <Review
         reviewsFromProduct={product.reviews || []}
-        totalReviews={product.review_count || 0}
-        averageRating={product.average_rating || 0}
-      /> */}
+        totalReviews={product.review_count}
+        averageRating={product.average_rating}
+      />
     </>
   );
 }

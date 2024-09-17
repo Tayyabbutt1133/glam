@@ -177,11 +177,13 @@ const ProductList = () => {
         settings: {
           slidesToShow: 3,
           slidesToScroll: 3,
+          arrows: false,
         },
       },
       {
         breakpoint: 768,
         settings: {
+          arrows: false,
           slidesToShow: 2,
           slidesToScroll: 2,
           rows: 2,

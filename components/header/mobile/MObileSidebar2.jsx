@@ -196,20 +196,27 @@ export default function MobileSidebar({ isOpen, onClose }) {
         </>
       );
     }
+    //`Sibty-In future when brands will be sdded in the menu remove them from isSpecialCategory and handle there logic with other links e.g skincare, makeup etc
 
     return mainLinks?.map((category, index) => {
       const lowerCaseName = category.name.toLowerCase();
       const isSpecialCategory = ["brands", "new in", "sale"].includes(
         lowerCaseName
       );
-      const categorySlug = lowerCaseName
-        .replace(/&/g, "")
-        .replace(/\s+/g, "-")
-        .replace(/-+/g, "-")
-        .replace(/^-|-$/g, "");
-      const href = isSpecialCategory
-        ? `/${categorySlug}`
-        : `/product-categories/${categorySlug}`;
+      let categorySlug = lowerCaseName
+      .replace(/&/g, "")
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-")
+      .replace(/^-|-$/g, "");
+    
+    // Special case for "skin care"
+    if (categorySlug === "skin-care") {
+      categorySlug = "skincare";
+    }
+
+    const href = isSpecialCategory
+      ? `/${categorySlug}`
+      : `/product-categories/${categorySlug}`;
 
       return (
         <div

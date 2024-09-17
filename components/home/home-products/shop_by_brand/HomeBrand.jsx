@@ -15,6 +15,7 @@ import BrandSlide from './BrandSlide';
 const HomeBrand = () => {
   const router = useRouter();
 
+  //`The ids are demo ids
   const products = [
     { id: 1, name: 'CLINIQUE', description: 'Discover Clinique\'s Anti-Wrinkle sunscreen', image: brand_one },
     { id: 2, name: 'ESTEE LAUDER', description: 'Discover Clinique\'s Anti-Wrinkle sunscreen', image: brand_two },

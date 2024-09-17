@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -45,15 +45,19 @@ const PrevArrow = ({ className, style, onClick }) => (
 );
 
 export default function ProductSlider({ images }) {
-  console.log({images});
+  // console.log({images});
   const [currentIndex, setCurrentIndex] = useState(0);
   const sliderRef = useRef(null);
 
   const settings = {
     arrows: true,
-    initialSlide: 0,
-    swipeToSlide: true,
+    // initialSlide: 0,
+    // swipeToSlide: true,
     dots: false,
+    // afterChange: (current) => {
+    //   setCurrentIndex(current);
+    //   // setCurrentIndex(current);
+    // },
     infinite: true,
     speed: 300,
     autoplay: true,
@@ -61,7 +65,11 @@ export default function ProductSlider({ images }) {
     slidesToShow: 1,
     slidesToScroll: 1,
     rows: 1,
-    beforeChange: (_, next) => setCurrentIndex(next),
+    // afterChange: (current) =>{
+    //   console.log({current});
+    //   console.log(currentIndex)
+    //   // setCurrentIndex(current);
+    // },
     prevArrow: <PrevArrow />,
     nextArrow: <NextArrow />,
     responsive: [
@@ -73,6 +81,7 @@ export default function ProductSlider({ images }) {
           autoplaySpeed: 2000,
           infinite: true,
           dots: true,
+          afterChange: ()=>{},
         },
       },
     ],
@@ -81,6 +90,7 @@ export default function ProductSlider({ images }) {
   };
 
   const handleThumbnailClick = (index) => {
+    setCurrentIndex(index);
     // console.log('Thumbnail clicked:', index);
     if (sliderRef.current) {
       // console.log('Slider ref exists');
@@ -89,37 +99,45 @@ export default function ProductSlider({ images }) {
       console.log('Slider ref is null');
     }
   };
+  const Thumbnail = React.memo(({ image, index, currentIndex, onClick }) => (
+    <div
+      className={`p-1 border rounded-md cursor-pointer ${
+        index === currentIndex ? "border-bg-03" : "border-transparent"
+      }`}
+      onClick={() => onClick(index)}
+    >
+      <div className="relative w-16 h-16">
+        <Image
+          src={image.src}
+          alt={image.alt}
+          layout="fill"
+          objectFit="cover"
+        />
+      </div>
+    </div>
+  ));
 
   const DesktopView = ({ images, currentIndex, handleThumbnailClick, sliderRef, settings }) => (
     <article className="flex flex-row items-center justify-center w-full h-full">
-      {images.length > 0 && (
+      {images?.length > 0 && (
         <section className="flex flex-col h-full w-1/5 justify-start items-center space-y-2 pr-4">
-          {images.map((image, index) => (
-            <button
-              key={index}
-              className={`p-1 border rounded-md ${
-                index === currentIndex ? "border-bg-03" : "border-transparent"
-              }`}
-              onClick={() => handleThumbnailClick(index)}
-            >
-              <div className="relative w-16 h-16">
-                <Image
-                  src={image.src}
-                  alt={image.alt}
-                  layout="fill"
-                  objectFit="cover"
-                />
-              </div>
-            </button>
-          ))}
+           {images?.map((image, index) => (
+          <Thumbnail
+            key={index}
+            image={image}
+            index={index}
+            currentIndex={currentIndex}
+            onClick={() => handleThumbnailClick(index)}
+          />
+        ))}
         </section>
       )}
   
-      <section className={`${images.length > 1 ? 'w-4/5' : 'w-full'} h-[400px] lg:h-[500px] mb-auto`}>
+      <section className={`${images?.length > 1 ? 'w-4/5' : 'w-full'} h-[400px] lg:h-[500px] mb-auto`}>
         <div className="relative w-full h-full">
-          {images.length > 1 ? (
+          {images?.length > 1 ? (
             <Slider ref={sliderRef} {...settings}>
-              {images.map((image, index) => (
+              {images?.map((image, index) => (
                 <div key={index} className="w-full h-full flex items-center justify-center">
                   <img
                     src={image.src}
@@ -142,11 +160,11 @@ export default function ProductSlider({ images }) {
       </section>
     </article>
   );
-  const MobileView = ({ images, currentIndex, handleThumbnailClick, sliderRef, settings }) => (
+  const MobileView = ({ images, settings }) => (
     <section className="w-full max-w-[calc(100vw_-_2rem)]">
-      {images.length > 1 ? (
-        <Slider ref={sliderRef} {...settings}>
-          {images.map((image, index) => (
+      {images?.length > 1 ? (
+        <Slider {...settings}>
+          {images?.map((image, index) => (
             <div key={index} className="w-full aspect-square">
               <img
                 src={image.src}
@@ -173,9 +191,9 @@ export default function ProductSlider({ images }) {
       <div className="md:hidden">
         <MobileView
           images={images}
-          currentIndex={currentIndex}
-          handleThumbnailClick={handleThumbnailClick}
-          sliderRef={sliderRef}
+          // currentIndex={currentIndex}
+          // handleThumbnailClick={handleThumbnailClick}
+          // sliderRef={sliderRef}
           settings={settings}
         />
       </div>

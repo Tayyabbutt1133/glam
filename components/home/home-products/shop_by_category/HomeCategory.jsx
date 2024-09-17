@@ -15,9 +15,9 @@ import PrevArrowIcon from "/public/hero-banners/prev-arrow";
 
 // Arrow styles
 const arrowStyles = {
-  width: "40px",
-  height: "40px",
-  zIndex: 1,
+  width: "30px",
+  height: "30px",
+  zIndex: 5,
   transition: "all 0.3s ease-in-out", // Smooth transition
 };
 
@@ -30,7 +30,7 @@ const NextArrow = ({ className, style, onClick }) => {
       style={{
         ...style,
         ...arrowStyles,
-        right: "-34px",
+        right: "-10px",
       }}
     >
       <NextArrowIcon />
@@ -47,7 +47,7 @@ const PrevArrow = ({ className, style, onClick }) => {
       style={{
         ...style,
         ...arrowStyles,
-        left: "-50px", // Adjust left position as needed
+        left: "-36px", // Adjust left position as needed
       }}
     >
       <PrevArrowIcon />
@@ -80,11 +80,13 @@ export default function HomeCategory() {
         settings: {
           slidesToShow: 3,
           slidesToScroll: 1,
+          arrows: false,
         },
       },
       {
         breakpoint: 768,
         settings: {
+          arrows: false,
           slidesToShow: 2,
           slidesToScroll: 1,
         },
@@ -92,6 +94,7 @@ export default function HomeCategory() {
       {
         breakpoint: 480,
         settings: {
+          arrows: false,
           slidesToShow: 2,
           slidesToScroll: 1,
         },
@@ -102,22 +105,24 @@ export default function HomeCategory() {
   return (
     <>
       <Container>
-        <div className="py-16 relative">
+        <div className="py-16  relative">
           <h1 className={`text-2xl font-semibold mb-8 text-left ${jost.className} uppercase`}>Shop by Category</h1>
-          <Slider {...settings}>
-            <div className="px-2  w-[45%] lg:w-44 xl:w-56 2xl:w-[100%]">
-              <Image src={cat_one} alt="Makeup" className="rounded-lg object-cover cursor-pointer w-full" />
-            </div>
-            <div className="px-2  w-[45%] lg:w-44 xl:w-56 2xl:w-[100%]">
-              <Image src={cat_two} alt="Lips" className="rounded-lg object-cover cursor-pointer w-full" />
-            </div>
-            <div className="px-2  w-[45%] lg:w-44 xl:w-56 2xl:w-[100%]">
-              <Image src={cat_three} alt="Hair" className="rounded-lg object-cover cursor-pointer w-full" />
-            </div>
-            <div className="px-2  w-[45%] lg:w-44 xl:w-56 2xl:w-[100%]">
-              <Image src={cat_four} alt="Fragrance" className="rounded-lg object-cover cursor-pointer w-full" />
-            </div>
-          </Slider>
+          <div className=' md:mx-3'>
+            <Slider {...settings} >
+              <div className="px-2  w-[45%] lg:w-44 xl:w-56 2xl:w-[100%]">
+                <Image src={cat_one} alt="Makeup" className="rounded-lg object-cover cursor-pointer w-full" />
+              </div>
+              <div className="px-2  w-[45%] lg:w-44 xl:w-56 2xl:w-[100%]">
+                <Image src={cat_two} alt="Lips" className="rounded-lg object-cover cursor-pointer w-full" />
+              </div>
+              <div className="px-2  w-[45%] lg:w-44 xl:w-56 2xl:w-[100%]">
+                <Image src={cat_three} alt="Hair" className="rounded-lg object-cover cursor-pointer w-full" />
+              </div>
+              <div className="px-2  w-[45%] lg:w-44 xl:w-56 2xl:w-[100%]">
+                <Image src={cat_four} alt="Fragrance" className="rounded-lg object-cover cursor-pointer w-full" />
+              </div>
+            </Slider>
+          </div>
         </div>
       </Container>
     </>

@@ -23,6 +23,7 @@ export default function SkinToneSelector({product}) {
   const [selectedShade, setSelectedShade] = useState(availableShades[0] || 'All')
   const size = attributes?.find(attribute => attribute.name.toLowerCase() === 'size'); //set size name 
   const sizes = size?.options;
+  console.log(attributes)
 // {
 //   id: 0,
 //   name: 'Shade',
@@ -118,6 +119,23 @@ export default function SkinToneSelector({product}) {
           ></div>
         ))}
       </div>
+      {/* add sizes if available  */}
+
+      {sizes && sizes.length > 0 && (
+        <div className="mt-4">
+          <h3 className="text-sm font-semibold text-gray-700 mb-2">Size</h3>
+          <div className="flex flex-wrap gap-2">
+            {sizes.map((size, index) => (
+              <button
+                key={index}
+                className="px-3 py-1 text-sm border border-gray-300 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                {size.trim()}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   )
 }

@@ -30,6 +30,7 @@ export default function MyBag() {
   const cartRef = useRef(null);
 
   const { rate, currencySymbol } = usePopupStore();
+  console.log({currencySymbol,rate});
 
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -227,11 +228,13 @@ export default function MyBag() {
                       <>
                         <div className="flex justify-between items-start mb-4">
                           <div>
-                            <h2
-                              className={`text-lg font-medium w-[80%] ${jost.className}`}
-                            >
-                              {item.name}
-                            </h2>
+                            <Link href={`/product/${item.id}`}>
+                              <h2
+                                className={`text-lg cursor-pointer font-medium w-[80%] ${jost.className}`}
+                              >
+                                {item.name}
+                              </h2>
+                            </Link>
                             <p
                               className={`text-sm text-black ${jost.className} font-normal`}
                             >

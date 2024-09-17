@@ -8,43 +8,58 @@ import MaxFactOverlay from "/public/home_banners/olaplex1.png";
 import Link from "next/link";
 import Text from "../../ui/Text";
 import Button from "../../ui/button";
-
-
-
+import { jost } from "@/components/ui/fonts";
 
 function MaxFactorBanner() {
   return (
-    <div className="relative w-full h-[191px] lg:hidden">
+    <div className="relative w-full max-h-[230px] sm:max-h-[280px] mt-10 lg:hidden">
       {/* Background Image */}
-      <Image
+      {/* <Image
         src={MobMax}
         alt="Background Image"
         layout="fill"
         objectFit="cover"
         objectPosition="right" // Aligns the image to the right edge
         className="absolute inset-0"
-      />
-
+      /> */}
+      
       {/* Overlay Image */}
       <div className="relative flex items-end justify-start h-full">
         <Image
-          src={MaxFactOverlay}
+          src={max_cosmetics}
           alt="Max Factor Banner"
-          objectFit="contain"
-          className="max-w-full h-auto"
+          objectFit="cover"
+          className="max-w-[67%] sm:max-w-[75%] h-auto"
         />
       </div>
+      <div className="absolute top-1/2 transform -translate-y-1/2 right-6 sm:right-12  text-center space-y-1 z-10">
+        <Text
+          style={"h1"}
+          className="uppercase font-bold text-xl sm:text-2xl"
+        >
+          Up To
+        </Text>
+        <Text style={"h1"} className="text-4xl font-bold sm:text-6xl">
+          50%
+        </Text>
+        <Text
+          style={"h1"}
+          className="uppercase font-bold text-xl sm:text-2xl"
+        >
+          Off
+        </Text>
+        <Button className={`mt-4 p-1 text-sm sm:p-2 z-10 ${jost.className} sm:text-lg`}>Shop Now</Button>
+      </div>
+
     </div>
   );
 }
-
-
 
 export default function MaxFact() {
   return (
     <>
       {/* Mobile */}
-      <div className="flex w-full lg:hidden">
+      <div className="flex w-full justify-center lg:hidden">
         <MaxFactorBanner />
       </div>
 
@@ -57,7 +72,7 @@ export default function MaxFact() {
         <div className="flex flex-col justify-center items-center bg-[#FFEEF0] w-[35%] xl:h-[600px] 2xl:h-[693px] p-8">
           <Image
             width={358}
-            height={50}
+            height={70}
             alt="max logo"
             src={max_logo}
             className="-mt-14"

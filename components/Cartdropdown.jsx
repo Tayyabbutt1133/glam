@@ -76,7 +76,9 @@ export default function Cartdropdown() {
                       </button>
                     </div>
                     <div className="ml-4">
-                      <h3 className={`font-semibold text-base ${jost.className}`}>{item.name}</h3>
+                      <Link href={`/product/${item.id}`}>
+                      <h3 className={`font-semibold text-base ${jost.className} cursor-pointer`}>{item.name}</h3>
+                      </Link>
                       <p className={`text-sm text-black ${jost.className} mt-1`}>Shade: {item.attributes.find(attr => attr.name === 'Shade')?.options[0] || 'N/A'}</p>
                       <p className={`text-sm text-black ${jost.className}`}>Size: {getItemSize(item)}</p>
                       <div className="flex items-center mt-2">

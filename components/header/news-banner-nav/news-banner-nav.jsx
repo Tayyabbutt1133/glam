@@ -16,6 +16,7 @@ export default function NewsBannerNav() {
   const selectedCountryFromStore = usePopupStore(
     (state) => state.selectedCountry
   );
+  // const {rate,currencySymbol} = usePopupStore()
 
   const [selectedCountry, setSelectedCountry] = useState(() => {
     // Check if window is defined to ensure code runs in the browser

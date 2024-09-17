@@ -158,25 +158,22 @@ const Staffpicks = () => {
       </h2>
       {loading ? (
         <Slider {...settings}>
-          {Array(4)
-            .fill(0)
-            .map((_, index) => (
-              <div key={index} className="px-2">
-                <div className="bg-white shadow-lg rounded-lg overflow-hidden relative flex flex-col h-full min-h-[350px] border border-gray-300">
-                  <div className="w-[90%] 2xl:w-[100%] h-48">
-                    <Skeleton height="100%" />
-                  </div>
-                  <div className="px-4 pb-4 flex-grow">
-                    <Skeleton height={24} width="80%" className="mb-2" />
-                    <Skeleton height={20} width="100%" className="mb-2" />
-                    <Skeleton height={20} width="90%" className="mb-2" />
-                    <Skeleton height={20} width="50%" className="mb-4" />
-                    <Skeleton height={32} width="100%" />
-                  </div>
-                </div>
+        {Array(4).fill(0).map((_, index) => (
+          <div key={index} className="px-2">
+            <div className="bg-white shadow-lg rounded-lg overflow-hidden relative flex flex-col h-full min-h-[350px] border border-gray-300">
+              <div className="aspect-w-1 aspect-h-1 w-full h-48">
+                <Skeleton height="100%" />
               </div>
-            ))}
-        </Slider>
+              <div className="p-4 flex-grow">
+                <Skeleton height={20} width="80%" className="mb-2" />
+                <Skeleton height={16} width="60%" className="mb-4" />
+                <Skeleton height={24} width="40%" className="mb-2" />
+                <Skeleton height={32} width="100%" />
+              </div>
+            </div>
+          </div>
+        ))}
+      </Slider>
       ) : (
         <Slider {...settings}>
           {staffPicks?.map((product) => (

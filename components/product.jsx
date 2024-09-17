@@ -7,6 +7,7 @@ import { jost, lexendDeca } from "./ui/fonts";
 import Image from "next/image";
 import { useCartStore } from "../states/Cardstore";
 import { usePopupStore } from "../states/use-popup-store";
+import Link from "next/link";
 
 
 
@@ -75,11 +76,13 @@ export default function Product({ product }) {
           >
             {getBrandName(product.attributes)}
           </p>
-          <h2
-            className={`text-gray-900 font-normal text-sm ${lexendDeca.className} line-clamp-2`}
-          >
-            {sanitizeText(product.name)}
-          </h2>
+          <Link href={`/product/${product.id}`}>
+            <h2
+              className={`text-gray-900 font-normal text-sm ${lexendDeca.className} line-clamp-2 cursor-pointer`}
+            >
+              {sanitizeText(product.name)}
+            </h2>
+          </Link>
           <div className="flex items-center mb-3 mt-3">
             {[...Array(5)].map((_, index) => (
               <span key={index}>
