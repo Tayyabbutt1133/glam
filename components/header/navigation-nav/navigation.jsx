@@ -65,7 +65,7 @@ export default function Navigation() {
                   index === 0 ? "text-sale" : ""
                 }`}
                 key={link.id}
-                href={link.href}
+                href={link.href === "/brands" ? "" : link.href}
                 style={{
                   boxShadow:
                     hoveredLink.id === link.id
