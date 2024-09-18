@@ -7,8 +7,16 @@ import MobRimmel from "/public/home_banners/mob-rimmel.svg";
 import { jost } from "../../ui/fonts";
 import Button from "../../ui/button";
 import Text from "../../ui/Text";
+import Link from "next/link";
 
 export default function Rimmel() {
+
+  const rimmelBrandLanding = "rimmel";
+  const rimmelBrandListing = "79";
+
+
+
+
   return (
     <>
       {/* Mobile */}
@@ -85,9 +93,11 @@ export default function Rimmel() {
               Off
             </Text>
           </div>
+          <Link href={`/brands/${rimmelBrandLanding}/${rimmelBrandListing}`}>
           <Button className={`mt-10 uppercase w-max mx-auto ${jost.className}`}>
             Shop Now
           </Button>
+          </Link>
         </div>
 
         {/* Right Section with Banner */}

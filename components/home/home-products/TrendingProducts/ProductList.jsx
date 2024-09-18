@@ -56,6 +56,10 @@ const ProductCard = ({ product, isFavorite, onFavoriteClick, onAddToCart }) => {
     
     router.push(`/product/${product.id}`);
   };
+
+
+
+  
   return (
     <div className="bg-white border border-gray-300 rounded-lg overflow-hidden relative flex flex-col h-full min-h-[430px] w-full cursor-pointer">
       {product.on_sale && (

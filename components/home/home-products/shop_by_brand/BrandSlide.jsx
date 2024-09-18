@@ -1,111 +1,84 @@
-"use client";
+'use client'
 
-import React from 'react';
-import Slider from 'react-slick';
-import Image from 'next/image';
-import Link from 'next/link';
+import React from 'react'
+import Slider from 'react-slick'
+import Image from 'next/image'
+import Link from 'next/link'
 
 // Import your images
-import brand1 from '../../../../public/brand_slider/brand_one.svg';
-import brand3 from '../../../../public/brand_slider/brand_three.svg';
-import brand4 from '../../../../public/brand_slider/brand_four.svg';
-import brand5 from '../../../../public/brand_slider/brand_five.svg';
-import brand2 from '../../../../public/brand_slider/Group.svg';
+import rimmel from '../../../../public/brand_slider/brand_one.svg'
+import loreal from '../../../../public/brand_slider/Group.svg'
+import bourjois from '../../../../public/brand_slider/brand_three.svg'
+import kerastase from '../../../../public/brand_slider/brand_four.svg'
+import max_factor from '../../../../public/brand_slider/brand_five.svg'
 
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
+
+const brands = [
+  { id: 79, name: 'Rimmel', image: rimmel },
+  { id: 72, name: 'L\'Oreal', image: loreal },
+  { id: 70, name: 'Bourjois', image: bourjois },
+  { id: 936, name: 'Kerastase', image: kerastase },
+  { id: 74, name: 'Max Factor', image: max_factor },
+]
 
 export default function BrandSlide() {
   const settings = {
-    dots: false, // Disables dots/pagination
-    infinite: true, // Enables continuous loop mode
+    dots: false,
+    infinite: true,
     speed: 500,
-    slidesToShow: 5, // Shows 5 slides at a time
-    slidesToScroll: 1, // Scrolls 1 slide at a time
-    autoplay: true, // Autoplay feature
-    autoplaySpeed: 3000, // Speed for autoplay
+    slidesToShow: 5,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
     responsive: [
       {
         breakpoint: 1280,
         settings: {
-          slidesToShow: 4, // 3 slides for tablet screens
+          slidesToShow: 4,
           slidesToScroll: 1,
         },
       },
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 3, // 3 slides for tablet screens
+          slidesToShow: 3,
           slidesToScroll: 1,
         },
       },
       {
         breakpoint: 768,
         settings: {
-          slidesToShow: 2, // 2 slides for smaller screens
+          slidesToShow: 2,
           slidesToScroll: 1,
         },
       },
       {
         breakpoint: 640,
         settings: {
-          slidesToShow: 1, // 1 slide for mobile screens
+          slidesToShow: 1,
           slidesToScroll: 1,
         },
       },
     ],
-  };
+  }
 
   return (
     <div className="my-8">
       <Slider {...settings}>
-        {/* Wrap each Image with Link to make it clickable */}
-        <div className="mx-10"> {/* Balanced gap between slides */}
-          <Link href="/brand1-page">
-            <Image
-              src={brand1}
-              alt="Brand 1"
-              className="h-8 md:h-10 w-auto hover:brightness-75 transition duration-300 cursor-pointer"
-            />
-          </Link>
-        </div>
-        <div className="mx-8">
-          <Link href="/brand2-page">
-            <Image
-              src={brand2}
-              alt="Brand 2"
-              className="h-8 md:h-10 w-auto hover:brightness-75 transition duration-300 cursor-pointer"
-            />
-          </Link>
-        </div>
-        <div className="">
-          <Link href="/brand3-page">
-            <Image
-              src={brand3}
-              alt="Brand 3"
-              className="h-8 md:h-10 w-auto hover:brightness-75 transition duration-300 cursor-pointer"
-            />
-          </Link>
-        </div>
-        <div className="mx-8">
-          <Link href="/brand4-page">
-            <Image
-              src={brand4}
-              alt="Brand 4"
-              className="h-8 md:h-10 w-auto hover:brightness-75 transition duration-300 cursor-pointer"
-            />
-          </Link>
-        </div>
-        <div className="">
-          <Link href="/brand5-page">
-            <Image
-              src={brand5}
-              alt="Brand 5"
-              className="h-8 xl:h-10 w-auto hover:brightness-75 transition duration-300 cursor-pointer"
-            />
-          </Link>
-        </div>
+        {brands.map((brand) => (
+          <div key={brand.id} className="mx-8">
+            <Link href={`/brands/${brand.id}`}>
+              <Image
+                src={brand.image}
+                alt={brand.name}
+                className="h-8 md:h-10 w-auto hover:brightness-75 transition duration-300 cursor-pointer"
+              />
+            </Link>
+          </div>
+        ))}
       </Slider>
     </div>
-  );
+  )
 }
