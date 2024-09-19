@@ -119,7 +119,7 @@ export default function HomeCategory() {
           <Slider {...settings}>
             {categories.map((category, index) => (
               <div key={index} className="px-2 w-[45%] lg:w-44 xl:w-56 2xl:w-[100%]">
-                <Link href={`/product-categories/${category.categoryLanding}/${category.subcategories}`}>
+                <Link href={`/product-categories/${category.categoryLanding}`}>
                   <Image 
                     src={category.image} 
                     alt={category.name} 
