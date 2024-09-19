@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { jost } from "./ui/fonts";
 
-import { usePopupStore } from "/states/use-popup-store"; 
+import { usePopupStore } from "../states/use-popup-store";
 
 export default function Cartdropdown() {
   const { cartItems, removeFromCart, updateQuantity} = useCartStore();

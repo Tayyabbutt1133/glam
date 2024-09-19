@@ -133,7 +133,7 @@ const Bestseller = () => {
 
 
   return (
-    <Container className="py-16">
+    <Container className="py-16 lg:mx-10 md:mx-5">
       <Text
       style={"h1"}
         className={`uppercase mb-8`}

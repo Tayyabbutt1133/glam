@@ -47,7 +47,7 @@ export default function SliderComponent({bannerObject}) {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    arrows: !isMobile,
+    arrows: false,
     swipe: isMobile,
     nextArrow: <NextArrow to="next" />,
     prevArrow: <PrevArrow to="prev" />,
