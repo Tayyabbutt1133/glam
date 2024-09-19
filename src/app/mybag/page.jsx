@@ -377,12 +377,14 @@ export default function MyBag() {
                       <div className="bg-white rounded-lg  shadow-md overflow-hidden">
                         
                         <div className="relative pb-[100%]">
-                          <Image
-                            src={product.images[0]?.src || "/placeholder.svg"}
-                            alt={product.name}
-                            layout="fill"
-                            objectFit="cover"
-                          />
+                          <Link href={`/product/${product.id}`}>
+                            <Image
+                              src={product.images[0]?.src || "/placeholder.svg"}
+                              alt={product.name}
+                              layout="fill"
+                              objectFit="cover"
+                            />
+                          </Link>
                         </div>
                         <div className="p-4">
                           <h3
@@ -390,11 +392,13 @@ export default function MyBag() {
                           >
                             {getBrand(product)}
                           </h3>
-                          <p
-                            className={`text-sm mb-2 h-10 overflow-hidden ${lexendDeca.className}`}
-                          >
-                            {product.name}
-                          </p>
+                          <Link href={`/product/${product.id}`}>
+                            <p
+                              className={`text-sm mb-2 h-10 overflow-hidden ${lexendDeca.className}`}
+                            >
+                              {product.name}
+                            </p>
+                          </Link>
                           <p
                             className={`text-lg mt-auto font-bold  ${lexendDeca.className}`}
                           >

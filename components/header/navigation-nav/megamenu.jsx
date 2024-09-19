@@ -32,7 +32,8 @@ export default function MegaMenu({ links, hoveredLink }) {
                 getSubMenu(hoveredLink.id).map((link, index) => (
                   <div key={index} className="min-w-fit mr-0">
                     {/* Submenu title */}
-                    <Link href={link.href}>
+                    {/* change the href link to id  */}
+                    <Link href={link.href =="/product-categories/skin-care/Moisturizers"?"/product-categories/skin-care/Moisturisers":link.href}>
                       <Text style={"h4"} className={`uppercase mb-5`}>
                         {link.name}
                       </Text>

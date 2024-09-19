@@ -88,7 +88,7 @@ const ProductCard = ({ product, isFavorite, onFavoriteClick, onAddToCart }) => {
         </h2>
         <h3 
         onClick={handleProductClick}
-        className={`text-gray-900 font-normal text-wrap text-sm ${lexendDeca.className} h-[40px] overflow-hidden`}>
+        className={`text-gray-900 font-normal text-wrap text-sm ${lexendDeca.className} text-sm sm:textbase h-[80px] overflow-hidden`}>
           {productName}
         </h3>
         <div className="flex items-center mb-2 mt-1 h-[20px]">
@@ -181,7 +181,7 @@ const ProductList = () => {
         settings: {
           slidesToShow: 3,
           slidesToScroll: 3,
-          arrows: false,
+          
         },
       },
       {
@@ -206,7 +206,7 @@ const ProductList = () => {
 
   return (
     <Container>
-      <div className="py-16">
+      <div className="py-16 md:mb-20">
         <h2 className={`text-2xl font-semibold mx-4 my-8 ${jost.className} uppercase`}>TRENDING NOW</h2>
         {loading ? (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">

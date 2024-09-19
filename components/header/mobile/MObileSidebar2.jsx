@@ -144,7 +144,7 @@ export default function MobileSidebar({ isOpen, onClose }) {
       <div className="flex flex-col w-full">
         {subCategories.map((subCategory) => (
           <div key={subCategory.id} className="mb-4">
-            <Link href={subCategory.href} className="relative inline-block">
+            <Link href={subCategory.href =="/product-categories/skin-care/Moisturizers"?"/product-categories/skin-care/Moisturisers":subCategory.href} className="relative inline-block">
               <Text style="h4" className="uppercase mb-2 font-semibold">
                 {subCategory.name}
               </Text>

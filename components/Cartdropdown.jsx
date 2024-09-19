@@ -9,9 +9,10 @@ import { jost } from "./ui/fonts";
 import { usePopupStore } from "states/use-popup-store";
 
 export default function Cartdropdown() {
-  const { cartItems, removeFromCart, updateQuantity } = useCartStore();
+  const { cartItems, removeFromCart, updateQuantity} = useCartStore();
+  const [isCartOpen, setIsCartOpen] = useState(true)
   const { rate, currencySymbol } = usePopupStore();
-  const [isOpen, setIsOpen] = useState(true);
+  
   const dropdownRef = useRef(null);
 
   const calculateSubtotal = () => {
@@ -23,7 +24,7 @@ export default function Cartdropdown() {
 
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-      setIsOpen(false);
+      setIsCartOpen(false);
     }
   };
 
@@ -43,10 +44,10 @@ export default function Cartdropdown() {
       : "N/A";
   };
 
-  if (!isOpen) return null;
+  if (!isCartOpen) return null;
 
   const handleViewBag = () => {
-    setIsOpen(false);
+    setIsCartOpen(false);
     
   };
   return (

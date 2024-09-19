@@ -10,7 +10,7 @@ import { MenuIcon, SearchIcon } from "lucide-react";
 import glam_logo from "../../../public/logo.svg";
 import { jost } from "../../ui/fonts";
 import SearchBarWithDropdown from "../middle-bar-nav/searchbar";
-import Cartdropdown from "@/components/Cartdropdown";
+import Cartdropdown from "../../Cartdropdown";
 
 export default function MobileHeader({ onOpenSidebar }) {
   const [isCartOpen, setIsCartOpen] = useState(false);

@@ -24,6 +24,7 @@ const PRODUCTS_PER_PAGE = 12;
 export default function SubcategoryPage() {
   const { rate, currencySymbol } = usePopupStore();
   const { categorylanding, subcategories } = useParams();
+  console.log({categorylanding, subcategories})
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -48,17 +49,23 @@ export default function SubcategoryPage() {
   const fetchProducts = async (page = 1) => {
     setLoading(true);
     try {
-      const params = {
-        category: subcategories,
-        per_page: 100,
-        page,
-        consumer_key: CONSUMER_KEY,
-        consumer_secret: CONSUMER_SECRET,
-      };
+      //fetch th subcatecategory id from localhost:3000/api/subcategoryslug 
+      const productsResponse = await axios.get(`/api/getProductsBySlug/${subcategories.toLowerCase()}`)
+      
 
-      const productsResponse = await axios.get(`${API_BASE_URL}/products`, {
-        params,
-      });
+      // const params = {
+      //   category: subcategories,
+      //   per_page: 100,
+      //   page,
+      //   consumer_key: CONSUMER_KEY,
+      //   consumer_secret: CONSUMER_SECRET,
+      // };
+
+      // const productsResponse = await axios.get(`${API_BASE_URL}/products`, {
+      //   params,
+      // });
+      // // console.log(productsResponse.data)
+
       const fetchedProducts = productsResponse.data
         .map((product) => ({
           ...product,
@@ -361,7 +368,7 @@ export default function SubcategoryPage() {
       </div>
 
       <div className="flex justify-between items-center">
-        <div className="flex items-center lg:hidden mr-10">
+        <div className="flex items-center lg:hidden">
           <button onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}>
             <span
               className={`flex items-center gap-2 text-md ${jost.className}`}
@@ -370,7 +377,7 @@ export default function SubcategoryPage() {
             </span>
           </button>
         </div>
-        <div className="flex flex-col md:flex-row items-center lg:ml-[20rem] mr-auto">
+        <div className="flex flex-col md:flex-row items-center lg:ml-[20rem] ">
           <select
             value={sortOption}
             onChange={handleSortChange}
@@ -392,6 +399,7 @@ export default function SubcategoryPage() {
 
       <div className="flex flex-col lg:flex-row gap-4 mb-32">
         <div
+          style={{ boxShadow: isMobileFilterOpen? "-115px 0 10px 0 rgba(255, 255, 255)" :"none" }}
           className={`w-full transition-all duration-300 ease-in-out ${
             isMobileFilterOpen
               ? "z-[90] lg:z-auto h-screen overflow-y-auto lg:overflow-y-auto translate-x-[0] lg:translate-x-0"
@@ -606,7 +614,10 @@ export default function SubcategoryPage() {
                       onChange={() => handleFilterChange("priceRange", range)}
                       className="mr-2"
                     />
-                    £{range.split("-")[0]} - £{range.split("-")[1]} (
+                    
+                    {currencySymbol}
+                    {(range.split("-")[0] * rate).toFixed(2)} - {currencySymbol}
+                    {(range.split("-")[1] * rate).toFixed(2)} (
                     {getFilteredCount("priceRange", range)})
                   </label>
                 ))}
@@ -638,7 +649,7 @@ export default function SubcategoryPage() {
 
         <div className="w-full lg:w-3/4">
           {loading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
               {Array(PRODUCTS_PER_PAGE)
                 .fill("")
                 .map((_, index) => (
@@ -653,7 +664,7 @@ export default function SubcategoryPage() {
                 ))}
             </div>
           ) : paginatedProducts.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
               {paginatedProducts.map((product) => {
                 const brand =
                   product.attributes.find(
@@ -687,7 +698,7 @@ export default function SubcategoryPage() {
                         alt={product.name}
                         width={200}
                         height={200}
-                        className="w-full h-64 object-cover mb-4"
+                        className="w-full h-64 object-contain mb-4"
                       />
                     </Link>
                     <Link href={`/product/${product.id}`}>

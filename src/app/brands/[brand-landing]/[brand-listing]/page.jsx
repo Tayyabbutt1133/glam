@@ -364,7 +364,7 @@ export default function BrandListing() {
           </button>
         </div>
 
-        <div className="flex flex-col md:flex-row items-center lg:ml-[20rem] mr-auto">
+        <div className="flex flex-col md:flex-row items-center lg:ml-[20rem] ">
           <select
             value={sortOption}
             onChange={handleSortChange}
@@ -386,9 +386,11 @@ export default function BrandListing() {
 
       <div className="flex flex-col lg:flex-row gap-4 mb-32">
         <div
+          //add a shadow bg white that is very strong and make bg white
+          style={{ boxShadow: isMobileFilterOpen? "-115px 0 10px 0 rgba(255, 255, 255)" :"none" }}
           className={`w-full transition-all duration-300 ease-in-out ${
             isMobileFilterOpen
-              ? "z-[90] lg:z-auto h-screen overflow-y-auto lg:overflow-y-auto translate-x-[0] lg:translate-x-0"
+              ? "z-[90]  lg:z-auto h-screen overflow-y-auto lg:overflow-y-auto translate-x-[0] lg:translate-x-0"
               : "translate-x-[300%] lg:translate-x-0"
           } lg:w-1/4 p-4 fixed lg:static md:block top-0 bg-white`}
         >
@@ -595,7 +597,9 @@ export default function BrandListing() {
                       onChange={() => handleFilterChange("priceRange", range)}
                       className="mr-2"
                     />
-                    £{range.split("-")[0]} - £{range.split("-")[1]} (
+                    {currencySymbol}
+                    {(range.split("-")[0] * rate).toFixed(2)} - {currencySymbol}
+                    {(range.split("-")[1] * rate).toFixed(2)} (
                     {getFilteredCount("priceRange", range)})
                   </label>
                 ))}
@@ -625,7 +629,7 @@ export default function BrandListing() {
         </div>
 
         <div className="w-full lg:w-3/4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
             {loading
               ? Array(PRODUCTS_PER_PAGE)
                   .fill("")
@@ -669,7 +673,7 @@ export default function BrandListing() {
                         <img
                           src={product.images[0]?.src}
                           alt={product.name}
-                          className="w-full h-64 object-cover mb-4"
+                          className="w-full h-64 object-contain mb-4"
                         />
                       </Link>
                       <Link href={`/product/${product.id}`}>
