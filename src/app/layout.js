@@ -6,7 +6,7 @@ import Newsletter from "../../components/Newsletter";
 import Footer from "../../components/Footer";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Head from 'next/head';
+import Script from 'next/script'; // Use next/script instead of Head
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,9 +18,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <Head>
-      <script type="text/javascript" src="https://www.bugherd.com/sidebarv2.js?apikey=fhpij2lzixqjqywxhkpnba" async="true"></script>
-      </Head>
+      <head>
+        {/* Include any other meta tags or link elements */}
+      </head>
       <body className={inter.className}>
         <CurrencyLanguagePopUp />
         <Header/>
@@ -28,6 +28,13 @@ export default function RootLayout({ children }) {
         <ToastContainer position="top-right" />
         <Newsletter />
         <Footer/>
+
+        {/* Add BugHerd script */}
+        <Script
+          id="bugherd-script"
+          strategy="afterInteractive" // Ensures script loads after the page is interactive
+          src="https://www.bugherd.com/sidebarv2.js?apikey=fhpij2lzixqjqywxhkpnba"
+        />
       </body>
     </html>
   );
