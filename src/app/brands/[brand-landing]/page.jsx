@@ -4,14 +4,14 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Container from "@/components/container";
 import MenucategoryLandingPage from "@/components/lifecycle/category/MenucategoryLandingPage";
-import Bestseller from "@/components/lifecycle/category/categoriescomponents/Bestseller";
+import Bestseller from "../../../../components/lifecycle/category/categoriescomponents/Bestseller";
 // import bannerimg from '../../../../public/product_category_landing/olaplex 1.svg';
 import Staffpicks from "@/components/single-product/components/Staffpicks";
 import Aboutbrand from "@/components/lifecycle/brand/Aboutbrand";
 import Faqsbrand from "@/components/lifecycle/brand/Faqsbrand";
 import olaplexbrand from "/public/about_brands/olaplexslide.svg";
 
-import SliderComponent from "@/components/lifecycle/mutual-components/slider";
+import SliderComponent from "../../../../components/lifecycle/mutual-components/slider";
 import Newin from "@/components/lifecycle/category/categoriescomponents/Newin";
 import MakeupTips from "@/components/lifecycle/mutual-components/makeup-tips";
 
