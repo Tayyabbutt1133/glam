@@ -80,6 +80,7 @@ const Banner = ({ src }) => {
 export default function Hero() {
   const isMobile = useMediaQuery("(max-width: 1024px)");
   const settings = {
+    arrows: false,
     autoplay: true,
     dots: isMobile,
     dotsClass: "slick-dots slick-thumb", // Apply custom dots styling
@@ -90,7 +91,7 @@ export default function Hero() {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    arrows: !isMobile, // Show arrows only on non-mobile devices
+   
     swipe: isMobile, // Enable swipe on mobile devices
     nextArrow: <NextArrow to="next" />,
     prevArrow: <PrevArrow to="prev" />,

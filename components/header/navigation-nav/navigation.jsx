@@ -11,6 +11,7 @@ export default function Navigation() {
   const [hoveredLink, setHoveredLink] = useState({
     id: null,
     href: null,
+  
     img: "",
   });
   const [links, setLinks] = useState([]);
@@ -28,6 +29,7 @@ export default function Navigation() {
           }
         );
         const data = await res.json();
+        // console.log({data})
         setLinks(data);
       } catch (err) {
         console.error(err);
@@ -78,6 +80,7 @@ export default function Navigation() {
                     id: link.id,
                     href: link.href,
                     img: link.menu_img,
+                   
                   })
                 }
               >

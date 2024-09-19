@@ -346,7 +346,7 @@ export default function Component() {
   return (
     <Container className="min-h-screen py-32">
       <div className="flex justify-between items-center">
-        <div className="flex items-center lg:hidden mr-10">
+        <div className="flex items-center lg:hidden ">
           <button onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}>
             <span
               className={`flex items-center gap-2 text-md ${jost.className}`}
@@ -355,7 +355,7 @@ export default function Component() {
             </span>
           </button>
         </div>
-        <div className="flex flex-col md:flex-row items-center lg:ml-[20rem] mr-auto">
+        <div className="flex flex-col md:flex-row items-center lg:ml-[20rem] ">
           <select
             value={sortOption}
             onChange={handleSortChange}
@@ -377,6 +377,7 @@ export default function Component() {
 
       <div className="flex flex-col lg:flex-row gap-4 mb-32">
         <div
+        style={{ boxShadow: isMobileFilterOpen? "-115px 0 10px 0 rgba(255, 255, 255)" :"none" }}
           className={`w-full transition-all duration-300 ease-in-out ${
             isMobileFilterOpen
               ? "z-[90] lg:z-auto h-screen overflow-y-auto lg:overflow-y-auto translate-x-[0] lg:translate-x-0"
@@ -591,7 +592,9 @@ export default function Component() {
                       onChange={() => handleFilterChange("priceRange", range)}
                       className="mr-2"
                     />
-                    £{range.split("-")[0]} - £{range.split("-")[1]} (
+                    {currencySymbol}
+                    {(range.split("-")[0] * rate).toFixed(2)} - {currencySymbol}
+                    {(range.split("-")[1] * rate).toFixed(2)} (
                     {getFilteredCount("priceRange", range)})
                   </label>
                 ))}
@@ -622,7 +625,7 @@ export default function Component() {
         </div>
 
         <div className="w-full lg:w-3/4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
             {loading
               ? Array(PRODUCTS_PER_PAGE)
                   .fill("")
@@ -669,7 +672,7 @@ export default function Component() {
                           alt={product.name}
                           width={200}
                           height={200}
-                          className="w-full h-64 object-cover mb-4"
+                          className="w-full h-64 object-contain mb-4"
                         />
                       </Link>
                       <Link href={`/product/${product.id}`}>

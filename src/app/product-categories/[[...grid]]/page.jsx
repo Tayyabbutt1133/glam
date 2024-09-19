@@ -14,6 +14,7 @@ import { RxCross2 } from "react-icons/rx";
 import { useCartStore } from "states/Cardstore";
 import { usePopupStore } from "states/use-popup-store";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 
 const API_BASE_URL = "https://glam.clickable.site/wp-json/wc/v3";
 const CONSUMER_KEY = "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d";
@@ -37,6 +38,9 @@ export default function Component() {
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
   const addToCart = useCartStore((state) => state.addToCart);
 
+  // get the third param
+  const params = useParams();
+  const subsubcategories = params.grid[2]
   const [filters, setFilters] = useState({
     brands: [],
     categories: [],
@@ -46,16 +50,19 @@ export default function Component() {
   const fetchProducts = async (page = 1) => {
     setLoading(true);
     try {
-      const params = {
-        per_page: 100,
-        page,
-        consumer_key: CONSUMER_KEY,
-        consumer_secret: CONSUMER_SECRET,
-      };
+      const productsResponse = await axios.get(`/api/getProductsBySlug/${subsubcategories}`);
+      console.log({productsResponse})
+      // const params = {
+      //   per_page: 100,
+      //   page,
+      //   consumer_key: CONSUMER_KEY,
+      //   consumer_secret: CONSUMER_SECRET,
+      // };
 
-      const productsResponse = await axios.get(`${API_BASE_URL}/products`, {
-        params,
-      });
+      // const productsResponse = await axios.get(`${API_BASE_URL}/products`, {
+      //   params,
+      // });
+      // console.log({products:productsResponse.data})
       const fetchedProducts = productsResponse.data
         .map((product) => ({
           ...product,
@@ -346,7 +353,7 @@ export default function Component() {
   return (
     <Container className="min-h-screen py-32">
       <div className="flex justify-between items-center">
-        <div className="flex items-center lg:hidden mr-10">
+        <div className="flex items-center justify-between lg:hidden ">
           <button onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}>
             <span
               className={`flex items-center gap-2 text-md ${jost.className}`}
@@ -355,7 +362,7 @@ export default function Component() {
             </span>
           </button>
         </div>
-        <div className="flex flex-col md:flex-row items-center lg:ml-[20rem] mr-auto">
+        <div className="flex flex-col md:flex-row items-center lg:ml-[20rem] ">
           <select
             value={sortOption}
             onChange={handleSortChange}
@@ -377,6 +384,7 @@ export default function Component() {
 
       <div className="flex flex-col lg:flex-row gap-4 mb-32">
         <div
+        style={{ boxShadow: isMobileFilterOpen? "-115px 0 10px 0 rgba(255, 255, 255)" :"none" }}
           className={`w-full transition-all duration-300 ease-in-out ${
             isMobileFilterOpen
               ? "z-[90] lg:z-auto h-screen overflow-y-auto lg:overflow-y-auto translate-x-[0] lg:translate-x-0"
@@ -591,7 +599,9 @@ export default function Component() {
                       onChange={() => handleFilterChange("priceRange", range)}
                       className="mr-2"
                     />
-                    £{range.split("-")[0]} - £{range.split("-")[1]} (
+                    {currencySymbol}
+                    {range.split("-")[0]} - {currencySymbol}
+                    {range.split("-")[1]} (
                     {getFilteredCount("priceRange", range)})
                   </label>
                 ))}
@@ -622,7 +632,7 @@ export default function Component() {
         </div>
 
         <div className="w-full lg:w-3/4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
+          <div className="grid grid-cols-2  lg:grid-cols-3 gap-4 mt-8">
             {loading
               ? Array(PRODUCTS_PER_PAGE)
                   .fill("")
@@ -669,7 +679,7 @@ export default function Component() {
                           alt={product.name}
                           width={200}
                           height={200}
-                          className="w-full h-64 object-cover mb-4"
+                          className="w-full h-64 object-contain  mb-4"
                         />
                       </Link>
                       <Link href={`/product/${product.id}`}>
