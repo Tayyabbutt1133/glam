@@ -8,7 +8,7 @@ export default function Trustpilot() {
       <>
           <Container>
               <div className='mb-12'>
-                  <Image src={trust_reviews}/>
+                  <Image src={trust_reviews} alt='trust-pilot'/>
               </div>
 
       </Container>

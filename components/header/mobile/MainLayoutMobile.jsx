@@ -5,8 +5,9 @@ import React, { useState } from "react";
 import MobileHeader from "./MobileHeader";
 
 import MobileSidebar2 from "./MObileSidebar2";
-import { jost } from "@/components/ui/fonts";
+
 import { Minus } from "lucide-react";
+import { jost } from "../../ui/fonts";
 export default function MainLayoutMobile() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 

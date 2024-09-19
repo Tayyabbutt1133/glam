@@ -1,7 +1,7 @@
 "use client"
-import { lexendDeca } from "@/components/ui/fonts";
-import Text from "@/components/ui/Text";
-import { usePopupStore } from "states/use-popup-store";
+import { lexendDeca } from "/components/ui/fonts";
+import Text from "/components/ui/Text";
+import { usePopupStore } from "/states/use-popup-store";
 
 export default function Price({price, regularPrice, salePrice,isOnsale}) {
   //`Get the rates from the popup store

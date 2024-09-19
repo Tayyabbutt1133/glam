@@ -11,7 +11,6 @@ import maxfactor from "/public/lifecycle/trending brands/maxfactor.png"
 import maxfactorLogo from "/public/lifecycle/trending brands/maxfactor.svg"
 import rimmle from "/public/lifecycle/trending brands/rimmel.png"
 import rimmleLogo from "/public/lifecycle/trending brands/rimmel.svg"
-import { useCartStore } from 'states/Cardstore'
 
 const rimmelBrandLanding = "rimmel"
 const rimmelBrandListing = "79"

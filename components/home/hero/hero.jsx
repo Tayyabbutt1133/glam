@@ -14,12 +14,7 @@ import Banner2 from "/public/hero-banners/Banner2.png";
 
 import useMediaQuery from "../../../hooks/useMediaQuery";
 
-const images = [
-  { src: Banner1 },
-  { src: Banner1 },
-  { src: Banner2 },
-  { src: Banner2 },
-];
+
 
 const bannerData = [
   {

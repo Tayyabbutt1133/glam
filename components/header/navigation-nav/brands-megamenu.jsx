@@ -1,11 +1,11 @@
 import Link from "next/link";
 import { useRef, useState } from "react";
 
-import Container from "@/components/container";
-import { brands } from "@/components/header/navigation-nav/data/brands";
-import { groupBrandsByAlphabet } from "@/components/header/navigation-nav/methods/groupBrands";
-import { lexendDeca } from "@/components/ui/fonts";
-import Text from "@/components/ui/Text";
+import Container from "../../container";
+import { brands } from "./data/brands";
+import { groupBrandsByAlphabet } from "./methods/groupBrands";
+import { lexendDeca } from "../../ui/fonts"; 
+import Text from "../../ui/Text";
 
 let alphabet = "abcdefghijklmnopqrstuvwxyz".toUpperCase().split("");
 alphabet = ["0-9", ...alphabet];

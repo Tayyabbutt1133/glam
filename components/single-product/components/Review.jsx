@@ -3,7 +3,7 @@ import { useState } from "react";
 // import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { FaStar, FaThumbsUp, FaThumbsDown } from "react-icons/fa";
-import { ArrowBigLeft, ArrowBigRight, ArrowBigRightDash } from "lucide-react";
+import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
 
 const reviewsdemo = [
   {

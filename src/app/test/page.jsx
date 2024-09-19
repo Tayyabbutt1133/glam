@@ -1,4 +1,4 @@
-import MainLayoutMobile from '@/components/header/mobile/MainLayoutMobile'
+import MainLayoutMobile from '/components/header/mobile/MainLayoutMobile'
 import React from 'react'
 
 function page() {

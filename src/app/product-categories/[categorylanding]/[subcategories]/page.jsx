@@ -8,13 +8,13 @@ import { FaStar, FaRegStar, FaHeart } from "react-icons/fa";
 import { CiHeart } from "react-icons/ci";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
-import { lexendDeca, jost } from "@/components/ui/fonts";
-import Container from "@/components/container";
+import { lexendDeca, jost } from "/components/ui/fonts";
+import Container from "/components/container";
 import filter from "../../../../../public/filter.svg";
 import { IoFilterOutline } from "react-icons/io5";
-import { usePopupStore } from "states/use-popup-store";
+import { usePopupStore } from "/states/use-popup-store";
 import Link from "next/link";
-import { useCartStore } from "states/Cardstore";
+import { useCartStore } from "/states/Cardstore";
 
 const API_BASE_URL = "https://glam.clickable.site/wp-json/wc/v3";
 const CONSUMER_KEY = "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d";

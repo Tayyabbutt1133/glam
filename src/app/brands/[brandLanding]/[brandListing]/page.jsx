@@ -2,28 +2,27 @@
 
 import React, { useEffect, useState, useMemo } from "react";
 import axios from "axios";
-import Container from "@/components/container";
+import Container from "/components/container";
 import { FaStar, FaRegStar, FaHeart } from "react-icons/fa";
 import { CiHeart } from "react-icons/ci";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { IoFilterOutline } from "react-icons/io5";
 import Image from "next/image";
-import { lexendDeca, jost } from "@/components/ui/fonts";
+import { lexendDeca, jost } from "/components/ui/fonts";
 import filter from "../../../../../public/filter.svg";
 import { RxCross2 } from "react-icons/rx";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useCartStore } from "states/Cardstore";
-import { usePopupStore } from "states/use-popup-store";
+import { useCartStore } from "/states/Cardstore";
+import { usePopupStore } from "/states/use-popup-store";
 
-const API_BASE_URL = "https://glam.clickable.site/wp-json/wc/v3";
+const API_BASE_URL = "https://glam.clickable.site/wp-json/wc/v3/products";
 const CONSUMER_KEY = "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d";
 const CONSUMER_SECRET = "cs_3f70ee2600a3ac17a5692d7ac9c358d47275d6fc";
 const PRODUCTS_PER_PAGE = 12;
 
 export default function BrandListing() {
-  const params = useParams();
-  const brandId = params["brand-listing"];
+  const {brandsLanding} = useParams();
   const { rate, currencySymbol } = usePopupStore();
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -52,7 +51,7 @@ export default function BrandListing() {
     try {
       const params = {
         attribute: "pa_brand",
-        attribute_term: brandId,
+        attribute_term: brandsLanding,
         per_page: 100,
         page,
         consumer_key: CONSUMER_KEY,
@@ -136,10 +135,10 @@ export default function BrandListing() {
   };
 
   useEffect(() => {
-    if (brandId) {
+    if (brandsLanding) {
       fetchProducts(1);
     }
-  }, [brandId]);
+  }, [brandsLanding]);
 
   const handlePageChange = (page) => {
     if (page >= 1 && page <= totalPages) {

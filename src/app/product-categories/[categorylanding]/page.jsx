@@ -35,6 +35,11 @@ const Page = () => {
       description: "Receive a free gift when you spend £30 on NARS.",
       src: Olaplex,
     },
+    {
+      title: "NARS FREE GIFT COLLECTION",
+      description: "Receive a free gift when you spend £30 on NARS.",
+      src: Olaplex,
+    },
   ];
 
   return (

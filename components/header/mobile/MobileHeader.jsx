@@ -8,7 +8,6 @@ import { CartIcon } from "../../../public/icons/cart";
 import { UserIcon } from "../../../public/icons/user";
 import { MenuIcon, SearchIcon } from "lucide-react";
 import glam_logo from "../../../public/logo.svg";
-import { jost } from "../../ui/fonts";
 import SearchBarWithDropdown from "../middle-bar-nav/searchbar";
 import Cartdropdown from "../../Cartdropdown";
 

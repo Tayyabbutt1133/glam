@@ -3,16 +3,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-import Container from "@/components/container";
+import Container from "/components/container";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { jost } from "@/components/ui/fonts";
+import { jost } from "/components/ui/fonts";
 import NextArrowIcon from "/public/hero-banners/next-arrow";
 import PrevArrowIcon from "/public/hero-banners/prev-arrow";
-import Product from "@/components/product";
+import Product from "/components/product";
 
 const arrowStyles = {
   width: "40px",
@@ -60,9 +60,6 @@ const decodeHtmlEntities = (text) => {
 
 const Staffpicks = () => {
 
-  
-
-
   const [favorites, setFavorites] = useState({});
   const [staffPicks, setStaffPicks] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -73,7 +70,6 @@ const Staffpicks = () => {
       try {
         setLoading(true);
         const response = await axios.get(`/api/staffpicks/${categoryId}`);
-        console.log(response.data)
         setStaffPicks(response.data);
       } catch (error) {
         console.error("Error fetching staff picks:", error);

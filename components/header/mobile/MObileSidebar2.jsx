@@ -6,8 +6,7 @@ import Image from "next/image";
 import { X, ChevronRight, ChevronLeft, Home } from "lucide-react";
 import { jost, lexendDeca } from "../../ui/fonts";
 import { usePopupStore } from "../../../states/use-popup-store";
-import ArrowDown from "../../../public/icons/arrow-down";
-
+import ArrowDown from "/public/icons/arrow-down";
 import Text from "../../ui/Text";
 import Container from "../../container";
 

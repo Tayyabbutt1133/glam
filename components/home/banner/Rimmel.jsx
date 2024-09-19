@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import rimmle_banner from "/public/home_banners/olaplex_two.svg";
 import rimmle_logo from "/public/home_banners/Max-Factor-Logo-two.svg";
-import MobRimmel from "/public/home_banners/mob-rimmel.svg";
+
 
 import { jost } from "../../ui/fonts";
 import Button from "../../ui/button";

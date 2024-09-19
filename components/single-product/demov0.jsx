@@ -1,10 +1,10 @@
 import Image from 'next/image'
 import { useState } from 'react'
-import { Star, Heart, ChevronDown, ThumbsUp, ThumbsDown, Flag } from 'lucide-react'
-import { Button } from "@/components/ui/button"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Star, ThumbsUp, ThumbsDown, Flag } from 'lucide-react'
+import { Button } from "/components/ui/button"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "/components/ui/select"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "/components/ui/accordion"
+
 
 const ProductImages = ({ images }) => {
   const [activeImage, setActiveImage] = useState(images[0])

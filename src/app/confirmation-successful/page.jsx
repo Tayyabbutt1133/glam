@@ -18,7 +18,7 @@ import paypal from "../../../public/PayPal.svg";
 import kl from "../../../public/Klarna.svg";
 import { ClipboardCheckIcon, ClipboardIcon } from "lucide-react";
 
-import { usePopupStore } from "states/use-popup-store";
+import { usePopupStore } from "/states/use-popup-store";
 
 const API_URL = "https://glam.clickable.site/wp-json/wc/v3/products";
 const CK = "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d";

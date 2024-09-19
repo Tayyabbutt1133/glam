@@ -4,12 +4,10 @@ import React from "react";
 import Image from "next/image";
 import max_cosmetics from "/public/home_banners/olaplex_one.svg";
 import max_logo from "/public/home_banners/Max-Factor-Logo.svg";
-import MobMax from "/public/home_banners/mob-maxfact.svg";
-import MaxFactOverlay from "/public/home_banners/olaplex1.png";
 import Link from "next/link";
 import Text from "../../ui/Text";
 import Button from "../../ui/button";
-import { jost } from "@/components/ui/fonts";
+import { jost } from "../../ui/fonts";
 
 function MaxFactorBanner() {
   return (
