@@ -65,16 +65,19 @@ export default function BrandSlide() {
   }
 
   return (
-    <div className="my-8">
-      <Slider {...settings}>
+    <div className="my-8 px-4">
+      {/* <h2 className="text-2xl font-bold mb-6 text-center">SHOP BY BRAND</h2> */}
+      <Slider {...settings} className="brand-slider">
         {brands.map((brand) => (
-          <div key={brand.id} className="mx-8">
+          <div key={brand.id} className="px-4">
             <Link href={`/brands/${brand.id}`}>
-              <Image
-                src={brand.image}
-                alt={brand.name}
-                className="h-8 md:h-10 w-auto hover:brightness-75 transition duration-300 cursor-pointer"
-              />
+              <div className="flex items-center justify-center h-20">
+                <Image
+                  src={brand.image}
+                  alt={brand.name}
+                  className="max-h-full w-auto object-contain hover:brightness-75 transition duration-300"
+                />
+              </div>
             </Link>
           </div>
         ))}
