@@ -1,4 +1,5 @@
 "use client";
+
 import React from "react";
 import Image from "next/image";
 import max_cosmetics from "/public/home_banners/olaplex_one.svg";
@@ -13,13 +14,12 @@ import { jost } from "@/components/ui/fonts";
 function MaxFactorBanner() {
   return (
     <div className="relative w-full max-h-[230px] sm:max-h-[280px] mt-10 lg:hidden">
-      {/* Background Image */}
       {/* <Image
         src={MobMax}
         alt="Background Image"
         layout="fill"
         objectFit="cover"
-        objectPosition="right" // Aligns the image to the right edge
+        objectPosition="right"
         className="absolute inset-0"
       /> */}
       
@@ -56,9 +56,12 @@ function MaxFactorBanner() {
 }
 
 export default function MaxFact() {
+  
+  const maxBrandLanding = "max-factor";
+  const maxBrandListing = "74";
+
   return (
     <>
-      {/* Mobile */}
       <div className="flex w-full justify-center lg:hidden">
         <MaxFactorBanner />
       </div>
@@ -68,7 +71,6 @@ export default function MaxFact() {
           <Image src={max_cosmetics} alt="max cosmetics" objectFit="contain" />
         </div>
 
-        {/* Right section */}
         <div className="flex flex-col justify-center items-center bg-[#FFEEF0] w-[35%] xl:h-[600px] 2xl:h-[693px] p-8">
           <Image
             width={358}
@@ -95,7 +97,9 @@ export default function MaxFact() {
             </Text>
           </div>
 
-          <Button className="mt-10">Shop Now</Button>
+          <Link  href={`/brands/${maxBrandLanding}/${maxBrandListing}`}>
+            <Button className="mt-10">Shop Now</Button>
+          </Link>
         </div>
       </div>
     </>

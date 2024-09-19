@@ -6,7 +6,7 @@ import Container from "../../../components/container";
 import { FaStar, FaRegStar, FaHeart } from "react-icons/fa";
 import { CiHeart } from "react-icons/ci";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import { IoCloseCircleOutline, IoFilterOutline } from "react-icons/io5";
+import { IoFilterOutline } from "react-icons/io5";
 import Image from "next/image";
 import { lexendDeca, jost } from "../../../components/ui/fonts";
 import filter from "../../../public/filter.svg";
@@ -14,14 +14,14 @@ import { RxCross2 } from "react-icons/rx";
 import { useCartStore } from "../../../states/Cardstore";
 import { usePopupStore } from "../../../states/use-popup-store";
 import Link from "next/link";
-// Base URl + woCommerce Secure Key
+
 const API_BASE_URL = "https://glam.clickable.site/wp-json/wc/v3";
 const CONSUMER_KEY = "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d";
 const CONSUMER_SECRET = "cs_3f70ee2600a3ac17a5692d7ac9c358d47275d6fc";
 const PRODUCTS_PER_PAGE = 12;
 
 export default function Component() {
-  const {rate,currencySymbol} = usePopupStore();
+  const { rate, currencySymbol } = usePopupStore();
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -34,14 +34,8 @@ export default function Component() {
   const [isCategoryFilterOpen, setIsCategoryFilterOpen] = useState(true);
   const [isPriceRangeFilterOpen, setIsPriceRangeFilterOpen] = useState(true);
   const [sortOption, setSortOption] = useState("popularity");
-
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
-
-
-
-
   const addToCart = useCartStore((state) => state.addToCart);
-
 
   const [filters, setFilters] = useState({
     brands: [],
@@ -88,35 +82,43 @@ export default function Component() {
 
   const updateFilters = (fetchedProducts) => {
     const brandMap = new Map();
+    const categoryMap = new Map();
+    const prices = [];
+
     fetchedProducts.forEach((product) => {
       const brandAttr = product.attributes.find(
         (attr) => attr.name === "Brand"
       );
       if (brandAttr) {
         const brandName = brandAttr.options[0].replace(/&amp;/g, "&");
-        brandMap.set(brandName, (brandMap.get(brandName) || 0) + 1);
+        if (!brandMap.has(brandName)) {
+          brandMap.set(brandName, { count: 1, categories: new Set() });
+        } else {
+          brandMap.get(brandName).count++;
+        }
+        product.categories.forEach((category) => {
+          brandMap.get(brandName).categories.add(category.id);
+        });
       }
-    });
-    setBrands(Array.from(brandMap, ([name, count]) => ({ name, count })));
 
-    const categoryMap = new Map();
-    fetchedProducts.forEach((product) => {
       product.categories.forEach((category) => {
         const categoryName = category.name.replace(/&amp;/g, "&");
-        if (categoryMap.has(category.id)) {
-          categoryMap.get(category.id).count++;
+        if (!categoryMap.has(category.id)) {
+          categoryMap.set(category.id, { ...category, name: categoryName, count: 1 });
         } else {
-          categoryMap.set(category.id, {
-            ...category,
-            name: categoryName,
-            count: 1,
-          });
+          categoryMap.get(category.id).count++;
         }
       });
+
+      const price = parseFloat(product.price);
+      if (!isNaN(price)) {
+        prices.push(price);
+      }
     });
+
+    setBrands(Array.from(brandMap, ([name, data]) => ({ name, count: data.count, categories: Array.from(data.categories) })));
     setCategories(Array.from(categoryMap.values()));
 
-    const prices = fetchedProducts.map((product) => parseFloat(product.price));
     const minPrice = Math.floor(Math.min(...prices));
     const maxPrice = Math.ceil(Math.max(...prices));
     const range = maxPrice - minPrice;
@@ -151,6 +153,12 @@ export default function Component() {
       } else {
         updatedFilters[filterType] = [...updatedFilters[filterType], value];
       }
+
+      // Clear category filters when changing brands
+      if (filterType === "brands") {
+        updatedFilters.categories = [];
+      }
+
       return updatedFilters;
     });
     setCurrentPage(1);
@@ -184,14 +192,14 @@ export default function Component() {
     }
   };
 
-  // this is use when you have to show products even if there price is zero
   const filteredAndSortedProducts = useMemo(() => {
     const filtered = products.filter((product) => {
       const brandMatch =
         filters.brands.length === 0 ||
         product.attributes.some(
           (attr) =>
-            attr.name === "Brand" && filters.brands.includes(attr.options[0])
+            attr.name === "Brand" &&
+            filters.brands.includes(attr.options[0])
         );
       const categoryMatch =
         filters.categories.length === 0 ||
@@ -210,31 +218,6 @@ export default function Component() {
     return sortProducts(filtered);
   }, [products, filters, sortOption]);
 
-  // this is use when you do not have to show products if there price is zero
-  // const filteredAndSortedProducts = useMemo(() => {
-  //   const filtered = products.filter(product => {
-  //     const brandMatch = filters.brands.length === 0 ||
-  //       product.attributes.some(attr =>
-  //         attr.name === "Brand" && filters.brands.includes(attr.options[0])
-  //       )
-  //     const categoryMatch = filters.categories.length === 0 ||
-  //       product.categories.some(cat => filters.categories.includes(cat.id.toString()))
-  //     const priceMatch = filters.priceRange.length === 0 ||
-  //       filters.priceRange.some(range => {
-  //         const [min, max] = range.split('-').map(Number)
-  //         const price = parseFloat(product.price)
-  //         return price >= min && price <= max
-  //       })
-
-  //     // New condition: Exclude products with a price of 0
-  //     const priceIsNotZero = parseFloat(product.price) !== 0
-
-  //     return brandMatch && categoryMatch && priceMatch && priceIsNotZero
-  //   })
-
-  //   return sortProducts(filtered)
-  // }, [products, filters, sortOption])
-
   const paginatedProducts = useMemo(() => {
     const startIndex = (currentPage - 1) * PRODUCTS_PER_PAGE;
     return filteredAndSortedProducts.slice(
@@ -244,52 +227,42 @@ export default function Component() {
   }, [filteredAndSortedProducts, currentPage]);
 
   const getFilteredCount = (filterType, value) => {
-    return products.filter((product) => {
-      const brandMatch =
-        filters.brands.length === 0 ||
-        product.attributes.some(
-          (attr) =>
-            attr.name === "Brand" &&
-            (filters.brands.includes(attr.options[0]) ||
-              attr.options[0] === value)
-        );
-      const categoryMatch =
-        filters.categories.length === 0 ||
-        product.categories.some(
-          (cat) =>
-            filters.categories.includes(cat.id.toString()) ||
-            cat.id.toString() === value
-        );
-      const priceMatch =
-        filters.priceRange.length === 0 ||
-        filters.priceRange.some((range) => {
-          const [min, max] = range.split("-").map(Number);
-          const price = parseFloat(product.price);
-          return (price >= min && price <= max) || range === value;
-        });
-
+    return filteredAndSortedProducts.filter((product) => {
       if (filterType === "brands") {
-        return (
-          categoryMatch &&
-          priceMatch &&
-          product.attributes.some(
-            (attr) => attr.name === "Brand" && attr.options.includes(value)
-          )
+        const brandAttr = product.attributes.find(
+          (attr) => attr.name === "Brand"
         );
+        return brandAttr && brandAttr.options[0] === value;
       } else if (filterType === "categories") {
-        return (
-          brandMatch &&
-          priceMatch &&
-          product.categories.some((cat) => cat.id.toString() === value)
-        );
+        return product.categories.some((cat) => cat.id.toString() === value);
       } else if (filterType === "priceRange") {
         const [min, max] = value.split("-").map(Number);
         const price = parseFloat(product.price);
-        return brandMatch && categoryMatch && price >= min && price <= max;
+        return price >= min && price <= max;
       }
       return false;
     }).length;
   };
+
+  const getAvailableCategories = useMemo(() => {
+    if (filters.brands.length === 0) {
+      return categories;
+    }
+
+    const availableCategories = new Set();
+    filters.brands.forEach((brand) => {
+      const brandData = brands.find((b) => b.name === brand);
+      if (brandData) {
+        brandData.categories.forEach((categoryId) => {
+          availableCategories.add(categoryId.toString());
+        });
+      }
+    });
+
+    return categories.filter((category) =>
+      availableCategories.has(category.id.toString())
+    );
+  }, [filters.brands, brands, categories]);
 
   const clearAllFilters = () => {
     setFilters({
@@ -370,26 +343,23 @@ export default function Component() {
     </div>
   );
 
-
   return (
     <Container className="min-h-screen py-32">
-      {/* <div className=""> */}
       <div className="flex justify-between items-center">
-        <div className="flex items-center  lg:hidden mr-10">
+        <div className="flex items-center lg:hidden mr-10">
           <button onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}>
             <span
-              className={` flex items-center gap-2 text-md ${jost.className}`}
+              className={`flex items-center gap-2 text-md ${jost.className}`}
             >
               Filters <IoFilterOutline className="w-6 h-6" />
             </span>
           </button>
         </div>
-
-        <div className=" flex flex-col md:flex-row items-center lg:ml-[20rem] mr-auto">
+        <div className="flex flex-col md:flex-row items-center lg:ml-[20rem] mr-auto">
           <select
             value={sortOption}
             onChange={handleSortChange}
-            className={`px-4 py-2 border border-gray-300 ${lexendDeca.className} rounded-md font-jost text-black`} // Apply font classes to the select itself
+            className={`px-4 py-2 border border-gray-300 ${lexendDeca.className} rounded-md font-jost text-black`}
           >
             <option value="popularity" className="text-black">
               Sort by: Popularity
@@ -405,18 +375,16 @@ export default function Component() {
         <span className="hidden lg:block">{renderPagination()}</span>
       </div>
 
-    
       <div className="flex flex-col lg:flex-row gap-4 mb-32">
-          {/* side filter */}
-          <div
-          className={`w-full  transition-all duration-300 ease-in-out ${
+        <div
+          className={`w-full transition-all duration-300 ease-in-out ${
             isMobileFilterOpen
-              ? "z-[90] lg:z-auto h-screen overflow-y-auto lg:overflow-y-auto  translate-x-[0] lg:translate-x-0"
-              : " translate-x-[300%] lg:translate-x-0"
-          }   lg:w-1/4 p-4   fixed lg:static md:block top-0 bg-white`}
+              ? "z-[90] lg:z-auto h-screen overflow-y-auto lg:overflow-y-auto translate-x-[0] lg:translate-x-0"
+              : "translate-x-[300%] lg:translate-x-0"
+          } lg:w-1/4 p-4 fixed lg:static md:block top-0 bg-white`}
         >
           <div className="flex justify-between items-center mb-4">
-          <h3
+            <h3
               className={`text-lg font-normal flex w-full items-center gap-4 ${lexendDeca.className}`}
             >
               <Image
@@ -426,23 +394,24 @@ export default function Component() {
                 alt="Filter icon"
                 onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
               />
-              <span className=" hidden lg:block">Filters</span>
-              <p className=" lg:hidden mx-auto block text-center flex-grow">
+              <span className="hidden lg:block">Filters</span>
+              <p className="lg:hidden mx-auto block text-center flex-grow">
                 Filter By
               </p>
             </h3>
             {(filters.brands.length > 0 ||
               filters.categories.length > 0 ||
               filters.priceRange.length > 0) && (
-                <button
+              <button
                 onClick={clearAllFilters}
-                className={` hidden min-w-fit lg:block text-sm text-[#8B929D] pl-4 underline ${lexendDeca.className}`}
+                className={`hidden lg:block text-sm text-[#8B929D] pl-4 underline ${lexendDeca.className}`}
               >
                 Clear All
               </button>
             )}
           </div>
 
+          {/* Filter chips */}
           {(filters.brands.length > 0 ||
             filters.categories.length > 0 ||
             filters.priceRange.length > 0) && (
@@ -467,12 +436,6 @@ export default function Component() {
                 </span>
               ))}
 
-
-
-
-
-
-
               {filters.categories.map((categoryId) => {
                 const category = categories.find(
                   (c) => c.id.toString() === categoryId
@@ -482,49 +445,35 @@ export default function Component() {
                     key={categoryId}
                     className={`inline-flex items-center bg-[#F7EBE0] rounded-lg px-3 py-1 text-sm font-bold text-black mr-2 mb-2 ${lexendDeca.className}`}
                   >
-                     <span
-                    className={`${lexendDeca.className} font-normal mr-1 text-black`}
-                  >
-                    Category:{" "}
-                  </span>{" "}
+                    <span
+                      className={`${lexendDeca.className} font-normal mr-1 text-black`}
+                    >
+                      Category:{" "}
+                    </span>{" "}
                     {category.name}
                     <button
-                    onClick={() => removeFilter("Category", categoryId)}
-                    className="ml-2 text-red-600 hover:text-red-700"
-                  >
-                    <RxCross2 />
-                  </button>
+                      onClick={() => removeFilter("categories", categoryId)}
+                      className="ml-2 text-red-600 hover:text-red-700"
+                    >
+                      <RxCross2 />
+                    </button>
                   </span>
                 ) : null;
               })}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-              
               {filters.priceRange.map((range) => (
                 <span
                   key={range}
                   className={`inline-flex items-center bg-[#F7EBE0] rounded-lg px-3 py-1 text-sm font-bold text-black mr-2 mb-2 ${lexendDeca.className}`}
                 >
-                      <span
+                  <span
                     className={`${lexendDeca.className} font-normal mr-1 text-black`}
                   >
                     Price:{" "}
                   </span>{" "}
                   £{range}
                   <button
-                    onClick={() => removeFilter("Price", range)}
+                    onClick={() => removeFilter("priceRange", range)}
                     className="ml-2 text-red-600 hover:text-red-700"
                   >
                     <RxCross2 />
@@ -535,6 +484,8 @@ export default function Component() {
           )}
 
           <hr className="bg-[#8B929D73] h-[1px]" />
+
+          {/* Brand filter */}
           <div className="mb-6 mt-4">
             <h4
               className={`font-bold text-lg mb-2 flex justify-between items-center cursor-pointer ${jost.className}`}
@@ -572,6 +523,7 @@ export default function Component() {
             )}
           </div>
 
+          {/* Category filter */}
           <div className="mb-6">
             <h4
               className={`font-bold ${jost.className} text-lg mb-2 flex justify-between items-center cursor-pointer`}
@@ -588,7 +540,7 @@ export default function Component() {
               <div
                 className={`pl-2 ${lexendDeca.className} font-normal max-h-60 overflow-y-auto`}
               >
-                {categories
+                {getAvailableCategories
                   .sort((a, b) => a.name.localeCompare(b.name))
                   .map((category) => (
                     <label key={category.id} className="block mb-2">
@@ -607,13 +559,14 @@ export default function Component() {
                         }
                         className="mr-2"
                       />
-                      {category.name} ({category.count})
+                      {category.name} ({getFilteredCount("categories", category.id.toString())})
                     </label>
                   ))}
               </div>
             )}
           </div>
 
+          {/* Price range filter */}
           <div className="mb-6">
             <h4
               className={`font-bold ${jost.className} text-lg mb-2 flex justify-between items-center cursor-pointer`}
@@ -645,10 +598,11 @@ export default function Component() {
               </div>
             )}
           </div>
-          <section className="flex  justify-around  mt-auto gap-4 lg:hidden">
+
+          <section className="flex justify-around mt-auto gap-4 lg:hidden">
             <button
               onClick={clearAllFilters}
-              className={`  text-sm text-[#8B929D] pl-4 underline ${lexendDeca.className}`}
+              className={`text-sm text-[#8B929D] pl-4 underline ${lexendDeca.className}`}
             >
               Clear All
             </button>
@@ -659,7 +613,7 @@ export default function Component() {
                 filters.categories.length === 0 &&
                 filters.priceRange.length === 0
               }
-              className=" basis-1/2 bg-black text-white w-full py-2 rounded-md"
+              className="basis-1/2 bg-black text-white w-full py-2 rounded-md"
               onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
             >
               Apply Filter
@@ -667,10 +621,6 @@ export default function Component() {
           </section>
         </div>
 
-        
-
-        
-        {/* product grid listing */}
         <div className="w-full lg:w-3/4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
             {loading
@@ -688,8 +638,9 @@ export default function Component() {
                   ))
               : paginatedProducts.map((product) => {
                   const brand =
-                    product.attributes.find((attr) => attr.name === "Brand")
-                      ?.options[0] || "Unknown Brand";
+                    product.attributes.find(
+                      (attr) => attr.name === "Brand"
+                    )?.options[0] || "Unknown Brand";
                   return (
                     <div
                       key={product.id}
@@ -713,17 +664,21 @@ export default function Component() {
                         </button>
                       </div>
                       <Link href={`/product/${product.id}`}>
-                      <img
-                        src={product.images[0]?.src}
-                        alt={product.name}
-                        className="w-full h-64 object-cover mb-4"
-                      />
-                    </Link>
-                    <Link href={`/product/${product.id}`}>
-                      <h1 className={`text-sm ${jost.className} cursor-pointer font-bold mb-2`}>
-                        {brand}
-                      </h1>
-                    </Link>
+                        <Image
+                          src={product.images[0]?.src}
+                          alt={product.name}
+                          width={200}
+                          height={200}
+                          className="w-full h-64 object-cover mb-4"
+                        />
+                      </Link>
+                      <Link href={`/product/${product.id}`}>
+                        <h1
+                          className={`text-sm ${jost.className} cursor-pointer font-bold mb-2`}
+                        >
+                          {brand}
+                        </h1>
+                      </Link>
                       <h3
                         className={`text-sm ${lexendDeca.className} font-normal mb-2 h-[60px] overflow-hidden`}
                       >
@@ -749,9 +704,11 @@ export default function Component() {
                         {product.sale_price ? (
                           <>
                             <span className="line-through text-gray-600 mr-2">
-                              {currencySymbol}{(product.regular_price * rate).toFixed(2)}
+                              {currencySymbol}
+                              {(product.regular_price * rate).toFixed(2)}
                             </span>
-                            {currencySymbol}{(product.sale_price * rate).toFixed(2)}
+                            {currencySymbol}
+                            {(product.sale_price * rate).toFixed(2)}
                           </>
                         ) : (
                           `${currencySymbol}${(product.price * rate).toFixed(2)}`
@@ -759,7 +716,8 @@ export default function Component() {
                       </p>
                       <button
                         className={`w-full bg-black text-white py-2 rounded-md hover:bg-gray-800 transition ${jost.className}`}
-                    onClick={()=>addToCart(product)}  >
+                        onClick={() => addToCart(product)}
+                      >
                         ADD TO BAG
                       </button>
                     </div>
@@ -767,16 +725,11 @@ export default function Component() {
                 })}
           </div>
 
-          {/* pagination rendering */}
-          <div className="mt-8 flex justify-end">{renderPagination()}</div>
+          {paginatedProducts.length > 0 && (
+            <div className="mt-8 flex justify-end">{renderPagination()}</div>
+          )}
         </div>
-
-
-
-
-
       </div>
-      {/* </div> */}
     </Container>
   );
 }

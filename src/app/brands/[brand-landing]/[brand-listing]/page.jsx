@@ -9,18 +9,21 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { IoFilterOutline } from "react-icons/io5";
 import Image from "next/image";
 import { lexendDeca, jost } from "@/components/ui/fonts";
-import filter from "../../../../public/filter.svg";
+import filter from "../../../../../public/filter.svg";
 import { RxCross2 } from "react-icons/rx";
+import Link from "next/link";
+import { useParams } from "next/navigation";
 import { useCartStore } from "states/Cardstore";
 import { usePopupStore } from "states/use-popup-store";
-import Link from "next/link";
 
 const API_BASE_URL = "https://glam.clickable.site/wp-json/wc/v3";
 const CONSUMER_KEY = "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d";
 const CONSUMER_SECRET = "cs_3f70ee2600a3ac17a5692d7ac9c358d47275d6fc";
 const PRODUCTS_PER_PAGE = 12;
 
-export default function Component() {
+export default function BrandListing() {
+  const params = useParams();
+  const brandId = params["brand-listing"];
   const { rate, currencySymbol } = usePopupStore();
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -35,6 +38,7 @@ export default function Component() {
   const [isPriceRangeFilterOpen, setIsPriceRangeFilterOpen] = useState(true);
   const [sortOption, setSortOption] = useState("popularity");
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
+
   const addToCart = useCartStore((state) => state.addToCart);
 
   const [filters, setFilters] = useState({
@@ -47,6 +51,8 @@ export default function Component() {
     setLoading(true);
     try {
       const params = {
+        attribute: "pa_brand",
+        attribute_term: brandId,
         per_page: 100,
         page,
         consumer_key: CONSUMER_KEY,
@@ -91,22 +97,19 @@ export default function Component() {
       );
       if (brandAttr) {
         const brandName = brandAttr.options[0].replace(/&amp;/g, "&");
-        if (!brandMap.has(brandName)) {
-          brandMap.set(brandName, { count: 1, categories: new Set() });
-        } else {
-          brandMap.get(brandName).count++;
-        }
-        product.categories.forEach((category) => {
-          brandMap.get(brandName).categories.add(category.id);
-        });
+        brandMap.set(brandName, (brandMap.get(brandName) || 0) + 1);
       }
 
       product.categories.forEach((category) => {
         const categoryName = category.name.replace(/&amp;/g, "&");
-        if (!categoryMap.has(category.id)) {
-          categoryMap.set(category.id, { ...category, name: categoryName, count: 1 });
-        } else {
+        if (categoryMap.has(category.id)) {
           categoryMap.get(category.id).count++;
+        } else {
+          categoryMap.set(category.id, {
+            ...category,
+            name: categoryName,
+            count: 1,
+          });
         }
       });
 
@@ -116,7 +119,7 @@ export default function Component() {
       }
     });
 
-    setBrands(Array.from(brandMap, ([name, data]) => ({ name, count: data.count, categories: Array.from(data.categories) })));
+    setBrands(Array.from(brandMap, ([name, count]) => ({ name, count })));
     setCategories(Array.from(categoryMap.values()));
 
     const minPrice = Math.floor(Math.min(...prices));
@@ -133,8 +136,10 @@ export default function Component() {
   };
 
   useEffect(() => {
-    fetchProducts(1);
-  }, []);
+    if (brandId) {
+      fetchProducts(1);
+    }
+  }, [brandId]);
 
   const handlePageChange = (page) => {
     if (page >= 1 && page <= totalPages) {
@@ -153,12 +158,6 @@ export default function Component() {
       } else {
         updatedFilters[filterType] = [...updatedFilters[filterType], value];
       }
-
-      // Clear category filters when changing brands
-      if (filterType === "brands") {
-        updatedFilters.categories = [];
-      }
-
       return updatedFilters;
     });
     setCurrentPage(1);
@@ -198,8 +197,7 @@ export default function Component() {
         filters.brands.length === 0 ||
         product.attributes.some(
           (attr) =>
-            attr.name === "Brand" &&
-            filters.brands.includes(attr.options[0])
+            attr.name === "Brand" && filters.brands.includes(attr.options[0])
         );
       const categoryMatch =
         filters.categories.length === 0 ||
@@ -227,42 +225,52 @@ export default function Component() {
   }, [filteredAndSortedProducts, currentPage]);
 
   const getFilteredCount = (filterType, value) => {
-    return filteredAndSortedProducts.filter((product) => {
-      if (filterType === "brands") {
-        const brandAttr = product.attributes.find(
-          (attr) => attr.name === "Brand"
+    return products.filter((product) => {
+      const brandMatch =
+        filters.brands.length === 0 ||
+        product.attributes.some(
+          (attr) =>
+            attr.name === "Brand" &&
+            (filters.brands.includes(attr.options[0]) ||
+              attr.options[0] === value)
         );
-        return brandAttr && brandAttr.options[0] === value;
+      const categoryMatch =
+        filters.categories.length === 0 ||
+        product.categories.some(
+          (cat) =>
+            filters.categories.includes(cat.id.toString()) ||
+            cat.id.toString() === value
+        );
+      const priceMatch =
+        filters.priceRange.length === 0 ||
+        filters.priceRange.some((range) => {
+          const [min, max] = range.split("-").map(Number);
+          const price = parseFloat(product.price);
+          return (price >= min && price <= max) || range === value;
+        });
+
+      if (filterType === "brands") {
+        return (
+          categoryMatch &&
+          priceMatch &&
+          product.attributes.some(
+            (attr) => attr.name === "Brand" && attr.options.includes(value)
+          )
+        );
       } else if (filterType === "categories") {
-        return product.categories.some((cat) => cat.id.toString() === value);
+        return (
+          brandMatch &&
+          priceMatch &&
+          product.categories.some((cat) => cat.id.toString() === value)
+        );
       } else if (filterType === "priceRange") {
         const [min, max] = value.split("-").map(Number);
         const price = parseFloat(product.price);
-        return price >= min && price <= max;
+        return brandMatch && categoryMatch && price >= min && price <= max;
       }
       return false;
     }).length;
   };
-
-  const getAvailableCategories = useMemo(() => {
-    if (filters.brands.length === 0) {
-      return categories;
-    }
-
-    const availableCategories = new Set();
-    filters.brands.forEach((brand) => {
-      const brandData = brands.find((b) => b.name === brand);
-      if (brandData) {
-        brandData.categories.forEach((categoryId) => {
-          availableCategories.add(categoryId.toString());
-        });
-      }
-    });
-
-    return categories.filter((category) =>
-      availableCategories.has(category.id.toString())
-    );
-  }, [filters.brands, brands, categories]);
 
   const clearAllFilters = () => {
     setFilters({
@@ -355,6 +363,7 @@ export default function Component() {
             </span>
           </button>
         </div>
+
         <div className="flex flex-col md:flex-row items-center lg:ml-[20rem] mr-auto">
           <select
             value={sortOption}
@@ -411,7 +420,6 @@ export default function Component() {
             )}
           </div>
 
-          {/* Filter chips */}
           {(filters.brands.length > 0 ||
             filters.categories.length > 0 ||
             filters.priceRange.length > 0) && (
@@ -484,8 +492,6 @@ export default function Component() {
           )}
 
           <hr className="bg-[#8B929D73] h-[1px]" />
-
-          {/* Brand filter */}
           <div className="mb-6 mt-4">
             <h4
               className={`font-bold text-lg mb-2 flex justify-between items-center cursor-pointer ${jost.className}`}
@@ -523,7 +529,6 @@ export default function Component() {
             )}
           </div>
 
-          {/* Category filter */}
           <div className="mb-6">
             <h4
               className={`font-bold ${jost.className} text-lg mb-2 flex justify-between items-center cursor-pointer`}
@@ -540,7 +545,7 @@ export default function Component() {
               <div
                 className={`pl-2 ${lexendDeca.className} font-normal max-h-60 overflow-y-auto`}
               >
-                {getAvailableCategories
+                {categories
                   .sort((a, b) => a.name.localeCompare(b.name))
                   .map((category) => (
                     <label key={category.id} className="block mb-2">
@@ -559,14 +564,13 @@ export default function Component() {
                         }
                         className="mr-2"
                       />
-                      {category.name} ({getFilteredCount("categories", category.id.toString())})
+                      {category.name} ({category.count})
                     </label>
                   ))}
               </div>
             )}
           </div>
 
-          {/* Price range filter */}
           <div className="mb-6">
             <h4
               className={`font-bold ${jost.className} text-lg mb-2 flex justify-between items-center cursor-pointer`}
@@ -598,7 +602,6 @@ export default function Component() {
               </div>
             )}
           </div>
-
           <section className="flex justify-around mt-auto gap-4 lg:hidden">
             <button
               onClick={clearAllFilters}
@@ -638,9 +641,8 @@ export default function Component() {
                   ))
               : paginatedProducts.map((product) => {
                   const brand =
-                    product.attributes.find(
-                      (attr) => attr.name === "Brand"
-                    )?.options[0] || "Unknown Brand";
+                    product.attributes.find((attr) => attr.name === "Brand")
+                      ?.options[0] || "Unknown Brand";
                   return (
                     <div
                       key={product.id}
@@ -664,11 +666,9 @@ export default function Component() {
                         </button>
                       </div>
                       <Link href={`/product/${product.id}`}>
-                        <Image
+                        <img
                           src={product.images[0]?.src}
                           alt={product.name}
-                          width={200}
-                          height={200}
                           className="w-full h-64 object-cover mb-4"
                         />
                       </Link>
@@ -711,7 +711,9 @@ export default function Component() {
                             {(product.sale_price * rate).toFixed(2)}
                           </>
                         ) : (
-                          `${currencySymbol}${(product.price * rate).toFixed(2)}`
+                          `${currencySymbol}${(product.price * rate).toFixed(
+                            2
+                          )}`
                         )}
                       </p>
                       <button
@@ -725,9 +727,7 @@ export default function Component() {
                 })}
           </div>
 
-          {paginatedProducts.length > 0 && (
-            <div className="mt-8 flex justify-end">{renderPagination()}</div>
-          )}
+          <div className="mt-8 flex justify-end">{renderPagination()}</div>
         </div>
       </div>
     </Container>

@@ -1,5 +1,7 @@
 "use client";
+
 import React from 'react';
+import Link from 'next/link';
 import Container from '../../../container';
 import cat_one from '../../../../public/home_categories_banner/category_one.svg';
 import cat_two from '../../../../public/home_categories_banner/category_two.svg';
@@ -56,6 +58,13 @@ const PrevArrow = ({ className, style, onClick }) => {
 };
 
 export default function HomeCategory() {
+  const categories = [
+    { name: "Makeup", image: cat_one, categoryLanding: "makeup", subcategories: "147" },
+    { name: "Lips", image: cat_two, categoryLanding: "lips", subcategories: "33" },
+    { name: "Hair", image: cat_three, categoryLanding: "hair", subcategories: "484" },
+    { name: "Fragrance", image: cat_four, categoryLanding: "fragrance", subcategories: "485" },
+  ];
+
   const settings = {
     infinite: true,
     speed: 500,
@@ -107,22 +116,19 @@ export default function HomeCategory() {
       <Container>
         <div className="py-16  relative">
           <h1 className={`text-2xl font-semibold mb-8 text-left ${jost.className} uppercase`}>Shop by Category</h1>
-          <div className=' md:mx-3'>
-            <Slider {...settings} >
-              <div className="px-2  w-[45%] lg:w-44 xl:w-56 2xl:w-[100%]">
-                <Image src={cat_one} alt="Makeup" className="rounded-lg object-cover cursor-pointer w-full" />
+          <Slider {...settings}>
+            {categories.map((category, index) => (
+              <div key={index} className="px-2 w-[45%] lg:w-44 xl:w-56 2xl:w-[100%]">
+                <Link href={`/product-categories/${category.categoryLanding}/${category.subcategories}`}>
+                  <Image 
+                    src={category.image} 
+                    alt={category.name} 
+                    className="rounded-lg object-cover cursor-pointer w-full" 
+                  />
+                </Link>
               </div>
-              <div className="px-2  w-[45%] lg:w-44 xl:w-56 2xl:w-[100%]">
-                <Image src={cat_two} alt="Lips" className="rounded-lg object-cover cursor-pointer w-full" />
-              </div>
-              <div className="px-2  w-[45%] lg:w-44 xl:w-56 2xl:w-[100%]">
-                <Image src={cat_three} alt="Hair" className="rounded-lg object-cover cursor-pointer w-full" />
-              </div>
-              <div className="px-2  w-[45%] lg:w-44 xl:w-56 2xl:w-[100%]">
-                <Image src={cat_four} alt="Fragrance" className="rounded-lg object-cover cursor-pointer w-full" />
-              </div>
-            </Slider>
-          </div>
+            ))}
+          </Slider>
         </div>
       </Container>
     </>
