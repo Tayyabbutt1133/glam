@@ -1,5 +1,5 @@
 "use client";
-import { jost } from "@/components/ui/fonts";
+import { jost } from "/components/ui/fonts";
 import React, { useState, useRef, useEffect } from "react";
 import { IoChevronDownOutline } from "react-icons/io5";
 

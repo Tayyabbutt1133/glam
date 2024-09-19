@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { FiChevronDown, FiEdit2, FiX, FiTruck } from 'react-icons/fi';
-import { usePopupStore } from "states/use-popup-store";
+import { usePopupStore } from "/states/use-popup-store";
 
 const subscriptionDetails = [
   { icon: <FiEdit2 size={16} />, text: "Edit or cancel anytime" },

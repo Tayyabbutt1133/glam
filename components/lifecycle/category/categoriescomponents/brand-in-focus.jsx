@@ -13,11 +13,6 @@ export default function BrandInFocus() {
         <Text style={"h1"}>Brand In Focus</Text>
       </Container>
 
-
-
-
-
-
       <section className="lg:hidden">
         <div className="w-full relative">
           {/* Image2 */}

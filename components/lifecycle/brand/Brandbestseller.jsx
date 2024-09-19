@@ -1,17 +1,15 @@
 "use client";
 
 import React, { useState } from "react";
-import { FaRegStar, FaStar, FaHeart } from "react-icons/fa";
-import { CiHeart } from "react-icons/ci";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { jost, lexendDeca } from "../../../components/ui/fonts";
+import { jost } from "../../../components/ui/fonts";
 import NextArrowIcon from "../../../public/hero-banners/next-arrow";
 import PrevArrowIcon from "../../../public/hero-banners/prev-arrow";
-import Product from "@/components/product";
+import Product from "/components/product";
 
 const arrowStyles = {
   width: "40px",

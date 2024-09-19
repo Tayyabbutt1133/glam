@@ -1,4 +1,4 @@
-import { jost } from "@/components/ui/fonts";
+import { jost } from "/components/ui/fonts";
 
 export default function ProductTitle({title}) {
   return (

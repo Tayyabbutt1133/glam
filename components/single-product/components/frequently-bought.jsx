@@ -7,7 +7,7 @@ import laColors from "/public/frequently-bought/la-colors.png";
 import benefits from "/public/frequently-bought/benefits.png";
 import ButtonAddToCart from "./product-data/ButtonAddtoCart";
 import Link from "next/link";
-import { usePopupStore } from "states/use-popup-store";
+import { usePopupStore } from "/states/use-popup-store";
 
 const products = [
   {

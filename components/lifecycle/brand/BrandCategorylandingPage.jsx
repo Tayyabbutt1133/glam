@@ -16,7 +16,7 @@ import { useParams, useRouter } from "next/navigation";
 import Skeleton from "react-loading-skeleton";
 
 import { useCategoryIdState } from "../../../states/use-category-id";
-import Container from "../../container";
+
 import { AlertCircle } from "lucide-react";
 
 const MenucategoryLandingPage = () => {

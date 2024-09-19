@@ -3,9 +3,9 @@ import Image from "next/image";
 import clearpay from "/public/product-payment/clearpay.png";
 import klarna from "/public/product-payment/klarna.svg";
 import laybuy from "/public/product-payment/LayBuy.png";
-import Text from "@/components/ui/Text";
+import Text from "/components/ui/Text";
 import { IoIosInformationCircleOutline } from "react-icons/io";
-import { usePopupStore } from "states/use-popup-store"
+import { usePopupStore } from "/states/use-popup-store"
 const paymentOptions = [
   {
     title: "3 interest-free payments of ",

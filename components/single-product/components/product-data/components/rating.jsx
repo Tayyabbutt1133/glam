@@ -1,4 +1,4 @@
-import Text from "@/components/ui/Text";
+import Text from "/components/ui/Text";
 import { FaStar } from "react-icons/fa";
 
 export default function Rating({ratingCount, averageRating}) {
