@@ -14,7 +14,7 @@ import Container from "../../../components/container";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { usePopupStore } from "states/use-popup-store";
+import { usePopupStore } from "/states/use-popup-store";
 
 const API_URL = "https://glam.clickable.site/wp-json/wc/v3/products";
 const CK = "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d";

@@ -22,8 +22,7 @@ const CONSUMER_SECRET = "cs_3f70ee2600a3ac17a5692d7ac9c358d47275d6fc";
 const PRODUCTS_PER_PAGE = 12;
 
 export default function BrandListing() {
-  const params = useParams();
-  const brandId = params["brand-listing"];
+  const {brandsLanding} = useParams();
   const { rate, currencySymbol } = usePopupStore();
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -52,7 +51,7 @@ export default function BrandListing() {
     try {
       const params = {
         attribute: "pa_brand",
-        attribute_term: brandId,
+        attribute_term: brandsLanding,
         per_page: 100,
         page,
         consumer_key: CONSUMER_KEY,
@@ -136,10 +135,10 @@ export default function BrandListing() {
   };
 
   useEffect(() => {
-    if (brandId) {
+    if (brandsLanding) {
       fetchProducts(1);
     }
-  }, [brandId]);
+  }, [brandsLanding]);
 
   const handlePageChange = (page) => {
     if (page >= 1 && page <= totalPages) {

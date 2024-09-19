@@ -17,7 +17,7 @@ import paypal from "../../../public/card-logos/paypal.svg";
 import klarna_wal from "../../../public/Klarnawallet.svg";
 import klarna_pink from "../../../public/klarn_pink.svg";
 
-import { usePopupStore } from "states/use-popup-store";
+import { usePopupStore } from "/states/use-popup-store";
 import { useRouter } from "next/navigation";
 import { toast } from 'react-toastify';
 
