@@ -7,7 +7,7 @@ import Text from "../../../../ui/Text"
 import Image from "next/image"
 import Link from "next/link"
 import { jost } from "../../../../ui/fonts"
-import { useCartStore } from 'states/Cardstore'
+import { useCartStore } from '/states/Cardstore'
 
 const decodeHtmlEntities = (text) => {
   return text.replace(/&amp;/g, '&')

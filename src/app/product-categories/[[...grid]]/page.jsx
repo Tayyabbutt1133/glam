@@ -2,17 +2,17 @@
 
 import React, { useEffect, useState, useMemo } from "react";
 import axios from "axios";
-import Container from "@/components/container";
+import Container from "/components/container";
 import { FaStar, FaRegStar, FaHeart } from "react-icons/fa";
 import { CiHeart } from "react-icons/ci";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { IoFilterOutline } from "react-icons/io5";
 import Image from "next/image";
-import { lexendDeca, jost } from "@/components/ui/fonts";
+import { lexendDeca, jost } from "/components/ui/fonts";
 import filter from "../../../../public/filter.svg";
 import { RxCross2 } from "react-icons/rx";
-import { useCartStore } from "states/Cardstore";
-import { usePopupStore } from "states/use-popup-store";
+import { useCartStore } from "/states/Cardstore";
+import { usePopupStore } from "/states/use-popup-store";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 

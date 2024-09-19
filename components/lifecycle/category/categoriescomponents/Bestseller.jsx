@@ -56,7 +56,7 @@ const PrevArrow = ({ className, style, onClick }) => (
   </div>
 );
 
-const Bestseller = ({ s = [] }) => {
+const Bestseller = () => {
   const [bestSellers, setBestSellers] = useState([]);
   const [loading, setLoading] = useState(true);
   const categoryId = useCategoryIdState((state) => state.categoryId);

@@ -16,7 +16,7 @@ import PrevArrowIcon from '../../../../public/hero-banners/prev-arrow';
 import { useCartStore } from '../../../../states/Cardstore';
 import { useRouter } from 'next/navigation';
 
-import { usePopupStore } from "states/use-popup-store"
+import { usePopupStore } from '../../../../states/use-popup-store';
 
 
 const arrowStyles = {

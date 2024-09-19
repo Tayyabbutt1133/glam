@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { lexendDeca } from "@/components/ui/fonts";
-import Text from "@/components/ui/Text";
+import { lexendDeca } from "../../ui/fonts";
+import Text from "../../ui/Text";
 import BrandMegaMenu from "./brands-megamenu";
 import img from "/public/nav-images/skincare-nav.png";
 
