@@ -9,6 +9,7 @@ import { usePopupStore } from "../../../states/use-popup-store";
 import ArrowDown from "/public/icons/arrow-down";
 import Text from "../../ui/Text";
 import Container from "../../container";
+import { brands } from "../navigation-nav/data/brands";
 
 export default function MobileSidebar({ isOpen, onClose }) {
   const [links, setLinks] = useState([]);
@@ -132,10 +133,60 @@ export default function MobileSidebar({ isOpen, onClose }) {
   const getSubMenu = (parentId) => {
     return links.filter((link) => link.parent === parentId?.toString());
   };
+  const categorizeBrands = (brands) => {
+    const categories = {
+      "0 - 9": [],
+      "A - D": [],
+      "E - H": [],
+      "I - L": [],
+      "M - P": [],
+      "Q - T": [],
+      "U - Z": [],
+    };
+
+    brands.forEach((brand) => {
+      const firstChar = brand.name[0].toUpperCase();
+      if (/[0-9]/.test(firstChar)) {
+        categories["0 - 9"].push(brand);
+      } else if (/[A-D]/.test(firstChar)) {
+        categories["A - D"].push(brand);
+      } else if (/[E-H]/.test(firstChar)) {
+        categories["E - H"].push(brand);
+      } else if (/[I-L]/.test(firstChar)) {
+        categories["I - L"].push(brand);
+      } else if (/[M-P]/.test(firstChar)) {
+        categories["M - P"].push(brand);
+      } else if (/[Q-T]/.test(firstChar)) {
+        categories["Q - T"].push(brand);
+      } else if (/[U-Z]/.test(firstChar)) {
+        categories["U - Z"].push(brand);
+      }
+    });
+    return categories;
+  };
 
   const renderMegaMenu = () => {
     if (hoveredLink.href === "/brands") {
-      return null; // Handle brands separately if needed
+      const categorizedBrands = categorizeBrands(brands);
+      return (
+        <>
+          {Object.keys(categorizedBrands).map(
+            (category) =>
+              categorizedBrands[category].length > 0 && (
+                <div key={category}>
+                  <h2 className="text-xl font-semibold text-center bg-slate-100">
+                    {category}
+                  </h2>
+                  {categorizedBrands[category].map((brand) => (
+                    <Link key={brand.slug} href={`/brands/${brand.slug}`}>
+                      <p className="text-lg my-1 font-light">{brand.name}</p>
+                    </Link>
+                  ))}
+                </div>
+              )
+          )}
+        </>
+      );
     }
 
     const subCategories = getSubMenu(hoveredLink.id);
@@ -144,7 +195,14 @@ export default function MobileSidebar({ isOpen, onClose }) {
       <div className="flex flex-col w-full">
         {subCategories.map((subCategory) => (
           <div key={subCategory.id} className="mb-4">
-            <Link href={subCategory.href =="/product-categories/skin-care/Moisturizers"?"/product-categories/skin-care/Moisturisers":subCategory.href} className="relative inline-block">
+            <Link
+              href={
+                subCategory.href == "/product-categories/skin-care/Moisturizers"
+                  ? "/product-categories/skin-care/Moisturisers"
+                  : subCategory.href
+              }
+              className="relative inline-block"
+            >
               <Text style="h4" className="uppercase mb-2 font-semibold">
                 {subCategory.name}
               </Text>
@@ -201,23 +259,21 @@ export default function MobileSidebar({ isOpen, onClose }) {
 
     return mainLinks?.map((category, index) => {
       const lowerCaseName = category.name.toLowerCase();
-      const isSpecialCategory = ["brands", "new in", "sale"].includes(
-        lowerCaseName
-      );
+      const isSpecialCategory = ["new in", "sale"].includes(lowerCaseName);
       let categorySlug = lowerCaseName
-      .replace(/&/g, "")
-      .replace(/\s+/g, "-")
-      .replace(/-+/g, "-")
-      .replace(/^-|-$/g, "");
-    
-    // Special case for "skin care"
-    if (categorySlug === "skin-care") {
-      categorySlug = "skincare";
-    }
+        .replace(/&/g, "")
+        .replace(/\s+/g, "-")
+        .replace(/-+/g, "-")
+        .replace(/^-|-$/g, "");
 
-    const href = isSpecialCategory
-      ? `/${categorySlug}`
-      : `/product-categories/${categorySlug}`;
+      // Special case for "skin care"
+      if (categorySlug === "skin-care") {
+        categorySlug = "skincare";
+      }
+
+      const href = isSpecialCategory
+        ? `/${categorySlug}`
+        : `/product-categories/${categorySlug}`;
 
       return (
         <div
@@ -231,7 +287,7 @@ export default function MobileSidebar({ isOpen, onClose }) {
           >
             {category.name}
           </Link>
-          {!["brands", "new in", "sale"].includes(lowerCaseName) && (
+          {!["new in", "sale"].includes(lowerCaseName) && (
             <button
               className="p-2 flex-grow"
               onClick={() => {
