@@ -140,7 +140,7 @@ const Staffpicks = () => {
   if (!categoryId) return;
   
   return (
-    <Container className="mb-16">
+    <Container className="mb-16 md:mx-5 lg:mx-10">
       <h2
         className={`text-2xl font-semibold mx-4 my-8 ${jost.className} uppercase`}
       >
