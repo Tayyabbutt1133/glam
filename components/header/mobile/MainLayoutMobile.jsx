@@ -17,7 +17,7 @@ export default function MainLayoutMobile() {
   return (
     <main className=" flex flex-col  z-50 lg:hidden">
       <MobileHeader onOpenSidebar={openSidebar} />
-      <p className={`text-center w-full p-2 text-sm ${jost.className}  font-light flex items-center gap-1 justify-center  bg-[#F7EBE0]`}>
+      <p className={`text-center w-full p-2 text-sm ${jost.className}  font-normal flex items-center gap-1 justify-center  bg-[#F7EBE0]`}>
         <span className="font-semibold">Free  </span> Shipping £10+ <Minus className=" opacity-60  h-6 w-4 rotate-90" /> <span className="font-semibold">Next Day </span> Delivery  £40+
       </p>
       <MobileSidebar2 isOpen={isSidebarOpen} onClose={closeSidebar} />

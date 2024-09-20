@@ -7,11 +7,11 @@ export default function Newsletter() {
     <>
       <section className="bg-bg-01 h-[238px] grid place-items-center">
         <Container>
-          <div className="sm:flex justify-center items-center mx-auto w-full py-10">
+          <div className="lg:flex justify-center items-center mx-auto w-full py-10">
 
             <div className="sm:text-center block md:flex flex-col sm:flex-row space-y-6 md:space-y-0 md:gap-16">
-              <div className="flex items-center">
-                <h2 className={`text-[24px] ${jost.className} capitalize font-medium text-black sm:text-2xl`}>
+              <div className="flex items-center justify-center md:justify-start">
+                <h2 className={` text-lg sm:text-xl md:text-[24px] ${jost.className} capitalize  text-black sm:text-2xl`}>
                   <span className="text-[#CF8562]">SIGN UP</span> TO RECEIVE
                   OFFERS AND UPDATES
                 </h2>
@@ -40,7 +40,7 @@ export default function Newsletter() {
                   <div>
                     <button
                       type="submit"
-                      className={`box-border h-[54px] w-[164px] uppercase   text-sm 2xl:text-[20px] font-medium text-center text-white rounded-2xl border cursor-pointer bg-primary-700 border-primary-600 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 bg-black ${jost.className}`}
+                      className={`box-border h-[45px]  px-7 uppercase   text-sm 2xl:text-[20px] font-medium text-center text-white rounded-lg border cursor-pointer bg-primary-700 border-primary-600 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 bg-black ${jost.className}`}
                     >
                       Subscribe
                     </button>
