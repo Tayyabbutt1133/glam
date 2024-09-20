@@ -104,6 +104,7 @@ export default function FastSearchBarWithDropdown({formobile = false}) {
   const handleProductClick = (product) => {
     // console.log(product);
 
+    setIsDropdownOpen(false);
     
     router.push(`/product/${product.id}`);
   };
