@@ -10,7 +10,7 @@ import ArrowDown from "/public/icons/arrow-down";
 import Text from "../../ui/Text";
 import Container from "../../container";
 import { brands } from "../navigation-nav/data/brands";
-
+import { MdHome } from "react-icons/md";
 export default function MobileSidebar({ isOpen, onClose }) {
   const [links, setLinks] = useState([]);
   const [currentCategory, setCurrentCategory] = useState(null);
@@ -198,7 +198,6 @@ export default function MobileSidebar({ isOpen, onClose }) {
       const expandedSubMenu = getSubMenu(expandedSubCategory.id);
       return (
         <div className="flex flex-col w-full">
-         
           {expandedSubMenu.map((item) => (
             <div key={item.id} className="mb-4">
               <Link href={item.href} className="flex items-center">
@@ -209,7 +208,7 @@ export default function MobileSidebar({ isOpen, onClose }) {
                   ></div>
                 )}
                 <span
-                  className={`${lexendDeca.className} text-[13px] opacity-70`}
+                  className={`${lexendDeca.className} opacity-70`}
                 >
                   {item.name}
                 </span>
@@ -233,13 +232,18 @@ export default function MobileSidebar({ isOpen, onClose }) {
                 }
                 className="relative inline-block"
               >
-                <Text style="h4" className="uppercase mb-2 font-semibold">
+                <Text style="h4" className="uppercase mb-2 ">
                   {subCategory.name}
                 </Text>
                 <div className="absolute bottom-0 z-50 left-0 w-full h-0.5 bg-gray-300 transform scale-x-0 transition-transform duration-300 origin-left group-hover:scale-x-100"></div>
               </Link>
               <button
-                onClick={() => setExpandedSubCategory(({id:subCategory.id,name:subCategory.name}))}
+                onClick={() =>
+                  setExpandedSubCategory({
+                    id: subCategory.id,
+                    name: subCategory.name,
+                  })
+                }
                 aria-label={`Toggle ${subCategory.name} submenu`}
               >
                 <ChevronRight className="w-5 h-5 ml-auto" />
@@ -263,12 +267,13 @@ export default function MobileSidebar({ isOpen, onClose }) {
     if (currentCategory) {
       return (
         <>
-          <div className="flex items-center mb-4">
-            <button onClick={goBack} className="mr-2" aria-label="Go back">
-              <ChevronLeft className="w-6 h-6" />
-            </button>
-            <h2 className="text-xl font-semibold">{ expandedSubCategory?expandedSubCategory.name: currentCategory}</h2>
-          </div>
+          
+            
+            <h2 className="text-xl font-semibold mb-8 flex ">
+              {/* {expandedSubCategory ? <p className="flex justify-center mr-1">  {expandedSubCategory.name} { currentCategory == currentCategory}</p> : currentCategory} { currentCategory!="Home" &&" Home"} */}
+              {expandedSubCategory ? expandedSubCategory.name: currentCategory}
+            </h2>
+          
           {renderMegaMenu()}
         </>
       );
@@ -335,52 +340,62 @@ export default function MobileSidebar({ isOpen, onClose }) {
   }
 
   return (
-    <div
-      className={`fixed inset-0 bg-white z-50 transition-transform duration-300 ease-in-out ${
-        isOpen ? "translate-x-0" : "-translate-x-full"
-      } ${jost.className}`}
-    >
-      <div className="flex items-center justify-between p-4 border-b">
-        <button onClick={onClose} className="p-2" aria-label="Close sidebar">
-          <X className="w-6 h-6" />
-        </button>
-        <Link
-          href="/"
-          className="p-2"
-          onClick={onClose}
-          aria-label="Go to home"
-        >
-          <Home className="w-6 h-6" />
-        </Link>
-      </div>
-      <div className="p-4 overflow-y-auto h-[calc(100vh-180px)]">
-        {renderCategories()}
-      </div>
-      <div className="absolute bottom-0 left-0 right-0 p-4 border-t bg-white">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center">
-            {flagUrl && (
-              <div className="relative w-8 h-6 mr-2">
-                <Image
-                  src={flagUrl}
-                  alt={`${selectedCountry.country} Flag`}
-                  layout="fill"
-                  objectFit="contain"
-                />
+    <>
+      {isOpen && <div className="fixed inset-0 bg-black opacity-40 z-40"></div>}
+      <div
+        className={`fixed inset-0 bg-white z-50  overflow-y-auto w-[87%] pl-1 transition-transform duration-300 ease-in-out ${
+          isOpen ? "translate-x-0" : "-translate-x-full"
+        } ${jost.className}`}
+      >
+        <div className="flex flex-row-reverse items-center justify-between p-4 border-b">
+          <button onClick={onClose} className="py-2" aria-label="Close sidebar">
+            <X className=" size-8" />
+          </button>
+        {currentCategory!=null || currentSubCategory !=null?<button onClick={goBack} className="mr-2 flex gap-2  items-center" aria-label="Go back">
+              <ChevronLeft className="w-6 h-6" /><span>Back</span>
+            </button>:  <Link
+            href="/"
+            className="py-2"
+            onClick={onClose}
+            aria-label="Go to home"
+          >
+            <MdHome className=" size-8" />
+          </Link>}
+        </div>
+        <div className="p-4 overflow-y-auto ">{renderCategories()}</div>
+        {currentCategory == null && currentSubCategory == null && (
+          <div className="p-4 bg-[#f7ebe0] flex items-center justify-between px-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                {flagUrl && (
+                  <div className="relative w-8 h-6 mr-2">
+                    <Image
+                      src={flagUrl}
+                      alt={`${selectedCountry.country} Flag`}
+                      layout="fill"
+                      objectFit="contain"
+                    />
+                  </div>
+                )}
+                <p
+                  className="flex items-center gap-2 font-normal text-base"
+              
+                >
+                  <span className="lowercase">
+                    {selectedCountry.countryCode}
+                  </span>
+                  {" - "}
+                  {selectedCountry.code}
+                  
+                </p>
               </div>
-            )}
-            <button
-              className="flex items-center gap-2 font-normal text-base"
-              onClick={onOpen}
-            >
-              <span className="lowercase">{selectedCountry.countryCode}</span>
-              {" - "}
-              {selectedCountry.code}
-              <ArrowDown className="w-3 h-auto" />
+            </div>
+            <button className=" p-1 underline underline-offset-3" onClick={onOpen}>
+              Change
             </button>
           </div>
-        </div>
+        )}
       </div>
-    </div>
+    </>
   );
 }
