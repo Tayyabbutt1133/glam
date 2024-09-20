@@ -1,4 +1,5 @@
-import React from "react";
+"use client"
+import React, { use, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -17,11 +18,26 @@ import maestro from "../public/card-logos/maestro.svg"
 import ae from "../public/card-logos/american-express.svg"
 import paypal from "../public/card-logos/paypal.svg"
 import { lexendDeca, jost} from "./ui/fonts";
-
+import { ChevronDown, ChevronUp } from "lucide-react";
+import useWindowWidth from "../hooks/useWindow";
 
 export default function Footer() {
+  const [openSections, setOpenSections] = useState({
+    glamBeauty: false,
+    helpInfo: false,
+    legal: false,
+    
+  });
+  const toggleSection = (section) => {
+    setOpenSections((prev) => {
+      const newState = { glamBeauty: false, helpInfo: false, legal: false };
+      newState[section] = !prev[section];
+      return newState;
+    });
+  };
+  const windowWidth = useWindowWidth();
   return (
-    <Container>
+    <main className=" w-[95%] mx-auto lg:w-[92%]">
       <footer className="">
 
 
@@ -38,7 +54,7 @@ export default function Footer() {
                 <Image src={logo} />
                 <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"></span>
               </a>
-              <p className={`text-sm 2xl:text-[16px]  text-[#7E7E7E] w-60 ${lexendDeca.className} font-normal`}>We are the fastest-growing beauty retailer, always offering huge discounts off the RRP.</p>
+              <p className={`text-sm lg:text-[14px] xl:text-[16px]  text-[#7E7E7E] w-60 ${lexendDeca.className} font-normal`}>We are the fastest-growing beauty retailer, always offering huge discounts off the RRP.</p>
               <div name="socials" className=" flex gap-4">
                 <Image src={fb} />
                 <Image src={Insta} />
@@ -51,13 +67,16 @@ export default function Footer() {
 
 
 
-            {/* Nav links */}
-            <div className="grid grid-cols-1 space-y-10 sm:grid-cols-4 sm:space-y-0 ml-16">
+         {/* Nav links */}
+         <div className="grid px-3 py-2 sm:px-0 mt-4 grid-cols-1 space-y-1 md:grid-cols-4 sm:space-y-0 lg:ml-16 md:ml-6">
               <div className="">
-                <h2 className={`mb-4 text-sm 2xl:font-[20px] capitalize font-semibold text-black ${jost.className}`}>
-                  GlamBeauty
+                <h2
+                  className={`mb-4 text-sm mt-4 text-[18px] xl:text-[20px] capitalize flex items-center justify-between font-semibold text-black ${jost.className}`}
+                  onClick={() => toggleSection('glamBeauty')}
+                >
+                  GlamBeauty {openSections.glamBeauty ? <ChevronUp className="inline-flex ml-auto md:hidden" /> : <ChevronDown className="inline-flex ml-auto md:hidden" />}
                 </h2>
-                <ul className={`text-[#8B929D]  text-sm 2xl:text-[16px] space-y-3 ${lexendDeca.className} font-normal`}>
+                <ul className={`text-[#8B929D] lg:text-[14px] xl:text-[16px] text-sm pb-3 space-y-3 ${lexendDeca.className} font-normal transition-all duration-300 ease-in-out ${openSections.glamBeauty || windowWidth >= 768 ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
                   <li className="">
                     <a href="#" className="hover:underline">
                       About us
@@ -77,10 +96,13 @@ export default function Footer() {
               </div>
               {/* Row 2 */}
               <div>
-              <h2 className={`mb-4 text-sm 2xl:font-[20px] capitalize font-semibold text-black ${jost.className}`}>
-              Help & Information
+                <h2
+                  className={`mb-4 text-sm mt-4 text-[18px] xl:text-[20px] capitalize flex items-center justify-between font-semibold text-black ${jost.className}`}
+                  onClick={() => toggleSection('helpInfo')}
+                >
+                  Help & Information {openSections.helpInfo ? <ChevronUp className="inline-flex ml-auto md:hidden" /> : <ChevronDown className="inline-flex ml-auto md:hidden" />}
                 </h2>
-                <ul className={`text-[#8B929D]  text-sm 2xl:text-[16px] space-y-3 ${lexendDeca.className} font-normal`}>
+                <ul className={`text-[#8B929D] text-sm lg:text-[14px] xl:text-[16px] space-y-3 ${lexendDeca.className} font-normal transition-all duration-300 ease-in-out ${openSections.helpInfo || windowWidth >= 768 ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
                   <li className="">
                     <a href="#" className="hover:underline">
                       Delivery Information
@@ -110,10 +132,13 @@ export default function Footer() {
               </div>
               {/* Row 3 */}
               <div>
-              <h2 className={`mb-4 text-sm 2xl:font-[20px] capitalize font-semibold text-black ${jost.className}`}>
-              Legal
+                <h2
+                  className={`mb-4 text-sm mt-4 text-[18px] xl:text-[20px] capitalize flex items-center justify-between font-semibold text-black ${jost.className}`}
+                  onClick={() => toggleSection('legal')}
+                >
+                  Legal {openSections.legal ? <ChevronUp className="inline-flex ml-auto md:hidden" /> : <ChevronDown className="inline-flex ml-auto md:hidden" />}
                 </h2>
-                <ul className={`text-[#8B929D]  text-sm 2xl:text-[16px] space-y-3 ${lexendDeca.className} font-normal`}>
+                <ul className={`text-[#8B929D] text-sm lg:text-[14px] xl:text-[16px] space-y-3 ${lexendDeca.className} font-normal transition-all duration-300 ease-in-out ${openSections.legal || windowWidth >= 768 ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
                   <li className="">
                     <a href="#" className="hover:underline">
                       Terms &amp; Conditions
@@ -133,10 +158,12 @@ export default function Footer() {
               </div>
               {/* Row 4 */}
               <div>
-              <h2 className={`mb-4 text-sm 2xl:font-[20px] capitalize font-semibold text-black ${jost.className}`}>
-              Download App
+                <h2
+                  className={`mb-4 text-sm mt-4 text-[18px] xl:text-[20px] capitalize flex items-center justify-between font-semibold text-black ${jost.className}`}
+                >
+                  Download App
                 </h2>
-                <p className={`text-[#8B929D]  text-sm 2xl:text-[16px] space-y-3 ${lexendDeca.className} font-normal mb-4`}>
+                <p className={`text-[#8B929D] text-sm lg:text-[14px] xl:text-[16px] space-y-3 ${lexendDeca.className} font-normal mb-4`}>
                   Download the App and get an extra 10% off your first order...!
                 </p>
                 <div className="flex sm:flex-col xl:flex-row gap-6">
@@ -147,10 +174,10 @@ export default function Footer() {
             </div>
           </div>
 
-          <hr className=" border-gray-200 sm:mx-auto dark:border-gray-700" />
+          <hr className="border-gray-200 sm:mx-auto dark:border-gray-700" />
 
           <div className="sm:flex sm:items-center sm:justify-between my-4">
-            <span className="text-sm 2xl:text-[16px] text-[#8B929D] font-normal sm:text-center">
+            <span className="text-sm lg:text-[14px] xl:text-[16px] text-[#8B929D] font-normal sm:text-center">
               GLAMBEAUTY © 2024. All Rights Reserved.
             </span>
             <div className="flex justify-between items-center gap-3">
@@ -169,10 +196,10 @@ export default function Footer() {
               <Link className="grid place-items-center w-[50px] h-[32px] border border-gray-300 rounded-[8px]" href="#">
                 <Image width={35} height={0} src={paypal} alt="Card 5" />
               </Link>
-            </div>
+            </div>
           </div>
         </div>
       </footer>
-    </Container>
+    </main>
   );
 }
