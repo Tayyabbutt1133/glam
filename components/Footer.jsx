@@ -19,7 +19,7 @@ import ae from "../public/card-logos/american-express.svg"
 import paypal from "../public/card-logos/paypal.svg"
 import { lexendDeca, jost} from "./ui/fonts";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import useWindowWidth from "../hooks/useWindow";
+
 
 export default function Footer() {
   const [openSections, setOpenSections] = useState({
@@ -35,7 +35,7 @@ export default function Footer() {
       return newState;
     });
   };
-  const windowWidth = useWindowWidth();
+  
   return (
     <main className=" w-[95%] mx-auto lg:w-[92%]">
       <footer className="">
@@ -54,7 +54,7 @@ export default function Footer() {
                 <Image src={logo} />
                 <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"></span>
               </a>
-              <p className={`text-sm lg:text-[14px] xl:text-[16px]  text-[#7E7E7E] w-60 ${lexendDeca.className} font-normal`}>We are the fastest-growing beauty retailer, always offering huge discounts off the RRP.</p>
+              <p className={`text-sm lg:text-[14px] xl:text-[16px]  text-[#7E7E7E] md:w-64 ${lexendDeca.className} font-normal`}>We are the fastest-growing beauty retailer, always offering huge discounts off the RRP.</p>
               <div name="socials" className=" flex gap-4">
                 <Image src={fb} />
                 <Image src={Insta} />
@@ -69,14 +69,14 @@ export default function Footer() {
 
          {/* Nav links */}
          <div className="grid px-3 py-2 sm:px-0 mt-4 grid-cols-1 space-y-1 md:grid-cols-4 sm:space-y-0 lg:ml-16 md:ml-6">
-              <div className="">
+              <div className=" md:hidden">
                 <h2
                   className={`mb-4 text-sm mt-4 text-[18px] xl:text-[20px] capitalize flex items-center justify-between font-semibold text-black ${jost.className}`}
                   onClick={() => toggleSection('glamBeauty')}
                 >
                   GlamBeauty {openSections.glamBeauty ? <ChevronUp className="inline-flex ml-auto md:hidden" /> : <ChevronDown className="inline-flex ml-auto md:hidden" />}
                 </h2>
-                <ul className={`text-[#8B929D] lg:text-[14px] xl:text-[16px] text-sm pb-3 space-y-3 ${lexendDeca.className} font-normal transition-all duration-300 ease-in-out ${openSections.glamBeauty || windowWidth >= 768 ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
+                <ul className={`text-[#8B929D] lg:text-[14px] xl:text-[16px] text-sm pb-3 space-y-3 ${lexendDeca.className} font-normal transition-all duration-300 ease-in-out ${openSections.glamBeauty    ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
                   <li className="">
                     <a href="#" className="hover:underline">
                       About us
@@ -94,15 +94,42 @@ export default function Footer() {
                   </li>
                 </ul>
               </div>
+              <div className=" hidden md:block">
+                <h2
+                  className={`mb-4 text-sm mt-4 text-[18px] xl:text-[20px] capitalize flex items-center justify-between font-semibold text-black ${jost.className}`}
+                  onClick={() => toggleSection('glamBeauty')}
+                >
+                  GlamBeauty {openSections.glamBeauty ? <ChevronUp className="inline-flex ml-auto md:hidden" /> : <ChevronDown className="inline-flex ml-auto md:hidden" />}
+                </h2>
+                <ul className={`text-[#8B929D] lg:text-[14px] xl:text-[16px] text-sm pb-3 space-y-3 ${lexendDeca.className} font-normal transition-all duration-300 ease-in-out max-h-screen opacity-100' `}>
+                  <li className="">
+                    <a href="#" className="hover:underline">
+                      About us
+                    </a>
+                  </li>
+                  <li className="">
+                    <a href="#" className="hover:underline">
+                      Partnerships & Suppliers
+                    </a>
+                  </li>
+                  <li className="">
+                    <a href="#" className="hover:underline">
+                      Sitemap
+                    </a>
+                  </li>
+                </ul>
+              </div>
+
+
               {/* Row 2 */}
-              <div>
+              <div className=" md:hidden">
                 <h2
                   className={`mb-4 text-sm mt-4 text-[18px] xl:text-[20px] capitalize flex items-center justify-between font-semibold text-black ${jost.className}`}
                   onClick={() => toggleSection('helpInfo')}
                 >
                   Help & Information {openSections.helpInfo ? <ChevronUp className="inline-flex ml-auto md:hidden" /> : <ChevronDown className="inline-flex ml-auto md:hidden" />}
                 </h2>
-                <ul className={`text-[#8B929D] text-sm lg:text-[14px] xl:text-[16px] space-y-3 ${lexendDeca.className} font-normal transition-all duration-300 ease-in-out ${openSections.helpInfo || windowWidth >= 768 ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
+                <ul className={`text-[#8B929D] text-sm lg:text-[14px] xl:text-[16px] space-y-3 ${lexendDeca.className} font-normal transition-all duration-300 ease-in-out ${openSections.helpInfo    ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
                   <li className="">
                     <a href="#" className="hover:underline">
                       Delivery Information
@@ -130,15 +157,54 @@ export default function Footer() {
                   </li>
                 </ul>
               </div>
+              <div className=" hidden md:block">
+                <h2
+                  className={`mb-4 text-sm mt-4 text-[18px] xl:text-[20px] capitalize flex items-center justify-between font-semibold text-black ${jost.className}`}
+                  onClick={() => toggleSection('helpInfo')}
+                >
+                  Help & Information {openSections.helpInfo ? <ChevronUp className="inline-flex ml-auto md:hidden" /> : <ChevronDown className="inline-flex ml-auto md:hidden" />}
+                </h2>
+                <ul className={`text-[#8B929D] text-sm lg:text-[14px] xl:text-[16px] space-y-3 ${lexendDeca.className} font-normal transition-all duration-300 ease-in-out  max-h-screen opacity-100`}>
+                  <li className="">
+                    <a href="#" className="hover:underline">
+                      Delivery Information
+                    </a>
+                  </li>
+                  <li className="">
+                    <a href="#" className="hover:underline">
+                      Returns Policy
+                    </a>
+                  </li>
+                  <li className="">
+                    <a href="#" className="hover:underline">
+                      FAQs
+                    </a>
+                  </li>
+                  <li className="">
+                    <a href="#" className="hover:underline">
+                      Contact Us
+                    </a>
+                  </li>
+                  <li className="">
+                    <a href="#" className="hover:underline">
+                      Student Discounts
+                    </a>
+                  </li>
+                </ul>
+              </div>
+
+
+
+
               {/* Row 3 */}
-              <div>
+              <div className=" md:hidden">
                 <h2
                   className={`mb-4 text-sm mt-4 text-[18px] xl:text-[20px] capitalize flex items-center justify-between font-semibold text-black ${jost.className}`}
                   onClick={() => toggleSection('legal')}
                 >
                   Legal {openSections.legal ? <ChevronUp className="inline-flex ml-auto md:hidden" /> : <ChevronDown className="inline-flex ml-auto md:hidden" />}
                 </h2>
-                <ul className={`text-[#8B929D] text-sm lg:text-[14px] xl:text-[16px] space-y-3 ${lexendDeca.className} font-normal transition-all duration-300 ease-in-out ${openSections.legal || windowWidth >= 768 ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
+                <ul className={`text-[#8B929D] text-sm lg:text-[14px] xl:text-[16px] space-y-3 ${lexendDeca.className} font-normal transition-all duration-300 ease-in-out ${openSections.legal    ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
                   <li className="">
                     <a href="/terms-and-conditions" className="hover:underline">
                       Terms &amp; Conditions
@@ -156,6 +222,42 @@ export default function Footer() {
                   </li>
                 </ul>
               </div>
+              <div className=" hidden md:block">
+                <h2
+                  className={`mb-4 text-sm mt-4 text-[18px] xl:text-[20px] capitalize flex items-center justify-between font-semibold text-black ${jost.className}`}
+                  onClick={() => toggleSection('legal')}
+                >
+                  Legal {openSections.legal ? <ChevronUp className="inline-flex ml-auto md:hidden" /> : <ChevronDown className="inline-flex ml-auto md:hidden" />}
+                </h2>
+                <ul className={`text-[#8B929D] text-sm lg:text-[14px] xl:text-[16px] space-y-3 ${lexendDeca.className} font-normal transition-all duration-300 ease-in-out max-h-screen opacity-100' }`}>
+                  <li className="">
+                    <a href="/terms-and-conditions" className="hover:underline">
+                      Terms &amp; Conditions
+                    </a>
+                  </li>
+                  <li className="">
+                    <a href="#" className="hover:underline">
+                      Privacy Policy
+                    </a>
+                  </li>
+                  <li className="">
+                    <a href="#" className="hover:underline">
+                      Cookie Policy (EU)
+                    </a>
+                  </li>
+                </ul>
+              </div>
+
+
+
+
+
+
+
+
+
+
+
               {/* Row 4 */}
               <div>
                 <h2
@@ -173,6 +275,16 @@ export default function Footer() {
               </div>
             </div>
           </div>
+
+
+
+
+
+
+
+
+
+
 
           <hr className="border-gray-200 sm:mx-auto dark:border-gray-700" />
 
