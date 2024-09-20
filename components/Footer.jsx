@@ -140,7 +140,7 @@ export default function Footer() {
                 </h2>
                 <ul className={`text-[#8B929D] text-sm lg:text-[14px] xl:text-[16px] space-y-3 ${lexendDeca.className} font-normal transition-all duration-300 ease-in-out ${openSections.legal || windowWidth >= 768 ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
                   <li className="">
-                    <a href="#" className="hover:underline">
+                    <a href="/terms-and-conditions" className="hover:underline">
                       Terms &amp; Conditions
                     </a>
                   </li>
