@@ -26,16 +26,18 @@ const sanitizeText = (text) => {
 };
 
 const CategoryItem = ({ href, logo, name }) => (
-  <li className="flex flex-col items-center text-center max-w-[90px]">
+  <li className="flex flex-col items-center text-center max-w-[90px] 2xl:max-w-[120px]">
     <Link href={href} passHref className="flex flex-col items-center">
-      <div className="flex justify-center items-center w-[88px] h-[88px] rounded-full overflow-hidden border-4 border-transparent hover:border-blue-500 transition-all duration-300 ease-in-out">
+      <div className="flex justify-center items-center w-[88px] h-[88px] 2xl:w-[116px] 2xl:h-[116px] rounded-full overflow-hidden border-4 border-transparent hover:border-blue-500 transition-all duration-300 ease-in-out">
         <Image
           src={logo}
           alt={sanitizeText(name)}
           className="object-cover w-full h-full cursor-pointer"
+          width={116}
+          height={116}
         />
       </div>
-      <p className={`mt-2 text-sm text-center w-[88px] font-semibold ${jost.className}`}>
+      <p className={`mt-2 text-sm 2xl:text-base text-center w-[88px] 2xl:w-[116px] font-medium ${jost.className}`}>
         {sanitizeText(name)}
       </p>
     </Link>
@@ -44,10 +46,10 @@ const CategoryItem = ({ href, logo, name }) => (
 
 const SkeletonItem = () => (
   <li className="flex flex-col items-center text-center">
-    <div className="flex justify-center items-center w-24 h-24 rounded-full overflow-hidden border-4 border-transparent">
+    <div className="flex justify-center items-center w-24 h-24 2xl:w-[116px] 2xl:h-[116px] rounded-full overflow-hidden border-4 border-transparent">
       <Skeleton circle={true} width={96} height={96} />
     </div>
-    <p className={`mt-2 text-sm font-semibold ${jost.className}`}>
+    <p className={`mt-2 text-sm 2xl:text-base font-semibold ${jost.className}`}>
       <Skeleton width={80} height={15} />
     </p>
   </li>
@@ -109,12 +111,14 @@ const MenuCategoryList = () => {
   const [mainCategory, setMainCategory] = useState(null);
   const [subCategories, setSubCategories] = useState([]);
   const setCategoryId = useCategoryIdState((state) => state.setCategoryId);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       if (!categorylanding) return;
 
       try {
+        setIsLoading(true);
         setMainCategory(null);
         setSubCategories([]);
         setCategoryId(null);
@@ -129,6 +133,8 @@ const MenuCategoryList = () => {
         }
       } catch (error) {
         console.log("Error fetching data:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -137,8 +143,14 @@ const MenuCategoryList = () => {
 
   return (
     <>
-      <h1 className={`text-2xl ${jost.className} uppercase font-bold text-center mt-10`}>
-        {mainCategory ? sanitizeText(mainCategory.name) : <Skeleton width={200} height={30} />}
+      <h1 className={`text-2xl ${jost.className} uppercase font-semibold text-center mt-10`}>
+        {isLoading ? (
+          <Skeleton width={200} height={30}>
+            <span className="opacity-0">Shop all</span>
+          </Skeleton>
+        ) : (
+          <>Shop all {sanitizeText(mainCategory?.name || '')}</>
+        )}
       </h1>
       <div className="mt-10">
         <CategoryList
@@ -152,8 +164,10 @@ const MenuCategoryList = () => {
 
 const SkeletonList = () => (
   <>
-    <h1 className={`text-2xl ${jost.className} uppercase font-bold text-center mt-10`}>
-      <Skeleton width={200} height={30} />
+    <h1 className={`text-2xl  ${jost.className} uppercase font-bold text-center mt-10`}>
+      <Skeleton width={200} height={30}>
+        <span className="opacity-0">Shop all</span>
+      </Skeleton>
     </h1>
     <div className="mt-10">
       <ul className="flex justify-center gap-8 overflow-x-scroll md:overflow-x-auto pl-[500px] md:pl-0">
