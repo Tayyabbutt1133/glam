@@ -122,8 +122,8 @@ We do not issue tax invoices for shipments to the EU from the UK. Any proof-of-s
         Notwithstanding any other provision in the Terms, nothing in these Terms
         affect or limit your rights as a consumer under English law; or will
         exclude or limit our liability for death or personal injury resulting
-        from our negligence. The Website is provided on an 'as is' and 'as
-        available' basis without any representation or endorsement made and we
+        from our negligence. The Website is provided on an &APOSas is&APOS and &APOSas
+        available&APOS basis without any representation or endorsement made and we
         make no warranties, whether express or implied, in relation to it and
         its use. You acknowledge that we cannot guarantee and cannot be
         responsible for the security or privacy of the Website and any
