@@ -117,7 +117,7 @@ export default function MyBag() {
   );
 
   const sliderSettings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 500,
     slidesToShow: 3,
@@ -262,7 +262,7 @@ export default function MyBag() {
                           </p>
                         </div>
                         <div className="block w-fit ml-auto items-center border border-gray-300 rounded-lg overflow-hidden">
-                          <button
+                          {/* <button
                             className="text-sm px-3 py-1 text-gray-600 hover:bg-gray-100 focus:outline-none"
                             onClick={() =>
                               updateQuantity(
@@ -272,18 +272,18 @@ export default function MyBag() {
                             }
                           >
                             -
-                          </button>
-                          <span className="text-sm px-3 py-1 border-l border-r border-gray-300">
+                          </button> */}
+                          {/* <span className="text-sm px-3 py-1 border-l border-r border-gray-300">
                             {item.quantity}
-                          </span>
-                          <button
+                          </span> */}
+                          {/* <button
                             className="text-sm px-3 py-1 text-gray-600 hover:bg-gray-100 focus:outline-none"
                             onClick={() =>
                               updateQuantity(item.id, item.quantity + 1)
                             }
                           >
                             +
-                          </button>
+                          </button> */}
                         </div>
                         <div className=" mt-6 sm:mt-24 flex items-center justify-between">
                           <div className="flex items-center">

@@ -5,8 +5,22 @@ import Text from "../../../ui/Text";
 import leftImage from "/public/lifecycle/brand in focus/left.png";
 import rightImage from "/public/lifecycle/brand in focus/right.png";
 import Container from "../../../container";
+import Link from "next/link";
 
 export default function BrandInFocus() {
+
+  const cats = [{
+    skin: {
+      name: "skincare"
+    },
+    make: {
+      name: "makeup"
+    },
+    brand: {
+      name: "4711"
+    }
+  }];
+
   return (
     <div className="flex flex-col gap-5 mb-10">
       <Container>
@@ -41,15 +55,16 @@ export default function BrandInFocus() {
               <button className="bg-white text-black py-2 px-2 xl:px-6 2xl:px-8 rounded">
                 SHOP SKINCARE
               </button>
+
               <button className="bg-white text-black py-2 px-2 xl:px-6 2xl:px-8 rounded">
                 SHOP NEW IN
-              </button>
+                </button>
               <button className="bg-white text-black py-2 px-2 xl:px-6 2xl:px-8 rounded">
                 SHOP MAKEUP
-              </button>
+                </button>
               <button className="bg-white text-black py-2 px-2 xl:px-6 2xl:px-8 rounded">
                 SHOP BRAND
-              </button>
+                </button>
             </div>
           </div>
         </div>
@@ -91,18 +106,26 @@ export default function BrandInFocus() {
             <div
               className={`grid grid-cols-2 gap-4 mt-8 ${jost.className} font-medium lg:text-base 2xl:text-xl`}
             >
+              <Link href={`/product-categories/${cats[0].skin.name}`}>
               <button className="bg-white text-black py-2 lg:px-4 xl:px-6 2xl:px-8 rounded">
                 SHOP SKINCARE
-              </button>
+                </button>
+              </Link>
+              <Link href={`/new-in`}>
               <button className="bg-white text-black py-2 lg:px-4 xl:px-6 2xl:px-8 rounded">
                 SHOP NEW IN
-              </button>
+                </button>
+              </Link>
+              <Link href={`/product-categories/${cats[0].make.name}`}>
               <button className="bg-white text-black py-2 lg:px-4 xl:px-6 2xl:px-8 rounded">
                 SHOP MAKEUP
-              </button>
+                </button>
+                </Link>
+              <Link href={`/brands/${cats[0].brand.name}`}>
               <button className="bg-white text-black py-2 lg:px-4 xl:px-6 2xl:px-8 rounded">
                 SHOP BRAND
-              </button>
+                </button>
+                </Link>
             </div>
           </div>
 

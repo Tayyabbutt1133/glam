@@ -107,7 +107,7 @@ export default function OrderConfirmation() {
   );
 
   const sliderSettings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 500,
     slidesToShow: 3,
@@ -412,13 +412,16 @@ export default function OrderConfirmation() {
                 <div key={product.id} className="px-2  mb-3">
                   <div className="bg-white rounded-lg shadow-md flex flex-col overflow-hidden  min-h-[385px] pb-4">
                     <div className="relative pb-[100%]">
+                    <Link href={`/product/${product.id}`}>
                       <Image
                         src={product.images[0]?.src || "/placeholder.svg"}
                         alt={product.name}
                         layout="fill"
                         objectFit="cover"
-                      />
+                        />
+                        </Link>
                     </div>
+                    
                     <div className="p-4  flex-grow justify-between flex flex-col">
                       <aside>
                         <h3

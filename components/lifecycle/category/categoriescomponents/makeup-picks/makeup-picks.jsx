@@ -110,7 +110,7 @@ const MakeupPicks = () => {
   }
 
   return (
-    <Container className="space-y-10 mb-14 mt-10">
+    <Container className="space-y-10 mb-14 mt-20">
       <Text style="h1" className="uppercase">Makeup Picks for You</Text>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {loading

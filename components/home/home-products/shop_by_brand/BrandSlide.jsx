@@ -16,11 +16,11 @@ import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 
 const brands = [
-  { id: 79, name: 'Rimmel', image: rimmel },
-  { id: 72, name: 'L\'Oreal', image: loreal },
-  { id: 70, name: 'Bourjois', image: bourjois },
-  { id: 936, name: 'Kerastase', image: kerastase },
-  { id: 74, name: 'Max Factor', image: max_factor },
+  { id: 79, name: 'rimmel', image: rimmel },
+  { id: 72, name: 'loreal', image: loreal },
+  { id: 70, name: 'bourjois', image: bourjois },
+  { id: 936, name: 'kerastase', image: kerastase },
+  { id: 74, name: 'max-factor', image: max_factor },
 ]
 
 export default function BrandSlide() {
@@ -70,7 +70,7 @@ export default function BrandSlide() {
       <Slider {...settings} className="brand-slider">
         {brands.map((brand) => (
           <div key={brand.id} className="px-4">
-            <Link href={`/brands/${brand.id}`}>
+            <Link href={`/brands/${brand.name}`}>
               <div className="flex items-center justify-center h-20">
                 <Image
                   src={brand.image}

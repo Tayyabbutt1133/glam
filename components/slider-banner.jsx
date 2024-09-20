@@ -7,7 +7,7 @@ export default function SliderBanner({ bannerObject, hero = false }) {
   const { title, description, src } = bannerObject;
 
 
-  const olaplexbrand = 935;
+  const olaplexbrand = "olaplex";
 
   return (
     <div className="w-full flex h-full max-h-[693px]">

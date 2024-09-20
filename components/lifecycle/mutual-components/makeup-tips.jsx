@@ -54,7 +54,7 @@ const Tips = ({ data }) => {
 export default function MakeupTips() {
   return (
     <Container className="my-3 lg:my-9">
-      <Text style={"h1"} className="uppercase">
+      <Text style={"h1"} className="uppercase mt-28">
         makeup tips for you
       </Text>
       <div className="overflow-x-auto lg:overflow-x-visible">

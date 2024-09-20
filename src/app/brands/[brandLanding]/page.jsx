@@ -59,8 +59,9 @@ export default function Page() {
         <Container>
           <Bestseller />
           <Aboutbrand />
+          <Newin />
         </Container>
-        <Newin />
+        
         <Container>
           <Staffpicks />
           <MakeupTips />
