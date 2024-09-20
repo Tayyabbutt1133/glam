@@ -19,7 +19,7 @@ import ae from "../public/card-logos/american-express.svg"
 import paypal from "../public/card-logos/paypal.svg"
 import { lexendDeca, jost} from "./ui/fonts";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import useWindowWidth from "../hooks/useWindow";
+
 
 export default function Footer() {
   const [openSections, setOpenSections] = useState({
