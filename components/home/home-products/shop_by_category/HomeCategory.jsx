@@ -114,7 +114,7 @@ export default function HomeCategory() {
   return (
     <>
       <Container>
-        <div className="py-16  relative">
+        <div className="py-16  relative md:mx-7 lg:mx-6 xl:mx-5">
           <h1 className={`text-2xl font-semibold mb-8 text-left ${jost.className} uppercase`}>Shop by Category</h1>
           <Slider {...settings}>
             {categories.map((category, index) => (
