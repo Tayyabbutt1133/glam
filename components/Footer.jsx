@@ -180,7 +180,7 @@ export default function Footer() {
             <span className="text-sm lg:text-[14px] xl:text-[16px] text-[#8B929D] font-normal sm:text-center">
               GLAMBEAUTY © 2024. All Rights Reserved.
             </span>
-            <div className="flex justify-between items-center gap-3">
+            <div className="flex sm:justify-between mt-2 sm:mt-0 items-center gap-3">
               <Link className="grid place-items-center w-[50px] h-[32px] border border-gray-300 rounded-[8px]" href="#">
                 <Image width={35} height={0} src={visa} alt="Card 1" />
               </Link>
