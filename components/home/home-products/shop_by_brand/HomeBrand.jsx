@@ -61,9 +61,10 @@ const HomeBrand = () => {
               href={`/brands/${product.brandLanding}`}
               className="cursor-pointer bg-transparent overflow-hidden transition-shadow duration-300 flex-shrink-0 w-[calc(50%-8px)] sm:w-[calc(33.333%-16px)] lg:w-full"
             >
-              <div className="relative sm:w-full h-[120px] sm:h-72 2xl:h-[390px] w-[150px]">
+              {/* <div className="relative   h-[120px] sm:h-72 2xl:h-[330px] w-[150px] sm:w-72 2xl:w-[330px] "> */}
+              <div className="relative w-[150px] h-[150px] sm:h-60 sm:w-60 lg:h-[255px]  lg:w-[255px]  2xl:h-[330px]    2xl:w-[330px]">
                 <Image
-                  className="rounded-md 2xl:rounded-lg brightness-75 sm:brightness-100"
+                  className="rounded-md 2xl:rounded-lg w-full h-full brightness-75 sm:brightness-100"
                   src={product.image}
                   alt={product.name}
                   layout="fill"
@@ -76,7 +77,7 @@ const HomeBrand = () => {
                 </h3>
               </div>
 
-              <div className="px-4 py-6 text-left">
+              <div className=" py-6 text-left">
                 <h3
                   className={`hidden sm:block text-lg font-semibold text-gray-900 ${jost.className}`}
                 >
