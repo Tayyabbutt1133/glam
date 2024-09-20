@@ -80,6 +80,7 @@ export default function Navigation() {
                     img: link.menu_img,
                   })
                 }
+                onClick={closeMegaMenu}
               >
                 <div>{link.name}</div>
               </Link>
