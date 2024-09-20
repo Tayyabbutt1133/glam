@@ -7,7 +7,7 @@ import creditCardType from "credit-card-type";
 import { useCartStore } from "../../../states/Cardstore";
 import { jost, lexendDeca } from "../../../components/ui/fonts";
 import Container from "../../../components/container";
-import PayPal from "../../../public/PayPal.svg";
+import PayPal from "../../../public/card-logos/paypal.svg";
 import Klarna from "../../../public/Klarna.svg";
 import visa from "../../../public/card-logos/visa.svg";
 import master from "../../../public/card-logos/master.svg";
@@ -55,6 +55,7 @@ const shippingOptions = [
 ];
 
 export default function Checkout() {
+  const [isMounted, setIsMounted] = useState(false);
   const { cartItems } = useCartStore();
   const { rate,currencySymbol } = usePopupStore();
   const [formData, setFormData] = useState({
@@ -367,6 +368,11 @@ export default function Checkout() {
     </div>
   );
 
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) return null;
   return (
     <Container>
       <div className="flex justify-between w-[65%] mt-16 items-center">
@@ -389,22 +395,22 @@ export default function Checkout() {
           {/* Left: Checkout Form */}
           <div className="lg:w-2/3 space-y-6">
             {/* Header with Payment Options */}
-            <div className="flex flex-col sm:flex-row justify-between gap-4 mb-6">
+            <div className="flex flex-row justify-evenly sm:justify-between gap-4 mb-6">
               <button
-                className={`bg-yellow-400 hover:bg-yellow-500 text-black px-4 py-2 rounded flex items-center justify-center ${jost.className}`}
+                className={`bg-yellow-400  hover:bg-yellow-500 w-full  text-black sm:px-4 sm:py-2 rounded flex items-center justify-center ${jost.className}`}
               >
-                Pay with{" "}
-                <span className="ml-2">
-                  <Image src={PayPal} alt="PayPal" />
+                <span className=" hidden sm:inline">Pay with{" "}</span>
+                <span className="sm:ml-2  ">
+                  <Image src={PayPal} alt="PayPal"   />
                 </span>
               </button>
               <button
-                className={`bg-[#FFB3C7] hover:bg-pink-500 text-black px-4 py-2 rounded flex items-center justify-center ${jost.className}`}
+                className={`bg-[#FFB3C7] hover:bg-pink-500 w-full  text-black px-4 py-2 rounded flex items-center justify-center ${jost.className}`}
               >
-                <span className="mr-2">
+                <span className="sm:mr-2">
                   <Image src={Klarna} alt="Klarna" />
                 </span>{" "}
-                Express Checkout
+                <span  className=" hidden sm:inline">Express Checkout</span>
               </button>
             </div>
 
@@ -796,7 +802,7 @@ export default function Checkout() {
           </div>
 
           {/* Right: Order Summary and Bag Summary */}
-          <div className="lg:w-1/3 bg-gray-50  p-6 rounded-lg -mt-24">
+          <div className="lg:w-1/3 bg-gray-50  p-6 rounded-lg lg:-mt-24">
             <div className=" ">
               <div className=" bg-white rounded-lg p-6 shadow-sm">
                 <h2 className={`text-xl font-semibold mb-4 ${jost.className}`}>
