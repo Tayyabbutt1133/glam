@@ -16,7 +16,7 @@ export default function SliderBanner({ bannerObject, hero = false }) {
         <div className={`flex flex-col w-full sm:w-[90%] lg:w-[80%] gap-3 sm:gap-4 lg:gap-6 ${hero ? "items-center text-center" : "items-start"}`}>
           <Text 
             style={"h1"} 
-            className={`uppercase hero-title  text-lg sm:text-xl lg:text-3xl xl:text-4xl`}>
+            className={`hero-title text-lg sm:text-xl lg:text-3xl xl:text-4xl hero-title`}>
             {title}
           </Text>
 

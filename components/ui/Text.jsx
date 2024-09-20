@@ -3,7 +3,7 @@ import { jost, lexendDeca } from "./fonts";
 export default function Text({ children, className = '', style }) {
   switch (style) {
     case "h1":
-      style = "font-semibold text-xl lg:text-2xl 2xl:text-4xl " + jost.className;
+      style = "lg:font-medium 2xl:font-semibold text-xl lg:text-2xl 2xl:text-4xl " + jost.className;
       return <h1 className={`${style} ${className}`}>{children}</h1>;
     case "h2":
       style = "font-semibold text-[32px] " + jost.className;
@@ -18,7 +18,7 @@ export default function Text({ children, className = '', style }) {
       style = "text-xs font-normal " + lexendDeca.className;
       return <p className={`${style} ${className}`}>{children}</p>;
     case "sm":
-      style = "text-base font-normal " + lexendDeca.className;
+      style = "text-base lg:font-normal 2xl:font-medium " + lexendDeca.className;
       return <p className={`${style} ${className}`}>{children}</p>;
     case "large":
       style = "text-xl font-bold " + lexendDeca.className;

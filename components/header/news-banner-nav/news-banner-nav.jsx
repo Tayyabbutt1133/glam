@@ -6,6 +6,7 @@ import ArrowDown from "../../../public/icons/arrow-down"
 import { lexendDeca } from "../../ui/fonts"
 import Container from "../../container"
 import { usePopupStore } from "../../../states/use-popup-store.jsx"
+import Text from "../../ui/Text"
 
 export default function NewsBannerNav() {
   const [mounted, setMounted] = useState(false)
@@ -69,9 +70,9 @@ export default function NewsBannerNav() {
     <div className={`hidden lg:flex ${lexendDeca.className} w-full bg-[#F7EBE0]`}>
       <Container>
         <div className="flex w-full justify-center items-center relative py-2">
-          <p className="text-center text-base font-medium">
+          <Text style={"sm"} className="text-center ">
             Up to 50% off selected brands + UK next day delivery over £40
-          </p>
+          </Text>
           <div className="flex flex-row gap-1 absolute right-0">
             <div className="relative flex w-10">
               {flagUrl && (
