@@ -10,29 +10,29 @@ import Text from "../../ui/Text";
 let alphabet = "abcdefghijklmnopqrstuvwxyz".toUpperCase().split("");
 alphabet = ["0-9", ...alphabet];
 
-export default function BrandMegaMenu({ links }) {
+export default function BrandMegaMenu({ closeMegaMenu }) {
   const [activeLetter, setActiveLetter] = useState(null);
-
-  // Store refs for each brand category
   const categoryRefs = useRef({});
 
   let brandCategories = groupBrandsByAlphabet(brands, alphabet);
 
   const handleScrollToCategory = (letter) => {
     setActiveLetter(letter);
-    // If the letter exists in categoryRefs, scroll to that section
     if (categoryRefs.current[letter]) {
       categoryRefs.current[letter].scrollIntoView({
         behavior: "smooth",
-        block: "nearest", // Prevents the page from scrolling vertically
-        inline: "start", // Ensures horizontal scrolling if needed
+        block: "nearest",
+        inline: "start",
       });
     }
   };
 
+  const handleLinkClick = () => {
+    closeMegaMenu();
+  };
+
   return (
     <div className="flex flex-col h-full w-full max-h-[460px]">
-      {/* Alphabet filter */}
       <Container>
         <div className="flex space-x-3 my-4 justify-between">
           {alphabet.map((letter, index) => (
@@ -51,15 +51,14 @@ export default function BrandMegaMenu({ links }) {
         </div>
       </Container>
       <hr />
-      {/* Brands */}
       <div className="flex flex-row gap-28 justify-start overflow-x-auto w-4/5 py-5 mx-auto">
         {brandCategories?.map((category) => (
           <div
             key={category?.label}
-            ref={(el) => (categoryRefs.current[category?.label] = el)} // Assign ref to each category
+            ref={(el) => (categoryRefs.current[category?.label] = el)}
             className="min-w-fit"
           >
-            <Text style={"h4"} className={`uppercase mb-5`}>
+            <Text style="h4" className="uppercase mb-5">
               {category.label}
             </Text>
             <ul className="flex flex-col flex-wrap text-sm lg:h-[250px] xl:h-[300] gap-4">
@@ -68,6 +67,7 @@ export default function BrandMegaMenu({ links }) {
                   href={`/brands/${brand.slug}`}
                   key={index}
                   className={`${lexendDeca.className} mr-5`}
+                  onClick={handleLinkClick}
                 >
                   {brand.name}
                 </Link>

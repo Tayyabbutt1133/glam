@@ -11,13 +11,11 @@ export default function Navigation() {
   const [hoveredLink, setHoveredLink] = useState({
     id: null,
     href: null,
-  
     img: "",
   });
   const [links, setLinks] = useState([]);
   const mainLinks = links?.filter((link) => link.parent === "0");
 
-  // fetching data from URL
   useEffect(() => {
     const fetchLinks = async () => {
       try {
@@ -29,7 +27,6 @@ export default function Navigation() {
           }
         );
         const data = await res.json();
-        // console.log({data})
         setLinks(data);
       } catch (err) {
         console.error(err);
@@ -38,8 +35,6 @@ export default function Navigation() {
     fetchLinks();
   }, []);
 
-  // condition of mega menu
-  // no megamenu for sale and new-in
   const shouldShowMegaMenu = links?.find((link) => {
     return (
       link.id === hoveredLink.id &&
@@ -48,8 +43,11 @@ export default function Navigation() {
     );
   });
 
-  // Function to handle mouse leave from both link and megamenu
   const handleMouseLeave = () => {
+    setHoveredLink({ id: null, href: null, img: '' });
+  };
+
+  const closeMegaMenu = () => {
     setHoveredLink({ id: null, href: null, img: '' });
   };
 
@@ -57,7 +55,7 @@ export default function Navigation() {
     <div className="relative" onMouseLeave={handleMouseLeave}>
       <div
         className={`${jost.className} hidden lg:flex items-center h-[52px] font-normal lg:text-base xl:text-sm bg-white text-sm 2xl:text-lg relative`}
-        style={{ boxShadow: '0px 0px 6px rgba(0, 0, 0, 0.1)', zIndex: '10' }} // Shadow with no x or y offset, just blur
+        style={{ boxShadow: '0px 0px 6px rgba(0, 0, 0, 0.1)', zIndex: '10' }}
       >
         <Container>
           <nav className="flex flex-row w-full justify-between items-center py-3">
@@ -80,7 +78,6 @@ export default function Navigation() {
                     id: link.id,
                     href: link.href,
                     img: link.menu_img,
-                   
                   })
                 }
               >
@@ -90,14 +87,13 @@ export default function Navigation() {
           </nav>
         </Container>
       </div>
-      {/* Add onMouseEnter and onMouseLeave to the MegaMenu to keep it visible when hovering */}
       {shouldShowMegaMenu && (
         <div
           className="absolute top-full left-0 w-full"
-          onMouseEnter={() => clearTimeout()} // Prevent resetting state when entering MegaMenu
-          onMouseLeave={handleMouseLeave} // Reset state when leaving MegaMenu
+          onMouseEnter={() => clearTimeout()}
+          onMouseLeave={handleMouseLeave}
         >
-          <MegaMenu hoveredLink={hoveredLink} links={links} />
+          <MegaMenu hoveredLink={hoveredLink} links={links} closeMegaMenu={closeMegaMenu} />
         </div>
       )}
     </div>
