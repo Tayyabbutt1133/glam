@@ -394,7 +394,7 @@ export default function Checkout() {
               >
                 <span className=" hidden sm:inline">Pay with{" "}</span>
                 <span className="sm:ml-2  ">
-                  <Image src={PayPal} alt="PayPal"   />
+                  <Image className="w-16" src={PayPal} alt="PayPal"   />
                 </span>
               </button>
               <button

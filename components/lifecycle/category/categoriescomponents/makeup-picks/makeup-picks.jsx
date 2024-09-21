@@ -6,7 +6,7 @@ import Container from "../../../../container"
 import Text from "../../../../ui/Text"
 import Image from "next/image"
 import Link from "next/link"
-import { jost } from "../../../../ui/fonts"
+import { jost, lexendDeca } from "../../../../ui/fonts"
 import { useCartStore } from '/states/Cardstore'
 
 const decodeHtmlEntities = (text) => {
@@ -64,14 +64,14 @@ const SingleMakeupPick = ({ product }) => {
         </div>
       </Link>
       <div className="flex-grow flex flex-col gap-3 items-start justify-start">
-        <Text style="h3" className="font-semibold uppercase">
+        <h1 className={`font-semibold uppercase ${jost.className}`}>
           {brand}
-        </Text>
-        <Text style="sm" className="line-clamp-2">
+        </h1>
+        <p  className={`line-clamp-2 ${lexendDeca.className} font-normal`}>
           {shortName}
-        </Text>
+        </p>
       </div>
-      <CustomButton onClick={handleAddToCart} className="mt-auto w-full uppercase">
+      <CustomButton onClick={handleAddToCart} className="mt-auto text-sm w-[40%] hover:bg-[#CF8562] uppercase">
         Shop Now
       </CustomButton>
     </div>
