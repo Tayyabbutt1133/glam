@@ -621,11 +621,13 @@ export default function MyBag() {
                           ADD TO BAG
                         </button>
                     </div>
+                    </div>
                   </div>
                 ))}
               </Slider>
             )}
           </div>
+
         </div>
       </div>
     </main>
