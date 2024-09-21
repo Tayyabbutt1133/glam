@@ -14,6 +14,7 @@ import NextArrowIcon from "../../../../public/hero-banners/next-arrow";
 import PrevArrowIcon from "../../../../public/hero-banners/prev-arrow";
 import { useCategoryIdState } from "../../../../states/use-category-id";
 import Product from "../../../product";
+import Text from "../../../ui/Text";
 
 const arrowStyles = {
   width: "40px",
@@ -140,12 +141,12 @@ const Staffpicks = () => {
   if (!categoryId) return;
   
   return (
-    <Container className="mb-16 md:mx-5 lg:mx-10 mt-14">
-      <h2
+    <Container className="my-16">
+      <Text style={"h1"}
         className={`text-2xl font-semibold mx-4 my-8 ${jost.className} uppercase`}
       >
         Staff Picks
-      </h2>
+      </Text>
       {loading ? (
         <Slider {...settings}>
           {Array(4)
