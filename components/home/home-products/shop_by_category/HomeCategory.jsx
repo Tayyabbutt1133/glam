@@ -64,7 +64,7 @@ export default function HomeCategory() {
     { name: "Lips", image: cat_two, categoryLanding: "lips", subcategories: "33" },
     { name: "Hair", image: cat_three, categoryLanding: "hair", subcategories: "484" },
     { name: "Fragrance", image: cat_four, categoryLanding: "fragrance", subcategories: "485" },
-    { name: "Skincare", image: cat_five, categoryLanding: "skincare", subcategories: "147" }
+    { name: "Skincare", image: cat_five, categoryLanding: "skincare", subcategories: "483" }
   ];
 
   const settings = {
