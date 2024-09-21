@@ -15,6 +15,7 @@ import NextArrowIcon from '../../../../public/hero-banners/next-arrow';
 import PrevArrowIcon from '../../../../public/hero-banners/prev-arrow';
 import { useCartStore } from '../../../../states/Cardstore';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 import { usePopupStore } from '../../../../states/use-popup-store';
 
@@ -76,12 +77,14 @@ const ProductCard = ({ product, isFavorite, onFavoriteClick, onAddToCart }) => {
           )}
         </button>
       </div>
+      <Link href={`/product/${product.id}`}>
       <img
         onClick={handleProductClick}
         className="w-full h-48 object-contain p-4"
         src={product.images[0]?.src}
         alt={product.images[0]?.alt || productName}
-      />
+        />
+        </Link>
       <div className="px-4 pb-4 flex-grow flex flex-col">
         <h2 className={`text-gray-900 hidden sm:block font-bold text-[16px] ${jost.className} h-[40px] overflow-hidden`}>
           {brand}
@@ -119,7 +122,7 @@ const ProductCard = ({ product, isFavorite, onFavoriteClick, onAddToCart }) => {
           {currencySymbol}{parseFloat(product.price * rate).toFixed(2)}
         </p>
         <button
-          className={`w-full hover:bg-[#CF8562] mt-4 bg-black text-white py-2 rounded-lg hover:bg-gray-800 font-normal transition duration-200 ${jost.className} uppercase`}
+          className={`w-full hover:bg-[#CF8562] mt-4 bg-black text-white py-2 rounded-lg  font-normal transition duration-200 ${jost.className} uppercase`}
           onClick={() => onAddToCart(product)}
         >
           ADD TO BAG

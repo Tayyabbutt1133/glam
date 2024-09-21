@@ -56,10 +56,10 @@ export default function Footer() {
               </a>
               <p className={`text-sm lg:text-[14px] 2xl:text-[16px]  text-[#7E7E7E] md:w-64 ${lexendDeca.className} font-normal`}>We are the fastest-growing beauty retailer, always offering huge discounts off the RRP.</p>
               <div name="socials" className=" flex gap-4">
-                <Image src={fb} />
-                <Image src={Insta} />
-                <Image src={pin} />
-                <Image src={tik}/>
+                <Image className="hover:scale-110 transition-transform duration-300 cursor-pointer" src={fb} />
+                <Image className="hover:scale-110 transition-transform duration-300 cursor-pointer" src={Insta} />
+                <Image className="hover:scale-110 transition-transform duration-300 cursor-pointer" src={pin} />
+                <Image className="hover:scale-110 transition-transform duration-300 cursor-pointer" src={tik}/>
               </div>
             </div>
 
@@ -294,9 +294,9 @@ export default function Footer() {
                 <p className={`text-[#8B929D] text-sm lg:text-[14px] 2xl:text-[16px] space-y-3 ${lexendDeca.className} font-normal mb-4`}>
                   Download the App and get an extra 10% off your first order...!
                 </p>
-                <div className="flex sm:flex-col xl:flex-row gap-6">
-                  <Image src={app_store} />
-                  <Image src={play_store} />
+                <div className="flex sm:flex-col xl:flex-row gap-6 ">
+                  <Image className="hover:scale-110 cursor-pointer transition-transform duration-300" src={app_store} />
+                  <Image className="hover:scale-110 cursor-pointer transition-transform duration-300" src={play_store} />
                 </div>
               </div>
             </div>
@@ -320,19 +320,19 @@ export default function Footer() {
             </span>
             <div className="flex sm:justify-between mt-2 sm:mt-0 items-center gap-3">
               <Link className="grid place-items-center w-[50px] h-[32px] border border-gray-300 rounded-[8px]" href="#">
-                <Image width={35} height={0} src={visa} alt="Card 1" />
+                <Image className="hover:scale-110 transition-transform duration-300" width={35} height={0} src={visa} alt="Card 1" />
               </Link>
               <Link className="grid place-items-center w-[50px] h-[32px] border border-gray-300 rounded-[8px]" href="#">
-                <Image width={24} height={0} src={maestro} alt="Card 3" />
+                <Image className="hover:scale-110 transition-transform duration-300" width={24} height={0} src={maestro} alt="Card 3" />
               </Link>
               <Link className="grid place-items-center w-[50px] h-[32px] border border-gray-300 rounded-[8px]" href="#">
-                <Image width={27} height={0} src={master} alt="Card 2" />
+                <Image className="hover:scale-110 transition-transform duration-300" width={27} height={0} src={master} alt="Card 2" />
               </Link>
               <Link className="flex justify-end w-[50px] h-[32px] border border-gray-300 rounded-[8px]" href="#">
-                <Image width={27} height={0} src={ae} alt="Card 4" />
+                <Image className="hover:scale-110 transition-transform duration-300" width={27} height={0} src={ae} alt="Card 4" />
               </Link>
               <Link className="grid place-items-center w-[50px] h-[32px] border border-gray-300 rounded-[8px]" href="#">
-                <Image width={35} height={0} src={paypal} alt="Card 5" />
+                <Image className="hover:scale-110 transition-transform duration-300" width={35} height={0} src={paypal} alt="Card 5" />
               </Link>
             </div>
           </div>
