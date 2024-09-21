@@ -146,30 +146,35 @@ export default function MyBag() {
   const addToCart = useCartStore((state) => state.addToCart);
 
   return (
-    <Container>
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex flex-col md:flex-row items-center mb-4 w-full md:w-[69%]">
-          <p className={`text-sm text-black ${jost.className} font-medium`}>
+    <main className="lg:w-[93%] w-[95%] xl:w-[92%] mx-auto">
+      <div className=" lg:w-[98%] xl:w-[92%] mx-auto px-4 py-8">
+        <div className="flex flex-col md:flex-row items-center md:justify-between  md:pr-2  mb-4 w-full md:w-[69%]">
+          <p className={`text-sm lg:text-[20px] md:w-full text-black ${jost.className} sm:font-medium`}>
             Log in or create an account now to get these exclusive benefits.
           </p>
-          <div className="flex mt-3 justify-start flex-row gap-4 md:gap-2 ">
+          <div className="flex mt-3 md:mt-0 items-center justify-between w-[80%] sm:w-8/12 md:w-[59%] lg:w-[40%]  md:justify-end flex-row gap-4 md:gap-1 lg:gap-2 ">
             <Link href="/signup">
               <button
-                className={`mr-4 ${jost.className} text-sm text-gray-800 border border-gray-300 px-4 py-2 font-medium rounded-lg`}
+                className={`mr-2 lg:mr-4 ${jost.className} lg:text-base text-gray-800 sm:border border-gray-300 px-4 py-2 font-medium  rounded-lg`}
               >
                 Register
               </button>
             </Link>
             <Link href="/login">
               <button
-                className={`text-sm font-medium text-gray-800 border border-gray-300 px-4 py-2 rounded-lg ${jost.className}`}
+                className={` lg:text-base font-medium  text-gray-800 sm:border border-gray-300 px-4 py-2 rounded-lg ${jost.className}`}
               >
-                Log In
+              Log in
               </button>
             </Link>
           </div>
         </div>
         <hr className="h-2" />
+
+
+
+
+
         <div className="flex justify-between items-center mb-6 mt-4">
           <h1 className={`text-3xl font-medium ${jost.className}`}>
             Your Bag ({cartItems.length})
@@ -598,6 +603,6 @@ export default function MyBag() {
           </div>
         </div>
       </div>
-    </Container>
+    </main>
   );
 }
