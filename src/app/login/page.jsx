@@ -157,7 +157,7 @@ export default function Login() {
           {/* Sign In Button */}
           <button
             type="submit"
-            className={`w-full py-2 bg-black text-white font-semibold rounded-md shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-900 ${lexendDeca.className}`}
+            className={`w-full py-2 bg-black text-white font-semibold rounded-lg shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-900 ${lexendDeca.className}`}
           >
             SIGN IN
           </button>

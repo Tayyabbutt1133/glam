@@ -50,7 +50,7 @@ const HomeBrand = () => {
   return (
     <Container>
       <div className="px-4 py-16 space-y-10">
-        <h2 className={`text-2xl font-semibold ${jost.className}`}>
+        <h2 className={`text-2xl lg:text-[36px] font-semibold ${jost.className}`}>
           SHOP BY BRAND
         </h2>
         <BrandSlide />
@@ -89,7 +89,7 @@ const HomeBrand = () => {
                   {product.description}
                 </p>
                 <button
-                  className={`sm:mt-4 bg-black text-white text-xs sm:text-sm py-2 sm:px-6 px-2 rounded-md hover:bg-gray-800 transition duration-200 ${jost.className}`}
+                  className={`sm:mt-4 bg-black text-white text-xs sm:text-sm py-2 sm:px-6 px-2 rounded-lg hover:bg-gray-800 transition duration-200 ${jost.className}`}
                 >
                   SHOP NOW
                 </button>

@@ -146,32 +146,35 @@ export default function MyBag() {
   const addToCart = useCartStore((state) => state.addToCart);
 
   return (
-    <Container>
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex flex-col md:flex-row justify-between items-center  mb-4 w-full md:w-[68%]">
-          <div>
-          <p className={`text-sm text-black ${jost.className} font-medium`}>
+    <main className="lg:w-[93%] w-[95%] xl:w-[92%] mx-auto">
+      <div className=" lg:w-[98%] xl:w-[92%] mx-auto px-4 py-8">
+        <div className="flex flex-col md:flex-row items-center md:justify-between  md:pr-2  mb-4 w-full md:w-[69%]">
+          <p className={`text-sm lg:text-[20px] md:w-full text-black ${jost.className} sm:font-medium`}>
             Log in or create an account now to get these exclusive benefits.
-            </p>
-            </div>
-          <div className="flex mt-3 justify-start  flex-row gap-4 md:gap-2 ">
+          </p>
+          <div className="flex mt-3 md:mt-0 items-center justify-between w-[80%] sm:w-8/12 md:w-[59%] lg:w-[40%]  md:justify-end flex-row gap-4 md:gap-1 lg:gap-2 ">
             <Link href="/signup">
               <button
-                className={`mr-4 ${jost.className} text-sm text-gray-800 border border-gray-300 hover:bg-gray-100 px-4 py-2 font-medium rounded-md`}
+                className={`mr-2 lg:mr-4 ${jost.className} lg:text-base hover:bg-gray-100 text-gray-800 sm:border border-gray-300 px-4 py-2 font-medium  rounded-lg`}
               >
                 Register
               </button>
             </Link>
             <Link href="/login">
               <button
-                className={`text-sm font-medium hover:bg-gray-100 text-gray-800 border border-gray-300 px-4 py-2 rounded-md ${jost.className}`}
+                className={` lg:text-base font-medium  hover:bg-gray-100 text-gray-800 sm:border border-gray-300 px-4 py-2 rounded-lg ${jost.className}`}
               >
-                Log In
+              Log in
               </button>
             </Link>
           </div>
         </div>
         <hr className="h-2" />
+
+
+
+
+
         <div className="flex justify-between items-center mb-6 mt-4">
           <h1 className={`text-3xl font-medium ${jost.className}`}>
             Your Bag ({cartItems.length})
@@ -409,7 +412,7 @@ export default function MyBag() {
                           </p>
 
                           <button
-                            className={`w-full bg-black text-white text-xs sm:text-sm md:text-base py-2 rounded-md hover:bg-gray-800 transition `}
+                            className={`w-full bg-black text-white rounded-lg text-xs sm:text-sm md:text-base py-2  hover:bg-gray-800 transition `}
                             onClick={() => addToCart(product)}
                           >
                             ADD TO BAG
@@ -488,7 +491,7 @@ export default function MyBag() {
                     placeholder="Enter the code"
                   />
                   <button
-                    className={`bg-white border text-black px-4 py-2 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-300 ${jost.className}`}
+                    className={`bg-white border text-black px-4 py-2 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-300 ${jost.className}`}
                   >
                     Apply
                   </button>
@@ -542,7 +545,7 @@ export default function MyBag() {
                 </div>
                 <Link href="./checkout">
                   <button
-                    className={`bg-black ${jost.className} text-white w-full py-3 rounded-md hover:bg-[#CF8562]`}
+                    className={`bg-black ${jost.className} text-white w-full py-3 rounded-lg hover:bg-[#CF8562]`}
                   >
                     Checkout Securely
                   </button>
@@ -610,21 +613,23 @@ export default function MyBag() {
                           {currencySymbol}
                           {parseFloat(product.price * rate).toFixed(2)}
                         </p>
-                      </div>
-                      <button
-                          className={`w-full bg-black text-xs sm:text-sm md:text-base text-white py-2 px-1 rounded-md hover:bg-[#CF8562] transition ${jost.className}`}
+
+                        <button
+                          className={`w-full bg-black text-xs rounded-lg sm:text-sm md:text-base text-white py-2 px-1  hover:bg-[#CF8562] transition ${jost.className}`}
                           onClick={() => addToCart(product)}
                         >
                           ADD TO BAG
                         </button>
+                    </div>
                     </div>
                   </div>
                 ))}
               </Slider>
             )}
           </div>
+
         </div>
       </div>
-    </Container>
+    </main>
   );
 }

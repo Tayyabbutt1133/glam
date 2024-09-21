@@ -15,13 +15,13 @@ export default function Instagram() {
   return (
     <div className="flex w-full mb-20 ">
       <Container>
-        <div className="flex flex-col w-full mt-10 overflow-hidden">
+        <div className="flex flex-col lg:mx-3 w-full mt-10 overflow-hidden">
           <h1
-            className={`mb-10 text-2xl xl:text-3xl font-semibold ${jost.className}`}
+            className={`mb-10 text-2xl lg:text-[36px] font-semibold ${jost.className}`}
           >
             SHOP OUR IG
           </h1>
-          <div className="ig-container scrollbar-hide">
+          <div className="ig-container lg:mx-1 scrollbar-hide">
             <div className="angry-grid ">
               {/* Grid of 4 pics */}
               <div className="relative group" id="item-0">
