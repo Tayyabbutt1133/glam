@@ -18,6 +18,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 import { usePopupStore } from '../../../../states/use-popup-store';
+import Product from '../../../product';
 
 
 const arrowStyles = {
@@ -62,7 +63,7 @@ const ProductCard = ({ product, isFavorite, onFavoriteClick, onAddToCart }) => {
 
   
   return (
-    <div className="bg-white border border-gray-300 rounded-lg overflow-hidden relative flex flex-col h-full min-h-[430px] w-full cursor-pointer">
+    <div className="bg-white border border-gray-300 rounded-lg overflow-hidden relative flex flex-col h-full min-h-[440px] w-full cursor-pointer">
       {product.on_sale && (
         <div className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
           SALE
@@ -166,7 +167,7 @@ const ProductList = () => {
     speed: 500,
     slidesToShow: 4,
     slidesToScroll: 4,
-    autoplay: true,
+    autoplay: false,
     autoplaySpeed: 3000,
     arrows: true,
     prevArrow: <PrevArrow />,
@@ -235,12 +236,13 @@ const ProductList = () => {
           <Slider {...settings}>
             {products.map((product) => (
               <div key={product.id} className="px-2 mb-4">
-                <ProductCard
+                {/* <ProductCard
                   product={product}
                   isFavorite={favorites[product.id]}
                   onFavoriteClick={handleFavoriteClick}
                   onAddToCart={addToCart}
-                />
+                /> */}
+                <Product product={product} />
               </div>
             ))}
           </Slider>

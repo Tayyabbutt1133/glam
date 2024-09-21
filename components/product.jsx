@@ -43,7 +43,7 @@ export default function Product({ product }) {
   return (
     <div key={product.id} className=" mx-0 2xl:mx-0 mb-2">
       <div
-        className="bg-white border border-gray-300 rounded-lg overflow-hidden relative flex flex-col h-full min-h-[392px] sm:min-h-[350px] md:min-h-[400px] w-[90%] cursor-pointer"
+        className="bg-white border border-gray-300 rounded-lg overflow-hidden relative flex flex-col h-full min-h-[430px] sm:min-h-[466px] lg:min-h-[400px]  w-[90%] cursor-pointer"
         onClick={() => handleProductClick(product.id)}
       >
         {product.on_sale && (
@@ -80,7 +80,7 @@ export default function Product({ product }) {
           </p>
         
             <h2
-              className={`text-gray-900 font-normal text-sm ${lexendDeca.className} line-clamp-2 cursor-pointer`}
+              className={`text-gray-900 font-normal text-sm ${lexendDeca.className} line-clamp-3 cursor-pointer`}
             >
               {sanitizeText(product.name)}
             </h2>
@@ -99,7 +99,7 @@ export default function Product({ product }) {
               ({product.rating_count})
             </span>
           </div>
-          <div className=" mt-auto flex items-center flex-col sm:flex-row text-gray-600 text-sm ">
+          <div className="  flex items-center  text-gray-600 text-sm ">
             {product.regular_price && (
               <span className={`line-through mr-2 text-xs flex ${lexendDeca.className}`}>
                 <span className=" hidden sm:block text-xs">RRP: </span>
@@ -115,12 +115,12 @@ export default function Product({ product }) {
             )}
           </div>
           <p
-            className={`text-gray-900 font-bold mt-auto text-lg mb-3 ${lexendDeca.className}`}
+            className={`text-gray-900 font-bold  text-lg mb-3 ${lexendDeca.className}`}
           >
             {currencySymbol}{Number(product.price * rate).toFixed(2)}
           </p>
           <button
-            className={`w-full bg-black text-white py-2 text-xs md:text-base mx-auto rounded-lg hover:bg-[#CF8562] font-normal transition duration-200 flex justify-center items-center text-center ${lexendDeca.className}`}
+            className={`w-full bg-black text-white py-2 mt-auto text-xs md:text-base mx-auto rounded-lg hover:bg-[#CF8562] font-normal transition duration-200 flex justify-center items-center text-center ${lexendDeca.className}`}
             onClick={() => addToCart(product)}
           >
             ADD TO BAG
