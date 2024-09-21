@@ -33,7 +33,7 @@ const tips = [
 
 const Tips = ({ data }) => {
   return (
-    <div className="relative">
+    <div className="relative hover:scale-110 transition-transform duration-300 cursor-pointer">
       <div className="relative">
         <Image
           src={data.image}

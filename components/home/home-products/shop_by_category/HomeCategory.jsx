@@ -3,10 +3,11 @@
 import React from 'react';
 import Link from 'next/link';
 import Container from '../../../container';
-import cat_one from '../../../../public/home_categories_banner/category_one.svg';
-import cat_two from '../../../../public/home_categories_banner/category_two.svg';
-import cat_three from '../../../../public/home_categories_banner/category_three.svg';
-import cat_four from '../../../../public/home_categories_banner/category_four.svg';
+import cat_one from '../../../../public/home_categories_banner/makeup.png';
+import cat_two from '../../../../public/home_categories_banner/lips.webp';
+import cat_three from '../../../../public/home_categories_banner/hair.png';
+import cat_four from '../../../../public/home_categories_banner/fragrance.webp';
+import cat_five from '../../../../public/home_categories_banner/skincare.png'
 import Image from 'next/image';
 import { jost } from '../../../ui/fonts';
 import Slider from 'react-slick';
@@ -63,6 +64,7 @@ export default function HomeCategory() {
     { name: "Lips", image: cat_two, categoryLanding: "lips", subcategories: "33" },
     { name: "Hair", image: cat_three, categoryLanding: "hair", subcategories: "484" },
     { name: "Fragrance", image: cat_four, categoryLanding: "fragrance", subcategories: "485" },
+    { name: "Skincare", image: cat_five, categoryLanding: "skincare", subcategories: "483" }
   ];
 
   const settings = {

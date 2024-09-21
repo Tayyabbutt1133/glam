@@ -63,26 +63,28 @@ export default function Product({ product }) {
             )}
           </button>
         </div>
+        <Link href={`/product/${product.id}`}>
         <Image
           width={250}
           height={250}
           className="object-contain p-4"
           src={product.images[0]?.src}
           alt={sanitizeText(product.images[0]?.alt || product.name)}
-        />
+          />
+              </Link>
         <div className="px-4 pb-4 flex-grow flex flex-col sm:min-h-[240px]">
           <p
             className={`text-gray-900 font-bold text-[16px] hidden sm:block mb-2 ${jost.className}`}
           >
             {getBrandName(product.attributes)}
           </p>
-          <Link href={`/product/${product.id}`}>
+        
             <h2
               className={`text-gray-900 font-normal text-sm ${lexendDeca.className} line-clamp-2 cursor-pointer`}
             >
               {sanitizeText(product.name)}
             </h2>
-          </Link>
+      
           <div className="flex items-center mb-3 mt-3">
             {[...Array(5)].map((_, index) => (
               <span key={index}>
@@ -118,7 +120,7 @@ export default function Product({ product }) {
             {currencySymbol}{Number(product.price * rate).toFixed(2)}
           </p>
           <button
-            className={`w-full bg-black text-white py-2 text-xs md:text-base mx-auto rounded-lg hover:[#CF8562] font-normal transition duration-200 flex justify-center items-center text-center ${lexendDeca.className}`}
+            className={`w-full bg-black text-white py-2 text-xs md:text-base mx-auto rounded-lg hover:bg-[#CF8562] font-normal transition duration-200 flex justify-center items-center text-center ${lexendDeca.className}`}
             onClick={() => addToCart(product)}
           >
             ADD TO BAG
