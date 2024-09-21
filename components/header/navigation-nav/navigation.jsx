@@ -58,7 +58,7 @@ export default function Navigation() {
         style={{ boxShadow: '0px 0px 6px rgba(0, 0, 0, 0.1)', zIndex: '10' }}
       >
         <Container>
-          <nav className="flex flex-row w-full justify-between items-center py-3">
+          <nav className="flex flex-row w-full xl:gap-[30px] 2xl:gap-[40px] 2xl:text-[20px] xl:text-lg   justify-between xl:justify-around items-center py-3">
             {mainLinks?.map((link, index) => (
               <Link
                 className={`box-border pb-2 -mb-2 text-nowrap uppercase ${
