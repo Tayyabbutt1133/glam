@@ -150,7 +150,7 @@ export default function CurrencyLanguagePopUp() {
             </div>
 
             <button
-              className={`${lexendDeca.className} w-full mt-4 p-3 bg-button text-white font-bold rounded-[8px] transition-colors ease-linear duration-100 hover:bg-hover`}
+              className={`${lexendDeca.className} w-full mt-4 p-3 bg-button text-white font-bold rounded-[8px] transition-colors hover:bg-[#CF8562] ease-linear duration-100 hover:bg-hover`}
               onClick={() => {
                 setSelectedCountryInStore({
                   ...selectedCountry,
