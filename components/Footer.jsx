@@ -54,7 +54,7 @@ export default function Footer() {
                 <Image src={logo} />
                 <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"></span>
               </a>
-              <p className={`text-sm lg:text-[14px] xl:text-[16px]  text-[#7E7E7E] md:w-64 ${lexendDeca.className} font-normal`}>We are the fastest-growing beauty retailer, always offering huge discounts off the RRP.</p>
+              <p className={`text-sm lg:text-[14px] 2xl:text-[16px]  text-[#7E7E7E] md:w-64 ${lexendDeca.className} font-normal`}>We are the fastest-growing beauty retailer, always offering huge discounts off the RRP.</p>
               <div name="socials" className=" flex gap-4">
                 <Image src={fb} />
                 <Image src={Insta} />
@@ -68,7 +68,12 @@ export default function Footer() {
 
 
          {/* Nav links */}
-         <div className="grid px-3 py-2 sm:px-0 mt-4 grid-cols-1 space-y-1 md:grid-cols-4 sm:space-y-0 lg:ml-16 md:ml-6">
+            <div className="grid px-3 py-2 sm:px-0 mt-4 grid-cols-1 space-y-1 md:grid-cols-4 sm:space-y-0 lg:ml-16 md:ml-6">
+              
+
+
+
+             {/* mobile */}
               <div className=" md:hidden">
                 <h2
                   className={`mb-4 text-sm mt-4 text-[18px] xl:text-[20px] capitalize flex items-center justify-between font-semibold text-black ${jost.className}`}
@@ -94,14 +99,22 @@ export default function Footer() {
                   </li>
                 </ul>
               </div>
+
+
+
+
+              
+
+
+              {/* desktop */}
               <div className=" hidden md:block">
                 <h2
-                  className={`mb-4 text-sm mt-4 text-[18px] xl:text-[20px] capitalize flex items-center justify-between font-semibold text-black ${jost.className}`}
+                  className={`mb-4 text-sm mt-4 md:text-[18px] 2xl:text-[20px] capitalize flex items-center justify-between font-semibold text-black ${jost.className}`}
                   onClick={() => toggleSection('glamBeauty')}
                 >
                   GlamBeauty {openSections.glamBeauty ? <ChevronUp className="inline-flex ml-auto md:hidden" /> : <ChevronDown className="inline-flex ml-auto md:hidden" />}
                 </h2>
-                <ul className={`text-[#8B929D] lg:text-[14px] xl:text-[16px] text-sm pb-3 space-y-3 ${lexendDeca.className} font-normal transition-all duration-300 ease-in-out max-h-screen opacity-100' `}>
+                <ul className={`text-[#8B929D] lg:text-[14px] 2xl:text-[16px] text-sm pb-3 space-y-3 ${lexendDeca.className} font-normal transition-all duration-300 ease-in-out max-h-screen opacity-100' `}>
                   <li className="">
                     <a href="#" className="hover:underline">
                       About us
@@ -119,6 +132,10 @@ export default function Footer() {
                   </li>
                 </ul>
               </div>
+
+              
+
+
 
 
               {/* Row 2 */}
@@ -157,14 +174,19 @@ export default function Footer() {
                   </li>
                 </ul>
               </div>
+
+
+
+              
+
               <div className=" hidden md:block">
                 <h2
-                  className={`mb-4 text-sm mt-4 text-[18px] xl:text-[20px] capitalize flex items-center justify-between font-semibold text-black ${jost.className}`}
+                  className={`mb-4 text-sm mt-4 md:text-[18px] 2xl:text-[20px] capitalize flex items-center justify-between font-semibold text-black ${jost.className}`}
                   onClick={() => toggleSection('helpInfo')}
                 >
                   Help & Information {openSections.helpInfo ? <ChevronUp className="inline-flex ml-auto md:hidden" /> : <ChevronDown className="inline-flex ml-auto md:hidden" />}
                 </h2>
-                <ul className={`text-[#8B929D] text-sm lg:text-[14px] xl:text-[16px] space-y-3 ${lexendDeca.className} font-normal transition-all duration-300 ease-in-out  max-h-screen opacity-100`}>
+                <ul className={`text-[#8B929D] text-sm lg:text-[14px] 2xl:text-[16px] space-y-3 ${lexendDeca.className} font-normal transition-all duration-300 ease-in-out  max-h-screen opacity-100`}>
                   <li className="">
                     <a href="#" className="hover:underline">
                       Delivery Information
@@ -192,6 +214,8 @@ export default function Footer() {
                   </li>
                 </ul>
               </div>
+
+              
 
 
 
@@ -222,14 +246,16 @@ export default function Footer() {
                   </li>
                 </ul>
               </div>
+
+
               <div className=" hidden md:block">
                 <h2
-                  className={`mb-4 text-sm mt-4 text-[18px] xl:text-[20px] capitalize flex items-center justify-between font-semibold text-black ${jost.className}`}
+                  className={`mb-4 text-sm mt-4 md:text-[18px] 2xl:text-[20px] capitalize flex items-center justify-between font-semibold text-black ${jost.className}`}
                   onClick={() => toggleSection('legal')}
                 >
                   Legal {openSections.legal ? <ChevronUp className="inline-flex ml-auto md:hidden" /> : <ChevronDown className="inline-flex ml-auto md:hidden" />}
                 </h2>
-                <ul className={`text-[#8B929D] text-sm lg:text-[14px] xl:text-[16px] space-y-3 ${lexendDeca.className} font-normal transition-all duration-300 ease-in-out max-h-screen opacity-100' }`}>
+                <ul className={`text-[#8B929D] text-sm lg:text-[14px] 2xl:text-[16px] space-y-3 ${lexendDeca.className} font-normal transition-all duration-300 ease-in-out max-h-screen opacity-100' }`}>
                   <li className="">
                     <a href="/terms-and-conditions" className="hover:underline">
                       Terms &amp; Conditions
@@ -261,11 +287,11 @@ export default function Footer() {
               {/* Row 4 */}
               <div>
                 <h2
-                  className={`mb-4 text-sm mt-4 text-[18px] xl:text-[20px] capitalize flex items-center justify-between font-semibold text-black ${jost.className}`}
+                  className={`mb-4 text-sm mt-4 md:text-[18px] 2xl:text-[20px] capitalize flex items-center justify-between font-semibold text-black ${jost.className}`}
                 >
                   Download App
                 </h2>
-                <p className={`text-[#8B929D] text-sm lg:text-[14px] xl:text-[16px] space-y-3 ${lexendDeca.className} font-normal mb-4`}>
+                <p className={`text-[#8B929D] text-sm lg:text-[14px] 2xl:text-[16px] space-y-3 ${lexendDeca.className} font-normal mb-4`}>
                   Download the App and get an extra 10% off your first order...!
                 </p>
                 <div className="flex sm:flex-col xl:flex-row gap-6">
@@ -289,7 +315,7 @@ export default function Footer() {
           <hr className="border-gray-200 sm:mx-auto dark:border-gray-700" />
 
           <div className="sm:flex sm:items-center sm:justify-between my-4">
-            <span className="text-sm lg:text-[14px] xl:text-[16px] text-[#8B929D] font-normal sm:text-center">
+            <span className="text-sm lg:text-[14px] 2xl:text-[16px] text-[#8B929D] font-normal sm:text-center">
               GLAMBEAUTY © 2024. All Rights Reserved.
             </span>
             <div className="flex sm:justify-between mt-2 sm:mt-0 items-center gap-3">
