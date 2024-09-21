@@ -1,7 +1,7 @@
 // import MainLayoutMobile from '/components/header/mobile/MainLayoutMobile'
 "use client"
 import React from 'react'
-import BrandInFocus from '../../../components/lifecycle/category/categoriescomponents/brand-in-focus'
+// import BrandInFocus from '../../../components/lifecycle/category/categoriescomponents/brand-in-focus'
 
 
 function page() {
@@ -10,7 +10,7 @@ function page() {
   <section className=' min-h-screen w-full '>
     {/* <Review reviewsFromProduct={[]}/> */}
     {/* <CustomRev /> */}
-    <BrandInFocus />
+    {/* <BrandInFocus /> */}
 
   </section>
   )
