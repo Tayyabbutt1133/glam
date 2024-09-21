@@ -15,6 +15,7 @@ import { IoFilterOutline } from "react-icons/io5";
 import { usePopupStore } from "/states/use-popup-store";
 import Link from "next/link";
 import { useCartStore } from "/states/Cardstore";
+import Breadcrumb from "../../../../../components/BreadCrumb";
 
 const API_BASE_URL = "https://glam.clickable.site/wp-json/wc/v3";
 const CONSUMER_KEY = "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d";
@@ -357,8 +358,15 @@ export default function SubcategoryPage() {
     </div>
   );
 
+  const breadcrumbLinks = [
+    { name: "Home", route: "/" },
+    // { name: "Categories", route: "/categories" },
+    { name: categorylanding, route: `/product-categories/${categorylanding}` },
+    { name: subcategories, route: `/product-categories/${categorylanding}/${subcategories}` },
+  ]
   return (
-    <Container className="min-h-screen py-32">
+    <Container className="min-h-screen py-7">
+      <Breadcrumb links={breadcrumbLinks} />
       <div className="mb-8">
         <h1
           className={`text-3xl text-center uppercase font-bold ${jost.className}`}

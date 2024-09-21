@@ -1,0 +1,17 @@
+.productarrowStyles {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    z-index: 100;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  /* Media query for screens below 1000px */
+  @media (max-width: 1000px) {
+    .productarrowStyles {
+      width: 10px;
+      height: 10px;
+    }
+  }

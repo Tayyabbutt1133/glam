@@ -11,10 +11,12 @@ import olaplexbrand from "/public/about_brands/olaplexslide.svg"
 import SliderComponent from "/components/lifecycle/mutual-components/slider"
 import Newin from "/components/lifecycle/category/categoriescomponents/Newin"
 import MakeupTips from "/components/lifecycle/mutual-components/makeup-tips"
-
+import { usePathname } from "next/navigation"
+import BreadCrumb from "../../../../components/BreadCrumb"
 export default function Page() {
   const [result, setResult] = useState(null)
-
+  const path = usePathname()
+  const currentBrand = path.split("/").pop()
   useEffect(() => {
     const fetchProductCategories = async () => {
       try {
@@ -47,12 +49,19 @@ export default function Page() {
       src: olaplexbrand,
     },
   ]
+  const breadcrumblinks = [
+    { name: "Home", route: "/" },
+    // { name: "Brands", route: false },
+    { name: currentBrand, route:`/brands/${currentBrand}` },
+  ];
 
 
   return (
     <div>
       <div className="">
         <Container>
+        <BreadCrumb links={breadcrumblinks} />
+
           <MenucategoryLandingPage brands={result} />
         </Container>
         <SliderComponent bannerObject={bannerObject} />
