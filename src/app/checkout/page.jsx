@@ -7,7 +7,7 @@ import creditCardType from "credit-card-type";
 import { useCartStore } from "../../../states/Cardstore";
 import { jost, lexendDeca } from "../../../components/ui/fonts";
 import Container from "../../../components/container";
-import PayPal from "../../../public/PayPal.svg";
+import PayPal from "../../../public/card-logos/paypal.svg";
 import Klarna from "../../../public/Klarna.svg";
 import visa from "../../../public/card-logos/visa.svg";
 import master from "../../../public/card-logos/master.svg";
@@ -20,6 +20,8 @@ import klarna_pink from "../../../public/klarn_pink.svg";
 import { usePopupStore } from "/states/use-popup-store";
 import { useRouter } from "next/navigation";
 import { toast } from 'react-toastify';
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 
 const shippingOptions = [
   {
@@ -54,7 +56,30 @@ const shippingOptions = [
   },
 ];
 
+const FloatingLabelInput = ({ label, name, value, onChange, type = "text" }) => {
+  return (
+    <div className="relative">
+      <input
+        type={type}
+        id={name}
+        name={name}
+        className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+        placeholder=" "
+        value={value}
+        onChange={onChange}
+      />
+      <label
+        htmlFor={name}
+        className="absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 start-1"
+      >
+        {label}
+      </label>
+    </div>
+  )
+}
+
 export default function Checkout() {
+  const [isMounted, setIsMounted] = useState(false);
   const { cartItems } = useCartStore();
   const { rate,currencySymbol } = usePopupStore();
   const [formData, setFormData] = useState({
@@ -70,6 +95,7 @@ export default function Checkout() {
     securityCode: "",
     nameOnCard: "",
     promoCode: "",
+    country: "",
   });
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
@@ -87,6 +113,7 @@ export default function Checkout() {
   const paymentRef = useRef(null);
   const [cardType, setCardType] = useState("");
   const router = useRouter();
+
   const validateField = (name, value) => {
     let error = "";
     switch (name) {
@@ -151,78 +178,77 @@ export default function Checkout() {
   };
 
   const handlePayNow = () => {
+    // Check if all required fields are filled
+    const requiredFields = ['firstName', 'lastName', 'address', 'city', 'postcode', 'phone', 'email'];
+    const missingFields = requiredFields.filter(field => !formData[field]);
 
-  // Check if all required fields are filled
-  const requiredFields = ['firstName', 'lastName', 'address', 'city', 'postcode', 'phone', 'email'];
-  const missingFields = requiredFields.filter(field => !formData[field]);
-
-  if (missingFields.length > 0) {
-    toast.error(`Please fill in all required fields`);
-    return;
-  }
-
-  // Check if shipping method is selected
-  if (!shippingMethod) {
-    toast.error('Please select a shipping method');
-    return;
-  }
-
-  // Check if payment method is selected
-  if (!paymentMethod) {
-    toast.error('Please select a payment method');
-    return;
-  }
-
-  // Check payment method specific details
-  if (paymentMethod === 'card') {
-    const cardFields = ['cardNumber', 'expirationDate', 'securityCode', 'nameOnCard'];
-    const missingCardFields = cardFields.filter(field => !formData[field]);
-
-    if (missingCardFields.length > 0) {
-      toast.error(`Please fill in all card details: ${missingCardFields.join(', ')}`);
+    if (missingFields.length > 0) {
+      toast.error(`Please fill in all required fields`);
       return;
     }
 
-    // Additional card validation could be added here
-  }
+    // Check if shipping method is selected
+    if (!shippingMethod) {
+      toast.error('Please select a shipping method');
+      return;
+    }
 
-  // Check if cart is not empty
-  if (cartItems.length === 0) {
-    toast.error('Your cart is empty');
-    return;
-  }
+    // Check if payment method is selected
+    if (!paymentMethod) {
+      toast.error('Please select a payment method');
+      return;
+    }
 
-  // If all checks pass, proceed with order creation
-  try {
-    const orderDetails = {
-      customerInfo: {
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        address: formData.address,
-        city: formData.city,
-        postcode: formData.postcode,
-        phone: formData.phone,
-        email: formData.email,
-      },
-      paymentMethod: paymentMethod,
-      cardType: cardType,
-      cardLastFour: formData.cardNumber ? formData.cardNumber.slice(-4) : null,
-      cartItems: cartItems,
-      subtotal: subtotal,
-      shipping: shipping,
-      total: total,
-      shippingMethod: shippingMethod.name,
-    };
+    // Check payment method specific details
+    if (paymentMethod === 'card') {
+      const cardFields = ['cardNumber', 'expirationDate', 'securityCode', 'nameOnCard'];
+      const missingCardFields = cardFields.filter(field => !formData[field]);
 
-    useCartStore.getState().setOrderDetails(orderDetails);
-    toast.success('Order placed successfully!');
-    
-    router.push('/confirmation-successful');
-  } catch (error) {
-    console.error('Error processing order:', error);
-    toast.error('There was an error processing your order. Please try again.');
+      if (missingCardFields.length > 0) {
+        toast.error(`Please fill in all card details: ${missingCardFields.join(', ')}`);
+        return;
+      }
+
+      // Additional card validation could be added here
+    }
+
+    // Check if cart is not empty
+    if (cartItems.length === 0) {
+      toast.error('Your cart is empty');
+      return;
+    }
+
+    // If all checks pass, proceed with order creation
+    try {
+      const orderDetails = {
+        customerInfo: {
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          address: formData.address,
+          city: formData.city,
+          postcode: formData.postcode,
+          phone: formData.phone,
+          email: formData.email,
+        },
+        paymentMethod: paymentMethod,
+        cardType: cardType,
+        cardLastFour: formData.cardNumber ? formData.cardNumber.slice(-4) : null,
+        cartItems: cartItems,
+        subtotal: subtotal,
+        shipping: shipping,
+        total: total,
+        shippingMethod: shippingMethod.name,
+      };
+
+      useCartStore.getState().setOrderDetails(orderDetails);
+      toast.success('Order placed successfully!');
+      
+      router.push('/confirmation-successful');
+    } catch (error) {
+      console.error('Error processing order:', error);
+      toast.error('There was an error processing your order. Please try again.');
+    }
   }
-}
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -336,36 +362,9 @@ export default function Checkout() {
     setShowPaymentOptions(false);
   };
 
-  const renderInput = (name, placeholder, type = "text") => (
-    <div className="relative">
-      <input
-        type={type}
-        name={name}
-        placeholder={placeholder}
-        value={formData[name]}
-        onChange={handleInputChange}
-        onBlur={handleBlur}
-        className={`w-full border rounded px-3 py-2 ${lexendDeca.className} ${
-          touched[name] && errors[name] ? "border-red-500" : ""
-        } ${name === "cardNumber" ? "pr-10" : ""}`}
-        maxLength={
-          name === "cardNumber"
-            ? cardType === "american-express"
-              ? 17
-              : 19
-            : undefined
-        }
-      />
-      {name === "cardNumber" && cardType && (
-        <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-          <Image src={getCardLogo()} alt={cardType} width={32} height={20} />
-        </div>
-      )}
-      {touched[name] && errors[name] && (
-        <p className="text-red-500 text-sm mt-1">{errors[name]}</p>
-      )}
-    </div>
-  );
+  const handlePhoneChange = (value) => {
+    setFormData(prev => ({ ...prev, phone: value }));
+  };
 
   return (
     <Container>
@@ -389,22 +388,22 @@ export default function Checkout() {
           {/* Left: Checkout Form */}
           <div className="lg:w-2/3 space-y-6">
             {/* Header with Payment Options */}
-            <div className="flex flex-col sm:flex-row justify-between gap-4 mb-6">
+            <div className="flex flex-row justify-evenly sm:justify-between gap-4 mb-6">
               <button
-                className={`bg-yellow-400 hover:bg-yellow-500 text-black px-4 py-2 rounded flex items-center justify-center ${jost.className}`}
+                className={`bg-yellow-400 w-[48%] hover:bg-yellow-500 text-black px-4 py-2 rounded flex items-center justify-center ${jost.className}`}
               >
-                Pay with{" "}
-                <span className="ml-2">
-                  <Image src={PayPal} alt="PayPal" />
+                <span className=" hidden sm:inline">Pay with{" "}</span>
+                <span className="sm:ml-2  ">
+                  <Image className="w-16" src={PayPal} alt="PayPal"   />
                 </span>
               </button>
               <button
-                className={`bg-[#FFB3C7] hover:bg-pink-500 text-black px-4 py-2 rounded flex items-center justify-center ${jost.className}`}
+                className={`bg-[#FFB3C7] hover:bg-pink-500 w-[48%] text-black px-4 py-2 rounded flex items-center justify-center ${jost.className}`}
               >
-                <span className="mr-2">
+                <span className="sm:mr-2">
                   <Image src={Klarna} alt="Klarna" />
                 </span>{" "}
-                Express Checkout
+                <span  className=" hidden sm:inline">Express Checkout</span>
               </button>
             </div>
 
@@ -427,36 +426,24 @@ export default function Checkout() {
                   >
                     Contact
                   </h2>
-                  <div className="flex items-center gap-1">
-                    
-                    <Link href="/login">
-                      <button
-                        className={` ${jost.className}`}
-                      >
-                        Log in
-                      </button>
-                    </Link>
-                    /
-                    <Link href="/signup">
-                      <button
-                        className={` ${jost.className}`}
-                      >
-                        Register
-                      </button>
-                    </Link>
-                  </div>
                 </aside>
-                {renderInput("email", "Email*", "email")}
+                <FloatingLabelInput
+                  label="Email*"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  type="email"
+                />
                 <div className="flex items-center my-3">
                   <input
                     type="checkbox"
                     id="subscribe"
                     checked={subscribeToNews}
                     onChange={(e) => setSubscribeToNews(e.target.checked)}
-                    className="mr-2  size-4"
+                    className="mr-2  size-4 bg-black"
                   />
                   <label
-                    className={`${lexendDeca.className}`}
+                    className={`${lexendDeca.className} font-medium`}
                     htmlFor="subscribe"
                   >
                     Email me with news and offers
@@ -471,17 +458,69 @@ export default function Checkout() {
                 >
                   Delivery
                 </h2>
-                {renderInput("country", "Country/Region*")}
+                <FloatingLabelInput
+                  label="Country/Region*"
+                  name="country"
+                  value={formData.country}
+                  onChange={handleInputChange}
+                />
                 <div className="grid grid-cols-1 sm:grid-cols-2 mt-4 mb-4 gap-4">
-                  {renderInput("firstName", "First Name*")}
-                  {renderInput("lastName", "Last Name*")}
+                  <FloatingLabelInput
+                    label="First Name*"
+                    name="firstName"
+                    value={formData.firstName}
+                    onChange={handleInputChange}
+                  />
+                  <FloatingLabelInput
+                    label="Last Name*"
+                    name="lastName"
+                    value={formData.lastName}
+                    onChange={handleInputChange}
+                  />
                 </div>
-                {renderInput("address", "Address*")}
+                <FloatingLabelInput
+                  label="Address*"
+                  name="address"
+                  value={formData.address}
+                  onChange={handleInputChange}
+                />
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4 mb-4">
-                  {renderInput("city", "City*")}
-                  {renderInput("postcode", "Postcode*")}
+                  <FloatingLabelInput
+                    label="City*"
+                    name="city"
+                    value={formData.city}
+                    onChange={handleInputChange}
+                  />
+                  <FloatingLabelInput
+                    label="Postcode*"
+                    name="postcode"
+                    value={formData.postcode}
+                    onChange={handleInputChange}
+                  />
                 </div>
-                {renderInput("phone", "Phone*")}
+                <div className="relative">
+                  <PhoneInput
+                    country={'gb'}
+                    value={formData.phone}
+                    onChange={handlePhoneChange}
+                    inputProps={{
+                      name: 'phone',
+                      required: true,
+                      className: "block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer pl-14",
+                    }}
+                    containerClass="w-full"
+                    buttonClass="h-full !bg-transparent hover:!bg-transparent focus:!bg-transparent active:!bg-transparent"
+                    dropdownClass="!bg-white"
+                  />
+                  <label
+                    htmlFor="phone"
+                    className={`absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600 start-1 ${
+                      formData.phone ? 'invisible' : 'visible'
+                    }`}
+                  >
+                    Phone*
+                  </label>
+                </div>
                 <div className="flex items-center mt-2">
                   <input
                     type="checkbox"
@@ -491,7 +530,7 @@ export default function Checkout() {
                     className="mr-2"
                   />
                   <label
-                    className={`${lexendDeca.className}`}
+                    className={`${lexendDeca.className} font-medium`}
                     htmlFor="textSubscribe"
                   >
                     Text me with news and offers
@@ -673,15 +712,32 @@ export default function Checkout() {
                             />
                           </div>
                         </div>
-                        {renderInput("cardNumber", "Card number*")}
+                        <FloatingLabelInput
+                          label="Card number*"
+                          name="cardNumber"
+                          value={formData.cardNumber}
+                          onChange={handleCardNumberChange}
+                        />
                         <div className="flex space-x-4">
-                          {renderInput(
-                            "expirationDate",
-                            "Expiration date (MM/YY)*"
-                          )}
-                          {renderInput("securityCode", "Security code*")}
+                          <FloatingLabelInput
+                            label="Expiration date (MM/YY)*"
+                            name="expirationDate"
+                            value={formData.expirationDate}
+                            onChange={handleInputChange}
+                          />
+                          <FloatingLabelInput
+                            label="Security code*"
+                            name="securityCode"
+                            value={formData.securityCode}
+                            onChange={handleInputChange}
+                          />
                         </div>
-                        {renderInput("nameOnCard", "Name on card*")}
+                        <FloatingLabelInput
+                          label="Name on card*"
+                          name="nameOnCard"
+                          value={formData.nameOnCard}
+                          onChange={handleInputChange}
+                        />
                         <label className="flex items-center space-x-2">
                           <input
                             type="checkbox"
@@ -770,14 +826,12 @@ export default function Checkout() {
               </div>
 
               {/* Pay Now Button */}
-              {/* <Link href="./confirmation-successful"> */}
-                <button
-                  onClick={handlePayNow}
-                  className={`w-full rounded-xl bg-black text-white mt-4 hover:bg-gray-800 py-3 md:rounded ${jost.className} uppercase`}
-                >
-                  PAY NOW
-                </button>
-              {/* </Link> */}
+              <button
+                onClick={handlePayNow}
+                className={`w-full rounded-xl bg-black text-white mt-4 hover:bg-gray-800 py-3 md:rounded ${jost.className} uppercase`}
+              >
+                PAY NOW
+              </button>
               {/* Terms */}
               <p
                 className={`text-sm text-gray-600 mt-4 text-center ${lexendDeca.className}`}
@@ -796,7 +850,7 @@ export default function Checkout() {
           </div>
 
           {/* Right: Order Summary and Bag Summary */}
-          <div className="lg:w-1/3 bg-gray-50  p-6 rounded-lg -mt-24">
+          <div className="lg:w-1/3 bg-gray-50  p-6 rounded-lg lg:-mt-24">
             <div className=" ">
               <div className=" bg-white rounded-lg p-6 shadow-sm">
                 <h2 className={`text-xl font-semibold mb-4 ${jost.className}`}>

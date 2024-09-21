@@ -28,9 +28,9 @@ const arrowStyles = {
 
 const NextArrow = ({ className, style, onClick }) => (
   <div
-    className={`absolute top-1/2 transform -translate-y-1/2 right-4 2xl:mr-8 ${className}`}
+    className={`absolute top-1/2 transform -translate-y-1/2 right-4  ${className}`}
     onClick={onClick}
-    style={{ ...style, ...arrowStyles, right: "-34px" }}
+    style={{ ...style, ...arrowStyles, right: "-60px" }}
   >
     <NextArrowIcon />
   </div>
@@ -40,7 +40,7 @@ const PrevArrow = ({ className, style, onClick }) => (
   <div
     className={`absolute top-1/2 transform -translate-y-1/2 left-4 ${className}`}
     onClick={onClick}
-    style={{ ...style, ...arrowStyles, left: "-50px" }}
+    style={{ ...style, ...arrowStyles, left: "-70px" }}
   >
     <PrevArrowIcon />
   </div>
@@ -119,7 +119,7 @@ const ProductCard = ({ product, isFavorite, onFavoriteClick, onAddToCart }) => {
           {currencySymbol}{parseFloat(product.price * rate).toFixed(2)}
         </p>
         <button
-          className={`w-full mt-4 bg-black text-white py-2 rounded-md hover:bg-gray-800 font-normal transition duration-200 ${jost.className} uppercase`}
+          className={`w-full hover:bg-[#CF8562]  mt-4 bg-black text-white py-2 rounded-md  font-normal transition duration-200 ${jost.className} uppercase`}
           onClick={() => onAddToCart(product)}
         >
           ADD TO BAG
@@ -158,7 +158,7 @@ const ProductList = () => {
   }, []);
 
   const settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 500,
     slidesToShow: 4,
@@ -180,7 +180,9 @@ const ProductList = () => {
         breakpoint: 1024,
         settings: {
           slidesToShow: 3,
+          dots:true,
           slidesToScroll: 3,
+          arrows: false,
           
         },
       },
@@ -188,6 +190,7 @@ const ProductList = () => {
         breakpoint: 768,
         settings: {
           arrows: false,
+          dots:true,
           slidesToShow: 2,
           slidesToScroll: 2,
           rows: 2,
@@ -206,7 +209,7 @@ const ProductList = () => {
 
   return (
     <Container>
-      <div className="py-16 md:mb-20">
+      <div className="py-16 md:mb-20 lg:mx-10">
         <h2 className={`text-2xl font-semibold mx-4 my-8 ${jost.className} uppercase`}>TRENDING NOW</h2>
         {loading ? (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">

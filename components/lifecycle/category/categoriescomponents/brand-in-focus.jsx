@@ -107,22 +107,22 @@ export default function BrandInFocus() {
               className={`grid grid-cols-2 gap-4 mt-8 ${jost.className} font-medium lg:text-base 2xl:text-xl`}
             >
               <Link href={`/product-categories/${cats[0].skin.name}`}>
-              <button className="bg-white text-black py-2 lg:px-4 xl:px-6 2xl:px-8 rounded">
+              <button className="bg-white hover:bg-[#CF8562] hover:text-white text-black py-2 lg:px-4 xl:px-6 2xl:px-8 rounded">
                 SHOP SKINCARE
                 </button>
               </Link>
               <Link href={`/new-in`}>
-              <button className="bg-white text-black py-2 lg:px-4 xl:px-6 2xl:px-8 rounded">
+              <button className="bg-white hover:bg-[#CF8562] hover:text-white text-black py-2 lg:px-4 xl:px-6 2xl:px-8 rounded">
                 SHOP NEW IN
                 </button>
               </Link>
               <Link href={`/product-categories/${cats[0].make.name}`}>
-              <button className="bg-white text-black py-2 lg:px-4 xl:px-6 2xl:px-8 rounded">
+              <button className="bg-white hover:bg-[#CF8562] hover:text-white text-black py-2 lg:px-4 xl:px-6 2xl:px-8 rounded">
                 SHOP MAKEUP
                 </button>
                 </Link>
               <Link href={`/brands/${cats[0].brand.name}`}>
-              <button className="bg-white text-black py-2 lg:px-4 xl:px-6 2xl:px-8 rounded">
+              <button className="bg-white hover:bg-[#CF8562] hover:text-white text-black py-2 lg:px-4 xl:px-6 2xl:px-8 rounded">
                 SHOP BRAND
                 </button>
                 </Link>

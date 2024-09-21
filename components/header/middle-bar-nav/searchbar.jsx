@@ -6,7 +6,7 @@ import axios from "axios";
 import { lexendDeca, jost } from "../../ui/fonts";
 import debounce from "lodash.debounce";
 import { useRouter } from "next/navigation";
-// import { generateSlug } from "lib/utils";
+import Image from "next/image";
 
 const axiosInstance = axios.create({
   baseURL: "https://glam.clickable.site/wp-json/wc/v3/",
@@ -16,7 +16,7 @@ const axiosInstance = axios.create({
   },
 });
 
-export default function FastSearchBarWithDropdown({formobile = false}) {
+export default function FastSearchBarWithDropdown({ formobile = false }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [products, setProducts] = useState([]);
@@ -102,14 +102,12 @@ export default function FastSearchBarWithDropdown({formobile = false}) {
   }, [handleClickOutside]);
 
   const handleProductClick = (product) => {
-    // console.log(product);
-
-    
+    setIsDropdownOpen(false);
     router.push(`/product/${product.id}`);
   };
 
   return (
-   <div ref={searchBarRef} className={`flex justify-center relative ${formobile ? 'w-full' : 'w-[768px]'}`}>
+    <div ref={searchBarRef} className={`flex justify-center relative ${formobile ? 'w-full' : 'w-[768px]'}`}>
       <section
         className={`flex flex-row ${formobile ? 'w-full' : 'w-[80%] max-w-[696px]'} h-10 border border-solid
         border-b-03 rounded-[8px] px-1 focus-within:border-gray-700 transition-colors ease-in-out duration-100`}
@@ -139,7 +137,7 @@ export default function FastSearchBarWithDropdown({formobile = false}) {
           </h3>
           <ul className="space-y-4 text-xs">
             {popularSearches.map((term) => (
-              <li key={term.id} className={`cursor-pointer hover:bg-slate-100 ${lexendDeca.className} font-medium`}>
+              <li key={term.id} className={`cursor-pointer hover:bg-[#CF8562] hover:text-white p-1 ${lexendDeca.className} font-medium`}>
                 {term.name}
               </li>
             ))}
@@ -150,15 +148,18 @@ export default function FastSearchBarWithDropdown({formobile = false}) {
           <h3 className={`text-xs text-[#8B929D] ${jost.className} font-normal uppercase mb-2`}>
             Trending Products
           </h3>
-          <ul className="space-y-4 text-xs text-gray-700">
+          <ul className="space-y-4 text-xs">
             {isLoading ? (
               <li>Searching...</li>
             ) : products.length > 0 ? (
               products.map((product) => (
-                // Here is product
-                <li key={product.id} onClick={() => handleProductClick(product)} className="flex items-center cursor-pointer hover:bg-slate-100">
-                  <div className="w-10 h-10 mr-4 bg-gray-100 rounded-md flex-shrink-0">
-                    <img
+                <li 
+                  key={product.id} 
+                  onClick={() => handleProductClick(product)} 
+                  className="flex p-1 items-center cursor-pointer hover:bg-[#CF8562] hover:text-white group"
+                >
+                  <div className="w-10 h-10 mr-4 ml-4 bg-gray-100 flex-shrink-0">
+                    <Image
                       src={product.images[0]?.src || "/placeholder.svg?height=40&width=40"}
                       alt={product.name}
                       className="object-cover w-full h-full rounded-md"
@@ -166,18 +167,18 @@ export default function FastSearchBarWithDropdown({formobile = false}) {
                       height={40}
                     />
                   </div>
-                  <div>
+                  <div className="">
                     <p className={`font-medium text-wrap ${lexendDeca.className}`}>
                       {product.name}
                     </p>
                     <div className="flex flex-row gap-3">
                       {product.sale_price ? (
                         <>
-                          <p className="line-through text-gray-400">£{product.regular_price}</p>
-                          <p className="text-red-600">£{product.sale_price}</p>
+                          <p className="line-through text-gray-400 group-hover:text-white">£{product.regular_price}</p>
+                          <p className="text-red-600 group-hover:text-white">£{product.sale_price}</p>
                         </>
                       ) : (
-                        <p className="text-black">£{product.price}</p>
+                        <p className="text-black group-hover:text-white">£{product.price}</p>
                       )}
                     </div>
                   </div>
