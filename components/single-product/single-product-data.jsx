@@ -9,7 +9,7 @@ import demo2 from "/public/product-slider/demo2.png";
 import Staffpicks from "./components/Staffpicks";
 import Accordion from "./components/product-data/components/accordion";
 import { AlertCircle } from "lucide-react";
-import Review from "./components/Review";
+import Reviews from "./components/CustomReviewComponent";
 // import { product } from "../../demoproduct";
 // import Review from "./components/Review";
 
@@ -82,11 +82,12 @@ export default async function SingleProductData({ productId }) {
         </section>
       </div>
       <Staffpicks />
-      <Review
+      {/* <Review
         reviewsFromProduct={product.reviews || []}
         totalReviews={product.review_count}
         averageRating={product.average_rating}
-      />
+      /> */}
+      <Reviews />
     </>
   );
 }
