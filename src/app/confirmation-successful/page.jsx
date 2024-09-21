@@ -442,7 +442,7 @@ export default function OrderConfirmation() {
                           {currencySymbol}{parseFloat(product.price * rate).toFixed(2)}
                         </p>
                         <button
-                          className={`w-full  text-xs sm:text-base bg-black text-white py-2 rounded-lg hover:bg-gray-800 transition ${jost.className}`}
+                          className={`w-full  text-xs sm:text-base bg-black text-white py-2 rounded-lg hover:bg-[#CF8562]  transition ${jost.className}`}
                           onClick={() => addToCart(product)}
                         >
                           ADD TO BAG

@@ -155,14 +155,14 @@ export default function MyBag() {
           <div className="flex mt-3 md:mt-0 items-center justify-between w-[80%] sm:w-8/12 md:w-[59%] lg:w-[40%]  md:justify-end flex-row gap-4 md:gap-1 lg:gap-2 ">
             <Link href="/signup">
               <button
-                className={`mr-2 lg:mr-4 ${jost.className} lg:text-base text-gray-800 sm:border border-gray-300 px-4 py-2 font-medium  rounded-lg`}
+                className={`mr-2 lg:mr-4 ${jost.className} lg:text-base hover:bg-gray-100 text-gray-800 sm:border border-gray-300 px-4 py-2 font-medium  rounded-lg`}
               >
                 Register
               </button>
             </Link>
             <Link href="/login">
               <button
-                className={` lg:text-base font-medium  text-gray-800 sm:border border-gray-300 px-4 py-2 rounded-lg ${jost.className}`}
+                className={` lg:text-base font-medium  hover:bg-gray-100 text-gray-800 sm:border border-gray-300 px-4 py-2 rounded-lg ${jost.className}`}
               >
               Log in
               </button>
@@ -426,8 +426,8 @@ export default function MyBag() {
             </div>
           </div>
 
-          <div className="md:w-1/3 md:-mt-32  md:shadow-md shadow-slate-500 md:h-fit rounded-xl md:rounded-none">
-            <div className="p-2 rounded-lg">
+          <div className="md:w-1/3 md:-mt-32  md:h-fit rounded-xl md:rounded-none">
+            <div className="p-2 rounded-lg bg-[#F7F7F7A6]">
               <div className="bg-white p-4 rounded-lg mt-4">
                 <h2 className={`text-xl font-normal mb-4 ${jost.className}`}>
                   Order Summary
@@ -502,24 +502,50 @@ export default function MyBag() {
                 <p className={`mb-2 text-lg ${jost.className} font-medium`}>
                   Payment Mode
                 </p>
-                <div className={`flex space-x-2 mt-8 mb-4 ${jost.className}`}>
+                <div className={`flex flex-col space-x-2 mt-8 mb-4 ${jost.className}`}>
                   <p>Pay by Card/Pay Later</p>
-                  <section className="gap-2 grid grid-cols-5 md:grid-cols-2">
-                    <Image src={visa} alt="Visa" width={40} height={25} />
-                    <Image src={master} alt="Master" width={40} height={25} />
-                    <Image src={maestro} alt="Maestro" width={40} height={25} />
-                    <Image
-                      src={ae}
-                      alt="American Express"
-                      width={40}
-                      height={25}
-                    />
-                    <Image src={paypal} alt="PayPal" width={40} height={25} />
-                  </section>
+                  <section className="gap-4 flex mt-2">
+  <Image
+    className="hover:scale-110 transition-transform duration-300 cursor-pointer"
+    src={visa}
+    alt="Visa"
+    width={40}
+    height={25}
+  />
+  <Image
+    className="hover:scale-110 transition-transform duration-300 cursor-pointer"
+    src={master}
+    alt="Master"
+    width={40}
+    height={25}
+  />
+  <Image
+    className="hover:scale-110 transition-transform duration-300 cursor-pointer"
+    src={maestro}
+    alt="Maestro"
+    width={40}
+    height={25}
+  />
+  <Image
+    className="hover:scale-110 transition-transform duration-300 cursor-pointer"
+    src={ae}
+    alt="American Express"
+    width={40}
+    height={25}
+  />
+  <Image
+    className="hover:scale-110 transition-transform duration-300 cursor-pointer"
+    src={paypal}
+    alt="PayPal"
+    width={40}
+    height={25}
+  />
+</section>
+
                 </div>
                 <Link href="./checkout">
                   <button
-                    className={`bg-black ${jost.className} text-white w-full py-3 rounded-lg`}
+                    className={`bg-black ${jost.className} text-white w-full py-3 rounded-lg hover:bg-[#CF8562]`}
                   >
                     Checkout Securely
                   </button>
@@ -589,12 +615,11 @@ export default function MyBag() {
                         </p>
 
                         <button
-                          className={`w-full bg-black text-xs rounded-lg sm:text-sm md:text-base text-white py-2 px-1  hover:bg-gray-800 transition ${jost.className}`}
+                          className={`w-full bg-black text-xs rounded-lg sm:text-sm md:text-base text-white py-2 px-1  hover:bg-[#CF8562] transition ${jost.className}`}
                           onClick={() => addToCart(product)}
                         >
                           ADD TO BAG
                         </button>
-                      </div>
                     </div>
                   </div>
                 ))}

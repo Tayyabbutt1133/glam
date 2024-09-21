@@ -119,7 +119,7 @@ const ProductCard = ({ product, isFavorite, onFavoriteClick, onAddToCart }) => {
           {currencySymbol}{parseFloat(product.price * rate).toFixed(2)}
         </p>
         <button
-          className={`w-full mt-4 bg-black text-white py-2 rounded-lg hover:bg-gray-800 font-normal transition duration-200 ${jost.className} uppercase`}
+          className={`w-full hover:bg-[#CF8562] mt-4 bg-black text-white py-2 rounded-lg hover:bg-gray-800 font-normal transition duration-200 ${jost.className} uppercase`}
           onClick={() => onAddToCart(product)}
         >
           ADD TO BAG

@@ -158,7 +158,7 @@ export default function Cartdropdown() {
           <Link href="/mybag" className="block">
             <button
               onClick={handleViewBag}
-              className={`w-full bg-black text-white py-3 rounded-lg text-center text-base font-semibold hover:bg-gray-900 transition duration-200 ${jost.className}`}
+              className={`w-full bg-black text-white py-3 rounded-lg text-center text-base font-semibold hover:bg-[#CF8562] transition duration-200 ${jost.className}`}
             >
               VIEW BAG
             </button>
