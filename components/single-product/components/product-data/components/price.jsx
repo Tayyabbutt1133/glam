@@ -22,7 +22,7 @@ export default function Price({price, regularPrice, salePrice,isOnsale}) {
           {currencySymbol}{(regularPrice * rate).toFixed(2) || (price * rate).toFixed(2)}
         </Text>
         <span
-          className={`${lexendDeca.className} text-black font-medium text-base rounded-md bg-bg-01 px-2 py-1`}
+          className={`${lexendDeca.className} text-black font-medium text-base rounded-lg bg-bg-01 px-2 py-1`}
         >
           SAVE {currencySymbol}{(savings * rate).toFixed(2)}
         </span>

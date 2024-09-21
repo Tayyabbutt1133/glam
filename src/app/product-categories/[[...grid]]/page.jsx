@@ -623,7 +623,7 @@ export default function Component() {
                 filters.categories.length === 0 &&
                 filters.priceRange.length === 0
               }
-              className="basis-1/2 bg-black text-white w-full py-2 rounded-md"
+              className="basis-1/2 bg-black text-white w-full py-2 rounded-lg"
               onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
             >
               Apply Filter

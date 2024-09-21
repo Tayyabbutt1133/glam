@@ -155,14 +155,14 @@ export default function MyBag() {
           <div className="flex mt-3 justify-start flex-row gap-4 md:gap-2 ">
             <Link href="/signup">
               <button
-                className={`mr-4 ${jost.className} text-sm text-gray-800 border border-gray-300 px-4 py-2 font-medium rounded-md`}
+                className={`mr-4 ${jost.className} text-sm text-gray-800 border border-gray-300 px-4 py-2 font-medium rounded-lg`}
               >
                 Register
               </button>
             </Link>
             <Link href="/login">
               <button
-                className={`text-sm font-medium text-gray-800 border border-gray-300 px-4 py-2 rounded-md ${jost.className}`}
+                className={`text-sm font-medium text-gray-800 border border-gray-300 px-4 py-2 rounded-lg ${jost.className}`}
               >
                 Log In
               </button>
@@ -486,7 +486,7 @@ export default function MyBag() {
                     placeholder="Enter the code"
                   />
                   <button
-                    className={`bg-white border text-black px-4 py-2 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-300 ${jost.className}`}
+                    className={`bg-white border text-black px-4 py-2 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-300 ${jost.className}`}
                   >
                     Apply
                   </button>
@@ -514,7 +514,7 @@ export default function MyBag() {
                 </div>
                 <Link href="./checkout">
                   <button
-                    className={`bg-black ${jost.className} text-white w-full py-3 rounded-md`}
+                    className={`bg-black ${jost.className} text-white w-full py-3 rounded-lg`}
                   >
                     Checkout Securely
                   </button>
@@ -584,7 +584,7 @@ export default function MyBag() {
                         </p>
 
                         <button
-                          className={`w-full bg-black text-xs rounded-lg sm:text-sm md:text-base text-white py-2 px-1 rounded-md hover:bg-gray-800 transition ${jost.className}`}
+                          className={`w-full bg-black text-xs rounded-lg sm:text-sm md:text-base text-white py-2 px-1  hover:bg-gray-800 transition ${jost.className}`}
                           onClick={() => addToCart(product)}
                         >
                           ADD TO BAG

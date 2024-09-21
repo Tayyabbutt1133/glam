@@ -132,7 +132,7 @@ export default function Review({
         <h2 className="text-lg font-bold">Reviews ({totalReviews})</h2>
         <button
           className={
-            "px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            "px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           }
         >
           Leave Review
@@ -205,7 +205,7 @@ export default function Review({
       </div>
       <div className="flex justify-center items-center space-x-2 mt-4">
         <button
-          className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
           onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
           disabled={currentPage === 1}
         >
@@ -215,7 +215,7 @@ export default function Review({
           (_, index) => (
             <button
               key={index}
-              className={`px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${
+              className={`px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${
                 currentPage === index + 1
                   ? "bg-gray-200 text-gray-800"
                   : "bg-white text-gray-800"
@@ -227,7 +227,7 @@ export default function Review({
           )
         )}
         <button
-          className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
           onClick={() => setCurrentPage(prev => Math.min(prev + 1, Math.ceil(reviews.length / reviewsPerPage)))}
           disabled={currentPage === Math.ceil(reviews.length / reviewsPerPage)}
         >
