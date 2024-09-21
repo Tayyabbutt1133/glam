@@ -42,7 +42,7 @@ export default function QuantityBag({product}) {
       {/* Add to Bag Button */}
       <button
         onClick={handleAddToBag}
-        className="bg-black text-white py-2 px-6 w-full h-full rounded-md uppercase text-sm tracking-wide hover:bg-hover"
+        className="bg-black text-white py-2 px-6 w-full h-full rounded-lg uppercase text-sm tracking-wide hover:bg-hover"
       >
         Add to Bag
       </button>

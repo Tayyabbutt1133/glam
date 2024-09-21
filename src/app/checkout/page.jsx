@@ -828,7 +828,7 @@ export default function Checkout() {
               {/* Pay Now Button */}
               <button
                 onClick={handlePayNow}
-                className={`w-full rounded-xl bg-black text-white mt-4 hover:bg-gray-800 py-3 md:rounded ${jost.className} uppercase`}
+                className={`w-full rounded-lg bg-black text-white mt-4 hover:bg-gray-800 py-3 md:rounded ${jost.className} uppercase`}
               >
                 PAY NOW
               </button>

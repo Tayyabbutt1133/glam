@@ -89,7 +89,7 @@ const HomeBrand = () => {
                   {product.description}
                 </p>
                 <button
-                  className={`sm:mt-4 bg-black text-white text-xs sm:text-sm py-2 sm:px-6 px-2 rounded-md hover:bg-gray-800 transition duration-200 ${jost.className}`}
+                  className={`sm:mt-4 bg-black text-white text-xs sm:text-sm py-2 sm:px-6 px-2 rounded-lg hover:bg-gray-800 transition duration-200 ${jost.className}`}
                 >
                   SHOP NOW
                 </button>

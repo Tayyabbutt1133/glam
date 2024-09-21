@@ -118,7 +118,7 @@ export default function Product({ product }) {
             {currencySymbol}{Number(product.price * rate).toFixed(2)}
           </p>
           <button
-            className={`w-full bg-black text-white py-2 text-xs md:text-base mx-auto rounded-md hover:bg-gray-800 font-normal transition duration-200 flex justify-center items-center text-center ${lexendDeca.className}`}
+            className={`w-full bg-black text-white py-2 text-xs md:text-base mx-auto rounded-lg hover:bg-gray-800 font-normal transition duration-200 flex justify-center items-center text-center ${lexendDeca.className}`}
             onClick={() => addToCart(product)}
           >
             ADD TO BAG

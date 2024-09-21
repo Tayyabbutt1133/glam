@@ -407,7 +407,7 @@ export default function MyBag() {
                           </p>
 
                           <button
-                            className={`w-full bg-black text-white text-xs sm:text-sm md:text-base py-2 rounded-md hover:bg-gray-800 transition `}
+                            className={`w-full bg-black text-white rounded-lg text-xs sm:text-sm md:text-base py-2  hover:bg-gray-800 transition `}
                             onClick={() => addToCart(product)}
                           >
                             ADD TO BAG
@@ -584,7 +584,7 @@ export default function MyBag() {
                         </p>
 
                         <button
-                          className={`w-full bg-black text-xs sm:text-sm md:text-base text-white py-2 px-1 rounded-md hover:bg-gray-800 transition ${jost.className}`}
+                          className={`w-full bg-black text-xs rounded-lg sm:text-sm md:text-base text-white py-2 px-1 rounded-md hover:bg-gray-800 transition ${jost.className}`}
                           onClick={() => addToCart(product)}
                         >
                           ADD TO BAG

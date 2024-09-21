@@ -14,7 +14,7 @@ const ButtonAddToCart = ({ product }) => {
   return (
     <button 
       onClick={handleAddToCart}
-      className="w-full lg:text-xs lg:py-1  bg-gray-900 hover:bg-hover ease duration-100 text-white py-2 mt-auto rounded-md"
+      className="w-full lg:text-xs lg:py-1  bg-gray-900 hover:bg-hover ease duration-100 text-white py-2 mt-auto rounded-lg"
     >
       ADD TO BAG
     </button>
