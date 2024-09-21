@@ -381,7 +381,7 @@ export default function SubcategoryPage() {
           <select
             value={sortOption}
             onChange={handleSortChange}
-            className={`px-4 py-2 border border-gray-300 ${lexendDeca.className} rounded-md font-jost text-black`}
+            className={`px-4 py-2 border border-gray-300 ${lexendDeca.className} rounded-lg font-jost text-black`}
           >
             <option value="popularity" className="text-black">
               Sort by: Popularity
@@ -639,7 +639,7 @@ export default function SubcategoryPage() {
                 filters.categories.length === 0 &&
                 filters.priceRange.length === 0
               }
-              className="basis-1/2 bg-black text-white w-full py-2 rounded-md"
+              className="basis-1/2 bg-black text-white w-full py-2 rounded-lg"
               onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
             >
               Apply Filter
@@ -746,7 +746,7 @@ export default function SubcategoryPage() {
                       )}
                     </p>
                     <button
-                      className={`w-full bg-black text-white py-2 rounded-md hover:bg-gray-800 transition ${jost.className}`}
+                      className={`w-full bg-black text-white py-2 rounded-lg hover:bg-gray-800 transition ${jost.className}`}
                       onClick={() => addToCart(product)}
                     >
                       ADD TO BAG

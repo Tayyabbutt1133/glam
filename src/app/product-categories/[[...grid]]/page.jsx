@@ -623,7 +623,7 @@ export default function Component() {
                 filters.categories.length === 0 &&
                 filters.priceRange.length === 0
               }
-              className="basis-1/2 bg-black text-white w-full py-2 rounded-md"
+              className="basis-1/2 bg-black text-white w-full py-2 rounded-lg"
               onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
             >
               Apply Filter
@@ -725,7 +725,7 @@ export default function Component() {
                         )}
                       </p>
                       <button
-                        className={`w-full bg-black text-white py-2 rounded-md hover:bg-gray-800 transition ${jost.className}`}
+                        className={`w-full bg-black text-white py-2 rounded-lg hover:bg-gray-800 transition ${jost.className}`}
                         onClick={() => addToCart(product)}
                       >
                         ADD TO BAG

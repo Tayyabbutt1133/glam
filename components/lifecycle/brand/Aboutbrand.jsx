@@ -25,7 +25,7 @@ export default function Aboutbrand() {
             Dive in today to discover the best UK makeup brands alongside the most iconic lines from the world&apos;s top beauty names. Shop the range of cosmetics and makeup at GLAMBEAUTY today.
           </p>
           <div>
-                      <button className={`w-36 ${jost.className} h-10 bg-black text-white rounded-md uppercase`}><a href="#">Shop now</a></button>
+                      <button className={`w-36 ${jost.className} h-10 bg-black text-white rounded-lg uppercase`}><a href="#">Shop now</a></button>
           </div>
         </div>
       </div>

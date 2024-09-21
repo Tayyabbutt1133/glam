@@ -119,7 +119,7 @@ const ProductCard = ({ product, isFavorite, onFavoriteClick, onAddToCart }) => {
           {currencySymbol}{parseFloat(product.price * rate).toFixed(2)}
         </p>
         <button
-          className={`w-full hover:bg-[#CF8562]  mt-4 bg-black text-white py-2 rounded-md  font-normal transition duration-200 ${jost.className} uppercase`}
+          className={`w-full hover:bg-[#CF8562] mt-4 bg-black text-white py-2 rounded-lg hover:bg-gray-800 font-normal transition duration-200 ${jost.className} uppercase`}
           onClick={() => onAddToCart(product)}
         >
           ADD TO BAG
@@ -210,7 +210,7 @@ const ProductList = () => {
   return (
     <Container>
       <div className="py-16 md:mb-20 lg:mx-10">
-        <h2 className={`text-2xl font-semibold mx-4 my-8 ${jost.className} uppercase`}>TRENDING NOW</h2>
+        <h2 className={`text-2xl lg:text-[36px] font-semibold mx-4 my-8 ${jost.className} uppercase`}>TRENDING NOW</h2>
         {loading ? (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {Array(4).fill(0).map((_, index) => (

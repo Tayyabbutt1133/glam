@@ -33,7 +33,7 @@ const SkeletonLoader = () => (
 const CustomButton = ({ onClick, children, className }) => (
   <button
     onClick={onClick}
-    className={`px-4 py-2 bg-primary text-white rounded-md hover:bg-primary-dark transition-colors ${className} ${jost.className}`}
+    className={`px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors ${className} ${jost.className}`}
   >
     {children}
   </button>

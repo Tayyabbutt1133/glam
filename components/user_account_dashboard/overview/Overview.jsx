@@ -156,7 +156,7 @@ const Overview = () => {
       <button
         type="button"
         onClick={handleButtonClick}
-        className={`md:mt-32 mt-5 px-6 py-3 bg-black text-white rounded-md shadow-sm w-full md:w-[30%] ${jost.className}`}
+        className={`md:mt-32 mt-5 px-6 py-3 bg-black text-white rounded-lg shadow-sm w-full md:w-[30%] ${jost.className}`}
       >
         SAVE CHANGES
       </button>
