@@ -22,9 +22,9 @@ export default function BrandInFocus() {
   }];
 
   return (
-    <div className="flex flex-col gap-5 mb-10">
+    <div className="flex flex-col gap-8 mb-10">
       <Container>
-        <Text style={"h1"}>Brand In Focus</Text>
+        <Text style={"h1"} className="uppercase">Brand In Focus</Text>
       </Container>
 
       <section className="lg:hidden">

@@ -69,7 +69,7 @@ export default function BrandSlide() {
       {/* <h2 className="text-2xl font-bold mb-6 text-center">SHOP BY BRAND</h2> */}
       <Slider {...settings} className="brand-slider">
         {brands.map((brand) => (
-          <div key={brand.id} className="px-4">
+          <div key={brand.id} className="px-3">
             <Link href={`/brands/${brand.name}`}>
               <div className="flex items-center justify-center h-20">
                 <Image

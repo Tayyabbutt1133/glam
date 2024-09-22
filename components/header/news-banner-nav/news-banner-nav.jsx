@@ -7,13 +7,19 @@ import { lexendDeca } from "../../ui/fonts"
 import Container from "../../container"
 import { usePopupStore } from "../../../states/use-popup-store.jsx"
 import uk_flag from '../../../public/Flag_uk.png'
+import Text from '../../../components/ui/Text'
+
+
+
+
+
 
 export default function NewsBannerNav() {
   const [mounted, setMounted] = useState(false)
   const onOpen = usePopupStore((state) => state.onOpen)
   const selectedCountryFromStore = usePopupStore((state) => state.selectedCountry)
 
-  const defaultCountry = { countryCode: "GB", code: "GBP", country: "United Kingdom" }
+  const defaultCountry = { countryCode: "en", code: "GBP", country: "United Kingdom" }
 
   const [selectedCountry, setSelectedCountry] = useState(() => {
     if (typeof window !== "undefined") {
@@ -74,9 +80,9 @@ export default function NewsBannerNav() {
     <div className={`hidden lg:flex ${lexendDeca.className} w-full bg-[#F7EBE0]`}>
       <Container>
         <div className="flex w-full justify-center items-center relative py-2">
-          <p className="text-center text-base font-medium">
+          <Text style={"sm"} className="text-center ">
             Up to 50% off selected brands + UK next day delivery over £40
-          </p>
+          </Text>
           <div className="flex flex-row gap-1 absolute right-0">
             <div className="relative flex w-10">
               {selectedCountry.countryCode === "en" ? (

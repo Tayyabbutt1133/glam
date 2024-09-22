@@ -10,6 +10,7 @@ import brand_three from "../../../../public/home_banners/brand_three.svg";
 import brand_four from "../../../../public/home_banners/brand_four.svg";
 import { jost, lexendDeca } from "../../../ui/fonts";
 import BrandSlide from "./BrandSlide";
+import Text from "../../../ui/Text";
 
 const HomeBrand = () => {
   const products = [
@@ -50,9 +51,9 @@ const HomeBrand = () => {
   return (
     <Container>
       <div className="px-4 py-16 space-y-10">
-        <h2 className={`text-2xl lg:text-[36px] font-semibold ${jost.className}`}>
+        <Text style={"h1"} className="uppercase" >
           SHOP BY BRAND
-        </h2>
+        </Text>
         <BrandSlide />
         <div className="flex overflow-x-auto pb-4 space-x-4 lg:grid lg:grid-cols-4 lg:gap-8 lg:space-x-0 scrollbar-hide">
           {products.map((product) => (
@@ -79,12 +80,12 @@ const HomeBrand = () => {
 
               <div className=" py-6 text-left">
                 <h3
-                  className={`hidden sm:block text-lg font-semibold text-gray-900 ${jost.className}`}
+                  className={`hidden  sm:block text-lg font-semibold text-gray-900 ${jost.className}`}
                 >
                   {product.name}
                 </h3>
                 <p
-                  className={`text-black text-xs sm:text-sm my-2 ${lexendDeca.className}`}
+                  className={`text-black font-normal text-xs sm:text-sm my-2 ${lexendDeca.className}`}
                 >
                   {product.description}
                 </p>
