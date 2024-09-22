@@ -97,7 +97,7 @@ export default function CurrencyLanguagePopUp() {
   return (
     <>
       {isOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-[150]">
           <div
             ref={modalRef}
             className="bg-white rounded-lg shadow-lg py-6 px-8 relative max-w-[537px]"

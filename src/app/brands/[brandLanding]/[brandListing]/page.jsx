@@ -15,6 +15,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useCartStore } from "/states/Cardstore";
 import { usePopupStore } from "/states/use-popup-store";
+import Breadcrumb from "../../../../../components/BreadCrumb";
 
 const API_BASE_URL = "https://glam.clickable.site/wp-json/wc/v3/products";
 const CONSUMER_KEY = "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d";
@@ -22,7 +23,7 @@ const CONSUMER_SECRET = "cs_3f70ee2600a3ac17a5692d7ac9c358d47275d6fc";
 const PRODUCTS_PER_PAGE = 12;
 
 export default function BrandListing() {
-  const {brandsLanding} = useParams();
+  const {brandLanding,brandListing} = useParams();
   const { rate, currencySymbol } = usePopupStore();
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -51,14 +52,14 @@ export default function BrandListing() {
     try {
       const params = {
         attribute: "pa_brand",
-        attribute_term: brandsLanding,
+        attribute_term: brandLanding,
         per_page: 100,
         page,
         consumer_key: CONSUMER_KEY,
         consumer_secret: CONSUMER_SECRET,
       };
 
-      const productsResponse = await axios.get(`/api/${brandsLanding}`, {
+      const productsResponse = await axios.get(`/api/${brandLanding}`, {
         params,
       });
       const fetchedProducts = productsResponse.data
@@ -135,10 +136,10 @@ export default function BrandListing() {
   };
 
   useEffect(() => {
-    if (brandsLanding) {
+    if (brandLanding) {
       fetchProducts(1);
     }
-  }, [brandsLanding]);
+  }, [brandLanding]);
 
   const handlePageChange = (page) => {
     if (page >= 1 && page <= totalPages) {
@@ -350,8 +351,22 @@ export default function BrandListing() {
     </div>
   );
 
+  const breadLinks = [{
+    name: "Home",
+    url: "/"
+  },
+  {
+    name: brandLanding,
+    url: `/brands/${brandLanding}`
+  },
+  {
+    name: brandListing,
+    url: `/brands/${brandLanding}/${brandListing}`
+  }]
+
   return (
-    <Container className="min-h-screen py-32">
+    <Container className="min-h-screen py-10">
+      <Breadcrumb links={breadLinks} />
       <div className="flex justify-between items-center">
         <div className="flex items-center lg:hidden mr-10">
           <button onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}>

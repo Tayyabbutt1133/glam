@@ -31,7 +31,7 @@ const NextArrow = ({ className, style, onClick }) => {
       style={{
         ...style,
         ...arrowStyles,
-        right: "-14px",
+        right: "-17px",
       }}
     >
       <NextArrowIcon />
@@ -46,7 +46,7 @@ const PrevArrow = ({ className, style, onClick }) => (
     style={{
       ...style,
       ...arrowStyles,
-      left: "-50px",
+      left: "-46px",
     }}
   >
     <PrevArrowIcon />
@@ -141,7 +141,7 @@ const Staffpicks = () => {
   if (!categoryId) return;
   
   return (
-    <Container className="my-16">
+    <main className="my-16 lg:mx-20">
       <Text style={"h1"}
         className={`text-2xl font-semibold mx-4 my-8 ${jost.className} uppercase`}
       >
@@ -177,7 +177,7 @@ const Staffpicks = () => {
           ))}
         </Slider>
       )}
-    </Container>
+    </main>
   );
 };
 
