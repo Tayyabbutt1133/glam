@@ -23,9 +23,9 @@ export default function SliderBanner({ bannerObject, hero = false }) {
           <Text style={"sm"} className="text-light capitalize text-xs sm:text-sm lg:text-base">
             {description}
           </Text>
-          <Link  href={`/brands/${olaplexbrand}`}>
-            <Button className="text-xs sm:text-sm lg:text-base px-2 py-1 sm:px-3 sm:py-2 lg:px-4 lg:py-2">Shop Now</Button>
-            </Link>
+          <Link className="mt-6" href={`/brands/${olaplexbrand}`}>
+            <Button className="">Shop Now</Button>
+          </Link>
         </div>
       </div>
 

@@ -13,6 +13,8 @@ import { jost } from "/components/ui/fonts";
 import NextArrowIcon from "/public/hero-banners/next-arrow";
 import PrevArrowIcon from "/public/hero-banners/prev-arrow";
 import Product from "/components/product";
+import Text from "../../ui/Text";
+
 
 const arrowStyles = {
   width: "40px",
@@ -118,15 +120,13 @@ const Staffpicks = () => {
       },
       {
         breakpoint: 480,
-        
+
         settings: {
           slidesToShow: 2,
           slidesToScroll: 2,
           arrows: false,
           dots: true,
           rows: 2,
-          
-          
         },
       },
     ],
@@ -147,29 +147,32 @@ const Staffpicks = () => {
 
   return (
     <Container className="mb-16">
-      <h2
+      <Text
+      style={"h1"}
         className={`text-2xl font-semibold mx-4 my-8 ${jost.className} uppercase`}
       >
         See What Others are Buying
-      </h2>
+      </Text>
       {loading ? (
         <Slider {...settings}>
-        {Array(4).fill(0).map((_, index) => (
-          <div key={index} className="px-2">
-            <div className="bg-white shadow-lg rounded-lg overflow-hidden relative flex flex-col h-full min-h-[350px] border border-gray-300">
-              <div className="aspect-w-1 aspect-h-1 w-full h-48">
-                <Skeleton height="100%" />
+          {Array(4)
+            .fill(0)
+            .map((_, index) => (
+              <div key={index} className="px-2">
+                <div className="bg-white shadow-lg rounded-lg overflow-hidden relative flex flex-col h-full min-h-[350px] border border-gray-300">
+                  <div className="aspect-w-1 aspect-h-1 w-full h-48">
+                    <Skeleton height="100%" />
+                  </div>
+                  <div className="p-4 flex-grow">
+                    <Skeleton height={20} width="80%" className="mb-2" />
+                    <Skeleton height={16} width="60%" className="mb-4" />
+                    <Skeleton height={24} width="40%" className="mb-2" />
+                    <Skeleton height={32} width="100%" />
+                  </div>
+                </div>
               </div>
-              <div className="p-4 flex-grow">
-                <Skeleton height={20} width="80%" className="mb-2" />
-                <Skeleton height={16} width="60%" className="mb-4" />
-                <Skeleton height={24} width="40%" className="mb-2" />
-                <Skeleton height={32} width="100%" />
-              </div>
-            </div>
-          </div>
-        ))}
-      </Slider>
+            ))}
+        </Slider>
       ) : (
         <Slider {...settings}>
           {staffPicks?.map((product) => (

@@ -58,7 +58,7 @@ export default function BrandListing() {
         consumer_secret: CONSUMER_SECRET,
       };
 
-      const productsResponse = await axios.get(`${API_BASE_URL}/products`, {
+      const productsResponse = await axios.get(`/api/${brandsLanding}`, {
         params,
       });
       const fetchedProducts = productsResponse.data
