@@ -18,6 +18,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 import { usePopupStore } from '../../../../states/use-popup-store';
+import Text from '../../../ui/Text';
 
 
 const arrowStyles = {
@@ -213,7 +214,7 @@ const ProductList = () => {
   return (
     <Container>
       <div className="py-16 md:mb-20 lg:mx-10">
-        <h2 className={`text-2xl lg:text-[36px] font-semibold mx-4 my-8 ${jost.className} uppercase`}>TRENDING NOW</h2>
+        <Text style={"h1"} className='uppercase'>TRENDING NOW</Text>
         {loading ? (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {Array(4).fill(0).map((_, index) => (

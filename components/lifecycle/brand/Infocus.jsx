@@ -3,17 +3,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-import Product from "../../../product";
-import Container from "../../../container";
+import Container from "/components/container";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import NextArrowIcon from "../../../../public/hero-banners/next-arrow";
-import PrevArrowIcon from "../../../../public/hero-banners/prev-arrow";
-import { useCategoryIdState } from "../../../../states/use-category-id";
-import Text from "../../../ui/Text";
+import NextArrowIcon from "/public/hero-banners/next-arrow";
+import PrevArrowIcon from "/public/hero-banners/prev-arrow";
+import Product from "/components/product";
+import Text from "../../ui/Text"
 
 const arrowStyles = {
   width: "40px",
@@ -21,7 +20,6 @@ const arrowStyles = {
   zIndex: 1,
   transition: "all 0.3s ease-in-out",
 };
-
 // Next Arrow component
 const NextArrow = ({ className, style, onClick }) => {
   return (
@@ -53,37 +51,46 @@ const PrevArrow = ({ className, style, onClick }) => (
   </div>
 );
 
-const Bestseller = () => {
-  const [bestSellers, setBestSellers] = useState([]);
+// Utility function to decode HTML entities
+const decodeHtmlEntities = (text) => {
+  const textarea = document.createElement("textarea");
+  textarea.innerHTML = text;
+  return textarea.value;
+};
+
+const InFocus = () => {
+
+  const [favorites, setFavorites] = useState({});
+  const [staffPicks, setStaffPicks] = useState([]);
   const [loading, setLoading] = useState(true);
   const categoryId = 147;
 
   useEffect(() => {
-    const fetchBestSellers = async () => {
+    const fetchStaffPicks = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`/api/bestsellers/${categoryId}`);
-        setBestSellers(response.data);
+        const response = await axios.get(`/api/staffpicks/${categoryId}`);
+        setStaffPicks(response.data);
       } catch (error) {
         console.error("Error fetching staff picks:", error);
       } finally {
         setLoading(false);
       }
     };
-    if (categoryId) fetchBestSellers();
+    if (categoryId) fetchStaffPicks();
   }, [categoryId]);
 
   const settings = {
     dots: false,
     infinite: true,
-    speed: 900,
+    speed: 500,
     slidesToShow: 4,
     slidesToScroll: 1,
-    autoplay: false,
+    autoplay: true,
     autoplaySpeed: 2000,
     arrows: true,
-    prevArrow: <div className="hidden sm:block"><PrevArrow /></div>,
-    nextArrow: <div className="hidden sm:block"><NextArrow /></div>,
+    prevArrow: <PrevArrow />,
+    nextArrow: <NextArrow />,
     responsive: [
       {
         breakpoint: 1280,
@@ -103,67 +110,70 @@ const Bestseller = () => {
       {
         breakpoint: 768,
         settings: {
+          dots: true,
+          arrows: false,
           slidesToShow: 2,
           slidesToScroll: 1,
         },
       },
       {
         breakpoint: 480,
+        
         settings: {
           slidesToShow: 2,
           slidesToScroll: 2,
+          arrows: false,
+          dots: true,
           rows: 2,
-          slidesPerRow: 1,
+          
+          
         },
       },
     ],
   };
 
-  if (!categoryId) return;
-
-
-
-  const getBrandName = (attributes) => {
-    const brandAttr = attributes.find((attr) => attr.name === "Brand");
-    return brandAttr ? (brandAttr.options[0] || "Unknown Brand") : "Unknown Brand";
+  const handleProductClick = (productId) => {
+    console.log(`Product clicked: ${productId}`);
   };
 
+  const handleFavoriteClick = (productId) => {
+    setFavorites((prevFavorites) => ({
+      ...prevFavorites,
+      [productId]: !prevFavorites[productId],
+    }));
+  };
+
+  if (!categoryId) return;
 
   return (
-    <Container className="py-16">
-      <Text
-      style={"h1"}
-        className={`uppercase mb-8`}
+    <Container className="mb-16">
+      <Text style={"h1"}
+        className={`uppercase mb-10`}
       >
-        Bestsellers
+        In focus
       </Text>
-      {!bestSellers.length ? (
+      {loading ? (
         <Slider {...settings}>
-          {Array(4)
-            .fill(0)
-            .map((_, index) => (
-              <div key={index} className="px-2">
-                <div className="bg-white shadow-lg rounded-lg overflow-hidden relative flex flex-col h-full min-h-[420px] border border-gray-300">
-                  <div className="flex items-center w-[90%] 2xl:w-[100%] h-48 ">
-                    <Skeleton height="100%" />
-                  </div>
-                  <div className="px-4 pb-4 flex-grow">
-                    <Skeleton height={24} width="80%" className="mb-3" />
-                    <Skeleton height={20} width="100%" className="mb-3" />
-                    <Skeleton height={20} width="90%" className="mb-3" />
-                    <Skeleton height={20} width="50%" className="mb-4" />
-                    <Skeleton height={32} width="100%" />
-                  </div>
-                </div>
+        {Array(4).fill(0).map((_, index) => (
+          <div key={index} className="px-2">
+            <div className="bg-white shadow-lg rounded-lg overflow-hidden relative flex flex-col h-full min-h-[350px] border border-gray-300">
+              <div className="aspect-w-1 aspect-h-1 w-full h-48">
+                <Skeleton height="100%" />
               </div>
-            ))}
-        </Slider>
+              <div className="p-4 flex-grow">
+                <Skeleton height={20} width="80%" className="mb-2" />
+                <Skeleton height={16} width="60%" className="mb-4" />
+                <Skeleton height={24} width="40%" className="mb-2" />
+                <Skeleton height={32} width="100%" />
+              </div>
+            </div>
+          </div>
+        ))}
+      </Slider>
       ) : (
         <Slider {...settings}>
-          {bestSellers.map((product) => (
-           <div key={product.id} className=" pb-2">
-              <Product product={product} />
-            </div>
+          {staffPicks?.map((product) => (
+            <Product key={product.id} product={product} />
           ))}
         </Slider>
       )}
@@ -171,4 +181,4 @@ const Bestseller = () => {
   );
 };
 
-export default Bestseller;
+export default InFocus;
