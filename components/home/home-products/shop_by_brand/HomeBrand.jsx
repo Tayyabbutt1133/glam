@@ -80,12 +80,12 @@ const HomeBrand = () => {
 
               <div className=" py-6 text-left">
                 <h3
-                  className={`hidden sm:block text-lg font-semibold text-gray-900 ${jost.className}`}
+                  className={`hidden  sm:block text-lg font-semibold text-gray-900 ${jost.className}`}
                 >
                   {product.name}
                 </h3>
                 <p
-                  className={`text-black text-xs sm:text-sm my-2 ${lexendDeca.className}`}
+                  className={`text-black font-normal text-xs sm:text-sm my-2 ${lexendDeca.className}`}
                 >
                   {product.description}
                 </p>
