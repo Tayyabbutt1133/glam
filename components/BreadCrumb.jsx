@@ -3,8 +3,13 @@
 import Link from 'next/link'
 
 const Breadcrumb = ({ links }) => {
+  const sanitizeText = (text) => {
+    return text.replace(/&amp;/g, "&");
+  };
+
   const capitalizeFirstLetter = (string) => {
-    return string && string.length > 0 ? string.charAt(0).toUpperCase() + string.slice(1) : ''
+    
+    return sanitizeText(string && string.length > 0 ? string.charAt(0).toUpperCase() + string.slice(1) : '')
   }
 
   return (
