@@ -57,7 +57,7 @@ export default function Aboutbrand() {
               range of cosmetics and makeup at GLAMBEAUTY today.
             </p>
             <div>
-            <button className={`w-36 ${jost.className} h-10 bg-black text-white rounded-lg uppercase`}><a href="#">Shop now</a></button>
+            <button className={`w-36 ${jost.className} h-10 bg-black text-white rounded-lg uppercase hover:bg-[#CF8562]`}><a href="#">Shop now</a></button>
             </div>
           </div>
         </div>

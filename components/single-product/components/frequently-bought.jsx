@@ -104,7 +104,7 @@ export default function FrequentlyBoughtTogether() {
 
             {/* Render "+" icon between products */}
             {index < products.length - 1 && (
-              <div className="flex items-center justify-end sm:justify-center w-8 text-4xl font-extralight text-gray-500  sm:flex">
+              <div className="flex items-center md:absolute md:-right-7  lg:-right-12 xl:-right-[22%] md:-translate-y-[70%] 2xl:-right-[39%]  md:top-[30%] justify-end sm:justify-center w-8 text-4xl font-extralight text-gray-500  sm:flex">
                 +
               </div>
             )}

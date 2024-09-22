@@ -72,9 +72,11 @@ const SingleMakeupPick = ({ product }) => {
           {shortName}
         </Text>
       </div>
-      <CustomButton onClick={handleAddToCart} className="mt-auto w-full uppercase">
+      <Link href={`/product/${product.id}`}>
+      <CustomButton onClick={handleAddToCart} className="mt-auto  uppercase hover:bg-[#CF8562]">
         Shop Now
       </CustomButton>
+      </Link>
     </div>
   )
 }

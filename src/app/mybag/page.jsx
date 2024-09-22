@@ -150,9 +150,7 @@ export default function MyBag() {
     <main className="lg:w-[93%] w-[95%] xl:w-[92%] mx-auto">
       <div className=" lg:w-[98%] xl:w-[92%] mx-auto px-4 py-8">
         <div className="flex flex-col md:flex-row items-center md:justify-between  md:pr-2  mb-4 w-full md:w-[69%]">
-          <p
-            className={`text-sm lg:text-[20px] md:w-full text-black ${jost.className} sm:font-medium`}
-          >
+          <p className={` text-sm md:text-[15px] 2xl:text-[20px] md:w-full text-black ${jost.className} sm:font-medium`}>
             Log in or create an account now to get these exclusive benefits.
           </p>
           <div className="flex mt-3 md:mt-0 items-center justify-between w-[80%] sm:w-8/12 md:w-[59%] lg:w-[40%]  md:justify-end flex-row gap-4 md:gap-1 lg:gap-2 ">
@@ -180,7 +178,7 @@ export default function MyBag() {
           </h1>
         </div>
 
-        <div className="flex flex-col md:flex-row gap-8">
+        <div className="flex flex-col md:flex-row md:items-stretch gap-8">
           <div className="md:w-2/3">
             <div
               ref={cartRef}
@@ -207,7 +205,9 @@ export default function MyBag() {
                       sizes="(max-width: 768px) 100%, 200px"
                     />
                   </div>
-                  <div className="ml-4">
+
+                  
+                  <div className="ml-4 md:flex-grow">
                     {editingItem?.id === item.id ? (
                       <div>
                         <input
@@ -351,8 +351,11 @@ export default function MyBag() {
             {/* You May Also Like section */}
             <div className="container mx-auto px-4 py-8 mb-24 md:mb-4 hidden md:block">
               <h2 className={`text-2xl font-bold mb-14 ${jost.className}`}>
-                You May Also Like
+                <p className=" mb-2">You May Also Like</p>
+            
               </h2>
+              <div className=" hidden md:block w-[calc(100%_-_14px)] mx-auto"><hr /></div>
+              
               {loading ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {Array(3)
@@ -413,7 +416,7 @@ export default function MyBag() {
                           </p>
 
                           <button
-                            className={`w-full bg-black text-white rounded-lg text-xs sm:text-sm md:text-base py-2  hover:bg-gray-800 transition `}
+                            className={`w-full bg-black hover:bg-[#CF8562] text-white rounded-lg text-xs sm:text-sm md:text-base py-2   transition `}
                             onClick={() => addToCart(product)}
                           >
                             ADD TO BAG
@@ -427,7 +430,7 @@ export default function MyBag() {
             </div>
           </div>
 
-          <div className="md:w-1/3 md:-mt-32  md:h-fit rounded-xl md:rounded-none">
+          <div className="md:w-1/3 md:-mt-36 bg-[#F7F7F7A6] md:flex-grow   rounded-xl md:rounded-none">
             <div className="p-2 rounded-lg bg-[#F7F7F7A6]">
               <div className="bg-white p-4 rounded-lg mt-4">
                 <h2 className={`text-xl font-normal mb-4 ${jost.className}`}>
@@ -555,6 +558,16 @@ export default function MyBag() {
               </div>
             </div>
           </div>
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
           <div className="container mx-auto px-4 py-8 mb-24 md:mb-4 md:hidden block">
             <h2 className={`text-2xl font-bold mb-14 ${jost.className}`}>
               You May Also Like
@@ -617,7 +630,7 @@ export default function MyBag() {
                         </p>
 
                         <button
-                          className={`w-full bg-black text-xs rounded-lg sm:text-sm md:text-base text-white py-2 px-1  hover:bg-[#CF8562] transition ${jost.className}`}
+                          className={`w-full bg-black  text-xs rounded-lg sm:text-sm md:text-base text-white py-2 px-1  hover:bg-[#CF8562] transition ${jost.className}`}
                           onClick={() => addToCart(product)}
                         >
                           ADD TO BAG

@@ -14,7 +14,7 @@ export default function Header() {
     );
   } else
     return (
-      <header className="sticky top-0 left-0 z-10">
+      <header className="sticky top-0 left-0 z-[110]">
         <NewsBannerNav />
         <div className=" hidden lg:block">
           <MiddleBarNav />

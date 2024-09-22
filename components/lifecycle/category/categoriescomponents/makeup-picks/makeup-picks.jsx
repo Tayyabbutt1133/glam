@@ -7,7 +7,7 @@ import Text from "../../../../ui/Text"
 import Image from "next/image"
 import Link from "next/link"
 import { jost, lexendDeca } from "../../../../ui/fonts"
-import { useCartStore } from '/states/Cardstore'
+// import { useCartStore } from '/states/Cardstore'
 
 const decodeHtmlEntities = (text) => {
   return text.replace(/&amp;/g, '&')
@@ -40,15 +40,15 @@ const CustomButton = ({ onClick, children, className }) => (
 )
 
 const SingleMakeupPick = ({ product }) => {
-  const addToCart = useCartStore((state) => state.addToCart)
+  // const addToCart = useCartStore((state) => state.addToCart)
   const brand = product.attributes.find((attr) => attr.name === "Brand")?.options[0] || "Unknown Brand"
   const decodedName = decodeHtmlEntities(product.name)
-  const shortName = shortenProductName(decodedName)
+  // const shortName = shortenProductName(decodedName)
 
-  const handleAddToCart = (e) => {
-    e.preventDefault()
-    addToCart(product)
-  }
+  // const handleAddToCart = (e) => {
+  //   e.preventDefault()
+  //   addToCart(product)
+  // }
 
   return (
     <div className="flex flex-col items-start gap-5 h-full">
@@ -67,13 +67,15 @@ const SingleMakeupPick = ({ product }) => {
         <h1 className={`font-semibold uppercase ${jost.className}`}>
           {brand}
         </h1>
-        <p  className={`line-clamp-2 ${lexendDeca.className} font-normal`}>
-          {shortName}
+        <p  className={` ${lexendDeca.className} font-normal`}>
+          {decodedName}
         </p>
       </div>
-      <CustomButton onClick={handleAddToCart} className="mt-auto text-sm w-[40%] hover:bg-[#CF8562] uppercase">
+      <Link href={`/product/${product.id}`} className="w-full">
+      <CustomButton  className="mt-auto text-sm xl:w-[40%] hover:bg-[#CF8562] uppercase">
         Shop Now
-      </CustomButton>
+        </CustomButton>
+        </Link>
     </div>
   )
 }

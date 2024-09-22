@@ -1,4 +1,5 @@
 "use client";
+
 import { usePopupStore } from "../states/use-popup-store";
 import { useRef, useEffect, useState } from "react";
 import name from "../src/app/currencies-with-flags.json";
@@ -6,8 +7,7 @@ import Image from "next/image";
 import Text from "./ui/Text";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { jost, lexendDeca } from "./ui/fonts";
-
-
+import uk_flag from '../public/Flag_uk.png'
 
 const plusJakartaSans = Plus_Jakarta_Sans({subsets: ['latin']});
 
@@ -40,15 +40,19 @@ export default function CurrencyLanguagePopUp() {
     }
   }, []);
 
-  const fetchFlag = async (countryCode) => {
-    try {
-      const response = await fetch(
-        `https://restcountries.com/v3.1/alpha/${countryCode}`
-      );
-      const data = await response.json();
-      setFlagUrl(data[0].flags.svg); // Use the SVG flag URL from the external API
-    } catch (error) {
-      console.error("Error fetching flag:", error);
+  const fetchFlag = async (country) => {
+    if (country.country === "United Kingdom" && country.name === "Pound Sterling") {
+      setFlagUrl(""); // We'll use the custom UK flag, so we don't need a URL
+    } else {
+      try {
+        const response = await fetch(
+          `https://restcountries.com/v3.1/alpha/${country.countryCode}`
+        );
+        const data = await response.json();
+        setFlagUrl(data[0].flags.svg);
+      } catch (error) {
+        console.error("Error fetching flag:", error);
+      }
     }
   };
 
@@ -59,7 +63,7 @@ export default function CurrencyLanguagePopUp() {
     );
     setSelectedCountry(country);
     setSelectedCurrency(country.code);
-    fetchFlag(country.countryCode);
+    fetchFlag(country);
 
     if (typeof window !== "undefined") {
       localStorage.setItem("selectedCountry", JSON.stringify(country));
@@ -68,7 +72,7 @@ export default function CurrencyLanguagePopUp() {
   };
 
   useEffect(() => {
-    fetchFlag(selectedCountry.countryCode);
+    fetchFlag(selectedCountry);
   }, [selectedCountry]);
 
   useEffect(() => {
@@ -88,23 +92,35 @@ export default function CurrencyLanguagePopUp() {
     };
   }, [isOpen, closeModal]);
 
+  const isUK = selectedCountry.country === "United Kingdom" && selectedCountry.name === "Pound Sterling";
+
   return (
     <>
       {isOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-[150]">
           <div
             ref={modalRef}
             className="bg-white rounded-lg shadow-lg py-6 px-8 relative max-w-[537px]"
           >
             {/* Country Flag Banner */}
             <div className="flex justify-center mb-4">
-              <Image
-                src={flagUrl}
-                alt={`${selectedCountry.country} flag`}
-                width={100}
-                height={100}
-                className="w-36 h-auto object-contain absolute -top-8"
-              />
+              {isUK ? (
+                <Image
+                  src={uk_flag}
+                  alt="United Kingdom flag"
+                  width={110}
+                  height={100}
+                  className="w-36 h-auto object-contain absolute -top-8"
+                />
+              ) : (
+                <Image
+                  src={flagUrl}
+                  alt={`${selectedCountry.country} flag`}
+                  width={110}
+                  height={100}
+                  className="w-36 h-auto object-contain absolute -top-8"
+                />
+              )}
             </div>
             <div className="mt-[4rem] mb-2">
               <Text style={"h3"} className={`text-center ${jost.className} text-2xl`}>

@@ -6,14 +6,20 @@ import ArrowDown from "../../../public/icons/arrow-down"
 import { lexendDeca } from "../../ui/fonts"
 import Container from "../../container"
 import { usePopupStore } from "../../../states/use-popup-store.jsx"
-import Text from "../../ui/Text"
+import uk_flag from '../../../public/Flag_uk.png'
+import Text from '../../../components/ui/Text'
+
+
+
+
+
 
 export default function NewsBannerNav() {
   const [mounted, setMounted] = useState(false)
   const onOpen = usePopupStore((state) => state.onOpen)
   const selectedCountryFromStore = usePopupStore((state) => state.selectedCountry)
 
-  const defaultCountry = { countryCode: "GB", code: "GBP", country: "United Kingdom" }
+  const defaultCountry = { countryCode: "en", code: "GBP", country: "United Kingdom" }
 
   const [selectedCountry, setSelectedCountry] = useState(() => {
     if (typeof window !== "undefined") {
@@ -29,12 +35,16 @@ export default function NewsBannerNav() {
   const [flagUrl, setFlagUrl] = useState("")
 
   const fetchFlag = async (countryCode) => {
-    try {
-      const response = await fetch(`https://restcountries.com/v3.1/alpha/${countryCode}`)
-      const data = await response.json()
-      setFlagUrl(data[0].flags.svg)
-    } catch (error) {
-      console.error("Error fetching flag:", error)
+    if (countryCode === "en") {
+      setFlagUrl("") // We'll use the custom UK flag, so we don't need a URL
+    } else {
+      try {
+        const response = await fetch(`https://restcountries.com/v3.1/alpha/${countryCode}`)
+        const data = await response.json()
+        setFlagUrl(data[0].flags.svg)
+      } catch (error) {
+        console.error("Error fetching flag:", error)
+      }
     }
   }
 
@@ -75,7 +85,15 @@ export default function NewsBannerNav() {
           </Text>
           <div className="flex flex-row gap-1 absolute right-0">
             <div className="relative flex w-10">
-              {flagUrl && (
+              {selectedCountry.countryCode === "en" ? (
+                <Image
+                  src={uk_flag}
+                  alt="United Kingdom Flag"
+                  width={31}
+                  height={22}
+                  objectFit="contain"
+                />
+              ) : flagUrl ? (
                 <Image
                   src={flagUrl}
                   alt={`${selectedCountry.country} Flag`}
@@ -83,7 +101,7 @@ export default function NewsBannerNav() {
                   height={22}
                   objectFit="contain"
                 />
-              )}
+              ) : null}
             </div>
             <button
               className={`flex flex-row items-center cursor-pointer gap-2`}
