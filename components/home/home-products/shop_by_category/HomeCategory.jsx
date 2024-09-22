@@ -118,7 +118,7 @@ export default function HomeCategory() {
     <>
       <Container>
         <div className="py-16  relative md:mx-7 lg:mx-6 xl:mx-5">
-          <Text style={"h1"} className='uppercase'>Shop by Category</Text>
+          <Text style={"h1"} className='uppercase mb-10'>Shop by Category</Text>
           <Slider {...settings}>
             {categories.map((category, index) => (
               <div key={index} className="px-2 w-[45%] lg:w-44 xl:w-56 2xl:w-[100%]">
