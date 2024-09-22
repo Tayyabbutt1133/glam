@@ -21,7 +21,7 @@ export default function Text({ children, className = '', style }) {
       style = "text-base lg:font-normal " + lexendDeca.className;
       return <p className={`${style} ${className}`}>{children}</p>;
     case "large":
-      style = "text-xl font-bold " + lexendDeca.className;
+      style = "lg:text-base xl:text-lg 2xl:text-xl font-bold " + lexendDeca.className;
       return <p className={`${style} ${className}`}>{children}</p>;
     default:
       style = "text-base font-normal " + lexendDeca.className;

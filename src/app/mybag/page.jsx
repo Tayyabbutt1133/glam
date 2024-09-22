@@ -15,6 +15,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { usePopupStore } from "/states/use-popup-store";
+import Text from "../../../components/ui/Text";
 
 const API_URL = "https://glam.clickable.site/wp-json/wc/v3/products";
 const CK = "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d";
@@ -30,7 +31,7 @@ export default function MyBag() {
   const cartRef = useRef(null);
 
   const { rate, currencySymbol } = usePopupStore();
-  console.log({currencySymbol,rate});
+  console.log({ currencySymbol, rate });
 
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -149,7 +150,9 @@ export default function MyBag() {
     <main className="lg:w-[93%] w-[95%] xl:w-[92%] mx-auto">
       <div className=" lg:w-[98%] xl:w-[92%] mx-auto px-4 py-8">
         <div className="flex flex-col md:flex-row items-center md:justify-between  md:pr-2  mb-4 w-full md:w-[69%]">
-          <p className={`text-sm lg:text-[20px] md:w-full text-black ${jost.className} sm:font-medium`}>
+          <p
+            className={`text-sm lg:text-[20px] md:w-full text-black ${jost.className} sm:font-medium`}
+          >
             Log in or create an account now to get these exclusive benefits.
           </p>
           <div className="flex mt-3 md:mt-0 items-center justify-between w-[80%] sm:w-8/12 md:w-[59%] lg:w-[40%]  md:justify-end flex-row gap-4 md:gap-1 lg:gap-2 ">
@@ -164,16 +167,12 @@ export default function MyBag() {
               <button
                 className={` lg:text-base font-medium  hover:bg-gray-100 text-gray-800 sm:border border-gray-300 px-4 py-2 rounded-lg ${jost.className}`}
               >
-              Log in
+                Log in
               </button>
             </Link>
           </div>
         </div>
         <hr className="h-2" />
-
-
-
-
 
         <div className="flex justify-between items-center mb-6 mt-4">
           <h1 className={`text-3xl font-medium ${jost.className}`}>
@@ -290,11 +289,11 @@ export default function MyBag() {
                             +
                           </button> */}
                         </div>
-                        <div className=" mt-6 sm:mt-24 flex items-center justify-between">
+                        <div className="mt-6 sm:mt-24 flex items-center justify-between">
                           <div className="flex items-center">
-                            <div className="hidden sm:inline-flex items-center border border-gray-300 rounded-lg overflow-hidden">
+                            <div className="inline-flex items-center justify-between w-[102px] h-[35px] border rounded-lg overflow-hidden sm:max-w-[102px] max-w-[80px] sm:h-[35px] h-[28px]">
                               <button
-                                className="text-sm px-3 py-1 text-gray-600 hover:bg-gray-100 focus:outline-none"
+                                className="text-sm w-1/3 h-full text-b-03 hover:bg-gray-100 focus:outline-none"
                                 onClick={() =>
                                   updateQuantity(
                                     item.id,
@@ -304,11 +303,14 @@ export default function MyBag() {
                               >
                                 -
                               </button>
-                              <span className="text-sm px-3 py-1 border-l border-r border-gray-300">
+                              <Text
+                                style="large"
+                                className="font-normal w-1/3 text-center"
+                              >
                                 {item.quantity}
-                              </span>
+                              </Text>
                               <button
-                                className="text-sm px-3 py-1 text-gray-600 hover:bg-gray-100 focus:outline-none"
+                                className="text-sm h-full w-1/3 text-b-03 hover:bg-gray-100 focus:outline-none"
                                 onClick={() =>
                                   updateQuantity(item.id, item.quantity + 1)
                                 }
@@ -364,23 +366,22 @@ export default function MyBag() {
                   {products.map((product) => (
                     <div key={product.id} className="px-2">
                       <button className="ml-auto pt-1 pr-1 block   rounded-full">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                            className="w-6 h-6"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                            />
-                          </svg>
-                        </button>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          className="w-6 h-6"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                          />
+                        </svg>
+                      </button>
                       <div className="bg-white rounded-lg  shadow-md overflow-hidden">
-                        
                         <div className="relative pb-[100%]">
                           <Link href={`/product/${product.id}`}>
                             <Image
@@ -502,46 +503,47 @@ export default function MyBag() {
                 <p className={`mb-2 text-lg ${jost.className} font-medium`}>
                   Payment Mode
                 </p>
-                <div className={`flex flex-col space-x-2 mt-8 mb-4 ${jost.className}`}>
+                <div
+                  className={`flex flex-col space-x-2 mt-8 mb-4 ${jost.className}`}
+                >
                   <p>Pay by Card/Pay Later</p>
                   <section className="gap-4 flex mt-2">
-  <Image
-    className="hover:scale-110 transition-transform duration-300 cursor-pointer"
-    src={visa}
-    alt="Visa"
-    width={40}
-    height={25}
-  />
-  <Image
-    className="hover:scale-110 transition-transform duration-300 cursor-pointer"
-    src={master}
-    alt="Master"
-    width={40}
-    height={25}
-  />
-  <Image
-    className="hover:scale-110 transition-transform duration-300 cursor-pointer"
-    src={maestro}
-    alt="Maestro"
-    width={40}
-    height={25}
-  />
-  <Image
-    className="hover:scale-110 transition-transform duration-300 cursor-pointer"
-    src={ae}
-    alt="American Express"
-    width={40}
-    height={25}
-  />
-  <Image
-    className="hover:scale-110 transition-transform duration-300 cursor-pointer"
-    src={paypal}
-    alt="PayPal"
-    width={40}
-    height={25}
-  />
-</section>
-
+                    <Image
+                      className="hover:scale-110 transition-transform duration-300 cursor-pointer"
+                      src={visa}
+                      alt="Visa"
+                      width={40}
+                      height={25}
+                    />
+                    <Image
+                      className="hover:scale-110 transition-transform duration-300 cursor-pointer"
+                      src={master}
+                      alt="Master"
+                      width={40}
+                      height={25}
+                    />
+                    <Image
+                      className="hover:scale-110 transition-transform duration-300 cursor-pointer"
+                      src={maestro}
+                      alt="Maestro"
+                      width={40}
+                      height={25}
+                    />
+                    <Image
+                      className="hover:scale-110 transition-transform duration-300 cursor-pointer"
+                      src={ae}
+                      alt="American Express"
+                      width={40}
+                      height={25}
+                    />
+                    <Image
+                      className="hover:scale-110 transition-transform duration-300 cursor-pointer"
+                      src={paypal}
+                      alt="PayPal"
+                      width={40}
+                      height={25}
+                    />
+                  </section>
                 </div>
                 <Link href="./checkout">
                   <button
@@ -620,14 +622,13 @@ export default function MyBag() {
                         >
                           ADD TO BAG
                         </button>
-                    </div>
+                      </div>
                     </div>
                   </div>
                 ))}
               </Slider>
             )}
           </div>
-
         </div>
       </div>
     </main>
