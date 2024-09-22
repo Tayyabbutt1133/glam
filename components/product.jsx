@@ -74,13 +74,13 @@ export default function Product({ product }) {
               </Link>
         <div className="px-4 pb-4 flex-grow flex flex-col sm:min-h-[240px]">
           <p
-            className={`text-gray-900 font-bold text-[16px] xl:text-xl hidden sm:block mb-2 ${jost.className}`}
+            className={`text-gray-900 font-bold text-[16px] 2xl:text-xl hidden sm:block mb-2 ${jost.className}`}
           >
             {getBrandName(product.attributes)}
           </p>
         
             <h2
-              className={`text-gray-900 font-normal text-sm xl:text-[17px] 2xl:text-lg xl:line-clamp-3 ${lexendDeca.className} line-clamp-3 cursor-pointer`}
+              className={`text-gray-900 font-normal text-sm xl:text-[14px] 2xl:text-lg xl:line-clamp-3 ${lexendDeca.className} line-clamp-3 cursor-pointer`}
             >
               {sanitizeText(product.name)}
             </h2>
