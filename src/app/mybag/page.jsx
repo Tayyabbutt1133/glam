@@ -181,7 +181,7 @@ export default function MyBag() {
           </h1>
         </div>
 
-        <div className="flex flex-col md:flex-row gap-8">
+        <div className="flex flex-col md:flex-row md:items-stretch gap-8">
           <div className="md:w-2/3">
             <div
               ref={cartRef}
@@ -208,7 +208,9 @@ export default function MyBag() {
                       sizes="(max-width: 768px) 100%, 200px"
                     />
                   </div>
-                  <div className="ml-4">
+
+                  
+                  <div className="ml-4 md:flex-grow">
                     {editingItem?.id === item.id ? (
                       <div>
                         <input
@@ -429,7 +431,7 @@ export default function MyBag() {
             </div>
           </div>
 
-          <div className="md:w-1/3 md:-mt-32  md:h-fit rounded-xl md:rounded-none">
+          <div className="md:w-1/3 md:-mt-36 bg-[#F7F7F7A6] md:flex-grow   rounded-xl md:rounded-none">
             <div className="p-2 rounded-lg bg-[#F7F7F7A6]">
               <div className="bg-white p-4 rounded-lg mt-4">
                 <h2 className={`text-xl font-normal mb-4 ${jost.className}`}>
@@ -556,6 +558,16 @@ export default function MyBag() {
               </div>
             </div>
           </div>
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
           <div className="container mx-auto px-4 py-8 mb-24 md:mb-4 md:hidden block">
             <h2 className={`text-2xl font-bold mb-14 ${jost.className}`}>
               You May Also Like

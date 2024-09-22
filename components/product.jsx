@@ -43,7 +43,7 @@ export default function Product({ product }) {
   return (
     <div key={product.id} className=" mx-0 2xl:mx-0 mb-2">
       <div
-        className="bg-white border border-gray-300 rounded-lg overflow-hidden relative flex flex-col h-full min-h-[430px] sm:min-h-[466px] lg:min-h-[400px]  w-[90%] cursor-pointer"
+        className="bg-white border border-gray-300 rounded-lg overflow-hidden relative flex flex-col h-full min-h-[370px] sm:min-h-[466px] lg:min-h-[440px] xl:min-h-[470px] 2xl:min-h-[520px]  w-[90%] cursor-pointer"
         onClick={() => handleProductClick(product.id)}
       >
         {product.on_sale && (
@@ -74,13 +74,13 @@ export default function Product({ product }) {
               </Link>
         <div className="px-4 pb-4 flex-grow flex flex-col sm:min-h-[240px]">
           <p
-            className={`text-gray-900 font-bold text-[16px] hidden sm:block mb-2 ${jost.className}`}
+            className={`text-gray-900 font-bold text-[16px] 2xl:text-xl hidden sm:block mb-2 ${jost.className}`}
           >
             {getBrandName(product.attributes)}
           </p>
         
             <h2
-              className={`text-gray-900 font-normal text-sm ${lexendDeca.className} line-clamp-3 cursor-pointer`}
+              className={`text-gray-900 font-normal text-sm xl:text-[14px] 2xl:text-lg xl:line-clamp-3 ${lexendDeca.className} line-clamp-3 cursor-pointer`}
             >
               {sanitizeText(product.name)}
             </h2>
@@ -95,14 +95,14 @@ export default function Product({ product }) {
                 )}
               </span>
             ))}
-            <span className="text-gray-600 text-sm ml-2">
+            <span className="text-[#8B929D] text-xs ml-2">
               ({product.rating_count})
             </span>
           </div>
-          <div className="  flex items-center  text-gray-600 text-sm ">
+          <div className="  flex items-center flex-wrap  text-[#8B929D] text-sm ">
             {product.regular_price && (
-              <span className={`line-through mr-2 text-xs flex ${lexendDeca.className}`}>
-                <span className=" hidden sm:block text-xs">RRP: </span>
+              <span className={`line-through mr-2 sm:text-xs  xl:text-base flex ${lexendDeca.className}`}>
+                <span className=" hidden sm:block sm:text-xs xl:text-base">RRP: </span>
                 {currencySymbol}{Number(product.regular_price * rate).toFixed(2)}
               </span>
             )}
@@ -115,7 +115,7 @@ export default function Product({ product }) {
             )}
           </div>
           <p
-            className={`text-gray-900 font-bold  text-lg mb-3 ${lexendDeca.className}`}
+            className={`text-gray-900 font-bold  text-lg xl:text-xl 2xl:text-2xl mb-3 ${lexendDeca.className}`}
           >
             {currencySymbol}{Number(product.price * rate).toFixed(2)}
           </p>

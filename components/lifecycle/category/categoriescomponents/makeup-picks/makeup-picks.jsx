@@ -43,7 +43,7 @@ const SingleMakeupPick = ({ product }) => {
   // const addToCart = useCartStore((state) => state.addToCart)
   const brand = product.attributes.find((attr) => attr.name === "Brand")?.options[0] || "Unknown Brand"
   const decodedName = decodeHtmlEntities(product.name)
-  const shortName = shortenProductName(decodedName)
+  // const shortName = shortenProductName(decodedName)
 
   // const handleAddToCart = (e) => {
   //   e.preventDefault()
@@ -67,12 +67,12 @@ const SingleMakeupPick = ({ product }) => {
         <h1 className={`font-semibold uppercase ${jost.className}`}>
           {brand}
         </h1>
-        <p  className={`line-clamp-2 ${lexendDeca.className} font-normal`}>
-          {shortName}
+        <p  className={` ${lexendDeca.className} font-normal`}>
+          {decodedName}
         </p>
       </div>
       <Link href={`/product/${product.id}`} className="w-full">
-      <CustomButton  className="mt-auto text-sm w-[40%] hover:bg-[#CF8562] uppercase">
+      <CustomButton  className="mt-auto text-sm xl:w-[40%] hover:bg-[#CF8562] uppercase">
         Shop Now
         </CustomButton>
         </Link>
