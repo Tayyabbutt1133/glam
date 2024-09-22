@@ -1,6 +1,7 @@
 import Container from "/components/container";
 import SingleProductData from "/components/single-product/single-product-data";
 
+
 export default function Page({ params }) {
   const { productSlug } = params;
   return (

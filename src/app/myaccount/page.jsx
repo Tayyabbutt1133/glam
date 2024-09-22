@@ -15,6 +15,7 @@ import power_off from "../../../public/myaccount_icons/power.svg";
 import { lexendDeca, jost } from "../../../components/ui/fonts";
 import Logout from "..//..//../components/user_account_dashboard/Logout";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import Breadcrumb from "../../../components/BreadCrumb";
 
 const Dashboard = () => {
   const [activeSection, setActiveSection] = useState("overview");
@@ -55,6 +56,7 @@ const Dashboard = () => {
  
   return (
     <>
+      <div className="px-12"><Breadcrumb links={[{ name: "Home", route: "/" }, { name: "My Account", route: "/myaccount" }]} /></div>
       <div className="md:flex p-12 hidden ">
         {/* Sidebar */}
         <div className="w-1/4 p-4 border-r">
@@ -129,16 +131,16 @@ const Dashboard = () => {
       </div>
 
       <div className="flex flex-col h-screen md:hidden">
-      <header className="bg-white p-4 shadow-md flex items-center">
+     {showContent && <header className="bg-white p-4 shadow-md flex items-center">
           {showContent && (
             <button onClick={handleBackClick} className="mr-4">
               <ChevronLeftIcon className="w-6 h-6" />
             </button>
           )}
-          <h1 className={`${jost.className} text-2xl font-bold text-center flex-grow`}>
-            {showContent ? menuItems.find(item => item.id === activeSection)?.label : "My Account"}
-          </h1>
-        </header>
+          {showContent &&<h1 className={`${jost.className} text-2xl font-bold text-center flex-grow`}>
+            {showContent && menuItems.find(item => item.id === activeSection)?.label}
+          </h1>}
+        </header>}
 
         {!showContent ? (
           <div className="w-full p-4 border-sb">

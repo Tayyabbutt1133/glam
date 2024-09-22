@@ -9,9 +9,11 @@ import demo2 from "/public/product-slider/demo2.png";
 import Staffpicks from "./components/Staffpicks";
 import Accordion from "./components/product-data/components/accordion";
 import { AlertCircle } from "lucide-react";
-import Review from "./components/Review";
+import Reviews from "./components/CustomReviewComponent";
+import BreadCrumbs from "../BreadCrumb";
 // import { product } from "../../demoproduct";
 // import Review from "./components/Review";
+
 
 const demo = [
   { src: demo1, alt: "Image 1" },
@@ -32,11 +34,22 @@ export default async function SingleProductData({ productId }) {
   );
   // console.log(productFromApi);
   const product = await productFromApi.json();
-  console.log({product});
-  // "message": "Invalid ID.",
-  //   "data": {
-  //       "status": 404
-  //   }
+  console.log({productcat:product.categories});
+  
+  const categories = product.categories || [];
+  const categoryLinks = categories.map((category, index) => {
+    const pathSegments = categories.slice(0, index + 1).map(cat => cat.slug);
+    return {
+      name: category.name,
+      route: `/product-categories/${pathSegments.join('/')}`,
+    };
+  });
+
+  const breadcrumblinks = [
+    { name: "Home", route: "/" },
+    ...categoryLinks,
+    { name: product.name, route:`/product/${product.id}` },
+  ];
   if (product?.message == "Invalid ID." || product?.data?.status === 404 ) {
     return (
       <div className="flex flex-col items-center justify-center h-64 text-center">
@@ -47,9 +60,11 @@ export default async function SingleProductData({ productId }) {
       </div>
     );
   }
+  
 
   else return (
     <>
+      <BreadCrumbs links={breadcrumblinks} /> 
       <div className="w-full  justify-between gap-[3%] overflow-hidden">
         <section className="grid md:grid-cols-2  justify-between   h-auto gap-5">
           <ProductSlider images={product.images} />
@@ -82,11 +97,12 @@ export default async function SingleProductData({ productId }) {
         </section>
       </div>
       <Staffpicks />
-      <Review
+      {/* <Review
         reviewsFromProduct={product.reviews || []}
         totalReviews={product.review_count}
         averageRating={product.average_rating}
-      />
+      /> */}
+      <Reviews />
     </>
   );
 }

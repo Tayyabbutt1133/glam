@@ -37,12 +37,12 @@ export default function BrandInFocus() {
             width={1000}
             height={1000}
           />
-           <div className=" px-4 absolute bottom-[2%] flex flex-col w-full  items-start ">
+           <div className=" px-4 bottom-[5%] sm:bottom-[9%]  w-full sm:w-[90%]  items-start   left-1/2  transform  -translate-x-1/2 -translate-y-[15%] min-w-[82%] absolute  flex flex-col ">
             <div className="text-start text-white">
-              <h1 className="lg:text-xl xl:text-2xl 2xl:text-3xl font-bold">
+              <h1 className=" sm:text-2xl md:text-3xl  font-bold">
                 ESTEE LAUDER
               </h1>
-              <p className="mt-2 lg:text-sm xl:text-base 2xl:text-xl">
+              <p className="mt-2 sm:text-lg ">
                 Lorem ipsum dolor sit amet consectetur. Commodo ipsum viverra
                 eget urna nunc duis....
                 <span className="text-[#d8a071]"> Read More</span>
@@ -50,21 +50,32 @@ export default function BrandInFocus() {
             </div>
 
             <div
-              className={`grid grid-cols-2 gap-4 mt-8 ${jost.className} font-medium lg:text-base 2xl:text-xl`}
+              className={`grid grid-cols-2 gap-2 mt-3 ${jost.className} font-medium lg:text-base 2xl:text-xl`}
             >
-              <button className="bg-white text-black py-2 px-2 xl:px-6 2xl:px-8 rounded">
+              <Link href={`/product-categories/${cats[0].skin.name}`}>
+              <button className="bg-white  w-32 sm:w-36 md:w-40 sm:text-base  text-sm text-black py-2 px-2 xl:px-6 2xl:px-8 rounded">
                 SHOP SKINCARE
               </button>
+              </Link>
+              <Link href={`/new-in`}>
 
-              <button className="bg-white text-black py-2 px-2 xl:px-6 2xl:px-8 rounded">
+              <button className="bg-white  w-32 sm:w-36 md:w-40 sm:text-base  text-sm text-black py-2 px-2 xl:px-6 2xl:px-8 rounded">
                 SHOP NEW IN
                 </button>
-              <button className="bg-white text-black py-2 px-2 xl:px-6 2xl:px-8 rounded">
+                </Link>
+                <Link href={`/product-categories/${cats[0].make.name}`}>
+
+
+              <button className="bg-white  w-32  sm:w-36 md:w-40 sm:text-base text-sm text-black py-2 px-2 xl:px-6 2xl:px-8 rounded">
                 SHOP MAKEUP
                 </button>
-              <button className="bg-white text-red-500 py-2 px-2 xl:px-6 2xl:px-8 rounded">
+              </Link>
+              <Link href={`/brands/${cats[0].brand.name}`}>
+
+              <button className="bg-white  w-32  sm:w-36 md:w-40 sm:text-base text-sm text-black py-2 px-2 xl:px-6 2xl:px-8 rounded">
                 SHOP BRAND
-              </button>
+                </button>
+        </Link>
             </div>
           </div>
         </div>
@@ -89,46 +100,47 @@ export default function BrandInFocus() {
       <div className="hidden lg:flex w-full relative ">
         <div className="w-1/2 relative">
           {/* Content */}
-          <div className="ml-20 absolute bottom-[10%] flex flex-col max-w-[70%] items-start ">
-            <div className="text-start text-white">
-              <h1 className="lg:text-xl xl:text-2xl 2xl:text-3xl font-bold">
-                ESTEE LAUDER
-              </h1>
-              <p className="mt-2 lg:text-sm xl:text-base 2xl:text-xl">
-                Lorem ipsum dolor sit amet consectetur. Commodo ipsum viverra
-                eget urna nunc duis. Hendrerit arcu mi nulla suspendisse ssed
-                pulvinar fames amet. Nisl eleifend solis sed id pellentesque
-                vitae facilisis arcu...
-                <span className="text-[#d8a071]"> Read More</span>
-              </p>
-            </div>
-
-            <div
-              className={`grid grid-cols-2 gap-4 mt-8 ${jost.className} font-medium lg:text-base 2xl:text-xl`}
-            >
-              <Link href={`/product-categories/${cats[0].skin.name}`}>
-              <button className="bg-white hover:bg-[#CF8562] hover:text-white text-black py-2 lg:px-4 xl:px-6 2xl:px-8 rounded">
-                SHOP SKINCARE
-                </button>
-              </Link>
-              <Link href={`/new-in`}>
-              <button className="bg-white hover:bg-[#CF8562] hover:text-white text-black py-2 lg:px-4 xl:px-6 2xl:px-8 rounded">
-                SHOP NEW IN
-                </button>
-              </Link>
-              <Link href={`/product-categories/${cats[0].make.name}`}>
-              <button className="bg-white hover:bg-[#CF8562] hover:text-white text-black py-2 lg:px-4 xl:px-6 2xl:px-8 rounded">
-                SHOP MAKEUP
-                </button>
+          {/* <section className=" relative  absolute  "> */}
+            <div className=" left-1/2 top-1/2 2xl:top-[55%] transform  -translate-x-1/2 -translate-y-[15%] 2xl:-translate-y-[0%] xl:-translate-y-[5%] min-w-[82%] absolute  flex flex-col  items-start ">
+              <div className="text-start text-white">
+                <h1 className="lg:text-xl xl:text-2xl 2xl:text-3xl font-bold">
+                  ESTEE LAUDER
+                </h1>
+                <p className="mt-2 lg:text-sm xl:text-base 2xl:text-xl">
+                  Lorem ipsum dolor sit amet consectetur. Commodo ipsum viverra
+                  eget urna nunc duis. Hendrerit arcu mi nulla suspendisse ssed
+                  pulvinar fames amet...
+                  <span className="text-[#d8a071]"> Read More</span>
+                </p>
+              </div>
+  
+              <div
+                className={`grid grid-cols-2 gap-4 mt-3 ${jost.className} font-medium lg:text-base 2xl:text-xl`}
+              >
+                <Link href={`/product-categories/${cats[0].skin.name}`}>
+                <button className="bg-white 2xl:w-56 w-36 text-sm xl:text-base  xl:w-44 hover:bg-[#CF8562] hover:text-white text-black py-2 lg:px-4 xl:px-6 2xl:px-8 rounded">
+                  SHOP SKINCARE
+                  </button>
                 </Link>
-              <Link href={`/brands/${cats[0].brand.name}`}>
-              <button className="bg-white hover:bg-[#CF8562] hover:text-white text-black py-2 lg:px-4 xl:px-6 2xl:px-8 rounded">
-                SHOP BRAND
-                </button>
+                <Link href={`/new-in`}>
+                <button className="bg-white 2xl:w-56 w-36 text-sm xl:text-base  xl:w-44 hover:bg-[#CF8562] hover:text-white text-black py-2 lg:px-4 xl:px-6 2xl:px-8 rounded">
+                  SHOP NEW IN
+                  </button>
                 </Link>
+                <Link href={`/product-categories/${cats[0].make.name}`}>
+                <button className="bg-white 2xl:w-56 w-36 text-sm xl:text-base  xl:w-44 hover:bg-[#CF8562] hover:text-white text-black py-2 lg:px-4 xl:px-6 2xl:px-8 rounded">
+                  SHOP MAKEUP
+                  </button>
+                  </Link>
+                <Link href={`/brands/${cats[0].brand.name}`}>
+                <button className="bg-white 2xl:w-56 w-36 text-sm xl:text-base xl:w-44 hover:bg-[#CF8562] hover:text-white text-black py-2 lg:px-4 xl:px-6 2xl:px-8 rounded">
+                  SHOP BRAND
+                  </button>
+                  </Link>
+              </div>
             </div>
-          </div>
-
+  
+          {/* </section> */}
           {/* Image1 with Overlay */}
           <div className="relative w-full h-full -z-30">
             <Image

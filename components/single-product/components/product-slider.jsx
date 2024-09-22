@@ -7,22 +7,16 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import NextArrowIcon from "/public/hero-banners/next-arrow";
 import PrevArrowIcon from "/public/hero-banners/prev-arrow";
-
-const arrowStyles = {
-  width: "20px",
-  height: "20px",
-  zIndex: 1,
-  transition: "all 0.3s ease-in-out",
-};
+import "./product-slider.css";
 
 const NextArrow = ({ className, style, onClick }) => (
   <div
-    className={`absolute top-1/2 transform -translate-y-1/2 right-7 lg:right-9 ${className}`}
+    className={` productarrowStyles ${className}`}
     onClick={onClick}
     style={{
       ...style,
-      ...arrowStyles,
-      right: "30px",
+      
+      right: "-%",
     }}
   >
     <NextArrowIcon />
@@ -32,12 +26,12 @@ const NextArrow = ({ className, style, onClick }) => (
 const PrevArrow = ({ className, style, onClick }) => (
 
   <div
-    className={`absolute top-1/2 transform -translate-y-1/2  ${className}`}
+    className={`  productarrowStyles ${className}`}
     onClick={onClick}
     style={{
       ...style,
-      ...arrowStyles,
-      left: "-10px",
+     
+      left: "-19%",
     }}
   >
     <PrevArrowIcon />
@@ -72,8 +66,15 @@ export default function ProductSlider({ images }) {
     // },
     prevArrow: <PrevArrow />,
     nextArrow: <NextArrow />,
+    
     responsive: [
-      {
+    {
+      breakpoint: 1024,
+      settings: {
+        arrows: false,}
+        
+    }
+      ,  {
         breakpoint: 768,
         settings: {
           arrows: false,
@@ -118,9 +119,9 @@ export default function ProductSlider({ images }) {
   ));
 
   const DesktopView = ({ images, currentIndex, handleThumbnailClick, sliderRef, settings }) => (
-    <article className="flex flex-row items-center justify-center w-full h-full">
+    <article className="flex flex-row items-start justify-center w-full h-full">
       {images?.length > 0 && (
-        <section className="flex flex-col h-full w-1/5 justify-start items-center space-y-2 pr-4">
+        <section className="flex flex-col h-full w-[18%] justify-start items-center space-y-2 pr-4">
            {images?.map((image, index) => (
           <Thumbnail
             key={index}
@@ -134,7 +135,7 @@ export default function ProductSlider({ images }) {
       )}
   
       <section className={`${images?.length > 1 ? 'w-4/5' : 'w-full'} h-[400px] lg:h-[500px] mb-auto`}>
-        <div className="relative w-full h-full">
+        <div className="relative w-[80%] lg:w-[75%] mx-auto h-full">
           {images?.length > 1 ? (
             <Slider ref={sliderRef} {...settings}>
               {images?.map((image, index) => (

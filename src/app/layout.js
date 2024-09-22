@@ -24,6 +24,7 @@ export default function RootLayout({ children }) {
       <body className={inter.className}>
         <CurrencyLanguagePopUp />
         <Header/>
+       
         {children}
         <ToastContainer position="top-right" />
         <Newsletter />
