@@ -25,7 +25,7 @@ export default function MobileHeader({ onOpenSidebar }) {
 
   return (
     <>
-      <header className="flex items-center justify-between px-4 py-2 bg-white shadow-md lg:hidden">
+      <header className="flex items-center justify-between px-4 py-2 bg-white shadow-md lg:hidden z-50">
         <aside className="flex items-center space-x-4">
           <button onClick={onOpenSidebar} className="p-2">
             <MenuIcon className="w-6 h-6" />

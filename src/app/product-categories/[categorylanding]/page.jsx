@@ -4,7 +4,7 @@ import React, { memo, Suspense, lazy } from "react";
 import MenucategoryLandingPage from "../../../../components/lifecycle/category/MenucategoryLandingPage";
 import SliderComponent from "../../../../components/lifecycle/mutual-components/slider";
 import Olaplex from "/public/product_category_landing/olaplex 1.svg";
-import Container from "../../../../components/container";
+
 
 // Lazy-load components that are below the fold
 const TrendingBrand = lazy(() =>

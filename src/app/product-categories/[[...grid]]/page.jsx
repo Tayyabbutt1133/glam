@@ -15,6 +15,7 @@ import { useCartStore } from "/states/Cardstore";
 import { usePopupStore } from "/states/use-popup-store";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import Breadcrumb from "../../../../components/BreadCrumb";
 
 const API_BASE_URL = "https://glam.clickable.site/wp-json/wc/v3";
 const CONSUMER_KEY = "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d";
@@ -350,8 +351,18 @@ export default function Component() {
     </div>
   );
 
+  const categorylanding = params.grid[0]
+  const subcategories = params.grid[1]
+  const breadcrumbLinks = [
+    { name: "Home", route: "/" },
+    
+    { name: categorylanding, route: `/product-categories/${categorylanding}` },
+    { name: subcategories, route: `/product-categories/${categorylanding}/${subcategories}` },
+    { name: subsubcategories, route: `/product-categories/${categorylanding}/${subcategories}/${subsubcategories}` },
+  ]
   return (
-    <Container className="min-h-screen py-32">
+    <Container className="min-h-screen py-5">
+      <Breadcrumb links={breadcrumbLinks} />
       <div className="flex justify-between items-center">
         <div className="flex items-center justify-between lg:hidden ">
           <button onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}>

@@ -349,8 +349,11 @@ export default function MyBag() {
             {/* You May Also Like section */}
             <div className="container mx-auto px-4 py-8 mb-24 md:mb-4 hidden md:block">
               <h2 className={`text-2xl font-bold mb-14 ${jost.className}`}>
-                You May Also Like
+                <p className=" mb-2">You May Also Like</p>
+            
               </h2>
+              <div className=" hidden md:block w-[calc(100%_-_14px)] mx-auto"><hr /></div>
+              
               {loading ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {Array(3)
@@ -412,7 +415,7 @@ export default function MyBag() {
                           </p>
 
                           <button
-                            className={`w-full bg-black text-white rounded-lg text-xs sm:text-sm md:text-base py-2  hover:bg-gray-800 transition `}
+                            className={`w-full bg-black hover:bg-[#CF8562] text-white rounded-lg text-xs sm:text-sm md:text-base py-2   transition `}
                             onClick={() => addToCart(product)}
                           >
                             ADD TO BAG
@@ -615,7 +618,7 @@ export default function MyBag() {
                         </p>
 
                         <button
-                          className={`w-full bg-black text-xs rounded-lg sm:text-sm md:text-base text-white py-2 px-1  hover:bg-[#CF8562] transition ${jost.className}`}
+                          className={`w-full bg-black  text-xs rounded-lg sm:text-sm md:text-base text-white py-2 px-1  hover:bg-[#CF8562] transition ${jost.className}`}
                           onClick={() => addToCart(product)}
                         >
                           ADD TO BAG

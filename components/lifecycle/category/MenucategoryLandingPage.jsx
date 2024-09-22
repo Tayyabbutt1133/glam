@@ -14,7 +14,7 @@ import logo_four from "../../../public/product_category_landing/rounded_cat/four
 import logo_five from "../../../public/product_category_landing/rounded_cat/five.svg";
 import logo_six from "../../../public/product_category_landing/rounded_cat/six.svg";
 import logo_seven from "../../../public/product_category_landing/rounded_cat/seven.svg";
-
+import Breadcrumb from "../../BreadCrumb";
 import { jost } from "/components/ui/fonts";
 import { useCategoryIdState } from "/states/use-category-id";
 import Container from "/components/container";
@@ -141,8 +141,14 @@ const MenuCategoryList = () => {
     fetchData();
   }, [categorylanding, setCategoryId]);
 
+  const breadcrumbLinks = [
+    { name: "Home", route: "/" },
+    { name: categorylanding, route: `/product-categories/${categorylanding}` },
+  ]
+
   return (
     <>
+      <Breadcrumb links={breadcrumbLinks} />
       <h1 className={`text-2xl ${jost.className} uppercase font-semibold text-center mt-10`}>
         {isLoading ? (
           <Skeleton width={200} height={30}>

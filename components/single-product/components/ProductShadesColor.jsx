@@ -1,6 +1,7 @@
 "use client"
 import { useState } from 'react'
 import { ChevronDownIcon } from 'lucide-react'
+import { jost } from '../../../components/ui/fonts'
 
 const shades = ['All', 'Fair', 'Light', 'Medium', 'Tan', 'Deep', 'Rich']
 const undertones = ['All', 'Neutral', 'Pink', 'Yellow']
@@ -38,19 +39,22 @@ export default function SkinToneSelector({product}) {
   const [selectedUndertone, setSelectedUndertone] = useState('All')
   const [selectedColour, setSelectedColour] = useState(colours[0])
   const [isOpen, setIsOpen] = useState(false)
-
+  const handleColorClick = (colour) => {
+    setSelectedColour(colour);
+    setIsOpen(false); // Close the dropdown if a circle is clicked
+  };
   return (
-    <div className="w-full max-w-md p-4 bg-white rounded-lg">
-      <div className="mb-4">
-        <h3 className="text-sm font-semibold text-gray-700 mb-2">Shade</h3>
-        <div className="flex flex-wrap gap-4">
+    <div className={`${jost.className} w-full  py-4 px-2 bg-white rounded-lg`}>
+      <div className="mb-4 w-full">
+        <h3 className="text-xl font-semibold text-gray-700 mb-2">Shade</h3>
+        <div className="flex flex-wrap gap-3 text-[9px] sm:text-sm  sm:gap-4">
           {availableShades.map((shade) => (
             <button
               key={shade}
               className={`text-sm ${
                 selectedShade === shade
-                  ? 'font-bold underline'
-                  : 'opacity-50'
+                  ? 'font-semibold underline underline-offset-4 '
+                  : 'opacity-40'
               }`}
               onClick={() => setSelectedShade(shade)}
             >
@@ -61,14 +65,14 @@ export default function SkinToneSelector({product}) {
       </div>
 
       <div className="mb-4">
-        <h3 className="text-sm font-semibold text-gray-700 mb-2">Undertone</h3>
-        <div className="flex flex-wrap gap-4">
+        <h3 className="text-xl font-semibold text-gray-700 mb-2">Undertone</h3>
+        <div className="flex  flex-nowrap gap-4 text-[9px] sm:text-sm">
           {undertones.map((undertone) => (
             <button
               key={undertone}
               className={`text-sm ${
                 selectedUndertone === undertone
-                  ? 'font-bold underline'
+                  ? 'font-bold underline underline-offset-4'
                   : 'opacity-50'
               }`}
               onClick={() => setSelectedUndertone(undertone)}
@@ -79,46 +83,60 @@ export default function SkinToneSelector({product}) {
         </div>
       </div>
 
-      <div className="mb-4">
-        <h3 className="text-sm font-semibold text-gray-700 mb-2">Colour</h3>
-        <div className="relative">
-          <button
-            className="w-full px-4 py-2 text-left bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            <span className="block truncate">{selectedColour.name} - {selectedColour.description}</span>
-            <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-              <ChevronDownIcon className="w-5 h-5 text-gray-400" />
-            </span>
-          </button>
-          {isOpen && (
-            <div className="absolute  w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg">
-              {colours.map((colour) => (
-                <button
-                  key={colour.name}
-                  className="block w-full px-4 py-2 text-left hover:bg-gray-100 focus:outline-none"
-                  onClick={() => {
-                    setSelectedColour(colour)
-                    setIsOpen(false)
-                  }}
-                >
-                  {colour.name} - {colour.description}
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
 
-      <div className="flex gap-2">
-        {colours.map((colour) => (
-          <div
-            key={colour.name}
-            className="w-8 h-8 rounded-full border border-gray-300"
-            style={{ backgroundColor: colour.name.toLowerCase() }}
-          ></div>
-        ))}
-      </div>
+      <div className="my-4">
+    <h3 className="text-xl font-semibold text-gray-700 mb-2">Colour</h3>
+
+    {/* Color Circles */}
+    <div className="flex gap-2 mb-4">
+      {colours.map((colour) => (
+        <div
+          key={colour.name}
+          className={`w-8 h-8 rounded-full cursor-pointer border-2 ${
+            selectedColour.name === colour.name ? 'border-slate-400' : 'border-gray-100'
+          }`}
+          style={{ backgroundColor: colour.name.toLowerCase() }}
+          onClick={() => handleColorClick(colour)}
+        ></div>
+      ))}
+    </div>
+
+    {/* Color Select Dropdown */}
+    <div className="relative lg:w-2/3 xl:w-8/12">
+      <button
+        className="w-full px-4 py-2 text-left bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <span className="flex items-center">
+          
+          <span className="block truncate">
+            {selectedColour.name} - {selectedColour.description}
+          </span>
+        </span>
+        <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+          <ChevronDownIcon className="w-5 h-5 text-gray-400" />
+        </span>
+      </button>
+      {isOpen && (
+        <div className="absolute w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg z-10">
+          {colours.map((colour) => (
+            <button
+              key={colour.name}
+              className="flex items-center w-full px-4 py-2 text-left hover:bg-gray-100 focus:outline-none"
+              onClick={() => handleColorClick(colour)}
+            >
+             
+              <span>
+                {colour.name} - {colour.description}
+              </span>
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  </div>
+
+      
       {/* add sizes if available  */}
 
       {sizes && sizes.length > 0 && (
