@@ -149,7 +149,7 @@ export default function MyBag() {
     <main className="lg:w-[93%] w-[95%] xl:w-[92%] mx-auto">
       <div className=" lg:w-[98%] xl:w-[92%] mx-auto px-4 py-8">
         <div className="flex flex-col md:flex-row items-center md:justify-between  md:pr-2  mb-4 w-full md:w-[69%]">
-          <p className={`text-sm lg:text-[20px] md:w-full text-black ${jost.className} sm:font-medium`}>
+          <p className={` text-sm md:text-[15px] 2xl:text-[20px] md:w-full text-black ${jost.className} sm:font-medium`}>
             Log in or create an account now to get these exclusive benefits.
           </p>
           <div className="flex mt-3 md:mt-0 items-center justify-between w-[80%] sm:w-8/12 md:w-[59%] lg:w-[40%]  md:justify-end flex-row gap-4 md:gap-1 lg:gap-2 ">
