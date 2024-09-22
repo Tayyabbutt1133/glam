@@ -86,7 +86,7 @@ export default function Cartdropdown() {
                         </button>
                       </div>
                       <div className="ml-4">
-                        <Link href={`/product/${item.id}`}>
+                        <Link onClick={handleViewBag} href={`/product/${item.id}`}>
                           <h3
                             className={`font-semibold text-base ${jost.className} cursor-pointer`}
                           >
