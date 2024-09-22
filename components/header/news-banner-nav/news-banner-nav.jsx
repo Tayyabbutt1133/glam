@@ -19,7 +19,7 @@ export default function NewsBannerNav() {
   const onOpen = usePopupStore((state) => state.onOpen)
   const selectedCountryFromStore = usePopupStore((state) => state.selectedCountry)
 
-  const defaultCountry = { countryCode: "GB", code: "GBP", country: "United Kingdom" }
+  const defaultCountry = { countryCode: "en", code: "GBP", country: "United Kingdom" }
 
   const [selectedCountry, setSelectedCountry] = useState(() => {
     if (typeof window !== "undefined") {
