@@ -815,78 +815,76 @@ export default function Checkout() {
 
               {/* Bag Summary */}
               <div className="bg-white rounded-lg p-6 shadow-sm mt-12">
-                <h2 className={`text-lg font-semibold mb-2 ${jost.className}`}>
-                  Bag Summary
-                </h2>
-                <div
-                  className={`
-                    ${
-                      cartItems.length > 1
-                        ? "max-h-[300px] overflow-y-auto pr-2"
-                        : ""
-                    }
-                    space-y-4
-                  `}
-                  style={{
-                    scrollbarWidth: "thin",
-                    scrollbarColor: "#888 #f1f1f1",
-                  }}
+      <h2 className={`text-lg font-semibold mb-2 ${jost.className}`}>
+        Bag Summary
+      </h2>
+      <div
+        className={`
+          ${cartItems.length > 1 ? "max-h-[300px] overflow-y-auto pr-2" : ""}
+          space-y-4
+        `}
+        style={{
+          scrollbarWidth: "thin",
+          scrollbarColor: "#888 #f1f1f1",
+        }}
+      >
+        {cartItems.map((item, index) => (
+          <div
+            key={index}
+            className={`flex justify-between ${
+              cartItems.length > 1 ? "border-b py-2" : "py-2"
+            }`}
+          >
+            <div className="flex">
+              {item.images && item.images[0] && item.images[0].src ? (
+                <Image
+                  src={item.images[0].src}
+                  alt={item.name}
+                  width={50}
+                  height={50}
+                  className="mr-4 object-cover rounded"
+                />
+              ) : (
+                <div className="mr-4 bg-gray-200 w-[50px] h-[50px] flex items-center justify-center rounded">
+                  <span className="text-xs text-gray-500">
+                    No Image
+                  </span>
+                </div>
+              )}
+              <div>
+                <p className={`font-medium ${jost.className}`}>
+                  {item.name}
+                </p>
+                <p
+                  className={`text-sm text-black ${jost.className} font-normal`}
                 >
-                  {cartItems.map((item, index) => (
-                    <div
-                      key={index}
-                      className="flex justify-between border-b py-2"
-                    >
-                      <div className="flex">
-                        {item.images && item.images[0] && item.images[0].src ? (
-                          <Image
-                            src={item.images[0].src}
-                            alt={item.name}
-                            width={50}
-                            height={50}
-                            className="mr-4 object-cover rounded"
-                          />
-                        ) : (
-                          <div className="mr-4 bg-gray-200 w-[50px] h-[50px] flex items-center justify-center rounded">
-                            <span className="text-xs text-gray-500">
-                              No Image
-                            </span>
-                          </div>
-                        )}
-                        <div>
-                          <p className={`font-medium ${jost.className}`}>
-                            {item.name}
-                          </p>
-                          <p
-                            className={`text-sm text-black ${jost.className} font-normal`}
-                          >
-                            Shade:{" "}
-                            {item.attributes.find(
-                              (attr) => attr.name === "Shade"
-                            )?.options[0] || "N/A"}
-                          </p>
-                          <p
-                            className={`text-sm text-black ${jost.className} font-normal`}
-                          >
-                            Size:{" "}
-                            {item.attributes.find(
-                              (attr) => attr.name === "Size"
-                            )?.options[0] || "N/A"}
-                          </p>
-                          <p
-                            className={`text-sm text-gray-500 ${lexendDeca.className}`}
-                          >
-                            Qty: {item.quantity}
-                          </p>
-                          <div className={`font-medium ${jost.className}`}>
-                            {currencySymbol}{parseFloat(item.price * rate).toFixed(2)}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+                  Shade:{" "}
+                  {item.attributes.find(
+                    (attr) => attr.name === "Shade"
+                  )?.options[0] || "N/A"}
+                </p>
+                <p
+                  className={`text-sm text-black ${jost.className} font-normal`}
+                >
+                  Size:{" "}
+                  {item.attributes.find(
+                    (attr) => attr.name === "Size"
+                  )?.options[0] || "N/A"}
+                </p>
+                <p
+                  className={`text-sm text-gray-500 ${lexendDeca.className}`}
+                >
+                  Qty: {item.quantity}
+                </p>
+                <div className={`font-medium ${jost.className}`}>
+                  {currencySymbol}{parseFloat(item.price * rate).toFixed(2)}
                 </div>
               </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
             </div>
           </div>
         </div>

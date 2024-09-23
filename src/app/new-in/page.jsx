@@ -346,7 +346,7 @@ export default function Component() {
   return (
     <Container className="min-h-screen py-32">
       <div className="flex justify-between items-center">
-        <div className="flex items-center lg:hidden mr-10">
+        <div className="flex items-center lg:hidden ">
           <button onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}>
             <span
               className={`flex items-center gap-2 text-md ${jost.className}`}
@@ -569,38 +569,42 @@ export default function Component() {
 
           {/* Price range filter */}
           <div className="mb-6">
-            <h4
-              className={`font-bold ${jost.className} text-lg mb-2 flex justify-between items-center cursor-pointer`}
-              onClick={() => setIsPriceRangeFilterOpen(!isPriceRangeFilterOpen)}
-            >
-              Price Range
-              {isPriceRangeFilterOpen ? (
-                <IoIosArrowUp className="text-gray-500" />
-              ) : (
-                <IoIosArrowDown className="text-gray-500" />
-              )}
-            </h4>
-            {isPriceRangeFilterOpen && (
-              <div className={`pl-2 ${lexendDeca.className}`}>
-                {priceRanges.map((range) => (
-                  <label key={range} className="block mb-2">
-                    <input
-                      type="checkbox"
-                      name="priceRange"
-                      value={range}
-                      checked={filters.priceRange.includes(range)}
-                      onChange={() => handleFilterChange("priceRange", range)}
-                      className="mr-2"
-                    />
-                    {currencySymbol}
-                    {(range.split("-")[0] * rate).toFixed(2)} - {currencySymbol}
-                    {(range.split("-")[1] * rate).toFixed(2)}(
-                    {getFilteredCount("priceRange", range)})
-                  </label>
-                ))}
-              </div>
-            )}
-          </div>
+      <h4
+        className={`font-bold ${jost.className} text-lg mb-2 flex justify-between items-center cursor-pointer`}
+        onClick={() => setIsPriceRangeFilterOpen(!isPriceRangeFilterOpen)}
+      >
+        Price Range
+        {isPriceRangeFilterOpen ? (
+          <IoIosArrowUp className="text-gray-500" />
+        ) : (
+          <IoIosArrowDown className="text-gray-500" />
+        )}
+      </h4>
+      {isPriceRangeFilterOpen && (
+        <div className={`pl-2 ${lexendDeca.className}`}>
+          {priceRanges.map((range) => {
+            const [min, max] = range.split("-").map(Number);
+            const minConverted = Math.round(min * rate);
+            const maxConverted = Math.round(max * rate);
+            
+            return (
+              <label key={range} className="block mb-2">
+                <input
+                  type="checkbox"
+                  name="priceRange"
+                  value={range}
+                  checked={filters.priceRange.includes(range)}
+                  onChange={() => handleFilterChange("priceRange", range)}
+                  className="mr-2"
+                />
+                {currencySymbol}{minConverted} - {currencySymbol}{maxConverted} (
+                {getFilteredCount("priceRange", range)})
+              </label>
+            );
+          })}
+        </div>
+      )}
+    </div>
 
           <section className="flex justify-around mt-auto gap-4 lg:hidden">
             <button
@@ -616,7 +620,7 @@ export default function Component() {
                 filters.categories.length === 0 &&
                 filters.priceRange.length === 0
               }
-              className="basis-1/2 bg-black text-white w-full py-2 rounded-md"
+              className="basis-1/2 bg-black text-white w-full py-2 rounded-lg"
               onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
             >
               Apply Filter

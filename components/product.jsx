@@ -9,18 +9,17 @@ import { useCartStore } from "../states/Cardstore";
 import { usePopupStore } from "../states/use-popup-store";
 import Link from "next/link";
 
-
-
 export default function Product({ product }) {
   const [favorites, setFavorites] = useState({});
-  const { rate,currencySymbol } = usePopupStore();
-// console.log(product)
+  const { rate, currencySymbol } = usePopupStore();
 
   const handleProductClick = (productId) => {
     console.log(`Product clicked: ${productId}`);
   };
 
-  const handleFavoriteClick = (productId) => {
+  const handleFavoriteClick = (productId, event) => {
+    event.preventDefault();
+    event.stopPropagation();
     setFavorites((prevFavorites) => ({
       ...prevFavorites,
       [productId]: !prevFavorites[productId],
@@ -28,7 +27,12 @@ export default function Product({ product }) {
   };
 
   const sanitizeText = (text) => {
-    return text.replace(/&amp;/g, "&");
+    return text
+      .replace(/&amp;/g, "&")
+      .replace(/&lt;/g, "<")
+      .replace(/&gt;/g, ">")
+      .replace(/&quot;/g, '"')
+      .replace(/&#039;/g, "'");
   };
 
   const getBrandName = (attributes) => {
@@ -41,92 +45,92 @@ export default function Product({ product }) {
   const addToCart = useCartStore((state) => state.addToCart);
 
   return (
-    <div key={product.id} className=" mx-0 2xl:mx-0 mb-2">
-      <div
-        className="bg-white border border-gray-300 rounded-lg overflow-hidden relative flex flex-col h-full min-h-[370px] sm:min-h-[466px] lg:min-h-[440px] xl:min-h-[470px] 2xl:min-h-[520px]  w-[90%] cursor-pointer"
-        onClick={() => handleProductClick(product.id)}
-      >
-        {product.on_sale && (
-          <div className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
-            SALE
-          </div>
-        )}
-        <div className="absolute top-2 right-2">
-          <button
-            className="focus:outline-none"
-            onClick={() => handleFavoriteClick(product.id)}
-          >
-            {favorites[product.id] ? (
-              <FaHeart className="text-red-500 w-6 h-6" />
-            ) : (
-              <CiHeart className="text-black w-6 h-6" />
+    <div className="w-full h-[500px] border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
+      <Link href={`/product/${product.id}`}>
+        <div
+          className="bg-white flex flex-col h-full cursor-pointer"
+          onClick={() => handleProductClick(product.id)}
+        >
+          <div className="relative h-[250px]">
+            {product.on_sale && (
+              <div className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                SALE
+              </div>
             )}
-          </button>
-        </div>
-        <Link href={`/product/${product.id}`}>
-        <Image
-          width={250}
-          height={250}
-          className="object-contain p-4"
-          src={product.images[0]?.src}
-          alt={sanitizeText(product.images[0]?.alt || product.name)}
-          />
-              </Link>
-        <div className="px-4 pb-4 flex-grow flex flex-col sm:min-h-[240px]">
-          <p
-            className={`text-gray-900 font-bold text-[16px] 2xl:text-xl hidden sm:block mb-2 ${jost.className}`}
-          >
-            {getBrandName(product.attributes)}
-          </p>
-        
-            <h2
-              className={`text-gray-900 font-normal text-sm xl:text-[14px] 2xl:text-lg xl:line-clamp-3 ${lexendDeca.className} line-clamp-3 cursor-pointer`}
-            >
-              {sanitizeText(product.name)}
-            </h2>
-      
-          <div className="flex items-center mb-3 mt-3">
-            {[...Array(5)].map((_, index) => (
-              <span key={index}>
-                {index < Math.round(product.average_rating) ? (
-                  <FaStar className="text-[#7E7E7E] w-4 h-4" />
-                ) : (
-                  <FaRegStar className="text-[#7E7E7E] w-4 h-4" />
-                )}
-              </span>
-            ))}
-            <span className="text-[#8B929D] text-xs ml-2">
-              ({product.rating_count})
-            </span>
-          </div>
-          <div className="  flex items-center flex-wrap  text-[#8B929D] text-sm ">
-            {product.regular_price && (
-              <span className={`line-through mr-2 sm:text-xs  xl:text-base flex ${lexendDeca.className}`}>
-                <span className=" hidden sm:block sm:text-xs xl:text-base">RRP: </span>
-                {currencySymbol}{Number(product.regular_price * rate).toFixed(2)}
-              </span>
-            )}
-            {product.regular_price && product.price && (
-              <span
-                className={` flex  justify-center text-red-700 text-xs items-center  ${lexendDeca.className}`}
+            <div className="absolute top-2 right-2">
+              <button
+                className="focus:outline-none"
+                onClick={(e) => handleFavoriteClick(product.id, e)}
               >
-                Save {currencySymbol}{Number((product.regular_price - product.price) * rate).toFixed(2)}
-              </span>
-            )}
+                {favorites[product.id] ? (
+                  <FaHeart className="text-red-500 w-6 h-6" />
+                ) : (
+                  <CiHeart className="text-black w-6 h-6" />
+                )}
+              </button>
+            </div>
+            <Image
+              width={250}
+              height={250}
+              className="object-contain w-full h-full p-4"
+              src={product.images[0]?.src}
+              alt={sanitizeText(product.images[0]?.alt || product.name)}
+            />
           </div>
-          <p
-            className={`text-gray-900 font-bold  text-lg xl:text-xl 2xl:text-2xl mb-3 ${lexendDeca.className}`}
-          >
-            {currencySymbol}{Number(product.price * rate).toFixed(2)}
-          </p>
-          <button
-            className={`w-full bg-black text-white py-2 mt-auto text-xs md:text-base mx-auto rounded-lg hover:bg-[#CF8562] font-normal transition duration-200 flex justify-center items-center text-center ${lexendDeca.className}`}
-            onClick={() => addToCart(product)}
-          >
-            ADD TO BAG
-          </button>
+          <div className="p-4 flex flex-col justify-between flex-grow">
+            <div>
+              <p className={`text-gray-900 font-bold text-sm mb-1 ${jost.className}`}>
+                {getBrandName(product.attributes)}
+              </p>
+              <h2 className={`text-gray-900 font-normal text-sm ${lexendDeca.className} line-clamp-2 mb-2`}>
+                {sanitizeText(product.name)}
+              </h2>
+              <div className="flex items-center mb-2">
+                {[...Array(5)].map((_, index) => (
+                  <span key={index}>
+                    {index < Math.round(product.average_rating) ? (
+                      <FaStar className="text-[#7E7E7E] w-4 h-4" />
+                    ) : (
+                      <FaRegStar className="text-[#7E7E7E] w-4 h-4" />
+                    )}
+                  </span>
+                ))}
+                <span className="text-[#8B929D] text-xs ml-2">
+                  ({product.rating_count})
+                </span>
+              </div>
+            </div>
+            <div>
+              <div className="flex items-center flex-wrap text-[#8B929D] text-xs mb-1">
+                {product.regular_price && (
+                  <span className={`line-through mr-2 flex ${lexendDeca.className}`}>
+                    <span className="hidden sm:block">RRP: </span>
+                    {currencySymbol}{Number(product.regular_price * rate).toFixed(2)}
+                  </span>
+                )}
+                {product.regular_price && product.price && (
+                  <span className={`flex justify-center text-red-700 items-center ${lexendDeca.className}`}>
+                    Save {currencySymbol}{Number((product.regular_price - product.price) * rate).toFixed(2)}
+                  </span>
+                )}
+              </div>
+              <p className={`text-gray-900 font-bold text-lg mb-2 ${lexendDeca.className}`}>
+                {currencySymbol}{Number(product.price * rate).toFixed(2)}
+              </p>
+              <button
+                className={`w-full bg-black text-white py-2 text-sm rounded-lg hover:bg-[#CF8562] font-normal transition duration-200 ${lexendDeca.className}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  addToCart(product);
+                }}
+              >
+                ADD TO BAG
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
+      </Link>
     </div>
   );
 }

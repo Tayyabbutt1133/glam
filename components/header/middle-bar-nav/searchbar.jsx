@@ -102,6 +102,16 @@ export default function FastSearchBarWithDropdown({ formobile = false }) {
     }
   }, [handleClickOutside])
 
+  const SkeletonLoader = () => (
+    <div className="animate-pulse flex p-1 items-center">
+      <div className="w-10 h-10 mr-4 ml-4 bg-gray-200 rounded-md flex-shrink-0"></div>
+      <div className="flex-1">
+        <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
+        <div className="h-3 bg-gray-200 rounded w-1/2"></div>
+      </div>
+    </div>
+  )
+
   return (
     <div ref={searchBarRef} className={`flex justify-center relative ${formobile ? 'w-full' : 'w-[768px]'}`}>
       <section
@@ -152,7 +162,11 @@ export default function FastSearchBarWithDropdown({ formobile = false }) {
           </h3>
           <ul className="space-y-4 text-xs">
             {isLoading ? (
-              <li>Searching...</li>
+              Array(5).fill(0).map((_, index) => (
+                <li key={index}>
+                  <SkeletonLoader />
+                </li>
+              ))
             ) : products.length > 0 ? (
               products.map((product) => (
                 <li key={product.id}>

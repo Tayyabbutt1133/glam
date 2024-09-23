@@ -28,7 +28,7 @@ const sanitizeText = (text) => {
 const CategoryItem = ({ href, logo, name }) => (
   <li className="flex flex-col items-center text-center max-w-[90px] 2xl:max-w-[120px]">
     <Link href={href} passHref className="flex flex-col items-center">
-      <div className="flex justify-center items-center w-[88px] h-[88px] 2xl:w-[116px] 2xl:h-[116px] rounded-full overflow-hidden border-4 border-transparent hover:border-blue-500 transition-all duration-300 ease-in-out">
+      <div className="flex justify-center items-center w-[88px] h-[88px] 2xl:w-[116px] 2xl:h-[116px] rounded-full overflow-hidden border-4 border-transparent hover:scale-110 transition-transform duration-300">
         <Image
           src={logo}
           alt={sanitizeText(name)}
@@ -90,7 +90,7 @@ const BrandsMenuCategoryList = ({ brands }) => {
   return (
     <>
       <h1 className={`text-2xl ${jost.className} uppercase font-bold text-center mt-10`}>
-        {sanitizeText(brandsData.brand_name)}
+        Shop  all  {sanitizeText(brandsData.brand_name)}
       </h1>
       <div className="mt-10">
         {brandsData.categories?.length === 0 ? (
@@ -155,7 +155,7 @@ const MenuCategoryList = () => {
             <span className="opacity-0">Shop all</span>
           </Skeleton>
         ) : (
-          <>Shop all {sanitizeText(mainCategory?.name || '')}</>
+          <>{sanitizeText(mainCategory?.name || '')}</>
         )}
       </h1>
       <div className="mt-10">
