@@ -1,6 +1,8 @@
 'use client'
 
 import Link from 'next/link'
+import { jost } from './ui/fonts';
+
 
 const Breadcrumb = ({ links }) => {
   const sanitizeText = (text) => {
@@ -16,7 +18,7 @@ const Breadcrumb = ({ links }) => {
     <nav aria-label="Breadcrumb" className="my-4">
       <ol className="flex space-x-2 text-sm">
         {links.map((link, index) => (
-          <li key={index} className="flex items-center">
+          <li key={index} className={`flex items-center ${jost.className}`}>
             {link.route ? (
               <Link
                 href={link.route}

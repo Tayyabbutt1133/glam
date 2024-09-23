@@ -1,8 +1,8 @@
 "use client"
 import Image from "next/image";
 import clearpay from "/public/product-payment/clearpay.png";
-import klarna from "../../../../../public/product-payment/Klarna.svg";
-import laybuy from "../../../../../public/product-payment/laybuy.svg";
+import klarna from "/public/product-payment/klarna.svg";
+import laybuy from "/public/product-payment/LayBuy.png";
 // import Text from "/components/ui/Text";
 import { lexendDeca } from "../../../../ui/fonts";
 import { IoIosInformationCircleOutline } from "react-icons/io";
