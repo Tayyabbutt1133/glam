@@ -154,7 +154,6 @@ export default function Component() {
         updatedFilters[filterType] = [...updatedFilters[filterType], value];
       }
 
-      // Clear category filters when changing brands
       if (filterType === "brands") {
         updatedFilters.categories = [];
       }
@@ -375,7 +374,7 @@ export default function Component() {
         <span className="hidden lg:block">{renderPagination()}</span>
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-4 mb-32">
+      <div className="flex flex-col lg:flex-row gap-8 mb-32">
         <div
         style={{ boxShadow: isMobileFilterOpen? "-115px 0 10px 0 rgba(255, 255, 255)" :"none" }}
           className={`w-full transition-all duration-300 ease-in-out ${
@@ -582,22 +581,26 @@ export default function Component() {
             </h4>
             {isPriceRangeFilterOpen && (
               <div className={`pl-2 ${lexendDeca.className}`}>
-                {priceRanges.map((range) => (
-                  <label key={range} className="block mb-2">
-                    <input
-                      type="checkbox"
-                      name="priceRange"
-                      value={range}
-                      checked={filters.priceRange.includes(range)}
-                      onChange={() => handleFilterChange("priceRange", range)}
-                      className="mr-2"
-                    />
-                    {currencySymbol}
-                    {(range.split("-")[0] * rate).toFixed(2)} - {currencySymbol}
-                    {(range.split("-")[1] * rate).toFixed(2)} (
-                    {getFilteredCount("priceRange", range)})
-                  </label>
-                ))}
+                {priceRanges.map((range) => {
+                  const [min, max] = range.split("-").map(Number);
+                  const minConverted = Math.round(min * rate);
+                  const maxConverted = Math.round(max * rate);
+                  
+                  return (
+                    <label key={range} className="block mb-2">
+                      <input
+                        type="checkbox"
+                        name="priceRange"
+                        value={range}
+                        checked={filters.priceRange.includes(range)}
+                        onChange={() => handleFilterChange("priceRange", range)}
+                        className="mr-2"
+                      />
+                      {currencySymbol}{minConverted} - {currencySymbol}{maxConverted} (
+                      {getFilteredCount("priceRange", range)})
+                    </label>
+                  );
+                })}
               </div>
             )}
           </div>
@@ -625,14 +628,14 @@ export default function Component() {
         </div>
 
         <div className="w-full lg:w-3/4">
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-[30px] mt-8">
             {loading
               ? Array(PRODUCTS_PER_PAGE)
                   .fill("")
                   .map((_, index) => (
                     <div
                       key={index}
-                      className="border p-4 rounded-lg shadow-lg relative bg-white animate-pulse"
+                      className="border rounded-lg shadow-lg relative bg-white animate-pulse"
                     >
                       <div className="w-full h-64 bg-gray-300 mb-4"></div>
                       <div className="h-6 bg-gray-300 mb-2"></div>
@@ -647,7 +650,7 @@ export default function Component() {
                   return (
                     <div
                       key={product.id}
-                      className="border p-4 rounded-lg shadow-lg relative bg-white"
+                      className="border rounded-lg shadow-lg relative bg-white"
                     >
                       {product.sale_price && (
                         <span className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
@@ -675,54 +678,56 @@ export default function Component() {
                           className="w-full h-64 object-contain mb-4"
                         />
                       </Link>
-                      <Link href={`/product/${product.id}`}>
-                        <h1
-                          className={`text-sm ${jost.className} cursor-pointer font-bold mb-2`}
+                      <div className="p-4">
+                        <Link href={`/product/${product.id}`}>
+                          <h1
+                            className={`text-sm ${jost.className} cursor-pointer font-bold mb-2`}
+                          >
+                            {brand}
+                          </h1>
+                        </Link>
+                        <h3
+                          className={`text-sm ${lexendDeca.className} font-normal mb-2 h-[60px] overflow-hidden`}
                         >
-                          {brand}
-                        </h1>
-                      </Link>
-                      <h3
-                        className={`text-sm ${lexendDeca.className} font-normal mb-2 h-[60px] overflow-hidden`}
-                      >
-                        {product.name}
-                      </h3>
-                      <div className="flex items-center mb-2">
-                        {[...Array(5)].map((_, index) => (
-                          <span key={index}>
-                            {index < Math.round(product.average_rating) ? (
-                              <FaStar className="text-[#7E7E7E] w-4 h-4" />
-                            ) : (
-                              <FaRegStar className="text-[#7E7E7E] w-4 h-4" />
-                            )}
-                          </span>
-                        ))}
-                        <span className="text-gray-600 text-sm ml-2">
-                          ({product.rating_count})
-                        </span>
-                      </div>
-                      <p
-                        className={`font-bold text-lg mb-3 ${lexendDeca.className}`}
-                      >
-                        {product.sale_price ? (
-                          <>
-                            <span className="line-through text-gray-600 mr-2">
-                              {currencySymbol}
-                              {(product.regular_price * rate).toFixed(2)}
+                          {product.name}
+                        </h3>
+                        <div className="flex items-center mb-2">
+                          {[...Array(5)].map((_, index) => (
+                            <span key={index}>
+                              {index < Math.round(product.average_rating) ? (
+                                <FaStar className="text-[#7E7E7E] w-4 h-4" />
+                              ) : (
+                                <FaRegStar className="text-[#7E7E7E] w-4 h-4" />
+                              )}
                             </span>
-                            {currencySymbol}
-                            {(product.sale_price * rate).toFixed(2)}
-                          </>
-                        ) : (
-                          `${currencySymbol}${(product.price * rate).toFixed(2)}`
-                        )}
-                      </p>
-                      <button
-                        className={`w-full bg-black text-white py-2 rounded-lg hover:bg-gray-800 transition ${jost.className}`}
-                        onClick={() => addToCart(product)}
-                      >
-                        ADD TO BAG
-                      </button>
+                          ))}
+                          <span className="text-gray-600 text-sm ml-2">
+                            ({product.rating_count})
+                          </span>
+                        </div>
+                        <p
+                          className={`font-bold text-lg mb-3 ${lexendDeca.className}`}
+                        >
+                          {product.sale_price ? (
+                            <>
+                              <span className="line-through text-gray-600 mr-2">
+                                {currencySymbol}
+                                {Math.round(product.regular_price * rate)}
+                              </span>
+                              {currencySymbol}
+                              {Math.round(product.sale_price * rate)}
+                            </>
+                          ) : (
+                            `${currencySymbol}${Math.round(product.price * rate)}`
+                          )}
+                        </p>
+                        <button
+                          className={`w-full bg-black text-white py-2 rounded-lg hover:bg-gray-800 transition ${jost.className}`}
+                          onClick={() => addToCart(product)}
+                        >
+                          ADD TO BAG
+                        </button>
+                      </div>
                     </div>
                   );
                 })}
