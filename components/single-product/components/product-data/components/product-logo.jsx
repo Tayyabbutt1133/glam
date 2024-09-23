@@ -1,10 +1,12 @@
+import { lexendDeca } from "../../../../ui/fonts";
 
-export default function ProductLogo({brand}) {
+
+export default function ProductLogo({ brand }) {
   return (
     <section className="flex sm:justify-between  items-center mb-5">
       <div className="text-2xl font-bold w-[90%] sm:w-auto">
-        <img src={"/home_banners/Max-Factor-Logo.svg"} className=" w-36 h-fit" alt="" />
-        <span className="text-sm font-normal block"> {brand || 'LONDON'}</span>
+        {/* <img src={"/home_banners/Max-Factor-Logo.svg"} className=" w-36 h-fit" alt="" /> */}
+        <span className={`text-sm md:text-3xl 2xl:text-4xl font-normal ${lexendDeca.className} block`}> {brand || 'LONDON'}</span>
       </div>
       <button className="p-2  shadow-sm  rounded-full">
         <svg

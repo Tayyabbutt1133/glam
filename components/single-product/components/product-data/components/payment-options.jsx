@@ -1,9 +1,10 @@
 "use client"
 import Image from "next/image";
 import clearpay from "/public/product-payment/clearpay.png";
-import klarna from "/public/product-payment/klarna.svg";
-import laybuy from "/public/product-payment/LayBuy.png";
-import Text from "/components/ui/Text";
+import klarna from "../../../../../public/Klarn_pink.svg";
+import laybuy from "../../../../../public/product-payment/laybuy.svg";
+// import Text from "/components/ui/Text";
+import { lexendDeca } from "../../../../ui/fonts";
 import { IoIosInformationCircleOutline } from "react-icons/io";
 import { usePopupStore } from "/states/use-popup-store"
 const paymentOptions = [
@@ -30,7 +31,7 @@ const paymentOptions = [
 export default function PaymentOptions() {
   const { currencySymbol, rate } = usePopupStore();
   return (
-    <section className="flex flex-row flex-wrap gap-3 mb-10">
+    <section className="flex  flex-wrap gap-3 mb-10">
       {paymentOptions.map((option, index) => {
         const convertedAmount = (option.amount * rate).toFixed(2);
         return (
@@ -42,9 +43,9 @@ export default function PaymentOptions() {
               height={100}
               style={{ height: "20px", width: "auto" }}
             />
-            <Text style={"sm"} className="text-light">
+            <p className={`text-black font-medium ${lexendDeca.className}`}>
               {option.title}{currencySymbol}{convertedAmount} with 
-            </Text>
+            </p>
             <IoIosInformationCircleOutline />
           </div>
         );
