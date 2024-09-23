@@ -1,7 +1,7 @@
 "use client"
 import Image from "next/image";
 import clearpay from "/public/product-payment/clearpay.png";
-import klarna from "../../../../../public/Klarn_pink.svg";
+import klarna from "../../../../../public/product-payment/Klarna.svg";
 import laybuy from "../../../../../public/product-payment/laybuy.svg";
 // import Text from "/components/ui/Text";
 import { lexendDeca } from "../../../../ui/fonts";
