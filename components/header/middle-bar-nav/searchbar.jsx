@@ -1,12 +1,13 @@
-"use client";
+'use client'
 
-import { useState, useEffect, useRef, useCallback } from "react";
-import SearchIcon from "../../../public/icons/search";
-import axios from "axios";
-import { lexendDeca, jost } from "../../ui/fonts";
-import debounce from "lodash.debounce";
-import { useRouter } from "next/navigation";
-import Image from "next/image";
+import { useState, useEffect, useRef, useCallback } from "react"
+import SearchIcon from "../../../public/icons/search"
+import axios from "axios"
+import { lexendDeca, jost } from "../../ui/fonts"
+import debounce from "lodash.debounce"
+import { useRouter } from "next/navigation"
+import Image from "next/image"
+import Link from "next/link"
 
 const axiosInstance = axios.create({
   baseURL: "https://glam.clickable.site/wp-json/wc/v3/",
@@ -14,32 +15,32 @@ const axiosInstance = axios.create({
     username: "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d",
     password: "cs_3f70ee2600a3ac17a5692d7ac9c358d47275d6fc",
   },
-});
+})
 
 export default function FastSearchBarWithDropdown({ formobile = false }) {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [query, setQuery] = useState("");
-  const [products, setProducts] = useState([]);
-  const [popularSearches, setPopularSearches] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [hasSearched, setHasSearched] = useState(false);
-  const searchBarRef = useRef(null);
-  const cancelTokenSource = useRef(null);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const [query, setQuery] = useState("")
+  const [products, setProducts] = useState([])
+  const [popularSearches, setPopularSearches] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [hasSearched, setHasSearched] = useState(false)
+  const searchBarRef = useRef(null)
+  const cancelTokenSource = useRef(null)
 
-  const router = useRouter();
+  const router = useRouter()
 
   const handleSearch = useCallback(
     debounce(async (searchQuery) => {
       if (cancelTokenSource.current) {
-        cancelTokenSource.current.cancel("Operation canceled due to new request.");
+        cancelTokenSource.current.cancel("Operation canceled due to new request.")
       }
 
-      cancelTokenSource.current = axios.CancelToken.source();
+      cancelTokenSource.current = axios.CancelToken.source()
 
       if (searchQuery.length > 0) {
-        setIsLoading(true);
-        setHasSearched(false);
-        setIsDropdownOpen(true);
+        setIsLoading(true)
+        setHasSearched(false)
+        setIsDropdownOpen(true)
 
         try {
           const productResponse = await axiosInstance.get("products", {
@@ -49,29 +50,29 @@ export default function FastSearchBarWithDropdown({ formobile = false }) {
               _fields: "id,name,price,sale_price,regular_price,images",
             },
             cancelToken: cancelTokenSource.current.token,
-          });
-          setProducts(productResponse.data);
-          setHasSearched(true);
+          })
+          setProducts(productResponse.data)
+          setHasSearched(true)
         } catch (error) {
           if (!axios.isCancel(error)) {
-            console.error("Error fetching products:", error);
+            console.error("Error fetching products:", error)
           }
         }
 
-        setIsLoading(false);
+        setIsLoading(false)
       } else {
-        setIsDropdownOpen(false);
-        setProducts([]);
+        setIsDropdownOpen(false)
+        setProducts([])
       }
     }, 150),
     []
-  );
+  )
 
   const handleChange = (e) => {
-    const searchQuery = e.target.value;
-    setQuery(searchQuery);
-    handleSearch(searchQuery);
-  };
+    const searchQuery = e.target.value
+    setQuery(searchQuery)
+    handleSearch(searchQuery)
+  }
 
   const fetchPopularSearches = async () => {
     try {
@@ -80,31 +81,26 @@ export default function FastSearchBarWithDropdown({ formobile = false }) {
           per_page: 6,
           _fields: "id,name",
         },
-      });
-      setPopularSearches(response.data);
+      })
+      setPopularSearches(response.data)
     } catch (error) {
-      console.error("Error fetching popular searches:", error);
+      console.error("Error fetching popular searches:", error)
     }
-  };
+  }
 
   const handleClickOutside = useCallback((e) => {
     if (searchBarRef.current && !searchBarRef.current.contains(e.target)) {
-      setIsDropdownOpen(false);
+      setIsDropdownOpen(false)
     }
-  }, []);
+  }, [])
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    fetchPopularSearches();
+    document.addEventListener("mousedown", handleClickOutside)
+    fetchPopularSearches()
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [handleClickOutside]);
-
-  const handleProductClick = (product) => {
-    setIsDropdownOpen(false);
-    router.push(`/product/${product.id}`);
-  };
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
+  }, [handleClickOutside])
 
   return (
     <div ref={searchBarRef} className={`flex justify-center relative ${formobile ? 'w-full' : 'w-[768px]'}`}>
@@ -137,8 +133,14 @@ export default function FastSearchBarWithDropdown({ formobile = false }) {
           </h3>
           <ul className="space-y-4 text-xs">
             {popularSearches.map((term) => (
-              <li key={term.id} className={`cursor-pointer hover:bg-[#CF8562] hover:text-white p-1 ${lexendDeca.className} font-medium`}>
-                {term.name}
+              <li key={term.id}>
+                <Link 
+                  href={`/brands/${encodeURIComponent(term.name.toLowerCase())}`}
+                  className={`block cursor-pointer hover:bg-[#CF8562] hover:text-white p-1 ${lexendDeca.className} font-medium`}
+                  onClick={() => setIsDropdownOpen(false)}
+                >
+                  {term.name}
+                </Link>
               </li>
             ))}
           </ul>
@@ -153,35 +155,37 @@ export default function FastSearchBarWithDropdown({ formobile = false }) {
               <li>Searching...</li>
             ) : products.length > 0 ? (
               products.map((product) => (
-                <li 
-                  key={product.id} 
-                  onClick={() => handleProductClick(product)} 
-                  className="flex p-1 items-center cursor-pointer hover:bg-[#CF8562] hover:text-white group"
-                >
-                  <div className="w-10 h-10 mr-4 ml-4 bg-gray-100 flex-shrink-0">
-                    <Image
-                      src={product.images[0]?.src || "/placeholder.svg?height=40&width=40"}
-                      alt={product.name}
-                      className="object-cover w-full h-full rounded-md"
-                      width={40}
-                      height={40}
-                    />
-                  </div>
-                  <div className="">
-                    <p className={`font-medium text-wrap ${lexendDeca.className}`}>
-                      {product.name}
-                    </p>
-                    <div className="flex flex-row gap-3">
-                      {product.sale_price ? (
-                        <>
-                          <p className="line-through text-gray-400 group-hover:text-white">£{product.regular_price}</p>
-                          <p className="text-red-600 group-hover:text-white">£{product.sale_price}</p>
-                        </>
-                      ) : (
-                        <p className="text-black group-hover:text-white">£{product.price}</p>
-                      )}
+                <li key={product.id}>
+                  <Link
+                    href={`/product/${product.id}`}
+                    className="flex p-1 items-center cursor-pointer hover:bg-[#CF8562] hover:text-white group"
+                    onClick={() => setIsDropdownOpen(false)}
+                  >
+                    <div className="w-10 h-10 mr-4 ml-4 bg-gray-100 flex-shrink-0">
+                      <Image
+                        src={product.images[0]?.src || "/placeholder.svg?height=40&width=40"}
+                        alt={product.name}
+                        className="object-cover w-full h-full rounded-md"
+                        width={40}
+                        height={40}
+                      />
                     </div>
-                  </div>
+                    <div className="">
+                      <p className={`font-medium text-wrap ${lexendDeca.className}`}>
+                        {product.name}
+                      </p>
+                      <div className="flex flex-row gap-3">
+                        {product.sale_price ? (
+                          <>
+                            <p className="line-through text-gray-400 group-hover:text-white">£{product.regular_price}</p>
+                            <p className="text-red-600 group-hover:text-white">£{product.sale_price}</p>
+                          </>
+                        ) : (
+                          <p className="text-black group-hover:text-white">£{product.price}</p>
+                        )}
+                      </div>
+                    </div>
+                  </Link>
                 </li>
               ))
             ) : hasSearched ? (
@@ -191,5 +195,5 @@ export default function FastSearchBarWithDropdown({ formobile = false }) {
         </div>
       </div>
     </div>
-  );
+  )
 }
