@@ -51,7 +51,7 @@ const HomeBrand = () => {
   return (
     <Container>
       <div className="px-4 py-16 space-y-10">
-        <Text style={"h1"} className="uppercase" >
+        <Text style="h1" className="uppercase">
           SHOP BY BRAND
         </Text>
         <BrandSlide />
@@ -62,14 +62,12 @@ const HomeBrand = () => {
               href={`/brands/${product.brandLanding}`}
               className="cursor-pointer bg-transparent overflow-hidden transition-shadow duration-300 flex-shrink-0 w-[calc(50%-8px)] sm:w-[calc(33.333%-16px)] lg:w-full"
             >
-              {/* <div className="relative   h-[120px] sm:h-72 2xl:h-[330px] w-[150px] sm:w-72 2xl:w-[330px] "> */}
-              <div className="relative w-[150px] h-[150px] sm:h-60 sm:w-60 lg:h-[255px]  lg:w-[255px]  2xl:h-[330px]    2xl:w-[330px]">
+              <div className="relative w-[150px] h-[150px] sm:h-60 sm:w-60 lg:h-[255px] lg:w-[255px] 2xl:w-[350px] 2xl:h-[350px]   rounded-md 2xl:rounded-lg overflow-hidden ">
                 <Image
-                  className="rounded-md 2xl:rounded-lg w-full h-full brightness-75 sm:brightness-100"
+                  className=" object-cover brightness-75 sm:brightness-100"
                   src={product.image}
                   alt={product.name}
                   layout="fill"
-                  objectFit="cover"
                 />
                 <h3
                   className={`sm:hidden text-md absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 font-semibold text-gray-50 ${jost.className}`}
@@ -78,14 +76,14 @@ const HomeBrand = () => {
                 </h3>
               </div>
 
-              <div className=" py-6 text-left">
+              <div className="py-6 text-left">
                 <h3
-                  className={`hidden  sm:block text-lg font-semibold text-gray-900 ${jost.className}`}
+                  className={`hidden sm:block text-lg font-semibold text-gray-900 ${jost.className}`}
                 >
                   {product.name}
                 </h3>
                 <p
-                  className={`text-black font-normal text-xs sm:text-sm my-2 ${lexendDeca.className}`}
+                  className={`text-black font-normal text-xs sm:text-sm 2xl:text-lg my-2 ${lexendDeca.className}`}
                 >
                   {product.description}
                 </p>
