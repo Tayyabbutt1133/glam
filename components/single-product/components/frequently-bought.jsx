@@ -65,11 +65,11 @@ export default function FrequentlyBoughtTogether() {
   const { rate,currencySymbol } = usePopupStore();
 
   return (
-    <div className="max-w-6xl mx-auto pt-8">
+    <div className="max-w-6xl mx-auto pt-8  pl-8">
       <h2 className="text-2xl font-bold mb-4">Frequently Bought Together</h2>
 
       {/* container */}
-      <div className=" flex  overflow-x-auto relative justify-between w-full gap-8 pb-6">
+      <div className=" flex  overflow-x-auto relative justify-between w-full  pb-6">
         {products.map((product, index) => (
           <div key={index} className=" relative flex flex-shrink-0 w-[190px] sm:w-[220px]  lg:w-[120px] xl:w-[170px] ">
             <div key={index} className="flex flex-col w-full">
@@ -81,7 +81,7 @@ export default function FrequentlyBoughtTogether() {
                   className="w-full object-contain mb-4 h-[140px] lg:h-[150px] xl:h-[180px]"
                 />
              </Link>
-              <div className="flex flex-col gap-2 ">
+              <div className="flex flex-col gap-2">
                <Link href={`/product/${product.id}`}> <h3 className="font-bold cursor-pointer text-lg mb-3 lg:text-sm">{product.brand}</h3></Link>
                 <p className="text-sm lg:text-xs flex-grow lg:line-clamp-2">{product.name}</p>
                 <div className="mb-3 ">
