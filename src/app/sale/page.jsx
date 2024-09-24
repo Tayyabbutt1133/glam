@@ -1,5 +1,4 @@
-"use client";
-
+"use client"
 import React, { useEffect, useState, useMemo } from "react";
 import axios from "axios";
 import Container from "../../../components/container";
@@ -19,6 +18,54 @@ const API_BASE_URL = "https://glam.clickable.site/wp-json/wc/v3";
 const CONSUMER_KEY = "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d";
 const CONSUMER_SECRET = "cs_3f70ee2600a3ac17a5692d7ac9c358d47275d6fc";
 const PRODUCTS_PER_PAGE = 12;
+
+const FilterSection = ({ title, isOpen, toggleOpen, children }) => (
+  <div className="mb-6">
+    <h4
+      className={`font-bold text-lg mb-2 flex justify-between items-center cursor-pointer ${jost.className}`}
+      onClick={toggleOpen}
+    >
+      {title}
+      {isOpen ? (
+        <IoIosArrowUp className="text-gray-500" />
+      ) : (
+        <IoIosArrowDown className="text-gray-500" />
+      )}
+    </h4>
+    {isOpen && (
+      <div className={`pl-2 ${lexendDeca.className} font-normal max-h-60 overflow-y-auto custom-scrollbar`}>
+        {children}
+      </div>
+    )}
+  </div>
+);
+
+const CustomCheckbox = ({ name, value, checked, onChange, label, count }) => (
+  <label className="flex items-center mb-2 cursor-pointer">
+    <div className="relative mr-2">
+      <input
+        type="checkbox"
+        name={name}
+        value={value}
+        checked={checked}
+        onChange={onChange}
+        className="sr-only"
+      />
+      <div className={`w-5 h-5 border rounded-md transition-colors ${
+        checked ? 'border-primary bg-primary' : 'border-gray-300'
+      }`}>
+        {checked && (
+          <svg className="w-4 h-4 text-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+          </svg>
+        )}
+      </div>
+    </div>
+    <span className="text-sm 2xl:text-lg">
+      {label} <span className="text-gray-500">({count})</span>
+    </span>
+  </label>
+);
 
 export default function Component() {
   const { rate, currencySymbol } = usePopupStore();
@@ -344,6 +391,22 @@ export default function Component() {
 
   return (
     <Container className="min-h-screen py-32">
+      <style jsx global>{`
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: #f1f1f1;
+          border-radius: 3px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: #888;
+          border-radius: 3px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+          background: #555;
+        }
+      `}</style>
       <div className="flex justify-between items-center">
         <div className="flex items-center lg:hidden ">
           <button onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}>
@@ -376,7 +439,7 @@ export default function Component() {
 
       <div className="flex flex-col lg:flex-row gap-8 mb-32">
         <div
-        style={{ boxShadow: isMobileFilterOpen? "-115px 0 10px 0 rgba(255, 255, 255)" :"none" }}
+          style={{ boxShadow: isMobileFilterOpen ? "-115px 0 10px 0 rgba(255, 255, 255)" : "none" }}
           className={`w-full transition-all duration-300 ease-in-out ${
             isMobileFilterOpen
               ? "z-[90] lg:z-auto h-screen overflow-y-auto lg:overflow-y-auto translate-x-[0] lg:translate-x-0"
@@ -486,124 +549,71 @@ export default function Component() {
           <hr className="bg-[#8B929D73] h-[1px]" />
 
           {/* Brand filter */}
-          <div className="mb-6 mt-4">
-            <h4
-              className={`font-bold text-lg mb-2 flex justify-between items-center cursor-pointer ${jost.className}`}
-              onClick={() => setIsBrandFilterOpen(!isBrandFilterOpen)}
-            >
-              Brand
-              {isBrandFilterOpen ? (
-                <IoIosArrowUp className="text-gray-500" />
-              ) : (
-                <IoIosArrowDown className="text-gray-500" />
-              )}
-            </h4>
-            {isBrandFilterOpen && (
-              <div
-                className={`pl-2 ${lexendDeca.className} font-normal max-h-60 overflow-y-auto`}
-              >
-                {brands
-                  .sort((a, b) => a.name.localeCompare(b.name))
-                  .map((brand) => (
-                    <label key={brand.name} className="block mb-2">
-                      <input
-                        type="checkbox"
-                        name="brand"
-                        value={brand.name}
-                        checked={filters.brands.includes(brand.name)}
-                        onChange={() =>
-                          handleFilterChange("brands", brand.name)
-                        }
-                        className={`mr-2`}
-                      />
-                      {brand.name} ({brand.count})
-                    </label>
-                  ))}
-              </div>
-            )}
-          </div>
+          <FilterSection 
+            title="Brand" 
+            isOpen={isBrandFilterOpen} 
+            toggleOpen={() => setIsBrandFilterOpen(!isBrandFilterOpen)}
+          >
+            {brands
+              .sort((a, b) => a.name.localeCompare(b.name))
+              .map((brand) => (
+                <CustomCheckbox
+                  key={brand.name}
+                  name="brand"
+                  value={brand.name}
+                  checked={filters.brands.includes(brand.name)}
+                  onChange={() => handleFilterChange("brands", brand.name)}
+                  label={brand.name}
+                  count={brand.count}
+                />
+              ))}
+          </FilterSection>
 
           {/* Category filter */}
-          <div className="mb-6">
-            <h4
-              className={`font-bold ${jost.className} text-lg mb-2 flex justify-between items-center cursor-pointer`}
-              onClick={() => setIsCategoryFilterOpen(!isCategoryFilterOpen)}
-            >
-              Category
-              {isCategoryFilterOpen ? (
-                <IoIosArrowUp className="text-gray-500" />
-              ) : (
-                <IoIosArrowDown className="text-gray-500" />
-              )}
-            </h4>
-            {isCategoryFilterOpen && (
-              <div
-                className={`pl-2 ${lexendDeca.className} font-normal max-h-60 overflow-y-auto`}
-              >
-                {getAvailableCategories
-                  .sort((a, b) => a.name.localeCompare(b.name))
-                  .map((category) => (
-                    <label key={category.id} className="block mb-2">
-                      <input
-                        type="checkbox"
-                        name="category"
-                        value={category.id.toString()}
-                        checked={filters.categories.includes(
-                          category.id.toString()
-                        )}
-                        onChange={() =>
-                          handleFilterChange(
-                            "categories",
-                            category.id.toString()
-                          )
-                        }
-                        className="mr-2"
-                      />
-                      {category.name} ({getFilteredCount("categories", category.id.toString())})
-                    </label>
-                  ))}
-              </div>
-            )}
-          </div>
+          <FilterSection 
+            title="Category" 
+            isOpen={isCategoryFilterOpen} 
+            toggleOpen={() => setIsCategoryFilterOpen(!isCategoryFilterOpen)}
+          >
+            {getAvailableCategories
+              .sort((a, b) => a.name.localeCompare(b.name))
+              .map((category) => (
+                <CustomCheckbox
+                  key={category.id}
+                  name="category"
+                  value={category.id.toString()}
+                  checked={filters.categories.includes(category.id.toString())}
+                  onChange={() => handleFilterChange("categories", category.id.toString())}
+                  label={category.name}
+                  count={getFilteredCount("categories", category.id.toString())}
+                />
+              ))}
+          </FilterSection>
 
           {/* Price range filter */}
-          <div className="mb-6">
-            <h4
-              className={`font-bold ${jost.className} text-lg mb-2 flex justify-between items-center cursor-pointer`}
-              onClick={() => setIsPriceRangeFilterOpen(!isPriceRangeFilterOpen)}
-            >
-              Price Range
-              {isPriceRangeFilterOpen ? (
-                <IoIosArrowUp className="text-gray-500" />
-              ) : (
-                <IoIosArrowDown className="text-gray-500" />
-              )}
-            </h4>
-            {isPriceRangeFilterOpen && (
-              <div className={`pl-2 ${lexendDeca.className}`}>
-                {priceRanges.map((range) => {
-                  const [min, max] = range.split("-").map(Number);
-                  const minConverted = Math.round(min * rate);
-                  const maxConverted = Math.round(max * rate);
-                  
-                  return (
-                    <label key={range} className="block mb-2">
-                      <input
-                        type="checkbox"
-                        name="priceRange"
-                        value={range}
-                        checked={filters.priceRange.includes(range)}
-                        onChange={() => handleFilterChange("priceRange", range)}
-                        className="mr-2"
-                      />
-                      {currencySymbol}{minConverted} - {currencySymbol}{maxConverted} (
-                      {getFilteredCount("priceRange", range)})
-                    </label>
-                  );
-                })}
-              </div>
-            )}
-          </div>
+          <FilterSection 
+            title="Price Range" 
+            isOpen={isPriceRangeFilterOpen} 
+            toggleOpen={() => setIsPriceRangeFilterOpen(!isPriceRangeFilterOpen)}
+          >
+            {priceRanges.map((range) => {
+              const [min, max] = range.split("-").map(Number);
+              const minConverted = Math.round(min * rate);
+              const maxConverted = Math.round(max * rate);
+              
+              return (
+                <CustomCheckbox
+                  key={range}
+                  name="priceRange"
+                  value={range}
+                  checked={filters.priceRange.includes(range)}
+                  onChange={() => handleFilterChange("priceRange", range)}
+                  label={`${currencySymbol}${minConverted} - ${currencySymbol}${maxConverted}`}
+                  count={getFilteredCount("priceRange", range)}
+                />
+              );
+            })}
+          </FilterSection>
 
           <section className="flex justify-around mt-auto gap-4 lg:hidden">
             <button
