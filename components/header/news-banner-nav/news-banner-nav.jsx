@@ -7,12 +7,8 @@ import { lexendDeca } from "../../ui/fonts"
 import Container from "../../container"
 import { usePopupStore } from "../../../states/use-popup-store.jsx"
 import uk_flag from '../../../public/united-kingdom-hd.jpg'
+import usa_flag from '../../../public/usa-flag.png'
 import Text from '../../../components/ui/Text'
-
-
-
-
-
 
 export default function NewsBannerNav() {
   const [mounted, setMounted] = useState(false)
@@ -34,9 +30,11 @@ export default function NewsBannerNav() {
 
   const [flagUrl, setFlagUrl] = useState("")
 
-  const fetchFlag = async (countryCode) => {
-    if (countryCode === "en") {
-      setFlagUrl("") // We'll use the custom UK flag, so we don't need a URL
+  const fetchFlag = async (countryCode, currencyCode) => {
+    if (countryCode === "en" && currencyCode === "GBP") {
+      setFlagUrl("") // We'll use the custom UK flag
+    } else if (countryCode === "en" && currencyCode === "USD") {
+      setFlagUrl("") // We'll use the custom USA flag
     } else {
       try {
         const response = await fetch(`https://restcountries.com/v3.1/alpha/${countryCode}`)
@@ -50,14 +48,16 @@ export default function NewsBannerNav() {
 
   useEffect(() => {
     if (selectedCountry.countryCode) {
-      fetchFlag(selectedCountry.countryCode)
+      fetchFlag(selectedCountry.countryCode, selectedCountry.code)
     }
   }, [selectedCountry])
 
   useEffect(() => {
     const unsubscribe = usePopupStore.subscribe((state) => {
       const updatedCountry = state.selectedCountry
-      if (updatedCountry && updatedCountry.countryCode !== selectedCountry.countryCode) {
+      if (updatedCountry && 
+          (updatedCountry.countryCode !== selectedCountry.countryCode || 
+           updatedCountry.code !== selectedCountry.code)) {
         setSelectedCountry(updatedCountry)
         if (typeof window !== "undefined") {
           localStorage.setItem("selectedCountry", JSON.stringify(updatedCountry))
@@ -85,10 +85,18 @@ export default function NewsBannerNav() {
           </Text>
           <div className="flex flex-row gap-1 absolute right-0">
             <div className="relative flex w-10">
-              {selectedCountry.countryCode === "en" ? (
+              {selectedCountry.countryCode === "en" && selectedCountry.code === "GBP" ? (
                 <Image
                   src={uk_flag}
                   alt="United Kingdom Flag"
+                  width={31}
+                  height={22}
+                  objectFit="contain"
+                />
+              ) : selectedCountry.countryCode === "en" && selectedCountry.code === "USD" ? (
+                <Image
+                  src={usa_flag}
+                  alt="United States Flag"
                   width={31}
                   height={22}
                   objectFit="contain"
