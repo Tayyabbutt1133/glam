@@ -732,7 +732,7 @@ export default function Component() {
 )}
                         </p>
                         <button
-                          className={`w-full bg-black text-white py-2 rounded-lg  transition ${jost.className}`}
+                          className={`w-full bg-black text-white py-2 rounded-lg hover:bg-[#CF8562]  transition ${jost.className}`}
                           onClick={() => addToCart(product)}
                         >
                           ADD TO BAG
