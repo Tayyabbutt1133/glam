@@ -22,10 +22,10 @@ const PRODUCTS_PER_PAGE = 12;
 const FilterSection = ({ title, isOpen, toggleOpen, children }) => (
   <div className="mb-6">
     <h4
-      className={`font-bold text-lg mb-2 flex justify-between items-center cursor-pointer ${jost.className}`}
+      className={`font-bold   text-lg mb-2 flex justify-between items-center cursor-pointer ${jost.className}`}
       onClick={toggleOpen}
     >
-      {title}
+     <span className="ml-2">{title}</span>
       {isOpen ? (
         <IoIosArrowUp className="text-gray-500" />
       ) : (
@@ -482,10 +482,10 @@ export default function Component() {
               {filters.brands.map((brand) => (
                 <span
                   key={brand}
-                  className={`inline-flex items-center bg-[#F7EBE0] rounded-lg px-3 py-1 text-sm font-bold text-black mr-2 mb-2 ${lexendDeca.className}`}
+                  className={`inline-flex items-center  bg-[#F7EBE0] rounded-lg px-3 py-1 text-sm font-bold text-black mr-2 mb-2 ${lexendDeca.className}`}
                 >
                   <span
-                    className={`${lexendDeca.className} font-normal mr-1 text-black`}
+                    className={`${lexendDeca.className} font-normal mr-1  text-black`}
                   >
                     Brand:{" "}
                   </span>{" "}
@@ -546,14 +546,15 @@ export default function Component() {
             </div>
           )}
 
-          <hr className="bg-[#8B929D73] h-[1px]" />
+          <hr className="bg-[#8B929D73] h-[1px] mb-4" />
 
           {/* Brand filter */}
           <FilterSection 
-            title="Brand" 
-            isOpen={isBrandFilterOpen} 
-            toggleOpen={() => setIsBrandFilterOpen(!isBrandFilterOpen)}
-          >
+  title="Brand" 
+  isOpen={isBrandFilterOpen} 
+  toggleOpen={() => setIsBrandFilterOpen(!isBrandFilterOpen)}
+  className=""
+>
             {brands
               .sort((a, b) => a.name.localeCompare(b.name))
               .map((brand) => (
@@ -732,7 +733,7 @@ export default function Component() {
 )}
                         </p>
                         <button
-                          className={`w-full bg-black text-white py-2 hover:bg-[#CF8562] rounded-lg  transition ${jost.className}`}
+                          className={`w-full bg-black text-white py-2 rounded-lg hover:bg-[#CF8562]  transition ${jost.className}`}
                           onClick={() => addToCart(product)}
                         >
                           ADD TO BAG
