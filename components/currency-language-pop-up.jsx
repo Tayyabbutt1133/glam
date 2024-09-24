@@ -8,6 +8,7 @@ import Text from "./ui/Text";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { jost, lexendDeca } from "./ui/fonts";
 import uk_flag from '../public/Flag_uk.png'
+import us_flag from '../public/usa-flag.png';
 
 const plusJakartaSans = Plus_Jakarta_Sans({subsets: ['latin']});
 
@@ -43,6 +44,8 @@ export default function CurrencyLanguagePopUp() {
   const fetchFlag = async (country) => {
     if (country.country === "United Kingdom" && country.name === "Pound Sterling") {
       setFlagUrl(""); // We'll use the custom UK flag, so we don't need a URL
+    } else if (country.country === "United States" && country.name === "United States Dollar") {
+      setFlagUrl(""); // We'll use the custom US flag, so we don't need a URL
     } else {
       try {
         const response = await fetch(
@@ -93,6 +96,7 @@ export default function CurrencyLanguagePopUp() {
   }, [isOpen, closeModal]);
 
   const isUK = selectedCountry.country === "United Kingdom" && selectedCountry.name === "Pound Sterling";
+  const isUS = selectedCountry.country === "United States" && selectedCountry.name === "United States Dollar";
 
   return (
     <>
@@ -112,7 +116,15 @@ export default function CurrencyLanguagePopUp() {
                   height={100}
                   className="w-36 h-auto object-contain absolute -top-8"
                 />
-              ) : (
+              ) : isUS ? (
+                <Image
+                  src={us_flag}
+                  alt="United States flag"
+                  width={110}
+                  height={100}
+                  className="w-36 h-auto object-contain absolute -top-8"
+                />
+              ) : flagUrl ? (
                 <Image
                   src={flagUrl}
                   alt={`${selectedCountry.country} flag`}
@@ -120,7 +132,7 @@ export default function CurrencyLanguagePopUp() {
                   height={100}
                   className="w-36 h-auto object-contain absolute -top-8"
                 />
-              )}
+              ) : null}
             </div>
             <div className="mt-[4rem] mb-2">
               <Text style={"h3"} className={`text-center ${jost.className} text-2xl`}>
