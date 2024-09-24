@@ -63,14 +63,14 @@ const FloatingLabelInput = ({ label, name, value, onChange, type = "text" }) => 
         type={type}
         id={name}
         name={name}
-        className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+        className={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer ${lexendDeca.className}`}
         placeholder=" "
         value={value}
         onChange={onChange}
       />
       <label
         htmlFor={name}
-        className="absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 start-1"
+        className={`absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 start-1 ${lexendDeca.className}`}
       >
         {label}
       </label>
@@ -81,7 +81,7 @@ const FloatingLabelInput = ({ label, name, value, onChange, type = "text" }) => 
 export default function Checkout() {
   const [isMounted, setIsMounted] = useState(false);
   const { cartItems } = useCartStore();
-  const { rate,currencySymbol } = usePopupStore();
+  const { rate, currencySymbol } = usePopupStore();
   const [formData, setFormData] = useState({
     email: "",
     firstName: "",
@@ -106,8 +106,7 @@ export default function Checkout() {
   const [paymentMethod, setPaymentMethod] = useState("");
   const [shippingMethod, setShippingMethod] = useState(null);
   const [showShippingDropdown, setShowShippingDropdown] = useState(false);
-  const [filteredShippingOptions, setFilteredShippingOptions] =
-    useState(shippingOptions);
+  const [filteredShippingOptions, setFilteredShippingOptions] = useState(shippingOptions);
   const [showPaymentOptions, setShowPaymentOptions] = useState(true);
   const shippingRef = useRef(null);
   const paymentRef = useRef(null);
@@ -178,7 +177,6 @@ export default function Checkout() {
   };
 
   const handlePayNow = () => {
-    // Check if all required fields are filled
     const requiredFields = ['firstName', 'lastName', 'address', 'city', 'postcode', 'phone', 'email'];
     const missingFields = requiredFields.filter(field => !formData[field]);
 
@@ -187,19 +185,16 @@ export default function Checkout() {
       return;
     }
 
-    // Check if shipping method is selected
     if (!shippingMethod) {
       toast.error('Please select a shipping method');
       return;
     }
 
-    // Check if payment method is selected
     if (!paymentMethod) {
       toast.error('Please select a payment method');
       return;
     }
 
-    // Check payment method specific details
     if (paymentMethod === 'card') {
       const cardFields = ['cardNumber', 'expirationDate', 'securityCode', 'nameOnCard'];
       const missingCardFields = cardFields.filter(field => !formData[field]);
@@ -208,17 +203,13 @@ export default function Checkout() {
         toast.error(`Please fill in all card details: ${missingCardFields.join(', ')}`);
         return;
       }
-
-      // Additional card validation could be added here
     }
 
-    // Check if cart is not empty
     if (cartItems.length === 0) {
       toast.error('Your cart is empty');
       return;
     }
 
-    // If all checks pass, proceed with order creation
     try {
       const orderDetails = {
         customerInfo: {
@@ -325,6 +316,7 @@ export default function Checkout() {
       cardNumber: validateField("cardNumber", value),
     }));
   };
+
   const getCardLogo = () => {
     switch (cardType) {
       case "visa":
@@ -440,7 +432,7 @@ export default function Checkout() {
                     id="subscribe"
                     checked={subscribeToNews}
                     onChange={(e) => setSubscribeToNews(e.target.checked)}
-                    className="mr-2  size-4 bg-black"
+                    className="mr-2 h-4 w-4 rounded border-gray-300 text-black focus:ring-black accent-black"
                   />
                   <label
                     className={`${lexendDeca.className} font-medium`}
@@ -453,9 +445,7 @@ export default function Checkout() {
 
               {/* Delivery Section */}
               <div className="">
-                <h2
-                  className={`text-xl font-semibold mb-2 mt-20 ${jost.className}`}
-                >
+                <h2 className={`text-xl font-semibold mb-2 mt-20 ${jost.className}`}>
                   Delivery
                 </h2>
                 <FloatingLabelInput
@@ -506,7 +496,7 @@ export default function Checkout() {
                     inputProps={{
                       name: 'phone',
                       required: true,
-                      className: "block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer pl-14",
+                      className: `block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer pl-14 ${lexendDeca.className}`,
                     }}
                     containerClass="w-full"
                     buttonClass="h-full !bg-transparent hover:!bg-transparent focus:!bg-transparent active:!bg-transparent"
@@ -516,7 +506,7 @@ export default function Checkout() {
                     htmlFor="phone"
                     className={`absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600 start-1 ${
                       formData.phone ? 'invisible' : 'visible'
-                    }`}
+                    } ${lexendDeca.className}`}
                   >
                     Phone*
                   </label>
@@ -527,7 +517,7 @@ export default function Checkout() {
                     id="textSubscribe"
                     checked={subscribeToNews}
                     onChange={(e) => setSubscribeToNews(e.target.checked)}
-                    className="mr-2"
+                    className="mr-2 h-4 w-4 rounded border-gray-300 text-black focus:ring-black accent-black"
                   />
                   <label
                     className={`${lexendDeca.className} font-medium`}
@@ -679,129 +669,88 @@ export default function Checkout() {
                   </div>
                 ) : (
                   <div className="border rounded-md p-4">
-                    {paymentMethod === "card" && (
-                      <div className="space-y-4">
-                        <div className="flex items-center justify-between">
-                          <span className={`font-medium ${jost.className}`}>
-                            Pay by card
-                          </span>
-                          <div className="flex space-x-2">
-                            <Image
-                              src={visa}
-                              alt="Visa"
-                              width={32}
-                              height={20}
-                            />
-                            <Image
-                              src={master}
-                              alt="Mastercard"
-                              width={32}
-                              height={20}
-                            />
-                            <Image
-                              src={maestro}
-                              alt="Maestro"
-                              width={32}
-                              height={20}
-                            />
-                            <Image
-                              src={ae}
-                              alt="American Express"
-                              width={32}
-                              height={20}
-                            />
-                          </div>
-                        </div>
-                        <FloatingLabelInput
-                          label="Card number*"
-                          name="cardNumber"
-                          value={formData.cardNumber}
-                          onChange={handleCardNumberChange}
-                        />
-                        <div className="flex space-x-4">
-                          <FloatingLabelInput
-                            label="Expiration date (MM/YY)*"
-                            name="expirationDate"
-                            value={formData.expirationDate}
-                            onChange={handleInputChange}
-                          />
-                          <FloatingLabelInput
-                            label="Security code*"
-                            name="securityCode"
-                            value={formData.securityCode}
-                            onChange={handleInputChange}
-                          />
-                        </div>
-                        <FloatingLabelInput
-                          label="Name on card*"
-                          name="nameOnCard"
-                          value={formData.nameOnCard}
-                          onChange={handleInputChange}
-                        />
-                        <label className="flex items-center space-x-2">
-                          <input
-                            type="checkbox"
-                            checked={useSameAddress}
-                            onChange={() => setUseSameAddress(!useSameAddress)}
-                            className="form-checkbox"
-                          />
-                          <span className={`${lexendDeca.className}`}>
-                            Use shipping address as billing address
-                          </span>
-                        </label>
-                      </div>
-                    )}
-                    {paymentMethod === "paypal" && (
-                      <div>
-                        <div className="flex items-center justify-between mb-4">
-                          <span className={`font-medium ${jost.className}`}>
-                            Paypal
-                          </span>
-                          <Image
-                            src={PayPal}
-                            alt="PayPal"
-                            width={64}
-                            height={20}
-                          />
-                        </div>
-                        <p
-                          className={`${lexendDeca.className} mt-4 text-sm text-center mx-auto w-[80%] `}
-                        >
-                          After clicking &quot;Pay now&quot;, you will be
-                          redirected to PayPal to complete your payment.
-                        </p>
-                      </div>
-                    )}
-                    {paymentMethod === "klarna" && (
-                      <div>
-                        <div className="flex items-center justify-between mb-4">
-                          <span className={`font-medium ${jost.className}`}>
-                            Klarna - Flexible payments
-                          </span>
-                          <Image
-                            src={klarna_pink}
-                            alt="Klarna"
-                            width={64}
-                            height={20}
-                          />
-                        </div>
-                        <Image
-                          src={klarna_wal}
-                          alt="Klarna Wallet"
-                          width={200}
-                          height={200}
-                          className="mx-auto"
-                        />
-                        <p
-                          className={`${lexendDeca.className} mt-4 text-sm text-center mx-auto w-[80%]`}
-                        >
-                          After clicking &quot;Pay now&quot;, you will be
-                          redirected to Klarna to set up your flexible payment
-                          plan.
-                        </p>
-                      </div>
-                    )}
-                  </div>
+      {paymentMethod === "card" && (
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <span className={`font-medium ${jost.className}`}>
+              Pay by card
+            </span>
+            <div className="flex space-x-2">
+              <Image src={visa} alt="Visa" width={32} height={20} />
+              <Image src={master} alt="Mastercard" width={32} height={20} />
+              <Image src={maestro} alt="Maestro" width={32} height={20} />
+              <Image src={ae} alt="American Express" width={32} height={20} />
+            </div>
+          </div>
+          <FloatingLabelInput
+            label="Card number*"
+            name="cardNumber"
+            value={formData.cardNumber}
+            onChange={handleCardNumberChange}
+          />
+          <div className="flex justify-between">
+            <FloatingLabelInput
+              label="Expiration date (MM/YY)*"
+              name="expirationDate"
+              value={formData.expirationDate}
+              onChange={handleInputChange}
+              className=""
+            />
+            <FloatingLabelInput
+              label="Security code*"
+              name="securityCode"
+              value={formData.securityCode}
+              onChange={handleInputChange}
+              className=""
+            />
+          </div>
+          <FloatingLabelInput
+            label="Name on card*"
+            name="nameOnCard"
+            value={formData.nameOnCard}
+            onChange={handleInputChange}
+          />
+          <label className="flex items-center space-x-2">
+            <input
+              type="checkbox"
+              checked={useSameAddress}
+              onChange={() => setUseSameAddress(!useSameAddress)}
+              className="form-checkbox"
+            />
+            <span className={`${lexendDeca.className}`}>
+              Use shipping address as billing address
+            </span>
+          </label>
+        </div>
+      )}
+      {paymentMethod === "paypal" && (
+        <div>
+          <div className="flex items-center justify-between mb-4">
+            <span className={`font-medium ${jost.className}`}>
+              Paypal
+            </span>
+            <Image src={PayPal} alt="PayPal" width={64} height={20} />
+          </div>
+          <p className={`${lexendDeca.className} mt-4 text-sm text-center mx-auto w-[80%]`}>
+            After clicking &quot;Pay now&quot;, you will be redirected to PayPal to complete your payment.
+          </p>
+        </div>
+      )}
+      {paymentMethod === "klarna" && (
+        <div>
+          <div className="flex items-center justify-between mb-4">
+            <span className={`font-medium ${jost.className}`}>
+              Klarna - Flexible payments
+            </span>
+            <Image src={klarna_pink} alt="Klarna" width={64} height={20} />
+          </div>
+          <Image src={klarna_wal} alt="Klarna Wallet" width={200} height={200} className="mx-auto" />
+          <p className={`${lexendDeca.className} mt-4 text-sm text-center mx-auto w-[80%]`}>
+            After clicking &quot;Pay now&quot;, you will be redirected to Klarna to set up your flexible payment plan.
+          </p>
+        </div>
+      )}
+    </div>
                 )}
               </div>
 
@@ -815,7 +764,7 @@ export default function Checkout() {
                   id="save-info"
                   checked={saveInfo}
                   onChange={(e) => setSaveInfo(e.target.checked)}
-                  className="mr-2"
+                  className="mr-2 h-4 w-4 rounded border-gray-300 text-black focus:ring-black accent-black"
                 />
                 <label
                   htmlFor="save-info"
@@ -832,25 +781,11 @@ export default function Checkout() {
               >
                 PAY NOW
               </button>
-              {/* Terms */}
-              <p
-                className={`text-sm text-gray-600 mt-4 text-center ${lexendDeca.className}`}
-              >
-                By placing this order, you are confirming that you agree to our{" "}
-                <a href="#" className="text-black underline">
-                  Terms and Conditions
-                </a>{" "}
-                and{" "}
-                <a href="#" className="text-black underline">
-                  Privacy Policy
-                </a>
-                .
-              </p>
             </div>
           </div>
 
           {/* Right: Order Summary and Bag Summary */}
-          <div className="lg:w-1/3 bg-gray-50  p-6 rounded-lg lg:-mt-24">
+          <div className="lg:w-1/3 bg-gray-50 p-6 rounded-lg lg:-mt-24">
             <div className=" ">
               <div className=" bg-white rounded-lg p-6 shadow-sm">
                 <h2 className={`text-xl font-semibold mb-4 ${jost.className}`}>
