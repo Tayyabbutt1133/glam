@@ -718,18 +718,18 @@ export default function Component() {
                         <p
                           className={`font-bold text-lg mb-3 ${lexendDeca.className}`}
                         >
-                          {product.sale_price ? (
-                            <>
-                              <span className="line-through text-gray-600 mr-2">
-                                {currencySymbol}
-                                {Math.round(product.regular_price * rate)}
-                              </span>
-                              {currencySymbol}
-                              {Math.round(product.sale_price * rate)}
-                            </>
-                          ) : (
-                            `${currencySymbol}${Math.round(product.price * rate)}`
-                          )}
+                         {product.sale_price ? (
+  <>
+    <span className="line-through text-gray-600 mr-2">
+      {currencySymbol}
+      {(product.regular_price * rate).toFixed(2)}
+    </span>
+    {currencySymbol}
+    {(product.sale_price * rate).toFixed(2)}
+  </>
+) : (
+  `${currencySymbol}${(product.price * rate).toFixed(2)}`
+)}
                         </p>
                         <button
                           className={`w-full bg-black text-white py-2 rounded-lg hover:bg-gray-800 transition ${jost.className}`}
