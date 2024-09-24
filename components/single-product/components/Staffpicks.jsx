@@ -26,7 +26,7 @@ const arrowStyles = {
 const NextArrow = ({ className, style, onClick }) => {
   return (
     <div
-      className={`absolute top-1/2 transform -translate-y-1/2 right-4 2xl:mr-8 ${className}`}
+      className={`absolute top-1/2 transform -translate-y-1/2 md:-mr-8  ${className}`}
       onClick={onClick}
       style={{
         ...style,
@@ -41,7 +41,7 @@ const NextArrow = ({ className, style, onClick }) => {
 
 const PrevArrow = ({ className, style, onClick }) => (
   <div
-    className={`absolute top-1/2 transform -translate-y-1/2 left-4 ${className}`}
+    className={`absolute top-1/2 transform -translate-y-1/2  -ml-4 ${className}`}
     onClick={onClick}
     style={{
       ...style,

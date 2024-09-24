@@ -45,7 +45,7 @@ export default function Product({ product }) {
   const addToCart = useCartStore((state) => state.addToCart);
 
   return (
-    <div className="w-full h-[500px] border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
+    <div className="w-[95%] h-[500px] border border-gray-50 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
       <Link href={`/product/${product.id}`}>
         <div
           className="bg-white flex flex-col h-full cursor-pointer"

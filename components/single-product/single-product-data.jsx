@@ -11,8 +11,7 @@ import Accordion from "./components/product-data/components/accordion";
 import { AlertCircle } from "lucide-react";
 import Reviews from "./components/CustomReviewComponent";
 import BreadCrumbs from "../BreadCrumb";
-// import { product } from "../../demoproduct";
-// import Review from "./components/Review";
+import Recientlyviewed from "./components/Recientlyviewed";
 
 const demo = [
   { src: demo1, alt: "Image 1" },
@@ -100,17 +99,10 @@ export default async function SingleProductData({ productId }) {
           <div className="lg:hidden">
             <FrequentlyBoughtTogether />
           </div>
-          <section>
-            {/* <CustomerReviews reviews={reviews} totalReviews={52} averageRating={4.2} /> */}
-          </section>
         </div>
         <Staffpicks />
-        {/* <Review
-        reviewsFromProduct={product.reviews || []}
-        totalReviews={product.review_count}
-        averageRating={product.average_rating}
-      /> */}
         <Reviews />
+      <Recientlyviewed/>
       </>
     );
 }
