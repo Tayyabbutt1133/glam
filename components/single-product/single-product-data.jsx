@@ -34,7 +34,7 @@ export default async function SingleProductData({ productId }) {
       },
     }
   );
-  // console.log(productFromApi);
+  
   const product = await productFromApi.json();
   console.log({ productcat: product.categories });
 

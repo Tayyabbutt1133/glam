@@ -7,6 +7,7 @@ import Image from "next/image";
 import { jost, lexendDeca } from "./ui/fonts";
 import uk_flag from '../public/Flag_uk.png'
 import us_flag from '../public/usa-flag.png';
+import { MdKeyboardArrowDown } from "react-icons/md";
 
 export default function CurrencyLanguagePopUp() {
   const isOpen = usePopupStore((state) => state.isOpen);
@@ -137,9 +138,9 @@ export default function CurrencyLanguagePopUp() {
             </p>
 
             <div className="space-y-4">
-              <div>
+              <div className="relative">
                 <select
-                  className={`w-full p-3 border border-gray-300 rounded-md ${lexendDeca.className} text-sm`}
+                  className={`w-full p-3 pr-10 border border-gray-300 rounded-md ${lexendDeca.className} text-sm appearance-none`}
                   onChange={handleCountryChange}
                   value={selectedCountry?.code || ""}
                 >
@@ -149,10 +150,11 @@ export default function CurrencyLanguagePopUp() {
                     </option>
                   ))}
                 </select>
+                <MdKeyboardArrowDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-black pointer-events-none" size={20} />
               </div>
-              <div>
+              <div className="relative">
                 <select
-                  className={`w-full p-3 border border-gray-300 rounded-md ${lexendDeca.className} text-sm`}
+                  className={`w-full p-3 pr-10 border border-gray-300 rounded-md ${lexendDeca.className} text-sm appearance-none`}
                   onChange={(e) => setSelectedCurrency(e.target.value)}
                   value={selectedCurrency || ""}
                 >
@@ -162,6 +164,7 @@ export default function CurrencyLanguagePopUp() {
                     </option>
                   ))}
                 </select>
+                <MdKeyboardArrowDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-black pointer-events-none" size={20} />
               </div>
             </div>
 

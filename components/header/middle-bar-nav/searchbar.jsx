@@ -137,7 +137,7 @@ export default function FastSearchBarWithDropdown({ formobile = false }) {
           isDropdownOpen ? "flex" : "hidden"
         }`}
       >
-        <div className="w-1/3 p-4 border-r border-gray-200">
+        <div className="w-1/2 p-4 border-r border-gray-200 bg-[#F7F7F7]">
           <h3 className={`text-xs font-normal text-[#8B929D] ${jost.className} uppercase mb-2`}>
             Popular Searches
           </h3>
@@ -146,7 +146,7 @@ export default function FastSearchBarWithDropdown({ formobile = false }) {
               <li key={term.id}>
                 <Link 
                   href={`/brands/${encodeURIComponent(term.name.toLowerCase())}`}
-                  className={`block cursor-pointer hover:bg-[#CF8562] hover:text-white p-1 ${lexendDeca.className} font-medium`}
+                  className={`block cursor-pointer transition duration-300 hover:bg-[#CF8562] hover:text-white p-1 ${lexendDeca.className} font-medium`}
                   onClick={() => setIsDropdownOpen(false)}
                 >
                   {term.name}
@@ -172,7 +172,7 @@ export default function FastSearchBarWithDropdown({ formobile = false }) {
                 <li key={product.id}>
                   <Link
                     href={`/product/${product.id}`}
-                    className="flex p-1 items-center cursor-pointer hover:bg-[#CF8562] hover:text-white group"
+                    className="flex p-1 items-center cursor-pointer transition duration-300 hover:bg-[#CF8562] hover:text-white group"
                     onClick={() => setIsDropdownOpen(false)}
                   >
                     <div className="w-10 h-10 mr-4 ml-4 bg-gray-100 flex-shrink-0">

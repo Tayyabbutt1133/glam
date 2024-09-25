@@ -6,6 +6,7 @@ import Container from "/components/container";
 import { FaStar, FaRegStar, FaHeart } from "react-icons/fa";
 import { CiHeart } from "react-icons/ci";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";
 import { IoFilterOutline } from "react-icons/io5";
 import Image from "next/image";
 import { lexendDeca, jost } from "/components/ui/fonts";
@@ -288,16 +289,19 @@ export default function Component() {
     }));
   };
 
-  const renderPagination = () => (
+  const RenderPagination = () => {
+    console.log("pagination")
+    return (
     <div className="flex justify-end items-center">
       <button
         onClick={() => handlePageChange(currentPage - 1)}
         disabled={currentPage === 1}
         className={`px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition ${
-          currentPage === 1 ? "disabled:bg-transparent" : ""
+          currentPage === 1 ? "disabled:opacity-50 cursor-not-allowed" : ""
         }`}
+        aria-label="Previous page"
       >
-        &lt;
+        <MdArrowBackIos className="w-4 h-4" />
       </button>
       {currentPage > 2 && (
         <button
@@ -343,13 +347,15 @@ export default function Component() {
         onClick={() => handlePageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
         className={`px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition ${
-          currentPage === totalPages ? "disabled:bg-transparent" : ""
+          currentPage === totalPages ? "disabled:opacity-50 cursor-not-allowed" : ""
         }`}
+        aria-label="Next page"
       >
-        &gt;
+        <MdArrowForwardIos className="w-4 h-4" />
       </button>
     </div>
-  );
+  )
+};
 
   const categorylanding = params.grid[0]
   const subcategories = params.grid[1]
@@ -390,7 +396,7 @@ export default function Component() {
             </option>
           </select>
         </div>
-        <span className="hidden lg:block">{renderPagination()}</span>
+        <span className="hidden lg:block"><RenderPagination /></span>
       </div>
 
       <div className="flex flex-col lg:flex-row gap-4 mb-32">
@@ -747,7 +753,7 @@ export default function Component() {
           </div>
 
           {paginatedProducts.length > 0 && (
-            <div className="mt-8 flex justify-end">{renderPagination()}</div>
+            <div className="mt-8 flex justify-end">{RenderPagination()}</div>
           )}
         </div>
       </div>
