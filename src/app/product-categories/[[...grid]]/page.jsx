@@ -753,7 +753,7 @@ export default function Component() {
           </div>
 
           {paginatedProducts.length > 0 && (
-            <div className="mt-8 flex justify-end">{renderPagination()}</div>
+            <div className="mt-8 flex justify-end">{RenderPagination()}</div>
           )}
         </div>
       </div>

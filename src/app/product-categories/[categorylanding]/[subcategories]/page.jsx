@@ -601,39 +601,40 @@ export default function SubcategoryPage() {
 
           {/* Price range filter */}
           <div className="mb-6">
-            <h4
-              className={`font-bold ${jost.className} text-lg mb-2 flex justify-between items-center cursor-pointer`}
-              onClick={() => setIsPriceRangeFilterOpen(!isPriceRangeFilterOpen)}
-            >
-              Price Range
-              {isPriceRangeFilterOpen ? (
-                <IoIosArrowUp className="text-gray-500" />
-              ) : (
-                <IoIosArrowDown className="text-gray-500" />
-              )}
-            </h4>
-            {isPriceRangeFilterOpen && (
-              <div className={`pl-2 ${lexendDeca.className}`}>
-                {priceRanges.map((range) => (
-                  <label key={range} className="block mb-2">
-                    <input
-                      type="checkbox"
-                      name="priceRange"
-                      value={range}
-                      checked={filters.priceRange.includes(range)}
-                      onChange={() => handleFilterChange("priceRange", range)}
-                      className="mr-2"
-                    />
-                    
-                    {currencySymbol}
-                    {(range.split("-")[0] * rate).toFixed(2)} - {currencySymbol}
-                    {(range.split("-")[1] * rate).toFixed(2)} (
-                    {getFilteredCount("priceRange", range)})
-                  </label>
-                ))}
-              </div>
-            )}
-          </div>
+  <h4
+    className={`font-bold ${jost.className} text-lg mb-2 flex justify-between items-center cursor-pointer`}
+    onClick={() => setIsPriceRangeFilterOpen(!isPriceRangeFilterOpen)}
+  >
+    Price Range
+    {isPriceRangeFilterOpen ? (
+      <IoIosArrowUp className="text-gray-500" />
+    ) : (
+      <IoIosArrowDown className="text-gray-500" />
+    )}
+  </h4>
+  {isPriceRangeFilterOpen && (
+    <div className={`pl-2 ${lexendDeca.className}`}>
+      {priceRanges.map((range) => (
+        <label key={range} className="block mb-2">
+          <input
+            type="checkbox"
+            name="priceRange"
+            value={range}
+            checked={filters.priceRange.includes(range)}
+            onChange={() => handleFilterChange("priceRange", range)}
+            className="mr-2"
+          />
+          
+          {currencySymbol}
+          {Math.round(range.split("-")[0] * rate)} - {currencySymbol}
+          {Math.round(range.split("-")[1] * rate)} (
+          {getFilteredCount("priceRange", range)})
+        </label>
+      ))}
+    </div>
+  )}
+</div>
+
 
           <section className="flex justify-around mt-auto gap-4 lg:hidden">
             <button

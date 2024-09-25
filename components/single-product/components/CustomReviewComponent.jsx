@@ -1,26 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import {
-  Star,
-  ThumbsUp,
-  ThumbsDown,
-  ChevronDown,
-  ChevronRight,
-  FilterIcon,
-  SlidersHorizontal,
-  ArrowBigLeft,
-  ArrowBigRight,
-  ChevronLeft,
-  MoreHorizontal,
-} from "lucide-react";
-import imgss from "../../../public/product-slider/demo1.png";
-import { jost, lexendDeca } from "../../ui/fonts";
-import { IoCheckmarkDoneCircle } from "react-icons/io5";
-import { FaCheckCircle } from "react-icons/fa";
-import Button from "../../ui/button";
-import Text from "../../ui/Text";
-import { MdKeyboardArrowDown } from "react-icons/md";
+import { Star, ThumbsUp, ThumbsDown, ChevronDown, ChevronRight, FilterIcon, ChevronLeft } from "lucide-react";
+import { lexendDeca } from "../../ui/fonts";
+import filter from '../../../public/filter.svg';
+import Image from "next/image";
 
 const reviews = [
   {
@@ -127,9 +111,9 @@ const ReviewFilters = () => {
 };
 
 const SortBy = () => (
-  <div className={`${lexendDeca.className} flex items-center`}>
-    <span className="text-gray-700 mr-2">Sort By:</span>
-    <select className="bg-transparent focus:outline-none text-gray-700 font-medium">
+  <div className={`${lexendDeca.className} flex items-center border py-1 px-1`}>
+    <span className="text-[#8B929D] mr-2 ml-2">Sort By:</span>
+    <select className="bg-transparent focus:outline-none text-black font-medium">
       <option>Most Recent</option>
       <option>Highest Rated</option>
       <option>Lowest Rated</option>
@@ -165,45 +149,6 @@ export default function Component() {
   const indexOfLastReview = currentPage * reviewsPerPage;
   const indexOfFirstReview = indexOfLastReview - reviewsPerPage;
   const currentReviews = reviews.slice(indexOfFirstReview, indexOfLastReview);
-
-  const Filters = () => (
-    <div className="relative">
-      <button
-        className="flex items-center gap-2 px-4 py-2 rounded-md"
-        onClick={() => setIsFiltersOpen(!isFiltersOpen)}
-      >
-        <SlidersHorizontal className=" hidden lg:block" /> Filters
-      </button>
-      {isFiltersOpen && (
-        <div className="absolute top-full -left-10 sm:left-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-10">
-          <div className="p-4">
-            <h3 className="font-semibold mb-2">Rating</h3>
-            {[5, 4, 3, 2, 1].map((stars) => (
-              <label key={stars} className="flex items-center mb-2">
-                <input type="checkbox" className="mr-2" />
-                <span>{stars} stars</span>
-              </label>
-            ))}
-          </div>
-        </div>
-      )}
-    </div>
-  );
-  const SortBy = () => (
-    <Text style="sm" className={`${jost.className} flex items-center border border-b-01 rounded-lg py-1 px-3 mr-3 relative`}>
-      <span className="text-light mr-2">Sort By:</span>
-      <div className="relative inline-block">
-        <select className="text-primary appearance-none bg-transparent pr-6 focus:outline-none">
-          <option>Most Recent</option>
-          <option>Highest Rated</option>
-          <option>Lowest Rated</option>
-        </select>
-        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center text-primary">
-          <MdKeyboardArrowDown className="h-4 w-4 text-light" aria-hidden="true" />
-        </div>
-      </div>
-    </Text>
-  );
 
   useEffect(() => {
     setIsMounted(true);
