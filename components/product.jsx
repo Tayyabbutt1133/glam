@@ -44,6 +44,10 @@ export default function Product({ product }) {
 
   const addToCart = useCartStore((state) => state.addToCart);
 
+  const discountAmount = product.regular_price && product.price
+    ? Number(product.regular_price) - Number(product.price)
+    : 0;
+
   return (
     <div className="w-[95%] h-[500px] border border-gray-50 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
       <Link href={`/product/${product.id}`}>
@@ -101,19 +105,17 @@ export default function Product({ product }) {
               </div>
             </div>
             <div>
-              <div className="flex items-center flex-wrap text-[#8B929D] text-xs mb-1">
-                {product.regular_price && (
+              {discountAmount > 0 && (
+                <div className="flex items-center flex-wrap text-[#8B929D] text-xs mb-1">
                   <span className={`line-through mr-2 flex ${lexendDeca.className}`}>
                     <span className="hidden sm:block">RRP: </span>
                     {currencySymbol}{Number(product.regular_price * rate).toFixed(2)}
                   </span>
-                )}
-                {product.regular_price && product.price && (
                   <span className={`flex justify-center text-red-700 items-center ${lexendDeca.className}`}>
-                    Save {currencySymbol}{Number((product.regular_price - product.price) * rate).toFixed(2)}
+                    Save {currencySymbol}{(discountAmount * rate).toFixed(2)}
                   </span>
-                )}
-              </div>
+                </div>
+              )}
               <p className={`text-gray-900 font-bold text-lg mb-2 ${lexendDeca.className}`}>
                 {currencySymbol}{Number(product.price * rate).toFixed(2)}
               </p>
@@ -121,7 +123,7 @@ export default function Product({ product }) {
                 className={`w-full bg-black text-white py-2 text-sm rounded-lg hover:bg-[#CF8562] font-normal transition duration-200 ${lexendDeca.className}`}
                 onClick={(e) => {
                   e.preventDefault();
-                  e.stopPropagation();
+                e.stopPropagation();
                   addToCart(product);
                 }}
               >

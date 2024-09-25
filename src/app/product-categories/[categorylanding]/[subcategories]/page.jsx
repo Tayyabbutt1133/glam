@@ -300,16 +300,17 @@ export default function SubcategoryPage() {
       <button
         onClick={() => handlePageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className={`px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition ${
-          currentPage === 1 ? "disabled:bg-transparent" : ""
+        className={`px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition duration-300 ease-in-out ${
+          currentPage === 1 ? "opacity-50 cursor-not-allowed" : "hover:opacity-100"
         }`}
+        aria-label="Previous page"
       >
         &lt;
       </button>
       {currentPage > 2 && (
         <button
           onClick={() => handlePageChange(1)}
-          className="px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition"
+          className="px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition duration-300 ease-in-out"
         >
           1
         </button>
@@ -318,7 +319,7 @@ export default function SubcategoryPage() {
       {currentPage > 1 && (
         <button
           onClick={() => handlePageChange(currentPage - 1)}
-          className="px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition"
+          className="px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition duration-300 ease-in-out"
         >
           {currentPage - 1}
         </button>
@@ -326,13 +327,14 @@ export default function SubcategoryPage() {
       <button
         onClick={() => handlePageChange(currentPage)}
         className="px-4 py-2 mx-1 bg-black text-white rounded"
+        aria-current="page"
       >
         {currentPage}
       </button>
       {currentPage < totalPages && (
         <button
           onClick={() => handlePageChange(currentPage + 1)}
-          className="px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition"
+          className="px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition duration-300 ease-in-out"
         >
           {currentPage + 1}
         </button>
@@ -341,7 +343,7 @@ export default function SubcategoryPage() {
       {currentPage < totalPages - 1 && (
         <button
           onClick={() => handlePageChange(totalPages)}
-          className="px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition"
+          className="px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition duration-300 ease-in-out"
         >
           {totalPages}
         </button>
@@ -349,9 +351,10 @@ export default function SubcategoryPage() {
       <button
         onClick={() => handlePageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className={`px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition ${
-          currentPage === totalPages ? "disabled:bg-transparent" : ""
+        className={`px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition duration-300 ease-in-out ${
+          currentPage === totalPages ? "opacity-50 cursor-not-allowed" : "hover:opacity-100"
         }`}
+        aria-label="Next page"
       >
         &gt;
       </button>
@@ -367,14 +370,13 @@ export default function SubcategoryPage() {
   return (
     <Container className="min-h-screen py-7">
       <Breadcrumb links={breadcrumbLinks} />
-      <div className="mb-8">
+      <div className="mb-16">
         <h1
-          className={`text-3xl text-center uppercase font-bold ${jost.className}`}
+          className={`2xl:text-3xl text-lg ml-12  text-center uppercase font-bold ${jost.className}`}
         >
           {categorylanding} {subcategories}
         </h1>
       </div>
-
       <div className="flex justify-between items-center">
         <div className="flex items-center lg:hidden">
           <button onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}>
@@ -775,7 +777,7 @@ export default function SubcategoryPage() {
             <div className="mt-8 flex justify-end">{renderPagination()}</div>
           )}
         </div>
-      </div>
-    </Container>
+        </div>
+        </Container>
   );
 }
