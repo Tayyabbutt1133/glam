@@ -3,17 +3,17 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-import Container from "/components/container";
+import Container from "../../container";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { jost } from "/components/ui/fonts";
+import { jost } from "../../ui/fonts";
 import NextArrowIcon from "/public/hero-banners/next-arrow";
 import PrevArrowIcon from "/public/hero-banners/prev-arrow";
-import Product from "/components/product";
-import Text from "../../ui/Text";
+import Product from "../../product";
+
 
 
 const arrowStyles = {
@@ -146,13 +146,19 @@ const Staffpicks = () => {
   if (!categoryId) return;
 
   return (
-    <Container className="mb-16">
-      <Text
-      style={"h1"}
-        className={`text-2xl font-semibold mx-4 my-8 ${jost.className} uppercase`}
+    <Container className="my-24">
+      <h1
+      
+        className={`
+          ${jost.className} 
+          capitalize 
+          font-medium 
+          mb-10 
+          text-[clamp(1rem,2.5vw,1.5rem)]
+        `}
       >
         See What Others are Buying
-      </Text>
+      </h1>
       {loading ? (
         <Slider {...settings}>
           {Array(4)

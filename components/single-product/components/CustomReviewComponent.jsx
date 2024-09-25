@@ -19,6 +19,8 @@ import { jost, lexendDeca } from "../../ui/fonts";
 import { IoCheckmarkDoneCircle } from "react-icons/io5";
 import { FaCheckCircle } from "react-icons/fa";
 import Button from "../../ui/button";
+import Text from "../../ui/Text";
+import { MdKeyboardArrowDown } from "react-icons/md";
 
 const reviews = [
   {
@@ -263,15 +265,19 @@ export default function Component() {
     </div>
   );
   const SortBy = () => (
-    <div className={`${jost.className} flex items-center`}>
-      <span className=" text-[#8B929D] ">Sort By:</span>
-      <select className="rounded  mx-2">
-    
-        <option>Most Recent</option>
-        <option>Highest Rated</option>
-        <option>Lowest Rated</option>
-      </select>
-    </div>
+    <Text style="sm" className={`${jost.className} flex items-center border border-b-01 rounded-lg py-1 px-3 mr-3 relative`}>
+      <span className="text-light mr-2">Sort By:</span>
+      <div className="relative inline-block">
+        <select className="text-primary appearance-none bg-transparent pr-6 focus:outline-none">
+          <option>Most Recent</option>
+          <option>Highest Rated</option>
+          <option>Lowest Rated</option>
+        </select>
+        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center text-primary">
+          <MdKeyboardArrowDown className="h-4 w-4 text-light" aria-hidden="true" />
+        </div>
+      </div>
+    </Text>
   );
 
   useEffect(() => {
