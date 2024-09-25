@@ -22,7 +22,7 @@ const PRODUCTS_PER_PAGE = 12;
 const FilterSection = ({ title, isOpen, toggleOpen, children }) => (
   <div className="mb-6">
     <h4
-      className={`font-bold   text-lg mb-2 flex justify-between items-center cursor-pointer ${jost.className}`}
+      className={`font-bold text-lg mb-2 flex justify-between items-center cursor-pointer ${jost.className}`}
       onClick={toggleOpen}
     >
      <span className="ml-2">{title}</span>
@@ -111,9 +111,11 @@ export default function Component() {
         .filter(
           (product) =>
             product.images.length > 0 &&
-            product.attributes.some((attr) => attr.name === "Brand") &&
-            product.name &&
-            product.price
+            product.images[0]?.src && // Check if image source exists
+            product.attributes.some((attr) => attr.name === "Brand" && attr.options[0]) && // Check if brand exists
+            product.name && // Check if product name exists
+            product.price && // Check if price exists
+            parseFloat(product.price) > 0 // Check if price is greater than 0
         );
       setProducts(fetchedProducts);
       setTotalPages(Math.ceil(fetchedProducts.length / PRODUCTS_PER_PAGE));
@@ -550,11 +552,11 @@ export default function Component() {
 
           {/* Brand filter */}
           <FilterSection 
-  title="Brand" 
-  isOpen={isBrandFilterOpen} 
-  toggleOpen={() => setIsBrandFilterOpen(!isBrandFilterOpen)}
-  className=""
->
+            title="Brand" 
+            isOpen={isBrandFilterOpen} 
+            toggleOpen={() => setIsBrandFilterOpen(!isBrandFilterOpen)}
+            className=""
+          >
             {brands
               .sort((a, b) => a.name.localeCompare(b.name))
               .map((brand) => (
@@ -720,17 +722,17 @@ export default function Component() {
                           className={`font-bold text-lg mb-3 ${lexendDeca.className}`}
                         >
                          {product.sale_price ? (
-  <>
-    <span className="line-through text-gray-600 mr-2">
-      {currencySymbol}
-      {(product.regular_price * rate).toFixed(2)}
-    </span>
-    {currencySymbol}
-    {(product.sale_price * rate).toFixed(2)}
-  </>
-) : (
-  `${currencySymbol}${(product.price * rate).toFixed(2)}`
-)}
+                            <>
+                              <span className="line-through text-gray-600 mr-2">
+                                {currencySymbol}
+                                {(product.regular_price * rate).toFixed(2)}
+                              </span>
+                              {currencySymbol}
+                              {(product.sale_price * rate).toFixed(2)}
+                            </>
+                          ) : (
+                            `${currencySymbol}${(product.price * rate).toFixed(2)}`
+                          )}
                         </p>
                         <button
                           className={`w-full bg-black text-white py-2 rounded-lg hover:bg-[#CF8562]  transition ${jost.className}`}
