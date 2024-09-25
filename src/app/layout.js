@@ -1,12 +1,14 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
+
+import ApolloProvider from "./components/ApolloProvider";
 import CurrencyLanguagePopUp from "../../components/currency-language-pop-up";
 import Header from "../../components/header/header";
 import Newsletter from "../../components/Newsletter";
 import Footer from "../../components/Footer";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import Script from 'next/script'; // Use next/script instead of Head
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Script from "next/script"; // Use next/script instead of Head
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,18 +20,17 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <head>
-        {/* Include any other meta tags or link elements */}
-      </head>
+      <head>{/* Include any other meta tags or link elements */}</head>
       <body className={inter.className}>
-        <CurrencyLanguagePopUp />
-        <Header/>
-       
-        {children}
-        <ToastContainer position="top-right" />
-        <Newsletter />
-        <Footer/>
+        <ApolloProvider>
+          <CurrencyLanguagePopUp />
+          <Header />
 
+          {children}
+          <ToastContainer position="top-right" />
+          <Newsletter />
+          <Footer />
+        </ApolloProvider>
         {/* Add BugHerd script */}
         <Script
           id="bugherd-script"
