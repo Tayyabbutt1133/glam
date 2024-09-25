@@ -6,8 +6,6 @@ import { AiOutlineMail } from "react-icons/ai";
 import { FaWhatsapp } from "react-icons/fa";
 import { RiHome5Line } from "react-icons/ri";
 
-
-
 const breadcrumbLinks = [
   { name: "Home", route: "/" },
   { name: "Contact Us", route: "/contact-us" },
@@ -18,7 +16,7 @@ export default function ContactUsPage() {
     <>
       <Container>
         <Breadcrumb links={breadcrumbLinks} />
-        <div className=" py-16">
+        <div className="py-16">
           <h1 className={`text-3xl ${jost.className} font-bold mb-4`}>
             CONTACT US
           </h1>
@@ -26,7 +24,7 @@ export default function ContactUsPage() {
           <div className="flex flex-col lg:flex-row gap-8">
             <div className="lg:w-1/2">
               <h2 className={`text-2xl font-semibold mb-4 ${jost.className}`}>
-                Reach Out, We're Here
+                Reach Out, We&apos;re Here
               </h2>
               <p className={`mb-6 ${lexendDeca.className}`}>
                 Have questions about your order or products? For the speediest
@@ -36,31 +34,28 @@ export default function ContactUsPage() {
               <hr className="my-6" />
               <div className="mb-6">
                 <div className={`${jost.className}`}>
-                  {" "}
                   <h3 className="">GLAMBEAUTY</h3>
                   <p>Registered office address:</p>
                   <p>133 Ley Street, Ilford, Essex, IG1 4BH</p>
                 </div>
               </div>
               <div>
-                <h3 className={`font-semibold text-lg ${jost.className}  mb-2`}>Customer Support</h3>
-              
-                              <div className="flex items-center gap-2">
-                              <AiOutlineMail size={20}/>
-                                  <p className={`${lexendDeca.className}`}>cs@glambeauty.com</p>
-                              </div>
-                              
-                              <div className=" flex items-center gap-2">
-                                  <FaWhatsapp size={20}/>
-                                  <p className={`${lexendDeca.className}`}>+447418626360</p>
-                                  </div>
+                <h3 className={`font-semibold text-lg ${jost.className} mb-2`}>Customer Support</h3>
+                <div className="flex items-center gap-2">
+                  <AiOutlineMail size={20}/>
+                  <p className={`${lexendDeca.className}`}>cs@glambeauty.com</p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <FaWhatsapp size={20}/>
+                  <p className={`${lexendDeca.className}`}>+447418626360</p>
+                </div>
               </div>
               <div>
-                              <h3 className="font-semibold text-lg mb-2 mt-8">Press Inquiries</h3>
-                              <div className="flex items-center gap-2">
-                                  <RiHome5Line size={20}/>
-                                  <p className={`${lexendDeca.className}`}>info@glambeauty.com</p>
-                                  </div>
+                <h3 className="font-semibold text-lg mb-2 mt-8">Press Inquiries</h3>
+                <div className="flex items-center gap-2">
+                  <RiHome5Line size={20}/>
+                  <p className={`${lexendDeca.className}`}>info@glambeauty.com</p>
+                </div>
               </div>
             </div>
 
@@ -104,8 +99,8 @@ export default function ContactUsPage() {
                   />
                 </div>
                 <button
-                                  type="submit"
-                                  className={`w-full bg-black text-white py-2 px-4 rounded-md hover:bg-gray-800 transition duration-300 ${jost.className}`}
+                  type="submit"
+                  className={`w-full bg-black text-white py-2 px-4 rounded-md hover:bg-gray-800 transition duration-300 ${jost.className}`}
                 >
                   Submit
                 </button>
