@@ -6,8 +6,8 @@ import ArrowDown from "../../../public/icons/arrow-down"
 import { lexendDeca } from "../../ui/fonts"
 import Container from "../../container"
 import { usePopupStore } from "../../../states/use-popup-store.jsx"
-import uk_flag from '../../../public/united-kingdom-hd.jpg'
-import usa_flag from '../../../public/usa-flag.png'
+import uk_flag from "../../../public/Flag_uk.png"
+import usa_flag from  "../../../public/usa-flag.png"
 import Text from '../../../components/ui/Text'
 
 export default function NewsBannerNav() {
