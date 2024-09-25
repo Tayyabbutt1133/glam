@@ -82,7 +82,7 @@ export default function TrendingBrand() {
                 className="rounded-lg"
               />
             </div>
-            <div className="flex">
+            <div className="flex  2xl:w-[194px] 2xl:h-[32px]">
               <Image
                 src={brand.logo}
                 alt={`${brand.name} logo`}

@@ -86,7 +86,7 @@ const HomeBrand = () => {
                   </p>
                 </div>
                 <button
-                  className={`w-[50%] mt-2 bg-black text-white text-sm py-2 px-6 rounded-lg hover:bg-[#CF8562] transition duration-200 ${jost.className}`}
+                  className={`w-[50%] mt-2 bg-black text-white text-[14px] py-2 px-6 rounded-lg hover:bg-[#CF8562] transition duration-200 ${jost.className}`}
                 >
                   SHOP NOW
                 </button>
