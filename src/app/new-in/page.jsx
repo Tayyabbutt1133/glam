@@ -395,7 +395,7 @@ export default function Component() {
   );
 
   return (
-    <Container className="min-h-screen py-32">
+    <Container className="min-h-screen py-20">
       <style jsx global>{`
         .custom-scrollbar::-webkit-scrollbar {
           width: 6px;
@@ -412,17 +412,9 @@ export default function Component() {
           background: #555;
         }
       `}</style>
-      <div className="flex justify-between items-center">
-        <div className="flex items-center lg:hidden ">
-          <button onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}>
-            <span
-              className={`flex items-center gap-2 text-md ${jost.className}`}
-            >
-              Filters <IoFilterOutline className="w-6 h-6" />
-            </span>
-          </button>
-        </div>
-        <div className="flex flex-col md:flex-row items-center lg:ml-[20rem] ">
+
+      <div className="flex justify-between items-center  w-[75%] mx-[300px]">
+          <div>
           <select
             value={sortOption}
             onChange={handleSortChange}
@@ -437,12 +429,18 @@ export default function Component() {
             <option value="price-high-to-low" className="text-black">
               Price: High to Low
             </option>
-          </select>
-        </div>
+            </select>
+          </div>
+          <div>
         <span className="hidden lg:block">{renderPagination()}</span>
-      </div>
+        </div>
+        </div>
+
+
 
       <div className="flex flex-col lg:flex-row gap-8 mb-32">
+
+        
         <div
           style={{ boxShadow: isMobileFilterOpen ? "-115px 0 10px 0 rgba(255, 255, 255)" : "none" }}
           className={`w-full transition-all duration-300 ease-in-out ${
@@ -644,7 +642,7 @@ export default function Component() {
         </div>
 
         <div className="w-full lg:w-3/4">
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-[30px] mt-8">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-[30px] mt-14">
             {loading
               ? Array(PRODUCTS_PER_PAGE)
                   .fill("")
@@ -666,7 +664,7 @@ export default function Component() {
                   return (
                     <div
                       key={product.id}
-                      className="border rounded-lg shadow-lg relative bg-white"
+                      className="border rounded-lg  relative bg-white"
                     >
                       {product.sale_price && (
                         <span className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
