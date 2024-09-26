@@ -174,7 +174,7 @@ export default function Footer() {
               </div>
 
               {/* Download App Section */}
-              <div>
+              <div className="">
                 <h2 className={`mb-4 text-sm mt-4 md:text-[18px] 2xl:text-[20px] capitalize flex items-center justify-between font-semibold text-black ${jost.className}`}>
                   Download App
                 </h2>
@@ -183,7 +183,7 @@ export default function Footer() {
                 >
                   Download the App and get an extra 10% off your first order...!
                 </p>
-                <div className="flex sm:flex-col xl:flex-row gap-6">
+                <div className="flex sm:flex-col xl:flex-row gap-6 2xl:gap-3">
                   <Image className="hover:scale-110 cursor-pointer transition-transform duration-300" src={app_store} alt="App Store" />
                   <Image className="hover:scale-110 cursor-pointer transition-transform duration-300" src={play_store} alt="Play Store" />
                 </div>
