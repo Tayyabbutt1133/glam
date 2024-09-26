@@ -696,91 +696,81 @@ export default function Checkout() {
                     </label>
                   </div>
                 ) : (
-                  <div className="border rounded-md p-4">
-                    {paymentMethod === "card" && (
-                      <div className="space-y-4">
-                        <div className="flex items-center justify-between">
-                          <span className={`font-medium ${jost.className}`}>
-                            Pay by card
-                          </span>
-                          <div className="flex space-x-2">
-                            <Image src={visa} alt="Visa" width={32} height={20} />
-                            <Image src={master} alt="Mastercard" width={32} height={20} />
-                            <Image src={maestro} alt="Maestro" width={32} height={20} />
-                            <Image src={ae} alt="American Express" width={32} height={20} />
-                          </div>
-                        </div>
-                        <FloatingLabelInput
-                          label="Card number*"
-                          name="cardNumber"
-                          value={formData.cardNumber}
-                          onChange={handleCardNumberChange}
-                          error={errors.cardNumber}
-                        />
-                        <div className="flex justify-between gap-4">
-                          <FloatingLabelInput
-                            label="Expiration date (MM/YY)*"
-                            name="expirationDate"
-                            value={formData.expirationDate}
-                            onChange={handleInputChange}
-                            error={errors.expirationDate}
-                          />
-                          <FloatingLabelInput
-                            label="Security code*"
-                            name="securityCode"
-                            value={formData.securityCode}
-                            onChange={handleInputChange}
-                            error={errors.securityCode}
-                          />
-                        </div>
-                        <FloatingLabelInput
-                          label="Name on card*"
-                          name="nameOnCard"
-                          value={formData.nameOnCard}
-                          onChange={handleInputChange}
-                          error={errors.nameOnCard}
-                        />
-                        <label className="flex items-center space-x-2">
-                          <input
-                            type="checkbox"
-                            checked={useSameAddress}
-                            onChange={() => setUseSameAddress(!useSameAddress)}
-                            className="form-checkbox"
-                          />
-                          <span className={`${lexendDeca.className}`}>
-                            Use shipping address as billing address
-                          </span>
-                        </label>
-                      </div>
-                    )}
-                    {paymentMethod === "paypal" && (
-                      <div>
-                        <div className="flex items-center justify-between mb-4">
-                          <span className={`font-medium ${jost.className}`}>
-                            Paypal
-                          </span>
-                          <Image src={PayPal} alt="PayPal" width={64} height={20} />
-                        </div>
-                        <p className={`${lexendDeca.className} mt-4 text-sm text-center mx-auto w-[80%]`}>
-                          After clicking &quot;Pay now&quot;, you will be redirected to PayPal to complete your payment.
-                        </p>
-                      </div>
-                    )}
-                    {paymentMethod === "klarna" && (
-                      <div>
-                        <div className="flex items-center justify-between mb-4">
-                          <span className={`font-medium ${jost.className}`}>
-                            Klarna - Flexible payments
-                          </span>
-                          <Image src={klarna_pink} alt="Klarna" width={64} height={20} />
-                        </div>
-                        <Image src={klarna_wal} alt="Klarna Wallet" width={200} height={200} className="mx-auto" />
-                        <p className={`${lexendDeca.className} mt-4 text-sm text-center mx-auto w-[80%]`}>
-                          After clicking &quot;Pay now&quot;, you will be redirected to Klarna to set up your flexible payment plan.
-                        </p>
-                      </div>
-                    )}
-                  </div>
+<div className="border rounded-md p-4">
+  {paymentMethod === "card" && (
+    <div className="space-y-4">
+      <div className="flex items-center justify-between">
+        <span className={`font-medium ${jost.className}`}>Pay by card</span>
+        <div className="flex space-x-2">
+          <Image src={visa} alt="Visa" width={32} height={20} />
+          <Image src={master} alt="Mastercard" width={32} height={20} />
+          <Image src={maestro} alt="Maestro" width={32} height={20} />
+          <Image src={ae} alt="American Express" width={32} height={20} />
+        </div>
+      </div>
+
+      <FloatingLabelInput
+        label="Card number*"
+        name="cardNumber"
+        value={formData.cardNumber}
+        onChange={handleCardNumberChange}
+        error={errors.cardNumber}
+      />
+
+      {/* Expiration date and Security code fields */}
+      <div className="flex items-center gap-4">
+        <div className="relative w-1/2">
+          <FloatingLabelInput
+            label="Expiration date (MM / YY)*"
+            name="expirationDate"
+            value={formData.expirationDate}
+            onChange={handleInputChange}
+            error={errors.expirationDate}
+            className="pr-12"
+          />
+          <span className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400">
+            {/* Add any lock or card icon here if required */}
+          </span>
+        </div>
+
+        <div className="relative w-1/2">
+          <FloatingLabelInput
+            label="Security code*"
+            name="securityCode"
+            value={formData.securityCode}
+            onChange={handleInputChange}
+            error={errors.securityCode}
+            className="pr-12"
+          />
+          <span className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400">
+            {/* Add any question mark or info icon here */}
+          </span>
+        </div>
+      </div>
+
+      <FloatingLabelInput
+        label="Name on card*"
+        name="nameOnCard"
+        value={formData.nameOnCard}
+        onChange={handleInputChange}
+        error={errors.nameOnCard}
+      />
+
+      <label className="flex items-center space-x-2">
+        <input
+          type="checkbox"
+          checked={useSameAddress}
+          onChange={() => setUseSameAddress(!useSameAddress)}
+          className="form-checkbox"
+        />
+        <span className={`${lexendDeca.className}`}>
+          Use shipping address as billing address
+        </span>
+      </label>
+    </div>
+  )}
+</div>
+
                 )}
               </div>
 
