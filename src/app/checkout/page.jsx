@@ -74,7 +74,9 @@ const FloatingLabelInput = ({ label, name, value, onChange, type = "text", error
         {label}
       </label>
       {error && (
-        <div className="text-red-500 text-xs mt-1">{error}</div>
+        <div className="absolute flex items-center">
+          <div className="text-red-500 text-xs bg-white px-1 -mb-2">{error}</div>
+        </div>
       )}
     </div>
   )
@@ -474,7 +476,7 @@ export default function Checkout() {
                   onChange={handleInputChange}
                   error={errors.country}
                 />
-                <div className="grid grid-cols-1 sm:grid-cols-2 mt-4 mb-4 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 mt-7 mb-4 gap-4">
                   <FloatingLabelInput
                     label="First Name*"
                     name="firstName"
@@ -497,7 +499,7 @@ export default function Checkout() {
                   onChange={handleInputChange}
                   error={errors.address}
                 />
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4 mb-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-7 mb-4">
                   <FloatingLabelInput
                     label="City*"
                     name="city"
@@ -536,7 +538,7 @@ export default function Checkout() {
                     Phone*
                   </label>
                   {errors.phone && (
-                    <div className="text-red-500 text-xs mt-1">{errors.phone}</div>
+                    <div className="text-red-500 text-xs">{errors.phone}</div>
                   )}
                 </div>
                 <div className="flex items-center mt-2">
