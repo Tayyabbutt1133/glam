@@ -50,10 +50,7 @@ const HomeBrand = () => {
 
   return (
     <Container>
-      <div className="px-4 py-16 space-y-10">
-        <Text style="h1" className="uppercase">
-          SHOP BY BRAND
-        </Text>
+      <div className=" py-16 space-y-10">
         <BrandSlide />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {products.map((product) => (
