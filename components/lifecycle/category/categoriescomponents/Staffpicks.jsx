@@ -141,7 +141,8 @@ const Staffpicks = () => {
   if (!categoryId) return;
   
   return (
-    <main className="my-16 lg:mx-20">
+    <Container>
+    <main className="my-16">
       <Text style={"h1"}
         className={`text-2xl font-semibold mx-4 my-8 ${jost.className} uppercase`}
       >
@@ -177,7 +178,8 @@ const Staffpicks = () => {
           ))}
         </Slider>
       )}
-    </main>
+      </main>
+      </Container>
   );
 };
 

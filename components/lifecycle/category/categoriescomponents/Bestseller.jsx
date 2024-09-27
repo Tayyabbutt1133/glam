@@ -15,6 +15,7 @@ import PrevArrowIcon from "../../../../public/hero-banners/prev-arrow";
 import { useCategoryIdState } from "../../../../states/use-category-id";
 import Text from "../../../ui/Text";
 
+
 const arrowStyles = {
   width: "40px",
   height: "40px",
@@ -130,7 +131,8 @@ const Bestseller = () => {
 
 
   return (
-    <main className="py-16 lg:mx-20 ">
+    <Container>
+    <main className="py-16">
       <Text
       style={"h1"}
         className={`uppercase mb-8`}
@@ -167,7 +169,8 @@ const Bestseller = () => {
           ))}
         </Slider>
       )}
-    </main>
+      </main>
+      </Container>
   );
 };
 
