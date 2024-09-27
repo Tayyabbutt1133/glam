@@ -49,7 +49,7 @@ export default function Product({ product }) {
     : 0;
 
   return (
-    <div className="w-[95%] h-[500px] border border-gray-100 rounded-lg overflow-hidden  transition-shadow duration-300">
+    <div className="w-[95%] h-[500px] border-gray-100 rounded-lg overflow-hidden  transition-shadow duration-300">
       <Link href={`/product/${product.id}`}>
         <div
           className="bg-white flex flex-col h-full cursor-pointer"
@@ -83,13 +83,13 @@ export default function Product({ product }) {
           </div>
           <div className="p-4 flex flex-col justify-between flex-grow">
             <div>
-              <p className={`text-gray-900 font-bold text-sm mb-1 ${jost.className}`}>
+              <p className={`text-gray-900 font-bold text-sm 2xl:text-[20px] mb-1 ${jost.className}`}>
                 {getBrandName(product.attributes)}
               </p>
-              <h2 className={`text-gray-900 font-normal text-sm ${lexendDeca.className} line-clamp-2 mb-2`}>
+              <h2 className={`text-gray-900 font-normal 2xl:mt-3 text-sm 2xl:text-[19px] ${lexendDeca.className} line-clamp-2 mb-2`}>
                 {sanitizeText(product.name)}
               </h2>
-              <div className="flex items-center mb-2">
+              <div className="flex items-center mb-2 2xl:mt-6">
                 {[...Array(5)].map((_, index) => (
                   <span key={index}>
                     {index < Math.round(product.average_rating) ? (

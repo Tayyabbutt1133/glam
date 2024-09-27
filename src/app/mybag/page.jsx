@@ -190,7 +190,7 @@ export default function MyBag() {
             Your Bag ({cartItems.length})
           </h1>
         </div>
-        <hr className="h-2" />
+        {/* <hr className="h-2" /> */}
 
         <div className="flex flex-col md:flex-row md:items-stretch gap-8">
           <div className="md:w-2/3">
@@ -442,7 +442,7 @@ export default function MyBag() {
           <div className="md:w-1/3 md:-mt-44 bg-[#F7F7F7A6] md:flex-grow   rounded-xl md:rounded-none  border-red-700">
             <div className="p-2 rounded-lg bg-[#F7F7F7A6]">
               <div className="bg-white p-4 rounded-lg mt-4">
-                <h2 className={`text-xl font-normal mb-4 ${jost.className}`}>
+                <h2 className={`text-xl 2xl:text-[22px] font-medium mb-4 ${jost.className}`}>
                   Order Summary
                 </h2>
                 <div className={`flex justify-between mb-2 ${jost.className}`}>
@@ -476,7 +476,7 @@ export default function MyBag() {
                 <div
                   className={`flex mt-4 justify-between font-semibold ${jost.className}`}
                 >
-                  <span>Estimated Total:</span>
+                  <span className={`${jost.className} text-xl 2xl:text-[22px] font-medium`}>Estimated Total:</span>
                   <span>
                     {currencySymbol}
                     {parseFloat(total * rate).toFixed(2)}
@@ -491,11 +491,11 @@ export default function MyBag() {
               <div className="mt-4 bg-white p-6 rounded-lg">
                 <label
                   htmlFor="promo"
-                  className={`block text-lg ${jost.className} font-medium text-black mb-1`}
+                  className={`block text-xl 2xl:text-[22px] ${jost.className} font-medium text-black mb-1`}
                 >
                   Promo code
                 </label>
-                <div className="flex items-center mt-8">
+                <div className="flex items-center mt-5">
                   <input
                     type="text"
                     className={`sm:flex-grow border w-[85%] text-sm font-normal rounded-md px-3 py-2 mr-4 focus:outline-none focus:ring-2 focus:ring-blue-300 ${lexendDeca.className}`}

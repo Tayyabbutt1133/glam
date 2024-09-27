@@ -129,8 +129,8 @@ const ProductList = () => {
 
   return (
     <Container>
-      <div className="py-16 md:mb-20 lg:mx-10">
-        <Text style={"h1"} className='uppercase mb-8'>TRENDING NOW</Text>
+      <div className="py-16 md:mb-20">
+        <h1 className={`uppercase font-semibold mb-8 ${jost.className} 2xl:text-[36px] text-2xl`}>TRENDING NOW</h1>
         {loading ? (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {Array(4).fill(0).map((_, index) => (
@@ -152,12 +152,6 @@ const ProductList = () => {
           <Slider {...settings}>
             {products.map((product) => (
               <div key={product.id} className="px-2 mb-4">
-                {/* <ProductCard
-                  product={product}
-                  isFavorite={favorites[product.id]}
-                  onFavoriteClick={handleFavoriteClick}
-                  onAddToCart={addToCart}
-                /> */}
                 <Product product={product} />
               </div>
             ))}
