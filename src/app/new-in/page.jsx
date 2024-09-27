@@ -333,17 +333,16 @@ export default function Component() {
       <button
         onClick={() => handlePageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className={`px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition duration-300 ease-in-out ${
-          currentPage === 1 ? "opacity-50 cursor-not-allowed" : "hover:opacity-100"
+        className={`px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition ${
+          currentPage === 1 ? "disabled:bg-transparent" : ""
         }`}
-        aria-label="Previous page"
       >
         &lt;
       </button>
       {currentPage > 2 && (
         <button
           onClick={() => handlePageChange(1)}
-          className="px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition duration-300 ease-in-out"
+          className="px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition"
         >
           1
         </button>
@@ -352,7 +351,7 @@ export default function Component() {
       {currentPage > 1 && (
         <button
           onClick={() => handlePageChange(currentPage - 1)}
-          className="px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition duration-300 ease-in-out"
+          className="px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition"
         >
           {currentPage - 1}
         </button>
@@ -360,14 +359,13 @@ export default function Component() {
       <button
         onClick={() => handlePageChange(currentPage)}
         className="px-4 py-2 mx-1 bg-black text-white rounded"
-        aria-current="page"
       >
         {currentPage}
       </button>
       {currentPage < totalPages && (
         <button
           onClick={() => handlePageChange(currentPage + 1)}
-          className="px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition duration-300 ease-in-out"
+          className="px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition"
         >
           {currentPage + 1}
         </button>
@@ -376,7 +374,7 @@ export default function Component() {
       {currentPage < totalPages - 1 && (
         <button
           onClick={() => handlePageChange(totalPages)}
-          className="px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition duration-300 ease-in-out"
+          className="px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition"
         >
           {totalPages}
         </button>
@@ -384,10 +382,9 @@ export default function Component() {
       <button
         onClick={() => handlePageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className={`px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition duration-300 ease-in-out ${
-          currentPage === totalPages ? "opacity-50 cursor-not-allowed" : "hover:opacity-100"
+        className={`px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition ${
+          currentPage === totalPages ? "disabled:bg-transparent" : ""
         }`}
-        aria-label="Next page"
       >
         &gt;
       </button>
@@ -422,7 +419,7 @@ export default function Component() {
             </span>
           </button>
         </div>
-        <div className="flex flex-col md:flex-row items-center lg:ml-[20rem] ">
+        <div className="flex  flex-col md:flex-row items-center lg:ml-[20rem] ">
           <select
             value={sortOption}
             onChange={handleSortChange}
@@ -666,7 +663,7 @@ export default function Component() {
                   return (
                     <div
                       key={product.id}
-                      className="border rounded-lg shadow-lg relative bg-white"
+                      className="border rounded-lg  relative bg-white"
                     >
                       {product.sale_price && (
                         <span className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">

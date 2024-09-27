@@ -22,10 +22,57 @@ const CONSUMER_KEY = "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d";
 const CONSUMER_SECRET = "cs_3f70ee2600a3ac17a5692d7ac9c358d47275d6fc";
 const PRODUCTS_PER_PAGE = 12;
 
+const FilterSection = ({ title, isOpen, toggleOpen, children }) => (
+  <div className="mb-6">
+    <h4
+      className={`font-bold text-lg mb-2 flex justify-between items-center cursor-pointer ${jost.className}`}
+      onClick={toggleOpen}
+    >
+      <span>{title}</span>
+      {isOpen ? (
+        <IoIosArrowUp className="text-gray-500" />
+      ) : (
+        <IoIosArrowDown className="text-gray-500" />
+      )}
+    </h4>
+    {isOpen && (
+      <div className={`pl-2 ${lexendDeca.className} font-normal max-h-60 overflow-y-auto custom-scrollbar`}>
+        {children}
+      </div>
+    )}
+  </div>
+);
+
+const CustomCheckbox = ({ name, value, checked, onChange, label, count }) => (
+  <label className="flex items-center mb-2 cursor-pointer">
+    <div className="relative mr-2">
+      <input
+        type="checkbox"
+        name={name}
+        value={value}
+        checked={checked}
+        onChange={onChange}
+        className="sr-only"
+      />
+      <div className={`w-5 h-5 border rounded-md transition-colors ${
+        checked ? 'border-primary bg-primary' : 'border-gray-300'
+      }`}>
+        {checked && (
+          <svg className="w-4 h-4 text-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+          </svg>
+        )}
+      </div>
+    </div>
+    <span className="text-sm 2xl:text-lg">
+      {label} <span className="text-gray-500">({count})</span>
+    </span>
+  </label>
+);
+
 export default function SubcategoryPage() {
   const { rate, currencySymbol } = usePopupStore();
   const { categorylanding, subcategories } = useParams();
-  console.log({categorylanding, subcategories})
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -50,23 +97,7 @@ export default function SubcategoryPage() {
   const fetchProducts = async (page = 1) => {
     setLoading(true);
     try {
-      //fetch th subcatecategory id from localhost:3000/api/subcategoryslug 
-      const productsResponse = await axios.get(`/api/getProductsBySlug/${subcategories.toLowerCase()}`)
-      
-
-      // const params = {
-      //   category: subcategories,
-      //   per_page: 100,
-      //   page,
-      //   consumer_key: CONSUMER_KEY,
-      //   consumer_secret: CONSUMER_SECRET,
-      // };
-
-      // const productsResponse = await axios.get(`${API_BASE_URL}/products`, {
-      //   params,
-      // });
-      // // console.log(productsResponse.data)
-
+      const productsResponse = await axios.get(`/api/getProductsBySlug/${subcategories.toLowerCase()}`);
       const fetchedProducts = productsResponse.data
         .map((product) => ({
           ...product,
@@ -168,7 +199,6 @@ export default function SubcategoryPage() {
         updatedFilters[filterType] = [...updatedFilters[filterType], value];
       }
 
-      // Clear category filters when changing brands
       if (filterType === "brands") {
         updatedFilters.categories = [];
       }
@@ -363,21 +393,37 @@ export default function SubcategoryPage() {
 
   const breadcrumbLinks = [
     { name: "Home", route: "/" },
-    // { name: "Categories", route: "/categories" },
     { name: categorylanding, route: `/product-categories/${categorylanding}` },
     { name: subcategories, route: `/product-categories/${categorylanding}/${subcategories}` },
-  ]
+  ];
+
   return (
     <Container className="min-h-screen py-7">
+      <style jsx global>{`
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: #f1f1f1;
+          border-radius: 3px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: #888;
+          border-radius: 3px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+          background: #555;
+        }
+      `}</style>
       <Breadcrumb links={breadcrumbLinks} />
       <div className="mb-16">
         <h1
-          className={`2xl:text-3xl text-lg ml-12  text-center uppercase font-bold ${jost.className}`}
+          className={`2xl:text-3xl text-lg ml-12 text-center uppercase font-bold ${jost.className}`}
         >
           {categorylanding} {subcategories}
         </h1>
       </div>
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center mb-8">
         <div className="flex items-center lg:hidden">
           <button onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}>
             <span
@@ -387,7 +433,7 @@ export default function SubcategoryPage() {
             </span>
           </button>
         </div>
-        <div className="flex flex-col md:flex-row items-center lg:ml-[20rem] ">
+        <div className="flex flex-col md:flex-row items-center lg:ml-[20rem]">
           <select
             value={sortOption}
             onChange={handleSortChange}
@@ -407,9 +453,9 @@ export default function SubcategoryPage() {
         <span className="hidden lg:block">{renderPagination()}</span>
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-4 mb-32">
+      <div className="flex flex-col lg:flex-row gap-8 mb-32">
         <div
-          style={{ boxShadow: isMobileFilterOpen? "-115px 0 10px 0 rgba(255, 255, 255)" :"none" }}
+          style={{ boxShadow: isMobileFilterOpen ? "-115px 0 10px 0 rgba(255, 255, 255)" : "none" }}
           className={`w-full transition-all duration-300 ease-in-out ${
             isMobileFilterOpen
               ? "z-[90] lg:z-auto h-screen overflow-y-auto lg:overflow-y-auto translate-x-[0] lg:translate-x-0"
@@ -516,124 +562,71 @@ export default function SubcategoryPage() {
             </div>
           )}
 
-          <hr className="bg-[#8B929D73] h-[1px]" />
+          <hr className="bg-[#8B929D73] h-[1px] mb-4" />
 
-          {/* Brand filter */}
-          <div className="mb-6 mt-4">
-            <h4
-              className={`font-bold text-lg mb-2 flex justify-between items-center cursor-pointer ${jost.className}`}
-              onClick={() => setIsBrandFilterOpen(!isBrandFilterOpen)}
-            >
-              Brand
-              {isBrandFilterOpen ? (
-                <IoIosArrowUp className="text-gray-500" />
-              ) : (
-                <IoIosArrowDown className="text-gray-500" />
-              )}
-            </h4>
-            {isBrandFilterOpen && (
-              <div
-                className={`pl-2 ${lexendDeca.className} font-normal max-h-60 overflow-y-auto`}
-              >
-                {brands
-                  .sort((a, b) => a.name.localeCompare(b.name))
-                  .map((brand) => (
-                    <label key={brand.name} className="block mb-2">
-                      <input
-                        type="checkbox"
-                        name="brand"
-                        value={brand.name}
-                        checked={filters.brands.includes(brand.name)}
-                        onChange={() =>
-                          handleFilterChange("brands", brand.name)
-                        }
-                        className={`mr-2`}
-                      />
-                      {brand.name} ({brand.count})
-                    </label>
-                  ))}
-              </div>
-            )}
-          </div>
+          <FilterSection
+            title="Brand"
+            isOpen={isBrandFilterOpen}
+            toggleOpen={() => setIsBrandFilterOpen(!isBrandFilterOpen)}
+          >
+            {brands
+              .sort((a, b) => a.name.localeCompare(b.name))
+              .map((brand) => (
+                <CustomCheckbox
+                  key={brand.name}
+                  name="brand"
+                  value={brand.name}
+                  checked={filters.brands.includes(brand.name)}
+                  onChange={() => handleFilterChange("brands", brand.name)}
+                  label={brand.name}
+                  count={brand.count}
+                />
+              ))}
+          </FilterSection>
 
-          {/* Category filter */}
-          <div className="mb-6">
-            <h4
-              className={`font-bold ${jost.className} text-lg mb-2 flex justify-between items-center cursor-pointer`}
-              onClick={() => setIsCategoryFilterOpen(!isCategoryFilterOpen)}
-            >
-              Category
-              {isCategoryFilterOpen ? (
-                <IoIosArrowUp className="text-gray-500" />
-              ) : (
-                <IoIosArrowDown className="text-gray-500" />
-              )}
-            </h4>
-            {isCategoryFilterOpen && (
-              <div
-                className={`pl-2 ${lexendDeca.className} font-normal max-h-60 overflow-y-auto`}
-              >
-                {getAvailableCategories
-                  .sort((a, b) => a.name.localeCompare(b.name))
-                  .map((category) => (
-                    <label key={category.id} className="block mb-2">
-                      <input
-                        type="checkbox"
-                        name="category"
-                        value={category.id.toString()}
-                        checked={filters.categories.includes(
-                          category.id.toString()
-                        )}
-                        onChange={() =>
-                          handleFilterChange(
-                            "categories",
-                            category.id.toString()
-                          )
-                        }
-                        className="mr-2"
-                      />
-                      {category.name} ({getFilteredCount("categories", category.id.toString())})
-                    </label>
-                  ))}
-              </div>
-            )}
-          </div>
+          <FilterSection
+            title="Category"
+            isOpen={isCategoryFilterOpen}
+            toggleOpen={() => setIsCategoryFilterOpen(!isCategoryFilterOpen)}
+          >
+            {getAvailableCategories
+              .sort((a, b) => a.name.localeCompare(b.name))
+              .map((category) => (
+                <CustomCheckbox
+                  key={category.id}
+                  name="category"
+                  value={category.id.toString()}
+                  checked={filters.categories.includes(category.id.toString())}
+                  onChange={() => handleFilterChange("categories", category.id.toString())}
+                  label={category.name}
+                  count={getFilteredCount("categories", category.id.toString())}
+                />
+              ))}
+          </FilterSection>
 
-          {/* Price range filter */}
-          <div className="mb-6">
-            <h4
-              className={`font-bold ${jost.className} text-lg mb-2 flex justify-between items-center cursor-pointer`}
-              onClick={() => setIsPriceRangeFilterOpen(!isPriceRangeFilterOpen)}
-            >
-              Price Range
-              {isPriceRangeFilterOpen ? (
-                <IoIosArrowUp className="text-gray-500" />
-              ) : (
-                <IoIosArrowDown className="text-gray-500" />
-              )}
-            </h4>
-            {isPriceRangeFilterOpen && (
-              <div className={`pl-2 ${lexendDeca.className}`}>
-                {priceRanges.map((range) => (
-                  <label key={range} className="block mb-2">
-                    <input
-                      type="checkbox"
-                      name="priceRange"
-                      value={range}
-                      checked={filters.priceRange.includes(range)}
-                      onChange={() => handleFilterChange("priceRange", range)}
-                      className="mr-2"
-                    />
-                    
-                    {currencySymbol}
-                    {(range.split("-")[0] * rate).toFixed(2)} - {currencySymbol}
-                    {(range.split("-")[1] * rate).toFixed(2)} (
-                    {getFilteredCount("priceRange", range)})
-                  </label>
-                ))}
-              </div>
-            )}
-          </div>
+          <FilterSection
+            title="Price Range"
+            isOpen={isPriceRangeFilterOpen}
+            toggleOpen={() => setIsPriceRangeFilterOpen(!isPriceRangeFilterOpen)}
+          >
+            {priceRanges.map((range) => {
+              const [min, max] = range.split("-").map(Number);
+              const minConverted = Math.round(min * rate);
+              const maxConverted = Math.round(max * rate);
+              
+              return (
+                <CustomCheckbox
+                  key={range}
+                  name="priceRange"
+                  value={range}
+                  checked={filters.priceRange.includes(range)}
+                  onChange={() => handleFilterChange("priceRange", range)}
+                  label={`${currencySymbol}${minConverted} - ${currencySymbol}${maxConverted}`}
+                  count={getFilteredCount("priceRange", range)}
+                />
+              );
+            })}
+          </FilterSection>
 
           <section className="flex justify-around mt-auto gap-4 lg:hidden">
             <button
@@ -665,7 +658,7 @@ export default function SubcategoryPage() {
                 .map((_, index) => (
                   <div
                     key={index}
-                    className="border p-4 rounded-lg shadow-lg relative bg-white animate-pulse"
+                    className="border p-4 rounded-lg relative bg-white animate-pulse"
                   >
                     <div className="w-full h-64 bg-gray-300 mb-4"></div>
                     <div className="h-6 bg-gray-300 mb-2"></div>
@@ -683,7 +676,7 @@ export default function SubcategoryPage() {
                 return (
                   <div
                     key={product.id}
-                    className="border p-4 rounded-lg shadow-lg relative bg-white"
+                    className="border p-4 rounded-lg  relative bg-white"
                   >
                     {product.sale_price && (
                       <span className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
@@ -696,9 +689,9 @@ export default function SubcategoryPage() {
                         onClick={() => handleFavoriteClick(product.id)}
                       >
                         {favorites[product.id] ? (
-                          <FaHeart className="text-red-500 w-6 h-6" />
+                          <FaHeart className="text-red-500 w-6 h-6 2xl:w-8 2xl:h-8" />
                         ) : (
-                          <CiHeart className="text-black w-6 h-6" />
+                          <CiHeart className="text-black w-6 h-6 2xl:w-8 2xl:h-8" />
                         )}
                       </button>
                     </div>
@@ -718,13 +711,13 @@ export default function SubcategoryPage() {
                         {brand}
                       </h1>
                     </Link>
-                  <Link href={`/product/${product.id}`}>
+                    <Link href={`/product/${product.id}`}>
                       <h3
                         className={`text-sm ${lexendDeca.className} font-normal mb-2 h-[60px] overflow-hidden cursor-pointer`}
                       >
                         {product.name}
                       </h3>
-                  </Link>
+                    </Link>
                     <div className="flex items-center mb-2">
                       {[...Array(5)].map((_, index) => (
                         <span key={index}>
@@ -756,7 +749,7 @@ export default function SubcategoryPage() {
                       )}
                     </p>
                     <button
-                      className={`w-full bg-black text-white py-2 rounded-lg hover:bg-gray-800 transition ${jost.className}`}
+                      className={`w-full bg-black text-white py-2 rounded-lg hover:bg-[#CF8562] transition ${jost.className}`}
                       onClick={() => addToCart(product)}
                     >
                       ADD TO BAG
@@ -767,9 +760,7 @@ export default function SubcategoryPage() {
             </div>
           ) : (
             <div className="text-center mt-8">
-              <p className={`text-xl ${jost.className}`}>
-                Sorry, we are out of stock. Please check back later.
-              </p>
+              <p className={`text-lg ${jost.className}`}>No products found.</p>
             </div>
           )}
 
@@ -777,7 +768,7 @@ export default function SubcategoryPage() {
             <div className="mt-8 flex justify-end">{renderPagination()}</div>
           )}
         </div>
-        </div>
-        </Container>
+      </div>
+    </Container>
   );
 }

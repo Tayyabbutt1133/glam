@@ -90,7 +90,7 @@ const BrandsMenuCategoryList = ({ brands }) => {
   return (
     <>
       <h1 className={`text-2xl ${jost.className} uppercase font-bold text-center mt-10`}>
-        Shop  all  {sanitizeText(brandsData.brand_name)}
+        shop all {sanitizeText(brandsData.brand_name)}
       </h1>
       <div className="mt-10">
         {brandsData.categories?.length === 0 ? (

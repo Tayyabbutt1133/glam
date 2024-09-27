@@ -15,6 +15,9 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { usePopupStore } from "/states/use-popup-store";
+import Text from "../../../components/ui/Text";
+import { FaHeart } from "react-icons/fa";
+
 
 const API_URL = "https://glam.clickable.site/wp-json/wc/v3/products";
 const CK = "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d";
@@ -27,10 +30,11 @@ export default function MyBag() {
   const [shippingAddress, setShippingAddress] = useState("");
   const [editingItem, setEditingItem] = useState(null);
   const [showScroll, setShowScroll] = useState(false);
+  const [likedProducts, setLikedProducts] = useState({}); // State to keep track of liked products
   const cartRef = useRef(null);
 
   const { rate, currencySymbol } = usePopupStore();
-  console.log({currencySymbol,rate});
+  console.log({ currencySymbol, rate });
 
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -97,6 +101,13 @@ export default function MyBag() {
     fetchProducts();
   }, []);
 
+  const toggleLike = (productId) => {
+    setLikedProducts((prevLiked) => ({
+      ...prevLiked,
+      [productId]: !prevLiked[productId], // Toggle like state for each product
+    }));
+  };
+
   const getBrand = (product) => {
     return (
       product.attributes.find((attr) => attr.name === "Brand")?.options[0] ||
@@ -147,8 +158,8 @@ export default function MyBag() {
 
   return (
     <main className="lg:w-[93%] w-[95%] xl:w-[92%] mx-auto">
-      <div className=" lg:w-[98%] xl:w-[98%] mx-auto px-4 py-8">
-        <div className="flex flex-col md:flex-row items-center md:justify-between  md:pr-2  mb-4 w-full md:w-[69%]">
+      <div className=" lg:w-[98%] xl:w-[98%] mx-auto px-4 mt-8">
+        <div className="flex flex-col md:flex-row items-center md:justify-between  md:pr-2  w-full md:w-[69%]">
           <p className={` text-sm md:text-[15px] 2xl:text-[20px] md:w-full text-black ${jost.className} sm:font-medium`}>
             Log in or create an account now to get these exclusive benefits.
           </p>
@@ -164,7 +175,7 @@ export default function MyBag() {
               <button
                 className={` lg:text-base  font-medium  hover:bg-gray-100 text-gray-800 sm:border border-gray-300 px-4 py-[5px] rounded-lg ${jost.className}`}
               >
-              Log in
+                Log in
               </button>
             </Link>
           </div>
@@ -179,7 +190,7 @@ export default function MyBag() {
             Your Bag ({cartItems.length})
           </h1>
         </div>
-        <hr className="h-2" />
+        {/* <hr className="h-2" /> */}
 
         <div className="flex flex-col md:flex-row md:items-stretch gap-8">
           <div className="md:w-2/3">
@@ -269,34 +280,13 @@ export default function MyBag() {
                           </p>
                         </div>
                         <div className="block w-fit ml-auto items-center border border-gray-300 rounded-lg overflow-hidden">
-                          {/* <button
-                            className="text-sm px-3 py-1 text-gray-600 hover:bg-gray-100 focus:outline-none"
-                            onClick={() =>
-                              updateQuantity(
-                                item.id,
-                                Math.max(1, item.quantity - 1)
-                              )
-                            }
-                          >
-                            -
-                          </button> */}
-                          {/* <span className="text-sm px-3 py-1 border-l border-r border-gray-300">
-                            {item.quantity}
-                          </span> */}
-                          {/* <button
-                            className="text-sm px-3 py-1 text-gray-600 hover:bg-gray-100 focus:outline-none"
-                            onClick={() =>
-                              updateQuantity(item.id, item.quantity + 1)
-                            }
-                          >
-                            +
-                          </button> */}
+                          
                         </div>
-                        <div className=" mt-6 sm:mt-24 flex items-center justify-between">
+                        <div className="mt-6 sm:mt-24 flex items-center justify-between">
                           <div className="flex items-center">
-                            <div className="hidden sm:inline-flex items-center border border-gray-300 rounded-lg overflow-hidden">
+                            <div className="inline-flex items-center justify-between w-[102px] h-[35px] border rounded-lg overflow-hidden sm:max-w-[102px] max-w-[80px] sm:h-[35px] ">
                               <button
-                                className="text-sm px-3 py-1 text-gray-600 hover:bg-gray-100 focus:outline-none"
+                                className="text-sm w-1/3 h-full text-b-03 hover:bg-gray-100 focus:outline-none"
                                 onClick={() =>
                                   updateQuantity(
                                     item.id,
@@ -306,11 +296,14 @@ export default function MyBag() {
                               >
                                 -
                               </button>
-                              <span className="text-sm px-3 py-1 border-l border-r border-gray-300">
+                              <Text
+                                style="large"
+                                className="font-normal w-1/3 text-center"
+                              >
                                 {item.quantity}
-                              </span>
+                              </Text>
                               <button
-                                className="text-sm px-3 py-1 text-gray-600 hover:bg-gray-100 focus:outline-none"
+                                className="text-sm h-full w-1/3 text-b-03 hover:bg-gray-100 focus:outline-none"
                                 onClick={() =>
                                   updateQuantity(item.id, item.quantity + 1)
                                 }
@@ -348,94 +341,108 @@ export default function MyBag() {
               ))}
             </div>
 
-            {/* You May Also Like section */}
-            <div className="container mx-auto px-4 py-8 mb-24 md:mb-4 hidden md:block">
-              <h2 className={`text-2xl font-bold mb-14 ${jost.className}`}>
-                <p className=" mb-2">You May Also Like</p>
             
-              </h2>
-              <div className=" hidden md:block w-[calc(100%_-_14px)] mx-auto"><hr /></div>
-              
-              {loading ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {Array(3)
-                    .fill(0)
-                    .map((_, index) => (
-                      <ProductSkeleton key={index} />
-                    ))}
-                </div>
-              ) : (
-                <Slider {...sliderSettings}>
-                  {products.map((product) => (
-                    <div key={product.id} className="px-2">
-                      <button className="ml-auto pt-1 pr-1 block   rounded-full">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                            className="w-6 h-6"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                            />
-                          </svg>
-                        </button>
-                      <div className="bg-white rounded-lg  shadow-md overflow-hidden">
-                        
-                        <div className="relative pb-[100%]">
-                          <Link href={`/product/${product.id}`}>
-                            <Image
-                              src={product.images[0]?.src || "/placeholder.svg"}
-                              alt={product.name}
-                              layout="fill"
-                              objectFit="cover"
-                            />
-                          </Link>
-                        </div>
-                        <div className="p-4">
-                          <h3
-                            className={`text-sm font-bold mb-1 ${jost.className}`}
-                          >
-                            {getBrand(product)}
-                          </h3>
-                          <Link href={`/product/${product.id}`}>
-                            <p
-                              className={`text-sm mb-2 h-10 overflow-hidden ${lexendDeca.className}`}
-                            >
-                              {product.name}
-                            </p>
-                          </Link>
-                          <p
-                            className={`text-lg mt-auto font-bold  ${lexendDeca.className}`}
-                          >
-                            {currencySymbol}
-                            {parseFloat(product.price * rate).toFixed(2)}
-                          </p>
 
-                          <button
-                            className={`w-full bg-black hover:bg-[#CF8562] text-white rounded-lg text-xs sm:text-sm md:text-base py-2   transition `}
-                            onClick={() => addToCart(product)}
-                          >
-                            ADD TO BAG
-                          </button>
-                        </div>
-                      </div>
+
+
+
+            {/* You May Also Like section */}
+    <div className="container mx-auto px-4 py-8 mb-24 md:mb-0  hidden md:block">
+      <h2 className={`text-2xl font-bold mb-14 ${jost.className}`}>
+        You May Also Like
+      </h2>
+      {loading ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {Array(3)
+            .fill(0)
+            .map((_, index) => (
+              <ProductSkeleton key={index} />
+            ))}
+        </div>
+      ) : (
+        <Slider {...sliderSettings}>
+          {products.map((product) => (
+            <div key={product.id} className="px-2">
+              <div className="bg-white flex flex-col pb-4 border border-gray-100 rounded-lg  min-h-[330px] overflow-hidden relative">
+                {/* Like Button (Heart Icon) */}
+                <button
+                  className="absolute top-2 right-2"
+                  onClick={() => toggleLike(product.id)}
+                >
+                  <FaHeart
+                    className="w-6 h-6"
+                    color={likedProducts[product.id] ? 'red' : 'black'}
+                  />
+                </button>
+
+                {/* Link wrapping the entire product div */}
+                <Link href={`/product/${product.id}`}>
+                  <div>
+                    {/* Product Image */}
+                    <div className="relative pb-[100%]">
+                      <Image
+                        src={product.images[0]?.src || '/placeholder.svg'}
+                        alt={product.name}
+                        layout="fill"
+                        objectFit="cover"
+                      />
                     </div>
-                  ))}
-                </Slider>
-              )}
+
+                    {/* Product Details */}
+                    <div className="px-2 mt-6">
+                      <h3 className={`text-sm font-bold mb-1 ${jost.className}`}>
+                        {getBrand(product)}
+                      </h3>
+                      <p
+                        className={`text-sm mb-2 h-10 overflow-hidden ${lexendDeca.className}`}
+                      >
+                        {product.name}
+                      </p>
+                    </div>
+
+                    {/* Product Price */}
+                    <div className="flex flex-col justify-end px-2 pb-2 mt-auto">
+                      <p
+                        className={`text-[15px] sm:text-base font-bold mb-3 ${lexendDeca.className}`}
+                      >
+                        {currencySymbol}
+                        {parseFloat(product.price * rate).toFixed(2)}
+                      </p>
+                    </div>
+                  </div>
+                </Link>
+
+                {/* Add to Bag Button (outside of the Link to prevent navigating) */}
+                <div className="px-2 pb-2">
+                  <button
+                    className={`w-full bg-black text-xs rounded-lg sm:text-sm md:text-base text-white py-2 px-1 hover:bg-[#CF8562] transition ${jost.className}`}
+                    onClick={() => addToCart(product)}
+                  >
+                    ADD TO BAG
+                  </button>
+                </div>
+              </div>
             </div>
+          ))}
+        </Slider>
+      )}
+    </div>
+
+
+
+
+
+
+
+
+
           </div>
 
           {/* order summary */}
-          <div className="md:w-1/3 md:-mt-36 bg-[#F7F7F7A6] md:flex-grow   rounded-xl md:rounded-none">
+          <div className="md:w-1/3 md:-mt-44 bg-[#F7F7F7A6] md:flex-grow   rounded-xl md:rounded-none  border-red-700">
             <div className="p-2 rounded-lg bg-[#F7F7F7A6]">
               <div className="bg-white p-4 rounded-lg mt-4">
-                <h2 className={`text-xl font-normal mb-4 ${jost.className}`}>
+                <h2 className={`text-xl 2xl:text-[22px] font-medium mb-4 ${jost.className}`}>
                   Order Summary
                 </h2>
                 <div className={`flex justify-between mb-2 ${jost.className}`}>
@@ -469,7 +476,7 @@ export default function MyBag() {
                 <div
                   className={`flex mt-4 justify-between font-semibold ${jost.className}`}
                 >
-                  <span>Estimated Total:</span>
+                  <span className={`${jost.className} text-xl 2xl:text-[22px] font-medium`}>Estimated Total:</span>
                   <span>
                     {currencySymbol}
                     {parseFloat(total * rate).toFixed(2)}
@@ -484,11 +491,11 @@ export default function MyBag() {
               <div className="mt-4 bg-white p-6 rounded-lg">
                 <label
                   htmlFor="promo"
-                  className={`block text-lg ${jost.className} font-medium text-black mb-1`}
+                  className={`block text-xl 2xl:text-[22px] ${jost.className} font-medium text-black mb-1`}
                 >
                   Promo code
                 </label>
-                <div className="flex items-center mt-8">
+                <div className="flex items-center mt-5">
                   <input
                     type="text"
                     className={`sm:flex-grow border w-[85%] text-sm font-normal rounded-md px-3 py-2 mr-4 focus:outline-none focus:ring-2 focus:ring-blue-300 ${lexendDeca.className}`}
@@ -508,46 +515,47 @@ export default function MyBag() {
                 <p className={`mb-2 text-lg ${jost.className} font-medium`}>
                   Payment Mode
                 </p>
-                <div className={`flex flex-col space-x-2 mt-8 mb-4 ${jost.className}`}>
+                <div
+                  className={`flex flex-col space-x-2 mt-8 mb-4 ${jost.className}`}
+                >
                   <p>Pay by Card/Pay Later</p>
                   <section className="gap-4 flex mt-2">
-  <Image
-    className="hover:scale-110 transition-transform duration-300 cursor-pointer"
-    src={visa}
-    alt="Visa"
-    width={40}
-    height={25}
-  />
-  <Image
-    className="hover:scale-110 transition-transform duration-300 cursor-pointer"
-    src={master}
-    alt="Master"
-    width={40}
-    height={25}
-  />
-  <Image
-    className="hover:scale-110 transition-transform duration-300 cursor-pointer"
-    src={maestro}
-    alt="Maestro"
-    width={40}
-    height={25}
-  />
-  <Image
-    className="hover:scale-110 transition-transform duration-300 cursor-pointer"
-    src={ae}
-    alt="American Express"
-    width={40}
-    height={25}
-  />
-  <Image
-    className="hover:scale-110 transition-transform duration-300 cursor-pointer"
-    src={paypal}
-    alt="PayPal"
-    width={40}
-    height={25}
-  />
-</section>
-
+                    <Image
+                      className="hover:scale-110 transition-transform duration-300 cursor-pointer"
+                      src={visa}
+                      alt="Visa"
+                      width={40}
+                      height={25}
+                    />
+                    <Image
+                      className="hover:scale-110 transition-transform duration-300 cursor-pointer"
+                      src={master}
+                      alt="Master"
+                      width={40}
+                      height={25}
+                    />
+                    <Image
+                      className="hover:scale-110 transition-transform duration-300 cursor-pointer"
+                      src={maestro}
+                      alt="Maestro"
+                      width={40}
+                      height={25}
+                    />
+                    <Image
+                      className="hover:scale-110 transition-transform duration-300 cursor-pointer"
+                      src={ae}
+                      alt="American Express"
+                      width={40}
+                      height={25}
+                    />
+                    <Image
+                      className="hover:scale-110 transition-transform duration-300 cursor-pointer"
+                      src={paypal}
+                      alt="PayPal"
+                      width={40}
+                      height={25}
+                    />
+                  </section>
                 </div>
                 <Link href="./checkout">
                   <button
@@ -569,7 +577,7 @@ export default function MyBag() {
           
           
           
-          <div className="container mx-auto px-4 py-8 mb-24 md:mb-4 md:hidden block">
+          <div className="container mx-auto px-4 py-8 mb-24 md:mb-0 md:hidden block">
             <h2 className={`text-2xl font-bold mb-14 ${jost.className}`}>
               You May Also Like
             </h2>
@@ -636,14 +644,13 @@ export default function MyBag() {
                         >
                           ADD TO BAG
                         </button>
-                    </div>
+                      </div>
                     </div>
                   </div>
                 ))}
               </Slider>
             )}
           </div>
-
         </div>
       </div>
     </main>

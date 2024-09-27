@@ -111,9 +111,9 @@ const ReviewFilters = () => {
 };
 
 const SortBy = () => (
-  <div className={`${lexendDeca.className} flex items-center`}>
-    <span className="text-gray-700 mr-2">Sort By:</span>
-    <select className="bg-transparent focus:outline-none text-gray-700 font-medium">
+  <div className={`${lexendDeca.className} flex items-center border py-1 px-1`}>
+    <span className="text-[#8B929D] mr-2 ml-2">Sort By:</span>
+    <select className="bg-transparent focus:outline-none text-black font-medium">
       <option>Most Recent</option>
       <option>Highest Rated</option>
       <option>Lowest Rated</option>

@@ -21,7 +21,7 @@ const RecentlyViewedItem = ({ product }) => {
 
   return (
     <Link href={`/product/${product.id}`} className="block">
-      <div className="aspect-square w-full relative border border-gray-100 rounded-sm">
+      <div className="aspect-square w-full relative border border-[#EFEFEF] rounded-lg">
         <Image
           src={product.images[0]?.src || '/placeholder.png'}
           alt={decodedName}

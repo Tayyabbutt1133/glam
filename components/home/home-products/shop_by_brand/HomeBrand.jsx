@@ -50,10 +50,7 @@ const HomeBrand = () => {
 
   return (
     <Container>
-      <div className="px-4 py-16 space-y-10">
-        <Text style="h1" className="uppercase">
-          SHOP BY BRAND
-        </Text>
+      <div className=" py-16 space-y-10">
         <BrandSlide />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {products.map((product) => (
@@ -86,7 +83,7 @@ const HomeBrand = () => {
                   </p>
                 </div>
                 <button
-                  className={`w-[50%] mt-2 bg-black text-white text-sm py-2 px-6 rounded-lg hover:bg-[#CF8562] transition duration-200 ${jost.className}`}
+                  className={`w-[50%] mt-2 bg-black text-white text-[14px] py-2 px-6 rounded-lg hover:bg-[#CF8562] transition duration-200 ${jost.className}`}
                 >
                   SHOP NOW
                 </button>

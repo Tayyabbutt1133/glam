@@ -39,6 +39,8 @@ export default function AboutUsPage() {
                   autoPlay
                   loop
                   muted
+                  disablePictureInPicture
+                  controlsList="nodownload noplaybackrate"
                 >
                   Your browser does not support the video tag.
                 </video>

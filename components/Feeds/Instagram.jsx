@@ -15,10 +15,10 @@ export default function Instagram() {
   return (
     <div className="flex w-full mb-20 ">
       <Container>
-        <div className="flex flex-col lg:mx-3 w-full mt-10 overflow-hidden">
-        <Text style={"h1"} className='uppercase mb-10'>
+        <div className="flex flex-col w-full mt-10 overflow-hidden">
+        <h1  className={`uppercase mb-10 ${jost.className} font-semibold 2xl:text-[36px] text-2xl`}>
             SHOP OUR IG
-          </Text>
+          </h1>
           <div className="ig-container lg:mx-1 scrollbar-hide">
             <div className="angry-grid ">
               {/* Grid of 4 pics */}

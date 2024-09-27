@@ -7,10 +7,10 @@ import Link from "next/link";
 import logo from "../public/logo.svg";
 import app_store from "../public/app_store.svg";
 import play_store from "../public/play_store.svg";
-import fb from '../public/socials/fb.svg';
-import Insta from '../public/socials/instagram.svg';
-import pin from '../public/socials/pinterest.svg';
-import tik from '../public/socials/tiktok.svg';
+import fb from "../public/socials/fb.svg";
+import Insta from "../public/socials/instagram.svg";
+import pin from "../public/socials/pinterest.svg";
+import tik from "../public/socials/tiktok.svg";
 import visa from "../public/card-logos/visa.svg";
 import master from "../public/card-logos/master.svg"
 import maestro from "../public/card-logos/maestro.svg"
@@ -33,7 +33,7 @@ export default function Footer() {
       return newState;
     });
   };
-  
+
   return (
     <main className="w-[95%] mx-auto lg:w-[92%]">
       <footer>
@@ -65,14 +65,20 @@ export default function Footer() {
             </div>
 
             {/* Nav links */}
+            {/* Nav links */}
             <div className="grid px-3 py-2 sm:px-0 mt-4 grid-cols-1 space-y-1 md:grid-cols-4 sm:space-y-0 lg:ml-16 md:ml-6">
               {/* GlamBeauty Section */}
               <div>
                 <h2
                   className={`mb-4 text-sm mt-4 md:text-[18px] 2xl:text-[20px] capitalize flex items-center justify-between font-semibold text-black ${jost.className}`}
-                  onClick={() => toggleSection('glamBeauty')}
+                  onClick={() => toggleSection("glamBeauty")}
                 >
-                  GlamBeauty {openSections.glamBeauty ? <ChevronUp className="inline-flex ml-auto md:hidden" /> : <ChevronDown className="inline-flex ml-auto md:hidden" />}
+                  GlamBeauty{" "}
+                  {openSections.glamBeauty ? (
+                    <ChevronUp className="inline-flex ml-auto md:hidden" />
+                  ) : (
+                    <ChevronDown className="inline-flex ml-auto md:hidden" />
+                  )}
                 </h2>
                 <ul className={`text-[#8B929D] lg:text-[14px] 2xl:text-[16px] text-sm pb-3 space-y-3 ${lexendDeca.className} font-normal transition-all duration-300 ease-in-out ${openSections.glamBeauty || 'md:block' ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
                   <li>
@@ -97,9 +103,14 @@ export default function Footer() {
               <div>
                 <h2
                   className={`mb-4 text-sm mt-4 md:text-[18px] 2xl:text-[20px] capitalize flex items-center justify-between font-semibold text-black ${jost.className}`}
-                  onClick={() => toggleSection('helpInfo')}
+                  onClick={() => toggleSection("helpInfo")}
                 >
-                  Help & Information {openSections.helpInfo ? <ChevronUp className="inline-flex ml-auto md:hidden" /> : <ChevronDown className="inline-flex ml-auto md:hidden" />}
+                  Help & Information{" "}
+                  {openSections.helpInfo ? (
+                    <ChevronUp className="inline-flex ml-auto md:hidden" />
+                  ) : (
+                    <ChevronDown className="inline-flex ml-auto md:hidden" />
+                  )}
                 </h2>
                 <ul className={`text-[#8B929D] text-sm lg:text-[14px] 2xl:text-[16px] space-y-3 ${lexendDeca.className} font-normal transition-all duration-300 ease-in-out ${openSections.helpInfo || 'md:block' ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
                   <li>
@@ -134,9 +145,14 @@ export default function Footer() {
               <div>
                 <h2
                   className={`mb-4 text-sm mt-4 md:text-[18px] 2xl:text-[20px] capitalize flex items-center justify-between font-semibold text-black ${jost.className}`}
-                  onClick={() => toggleSection('legal')}
+                  onClick={() => toggleSection("legal")}
                 >
-                  Legal {openSections.legal ? <ChevronUp className="inline-flex ml-auto md:hidden" /> : <ChevronDown className="inline-flex ml-auto md:hidden" />}
+                  Legal{" "}
+                  {openSections.legal ? (
+                    <ChevronUp className="inline-flex ml-auto md:hidden" />
+                  ) : (
+                    <ChevronDown className="inline-flex ml-auto md:hidden" />
+                  )}
                 </h2>
                 <ul className={`text-[#8B929D] text-sm lg:text-[14px] 2xl:text-[16px] space-y-3 ${lexendDeca.className} font-normal transition-all duration-300 ease-in-out ${openSections.legal || 'md:block' ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
                   <li>
@@ -158,14 +174,16 @@ export default function Footer() {
               </div>
 
               {/* Download App Section */}
-              <div>
+              <div className="">
                 <h2 className={`mb-4 text-sm mt-4 md:text-[18px] 2xl:text-[20px] capitalize flex items-center justify-between font-semibold text-black ${jost.className}`}>
                   Download App
                 </h2>
-                <p className={`text-[#8B929D] text-sm lg:text-[14px] 2xl:text-[16px] space-y-3 ${lexendDeca.className} font-normal mb-4`}>
+                <p
+                  className={`text-[#8B929D] text-sm lg:text-[14px] 2xl:text-[16px] space-y-3 ${lexendDeca.className} font-normal mb-4`}
+                >
                   Download the App and get an extra 10% off your first order...!
                 </p>
-                <div className="flex sm:flex-col xl:flex-row gap-6">
+                <div className="flex sm:flex-col xl:flex-row gap-6 2xl:gap-3">
                   <Image className="hover:scale-110 cursor-pointer transition-transform duration-300" src={app_store} alt="App Store" />
                   <Image className="hover:scale-110 cursor-pointer transition-transform duration-300" src={play_store} alt="Play Store" />
                 </div>
