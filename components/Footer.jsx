@@ -18,6 +18,7 @@ import ae from "../public/card-logos/american-express.svg"
 import paypal from "../public/card-logos/paypal.svg"
 import { lexendDeca, jost } from "./ui/fonts";
 import { ChevronDown, ChevronUp } from "lucide-react";
+import Container from "./container";
 
 export default function Footer() {
   const [openSections, setOpenSections] = useState({
@@ -35,7 +36,8 @@ export default function Footer() {
   };
 
   return (
-    <main className="w-[95%] mx-auto lg:w-[92%]">
+    <Container>
+    <main className="">
       <footer>
         <div className="mx-auto w-full">
           <div className="md:flex md:justify-between md:items-center my-10">
@@ -217,6 +219,7 @@ export default function Footer() {
           </div>
         </div>
       </footer>
-    </main>
+      </main>
+      </Container>
   );
 }
