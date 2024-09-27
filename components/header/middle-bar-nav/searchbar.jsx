@@ -132,82 +132,83 @@ export default function FastSearchBarWithDropdown({ formobile = false }) {
         />
       </section>
 
-      <div
-        className={`absolute top-12 left-0 w-full bg-white border border-gray-200 rounded-md shadow-lg z-50 ${
-          isDropdownOpen ? "flex" : "hidden"
-        }`}
-      >
-        <div className="w-1/2 p-4 border-r border-gray-200 bg-[#F7F7F7]">
-          <h3 className={`text-xs font-normal text-[#8B929D] ${jost.className} uppercase mb-2`}>
-            Popular Searches
-          </h3>
-          <ul className="space-y-4 text-xs">
-            {popularSearches.map((term) => (
-              <li key={term.id}>
-                <Link 
-                  href={`/brands/${encodeURIComponent(term.name.toLowerCase())}`}
-                  className={`block cursor-pointer transition duration-300 hover:bg-[#CF8562] hover:text-white p-1 ${lexendDeca.className} font-medium`}
-                  onClick={() => setIsDropdownOpen(false)}
-                >
-                  {term.name}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
+      {isDropdownOpen && (
+        <div className="absolute top-12 left-0 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-50">
+          <div className="absolute -top-2 left-[55%] transform -translate-x-1/2 w-4 h-4 bg-white border-t border-l border-gray-200 rotate-45"></div>
+          <div className="flex">
+            <div className="w-[45%] py-4 px-6 border-r border border-gray-200 bg-[#F7F7F7]">
+              <h3 className={`text-xs font-normal text-[#8B929D] ${jost.className} uppercase mb-2`}>
+                Popular Searches
+              </h3>
+              <ul className="space-y-4 text-xs">
+                {popularSearches.map((term) => (
+                  <li key={term.id}>
+                    <Link 
+                      href={`/brands/${encodeURIComponent(term.name.toLowerCase())}`}
+                      className={`block cursor-pointer transition duration-300 hover:bg-[#CF8562] hover:text-white p-1 ${lexendDeca.className} font-medium`}
+                      onClick={() => setIsDropdownOpen(false)}
+                    >
+                      {term.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-        <div className="w-2/3 p-4">
-          <h3 className={`text-xs text-[#8B929D] ${jost.className} font-normal uppercase mb-2`}>
-            Trending Products
-          </h3>
-          <ul className="space-y-4 text-xs">
-            {isLoading ? (
-              Array(5).fill(0).map((_, index) => (
-                <li key={index}>
-                  <SkeletonLoader />
-                </li>
-              ))
-            ) : products.length > 0 ? (
-              products.map((product) => (
-                <li key={product.id}>
-                  <Link
-                    href={`/product/${product.id}`}
-                    className="flex p-1 items-center cursor-pointer transition duration-300 hover:bg-[#CF8562] hover:text-white group"
-                    onClick={() => setIsDropdownOpen(false)}
-                  >
-                    <div className="w-10 h-10 mr-4 ml-4 bg-gray-100 flex-shrink-0">
-                      <Image
-                        src={product.images[0]?.src || "/placeholder.svg?height=40&width=40"}
-                        alt={product.name}
-                        className="object-cover w-full h-full rounded-md"
-                        width={40}
-                        height={40}
-                      />
-                    </div>
-                    <div className="">
-                      <p className={`font-medium text-wrap ${lexendDeca.className}`}>
-                        {product.name}
-                      </p>
-                      <div className="flex flex-row gap-3">
-                        {product.sale_price ? (
-                          <>
-                            <p className="line-through text-gray-400 group-hover:text-white">£{product.regular_price}</p>
-                            <p className="text-red-600 group-hover:text-white">£{product.sale_price}</p>
-                          </>
-                        ) : (
-                          <p className="text-black group-hover:text-white">£{product.price}</p>
-                        )}
-                      </div>
-                    </div>
-                  </Link>
-                </li>
-              ))
-            ) : hasSearched ? (
-              <li>No products found.</li>
-            ) : null}
-          </ul>
+            <div className="w-1/2 p-4">
+              <h3 className={`text-xs text-[#8B929D] ${jost.className} font-normal uppercase mb-2 ml-4`}>
+                Trending Products
+              </h3>
+              <ul className="space-y-4 text-xs">
+                {isLoading ? (
+                  Array(5).fill(0).map((_, index) => (
+                    <li key={index}>
+                      <SkeletonLoader />
+                    </li>
+                  ))
+                ) : products.length > 0 ? (
+                  products.map((product) => (
+                    <li key={product.id}>
+                      <Link
+                        href={`/product/${product.id}`}
+                        className="flex p-1 items-center cursor-pointer transition duration-300 hover:bg-[#CF8562] hover:text-white group"
+                        onClick={() => setIsDropdownOpen(false)}
+                      >
+                        <div className="w-10 h-10 mr-4 ml-4 bg-gray-100 flex-shrink-0">
+                          <Image
+                            src={product.images[0]?.src || "/placeholder.svg?height=40&width=40"}
+                            alt={product.name}
+                            className="object-cover w-full h-full rounded-md"
+                            width={40}
+                            height={40}
+                          />
+                        </div>
+                        <div className="">
+                          <p className={`font-medium text-wrap ${lexendDeca.className}`}>
+                            {product.name}
+                          </p>
+                          <div className="flex flex-row gap-3">
+                            {product.sale_price ? (
+                              <>
+                                <p className="line-through text-gray-400 group-hover:text-white">£{product.regular_price}</p>
+                                <p className="text-red-600 group-hover:text-white">£{product.sale_price}</p>
+                              </>
+                            ) : (
+                              <p className="text-black group-hover:text-white">£{product.price}</p>
+                            )}
+                          </div>
+                        </div>
+                      </Link>
+                    </li>
+                  ))
+                ) : hasSearched ? (
+                  <li>No products found.</li>
+                ) : null}
+              </ul>
+            </div>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   )
 }
