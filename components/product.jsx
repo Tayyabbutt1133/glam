@@ -49,7 +49,7 @@ export default function Product({ product }) {
     : 0;
 
   return (
-    <div className="w-[95%] h-[500px] border-gray-100 rounded-lg overflow-hidden  transition-shadow duration-300">
+    <div className="w-[95%] h-[500px] border border-[#EFEFEF] rounded-lg overflow-hidden   duration-300">
       <Link href={`/product/${product.id}`}>
         <div
           className="bg-white flex flex-col h-full cursor-pointer"

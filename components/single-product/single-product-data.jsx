@@ -83,7 +83,7 @@ export default async function SingleProductData({ productId }) {
   return (
     <div className="flex flex-col min-h-screen">
       <div className="-mt-20">
-        <div className="container mx-auto px-4">
+        <div className="container">
           <BreadCrumbs links={breadcrumblinks} />
         </div>
       </div>

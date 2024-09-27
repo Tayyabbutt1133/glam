@@ -153,11 +153,10 @@ export default function MyBag() {
       },
     ],
   };
-
   const addToCart = useCartStore((state) => state.addToCart);
 
   return (
-    <main className="lg:w-[93%] w-[95%] xl:w-[92%] mx-auto">
+    <main className="mx-6">
       <div className=" lg:w-[98%] xl:w-[98%] mx-auto px-4 mt-8">
         <div className="flex flex-col md:flex-row items-center md:justify-between  md:pr-2  w-full md:w-[69%]">
           <p className={` text-sm md:text-[15px] 2xl:text-[20px] md:w-full text-black ${jost.className} sm:font-medium`}>

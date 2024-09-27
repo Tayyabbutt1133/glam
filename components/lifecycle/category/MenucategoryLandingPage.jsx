@@ -26,9 +26,9 @@ const sanitizeText = (text) => {
 };
 
 const CategoryItem = ({ href, logo, name }) => (
-  <li className="flex flex-col items-center text-center max-w-[90px] 2xl:max-w-[120px]">
-    <Link href={href} passHref className="flex flex-col items-center">
-      <div className="flex justify-center items-center w-[88px] h-[88px] 2xl:w-[116px] 2xl:h-[116px] rounded-full overflow-hidden border-4 border-transparent hover:scale-110 transition-transform duration-300">
+  <li className="flex flex-col items-center text-center max-w-[120px] 2xl:max-w-[170px]">
+    <Link href={href} passHref className="flex  flex-col items-center">
+      <div className="flex justify-center items-center w-[90] h-[90] md:w-[115px] md:h-[115px] 2xl:w-[153px] 2xl:h-[153px] rounded-full overflow-hidden border-4 border-transparent hover:scale-110 transition-transform duration-300 ">
         <Image
           src={logo}
           alt={sanitizeText(name)}
@@ -37,7 +37,7 @@ const CategoryItem = ({ href, logo, name }) => (
           height={116}
         />
       </div>
-      <p className={`mt-2 text-sm 2xl:text-base text-center w-[88px] 2xl:w-[116px] font-medium ${jost.className}`}>
+      <p className={`mt-2 text-sm 2xl:text-[20px] text-center w-[88px] 2xl:w-[116px] font-medium ${jost.className}`}>
         {sanitizeText(name)}
       </p>
     </Link>
@@ -148,8 +148,10 @@ const MenuCategoryList = () => {
 
   return (
     <>
-      <Breadcrumb links={breadcrumbLinks} />
-      <h1 className={`text-2xl ${jost.className} uppercase font-semibold text-center mt-10`}>
+      <div className="-mt-12">
+        <Breadcrumb links={breadcrumbLinks} />
+        </div>
+      <h1 className={`text-2xl 2xl:text-[36px] ${jost.className}  uppercase font-semibold text-center mt-10`}>
         {isLoading ? (
           <Skeleton width={200} height={30}>
             <span className="opacity-0">Shop all</span>
