@@ -158,7 +158,7 @@ export default function HomeCategory() {
             {categories.map((category, index) => (
               <div
                 key={index}
-                className="px-2 w-[45%] lg:w-44 xl:w-56 2xl:w-[100%]"
+                className="px-2"
               >
                 <Link href={`/product-categories/${category.categoryLanding}`}>
                   <div className="relative w-full h-full">
@@ -167,9 +167,9 @@ export default function HomeCategory() {
                       alt={category.name}
                       className="w-full h-full object-cover rounded-lg 2xl:w-[390px] 2xl:h-[455px]"
                     />
-                    <div className="absolute inset-0 bg-black bg-opacity-40 rounded-lg flex items-end justify-start p-4">
+                    <div className="absolute inset-0 bg-black bg-opacity-40 rounded-lg flex items-end justify-start p-8">
                       <h2
-                        className={`${jost.className} text-white text-xl font-bold`}
+                        className={`${jost.className} text-white text-[30px] xl:text-[36px] font-bold`}
                       >
                         {category.name}
                       </h2>
