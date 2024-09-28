@@ -17,6 +17,7 @@ import { usePopupStore } from "/states/use-popup-store";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import Breadcrumb from "../../../../components/BreadCrumb";
+import { MdKeyboardArrowDown } from "react-icons/md";
 
 const API_BASE_URL = "https://glam.clickable.site/wp-json/wc/v3";
 const CONSUMER_KEY = "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d";
@@ -95,6 +96,69 @@ export default function Component() {
     categories: [],
     priceRange: [],
   });
+  const CustomDropdown = ({ options, value, onChange }) => {
+    const [isOpen, setIsOpen] = useState(false)
+    const dropdownRef = React.useRef(null)
+  
+    const handleToggle = () => setIsOpen(!isOpen)
+  
+    const handleOptionClick = (optionValue) => {
+      onChange({ target: { value: optionValue } })
+      setIsOpen(false)
+    }
+  
+    React.useEffect(() => {
+      const handleClickOutside = (event) => {
+        if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+          setIsOpen(false)
+        }
+      }
+  
+      document.addEventListener('mousedown', handleClickOutside)
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside)
+      }
+    }, [])
+  
+    const selectedOption = options.find(option => option.value === value)
+  
+    return (
+      <div ref={dropdownRef} className="relative inline-block text-left">
+        <div>
+          <button
+            type="button"
+            className={`inline-flex justify-between items-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-sm ${jost.className} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 `}
+            id="options-menu"
+            aria-haspopup="true"
+            aria-expanded="true"
+            onClick={handleToggle}
+          >
+            <span className={`text-[#8B929D] font-normal ${lexendDeca.className}`}>
+              Sort by: <span className={`text-black ${lexendDeca.className} font-normal`}>{selectedOption?.label}</span>
+            </span>
+            <MdKeyboardArrowDown className="text-black text-xl ml-2" />
+          </button>
+        </div>
+  
+        {isOpen && (
+          <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+            <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+              {options.map((option) => (
+                <button
+                  key={option.value}
+                  className={`${option.value === value ? 'bg-gray-100 text-gray-900' : 'text-gray-700'} block px-4 py-2 text-sm ${jost.className} w-full text-left hover:bg-gray-100 hover:text-gray-900`}
+                  role="menuitem"
+                  onClick={() => handleOptionClick(option.value)}
+                >
+                  {option.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    )
+  }
 
   const fetchProducts = async (page = 1) => {
     setLoading(true);
@@ -324,70 +388,93 @@ export default function Component() {
     }));
   };
 
-  const RenderPagination = () => (
+  const renderPagination = () => (
     <div className="flex justify-end items-center">
+      {/* Previous Button */}
       <button
         onClick={() => handlePageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className={`px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition ${
-          currentPage === 1 ? "disabled:opacity-50 cursor-not-allowed" : ""
+        className={`px-4 py-2 mx-1 border border-gray-300 rounded hover:bg-black hover:text-white transition duration-300 ease-in-out ${
+          currentPage === 1
+            ? "opacity-50 cursor-not-allowed text-gray-400 bg-transparent border border-gray-400"
+            : "bg-efefef text-black"
         }`}
         aria-label="Previous page"
       >
-        <MdArrowBackIos className="w-4 h-4" />
+        &lt;
       </button>
+  
+      {/* First page button */}
       {currentPage > 2 && (
         <button
           onClick={() => handlePageChange(1)}
-          className="px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition"
+          className="px-4 py-2 mx-1 border border-gray-300 rounded hover:bg-black hover:text-white transition duration-300 ease-in-out bg-efefef"
         >
           1
         </button>
       )}
+  
+      {/* Ellipsis if needed */}
       {currentPage > 3 && <span className="px-4 py-2">...</span>}
+  
+      {/* Previous Page Number */}
       {currentPage > 1 && (
         <button
           onClick={() => handlePageChange(currentPage - 1)}
-          className="px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition"
+          className="px-4 py-2 mx-1 border border-gray-300 rounded hover:bg-black hover:text-white transition duration-300 ease-in-out bg-efefef"
         >
           {currentPage - 1}
         </button>
       )}
+  
+      {/* Current Page */}
       <button
         onClick={() => handlePageChange(currentPage)}
         className="px-4 py-2 mx-1 bg-black text-white rounded"
+        aria-current="page"
       >
         {currentPage}
       </button>
+  
+      {/* Next Page Number */}
       {currentPage < totalPages && (
         <button
           onClick={() => handlePageChange(currentPage + 1)}
-          className="px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition"
+          className="px-4 py-2 mx-1 border border-gray-300 rounded hover:bg-black hover:text-white transition duration-300 ease-in-out bg-efefef"
         >
           {currentPage + 1}
         </button>
       )}
+  
+      {/* Ellipsis after next page */}
       {currentPage < totalPages - 2 && <span className="px-4 py-2">...</span>}
+  
+      {/* Last Page Button */}
       {currentPage < totalPages - 1 && (
         <button
           onClick={() => handlePageChange(totalPages)}
-          className="px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition"
+          className="px-4 py-2 mx-1 border border-gray-300 rounded hover:bg-black hover:text-white transition duration-300 ease-in-out bg-efefef"
         >
           {totalPages}
         </button>
       )}
+  
+      {/* Next Button */}
       <button
         onClick={() => handlePageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className={`px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition ${
-          currentPage === totalPages ? "disabled:opacity-50 cursor-not-allowed" : ""
+        className={`px-4 py-2 mx-1 border border-gray-300 rounded hover:bg-black hover:text-white transition duration-300 ease-in-out ${
+          currentPage === totalPages
+            ? "opacity-50 cursor-not-allowed text-gray-400 bg-transparent border border-gray-400"
+            : "bg-efefef text-black"
         }`}
         aria-label="Next page"
       >
-        <MdArrowForwardIos className="w-4 h-4" />
+        &gt;
       </button>
     </div>
   );
+  
 
   const categorylanding = params.grid[0];
   const subcategories = params.grid[1];
@@ -416,7 +503,9 @@ export default function Component() {
           background: #555;
         }
       `}</style>
-      <Breadcrumb links={breadcrumbLinks} />
+      <div className=" -mt-7 mb-16">
+        <Breadcrumb className="" links={breadcrumbLinks} />
+      </div>
       <div className="flex justify-between items-center mb-8">
         <div className="flex items-center lg:hidden">
           <button onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}>
@@ -427,24 +516,18 @@ export default function Component() {
             </span>
           </button>
         </div>
-        <div className="flex flex-col md:flex-row items-center lg:ml-[20rem]">
-          <select
+        <div className="relative z-50 flex flex-col md:flex-row items-center lg:ml-[20rem]">
+          <CustomDropdown
+            options={[
+              { value: 'popularity', label: 'Popularity' },
+              { value: 'price-low-to-high', label: 'Low to High' },
+              { value: 'price-high-to-low', label: 'High to Low' },
+            ]}
             value={sortOption}
             onChange={handleSortChange}
-            className={`px-4 py-2 border border-gray-300 ${lexendDeca.className} rounded-lg font-jost text-black`}
-          >
-            <option value="popularity" className="text-black">
-              Sort by: Popularity
-            </option>
-            <option value="price-low-to-high" className="text-black">
-              Price: Low to High
-            </option>
-            <option value="price-high-to-low" className="text-black">
-              Price: High to Low
-            </option>
-          </select>
+          />
         </div>
-        <span className="hidden lg:block"><RenderPagination /></span>
+        <span className="hidden lg:block">{renderPagination()}</span>
       </div>
 
       <div className="flex flex-col lg:flex-row gap-8 mb-32">
@@ -697,13 +780,13 @@ export default function Component() {
                       </Link>
                       <Link href={`/product/${product.id}`}>
                         <h1
-                          className={`text-sm ${jost.className} cursor-pointer font-bold mb-2`}
+                          className={`text-sm 2xl:text-[20px] uppercase ${jost.className} cursor-pointer font-bold mb-2`}
                         >
                           {brand}
                         </h1>
                       </Link>
                       <h3
-                        className={`text-sm ${lexendDeca.className} font-normal mb-2 h-[60px] overflow-hidden`}
+                        className={`text-sm 2xl:text-[19px] ${lexendDeca.className} font-normal mb-2 h-[60px] overflow-hidden`}
                       >
                         {product.name}
                       </h3>
@@ -749,7 +832,7 @@ export default function Component() {
           </div>
 
           {paginatedProducts.length > 0 && (
-            <div className="mt-8 flex justify-end"><RenderPagination /></div>
+            <div className="mt-8 flex justify-end">{renderPagination()}</div>
           )}
         </div>
       </div>

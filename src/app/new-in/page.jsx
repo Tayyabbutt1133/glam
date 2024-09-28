@@ -1,23 +1,25 @@
 "use client"
-import React, { useEffect, useState, useMemo } from "react";
-import axios from "axios";
-import Container from "../../../components/container";
-import { FaStar, FaRegStar, FaHeart } from "react-icons/fa";
-import { CiHeart } from "react-icons/ci";
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import { IoFilterOutline } from "react-icons/io5";
-import Image from "next/image";
-import { lexendDeca, jost } from "../../../components/ui/fonts";
-import filter from "../../../public/filter.svg";
-import { RxCross2 } from "react-icons/rx";
-import { useCartStore } from "../../../states/Cardstore";
-import { usePopupStore } from "../../../states/use-popup-store";
-import Link from "next/link";
 
-const API_BASE_URL = "https://glam.clickable.site/wp-json/wc/v3";
-const CONSUMER_KEY = "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d";
-const CONSUMER_SECRET = "cs_3f70ee2600a3ac17a5692d7ac9c358d47275d6fc";
-const PRODUCTS_PER_PAGE = 12;
+import React, { useEffect, useState, useMemo } from "react"
+import axios from "axios"
+import Container from "../../../components/container"
+import { FaStar, FaRegStar, FaHeart } from "react-icons/fa"
+import { CiHeart } from "react-icons/ci"
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io"
+import { IoFilterOutline } from "react-icons/io5"
+import Image from "next/image"
+import { lexendDeca, jost } from "../../../components/ui/fonts"
+import filter from "../../../public/filter.svg"
+import { RxCross2 } from "react-icons/rx"
+import { useCartStore } from "../../../states/Cardstore"
+import { usePopupStore } from "../../../states/use-popup-store"
+import Link from "next/link"
+import { MdKeyboardArrowDown } from 'react-icons/md'
+
+const API_BASE_URL = "https://glam.clickable.site/wp-json/wc/v3"
+const CONSUMER_KEY = "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d"
+const CONSUMER_SECRET = "cs_3f70ee2600a3ac17a5692d7ac9c358d47275d6fc"
+const PRODUCTS_PER_PAGE = 12
 
 const FilterSection = ({ title, isOpen, toggleOpen, children }) => (
   <div className="mb-6">
@@ -38,7 +40,7 @@ const FilterSection = ({ title, isOpen, toggleOpen, children }) => (
       </div>
     )}
   </div>
-);
+)
 
 const CustomCheckbox = ({ name, value, checked, onChange, label, count }) => (
   <label className="flex items-center mb-2 cursor-pointer">
@@ -65,44 +67,108 @@ const CustomCheckbox = ({ name, value, checked, onChange, label, count }) => (
       {label} <span className="text-gray-500">({count})</span>
     </span>
   </label>
-);
+)
+
+const CustomDropdown = ({ options, value, onChange }) => {
+  const [isOpen, setIsOpen] = useState(false)
+  const dropdownRef = React.useRef(null)
+
+  const handleToggle = () => setIsOpen(!isOpen)
+
+  const handleOptionClick = (optionValue) => {
+    onChange({ target: { value: optionValue } })
+    setIsOpen(false)
+  }
+
+  React.useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false)
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [])
+
+  const selectedOption = options.find(option => option.value === value)
+
+  return (
+    <div ref={dropdownRef} className="relative inline-block text-left">
+      <div>
+        <button
+          type="button"
+          className={`inline-flex justify-between items-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-sm ${jost.className} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 `}
+          id="options-menu"
+          aria-haspopup="true"
+          aria-expanded="true"
+          onClick={handleToggle}
+        >
+          <span className={`text-[#8B929D] font-normal ${lexendDeca.className}`}>
+            Sort by: <span className={`text-black ${lexendDeca.className} font-normal`}>{selectedOption?.label}</span>
+          </span>
+          <MdKeyboardArrowDown className="text-black text-xl ml-2" />
+        </button>
+      </div>
+
+      {isOpen && (
+        <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+          <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+            {options.map((option) => (
+              <button
+                key={option.value}
+                className={`${option.value === value ? 'bg-gray-100 text-gray-900' : 'text-gray-700'} block px-4 py-2 text-sm ${jost.className} w-full text-left hover:bg-gray-100 hover:text-gray-900`}
+                role="menuitem"
+                onClick={() => handleOptionClick(option.value)}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
 
 export default function Component() {
-  const { rate, currencySymbol } = usePopupStore();
-  const [products, setProducts] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [loading, setLoading] = useState(true);
-  const [favorites, setFavorites] = useState({});
-  const [brands, setBrands] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [priceRanges, setPriceRanges] = useState([]);
-  const [isBrandFilterOpen, setIsBrandFilterOpen] = useState(true);
-  const [isCategoryFilterOpen, setIsCategoryFilterOpen] = useState(true);
-  const [isPriceRangeFilterOpen, setIsPriceRangeFilterOpen] = useState(true);
-  const [sortOption, setSortOption] = useState("popularity");
-  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
-  const addToCart = useCartStore((state) => state.addToCart);
+  const { rate, currencySymbol } = usePopupStore()
+  const [products, setProducts] = useState([])
+  const [currentPage, setCurrentPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
+  const [loading, setLoading] = useState(true)
+  const [favorites, setFavorites] = useState({})
+  const [brands, setBrands] = useState([])
+  const [categories, setCategories] = useState([])
+  const [priceRanges, setPriceRanges] = useState([])
+  const [isBrandFilterOpen, setIsBrandFilterOpen] = useState(true)
+  const [isCategoryFilterOpen, setIsCategoryFilterOpen] = useState(true)
+  const [isPriceRangeFilterOpen, setIsPriceRangeFilterOpen] = useState(true)
+  const [sortOption, setSortOption] = useState("popularity")
+  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false)
+  const addToCart = useCartStore((state) => state.addToCart)
 
   const [filters, setFilters] = useState({
     brands: [],
     categories: [],
     priceRange: [],
-  });
+  })
 
   const fetchProducts = async (page = 1) => {
-    setLoading(true);
+    setLoading(true)
     try {
       const params = {
         per_page: 100,
         page,
         consumer_key: CONSUMER_KEY,
         consumer_secret: CONSUMER_SECRET,
-      };
+      }
 
       const productsResponse = await axios.get(`${API_BASE_URL}/products`, {
         params,
-      });
+      })
       const fetchedProducts = productsResponse.data
         .map((product) => ({
           ...product,
@@ -116,129 +182,129 @@ export default function Component() {
             product.name && // Check if product name exists
             product.price && // Check if price exists
             parseFloat(product.price) > 0 // Check if price is greater than 0
-        );
-      setProducts(fetchedProducts);
-      setTotalPages(Math.ceil(fetchedProducts.length / PRODUCTS_PER_PAGE));
-      setCurrentPage(page);
+        )
+      setProducts(fetchedProducts)
+      setTotalPages(Math.ceil(fetchedProducts.length / PRODUCTS_PER_PAGE))
+      setCurrentPage(page)
 
-      updateFilters(fetchedProducts);
+      updateFilters(fetchedProducts)
     } catch (error) {
-      console.error("Error fetching products:", error);
+      console.error("Error fetching products:", error)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   const updateFilters = (fetchedProducts) => {
-    const brandMap = new Map();
-    const categoryMap = new Map();
-    const prices = [];
+    const brandMap = new Map()
+    const categoryMap = new Map()
+    const prices = []
 
     fetchedProducts.forEach((product) => {
       const brandAttr = product.attributes.find(
         (attr) => attr.name === "Brand"
-      );
+      )
       if (brandAttr) {
-        const brandName = brandAttr.options[0].replace(/&amp;/g, "&");
+        const brandName = brandAttr.options[0].replace(/&amp;/g, "&")
         if (!brandMap.has(brandName)) {
-          brandMap.set(brandName, { count: 1, categories: new Set() });
+          brandMap.set(brandName, { count: 1, categories: new Set() })
         } else {
-          brandMap.get(brandName).count++;
+          brandMap.get(brandName).count++
         }
         product.categories.forEach((category) => {
-          brandMap.get(brandName).categories.add(category.id);
-        });
+          brandMap.get(brandName).categories.add(category.id)
+        })
       }
 
       product.categories.forEach((category) => {
-        const categoryName = category.name.replace(/&amp;/g, "&");
+        const categoryName = category.name.replace(/&amp;/g, "&")
         if (!categoryMap.has(category.id)) {
-          categoryMap.set(category.id, { ...category, name: categoryName, count: 1 });
+          categoryMap.set(category.id, { ...category, name: categoryName, count: 1 })
         } else {
-          categoryMap.get(category.id).count++;
+          categoryMap.get(category.id).count++
         }
-      });
+      })
 
-      const price = parseFloat(product.price);
+      const price = parseFloat(product.price)
       if (!isNaN(price)) {
-        prices.push(price);
+        prices.push(price)
       }
-    });
+    })
 
-    setBrands(Array.from(brandMap, ([name, data]) => ({ name, count: data.count, categories: Array.from(data.categories) })));
-    setCategories(Array.from(categoryMap.values()));
+    setBrands(Array.from(brandMap, ([name, data]) => ({ name, count: data.count, categories: Array.from(data.categories) })))
+    setCategories(Array.from(categoryMap.values()))
 
-    const minPrice = Math.floor(Math.min(...prices));
-    const maxPrice = Math.ceil(Math.max(...prices));
-    const range = maxPrice - minPrice;
-    const step = Math.ceil(range / 4);
+    const minPrice = Math.floor(Math.min(...prices))
+    const maxPrice = Math.ceil(Math.max(...prices))
+    const range = maxPrice - minPrice
+    const step = Math.ceil(range / 4)
 
     setPriceRanges([
       `${minPrice}-${minPrice + step}`,
       `${minPrice + step + 1}-${minPrice + 2 * step}`,
       `${minPrice + 2 * step + 1}-${minPrice + 3 * step}`,
       `${minPrice + 3 * step + 1}-${maxPrice}`,
-    ]);
-  };
+    ])
+  }
 
   useEffect(() => {
-    fetchProducts(1);
-  }, []);
+    fetchProducts(1)
+  }, [])
 
   const handlePageChange = (page) => {
     if (page >= 1 && page <= totalPages) {
-      setCurrentPage(page);
+      setCurrentPage(page)
     }
-  };
+  }
 
   const handleFilterChange = (filterType, value) => {
     setFilters((prevFilters) => {
-      const updatedFilters = { ...prevFilters };
-      const index = updatedFilters[filterType].indexOf(value);
+      const updatedFilters = { ...prevFilters }
+      const index = updatedFilters[filterType].indexOf(value)
       if (index > -1) {
         updatedFilters[filterType] = updatedFilters[filterType].filter(
           (item) => item !== value
-        );
+        )
       } else {
-        updatedFilters[filterType] = [...updatedFilters[filterType], value];
+        updatedFilters[filterType] = [...updatedFilters[filterType], value]
       }
 
       if (filterType === "brands") {
-        updatedFilters.categories = [];
+        updatedFilters.categories = []
       }
 
-      return updatedFilters;
-    });
-    setCurrentPage(1);
-  };
+      return updatedFilters
+    })
+    setCurrentPage(1)
+  }
 
   const handleFavoriteClick = (productId) => {
     setFavorites((prevFavorites) => ({
       ...prevFavorites,
       [productId]: !prevFavorites[productId],
-    }));
-  };
+    }))
+  }
 
   const handleSortChange = (event) => {
-    setSortOption(event.target.value);
-  };
+    setSortOption(event.target.value)
+  }
 
   const sortProducts = (products) => {
     switch (sortOption) {
       case "popularity":
-        return [...products].sort((a, b) => b.total_sales - a.total_sales);
+        return [...products].sort((a, b) => b.total_sales - a.total_sales)
       case "price-low-to-high":
         return [...products].sort(
           (a, b) => parseFloat(a.price) - parseFloat(b.price)
-        );
+        )
       case "price-high-to-low":
         return [...products].sort(
           (a, b) => parseFloat(b.price) - parseFloat(a.price)
-        );
+        )
       default:
-        return products;
+        return products
     }
-  };
+  }
 
   const filteredAndSortedProducts = useMemo(() => {
     const filtered = products.filter((product) => {
@@ -248,53 +314,53 @@ export default function Component() {
           (attr) =>
             attr.name === "Brand" &&
             filters.brands.includes(attr.options[0])
-        );
+        )
       const categoryMatch =
         filters.categories.length === 0 ||
         product.categories.some((cat) =>
           filters.categories.includes(cat.id.toString())
-        );
+        )
       const priceMatch =
         filters.priceRange.length === 0 ||
         filters.priceRange.some((range) => {
-          const [min, max] = range.split("-").map(Number);
-          const price = parseFloat(product.price);
-          return price >= min && price <= max;
-        });
-      return brandMatch && categoryMatch && priceMatch;
-    });
-    return sortProducts(filtered);
-  }, [products, filters, sortOption]);
+          const [min, max] = range.split("-").map(Number)
+          const price = parseFloat(product.price)
+          return price >= min && price <= max
+        })
+      return brandMatch && categoryMatch && priceMatch
+    })
+    return sortProducts(filtered)
+  }, [products, filters, sortOption])
 
   const paginatedProducts = useMemo(() => {
-    const startIndex = (currentPage - 1) * PRODUCTS_PER_PAGE;
+    const startIndex = (currentPage - 1) * PRODUCTS_PER_PAGE
     return filteredAndSortedProducts.slice(
       startIndex,
       startIndex + PRODUCTS_PER_PAGE
-    );
-  }, [filteredAndSortedProducts, currentPage]);
+    )
+  }, [filteredAndSortedProducts, currentPage])
 
   const getFilteredCount = (filterType, value) => {
     return filteredAndSortedProducts.filter((product) => {
       if (filterType === "brands") {
         const brandAttr = product.attributes.find(
           (attr) => attr.name === "Brand"
-        );
-        return brandAttr && brandAttr.options[0] === value;
+        )
+        return brandAttr && brandAttr.options[0] === value
       } else if (filterType === "categories") {
-        return product.categories.some((cat) => cat.id.toString() === value);
+        return product.categories.some((cat) => cat.id.toString() === value)
       } else if (filterType === "priceRange") {
-        const [min, max] = value.split("-").map(Number);
-        const price = parseFloat(product.price);
-        return price >= min && price <= max;
+        const [min, max] = value.split("-").map(Number)
+        const price = parseFloat(product.price)
+        return price >= min && price <= max
       }
-      return false;
-    }).length;
-  };
+      return false
+    }).length
+  }
 
   const getAvailableCategories = useMemo(() => {
     if (filters.brands.length === 0) {
-      return categories;
+      return categories
     }
 
     const availableCategories = new Set();
@@ -309,87 +375,102 @@ export default function Component() {
 
     return categories.filter((category) =>
       availableCategories.has(category.id.toString())
-    );
-  }, [filters.brands, brands, categories]);
+    )
+  }, [filters.brands, brands, categories])
 
   const clearAllFilters = () => {
     setFilters({
       brands: [],
       categories: [],
       priceRange: [],
-    });
-    setCurrentPage(1);
-  };
+    })
+    setCurrentPage(1)
+  }
 
   const removeFilter = (filterType, value) => {
     setFilters((prevFilters) => ({
       ...prevFilters,
       [filterType]: prevFilters[filterType].filter((item) => item !== value),
-    }));
-  };
+    }))
+  }
 
   const renderPagination = () => (
     <div className="flex justify-end items-center">
       <button
         onClick={() => handlePageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className={`px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition ${
-          currentPage === 1 ? "disabled:bg-transparent" : ""
+        className={`px-4 py-2 mx-1 border border-gray-300 rounded hover:bg-black hover:text-white transition duration-300 ease-in-out ${
+          currentPage === 1
+            ? "opacity-50 cursor-not-allowed text-gray-400 bg-transparent border border-gray-400"
+            : "bg-efefef text-black"
         }`}
+        aria-label="Previous page"
       >
         &lt;
       </button>
+  
       {currentPage > 2 && (
         <button
           onClick={() => handlePageChange(1)}
-          className="px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition"
+          className="px-4 py-2 mx-1 border border-gray-300 rounded hover:bg-black hover:text-white transition duration-300 ease-in-out bg-efefef"
         >
           1
         </button>
       )}
+  
       {currentPage > 3 && <span className="px-4 py-2">...</span>}
+  
       {currentPage > 1 && (
         <button
           onClick={() => handlePageChange(currentPage - 1)}
-          className="px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition"
+          className="px-4 py-2 mx-1 border border-gray-300 rounded hover:bg-black hover:text-white transition duration-300 ease-in-out bg-efefef"
         >
           {currentPage - 1}
         </button>
       )}
+  
       <button
         onClick={() => handlePageChange(currentPage)}
         className="px-4 py-2 mx-1 bg-black text-white rounded"
+        aria-current="page"
       >
         {currentPage}
       </button>
+  
       {currentPage < totalPages && (
         <button
           onClick={() => handlePageChange(currentPage + 1)}
-          className="px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition"
+          className="px-4 py-2 mx-1 border border-gray-300 rounded hover:bg-black hover:text-white transition duration-300 ease-in-out bg-efefef"
         >
           {currentPage + 1}
         </button>
       )}
+  
       {currentPage < totalPages - 2 && <span className="px-4 py-2">...</span>}
+  
       {currentPage < totalPages - 1 && (
         <button
           onClick={() => handlePageChange(totalPages)}
-          className="px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition"
+          className="px-4 py-2 mx-1 border border-gray-300 rounded hover:bg-black hover:text-white transition duration-300 ease-in-out bg-efefef"
         >
           {totalPages}
         </button>
       )}
+  
       <button
         onClick={() => handlePageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className={`px-4 py-2 mx-1 bg-transparent border border-gray-300 rounded hover:bg-black hover:text-white transition ${
-          currentPage === totalPages ? "disabled:bg-transparent" : ""
+        className={`px-4 py-2 mx-1 border border-gray-300 rounded hover:bg-black hover:text-white transition duration-300 ease-in-out ${
+          currentPage === totalPages
+            ? "opacity-50 cursor-not-allowed text-gray-400 bg-transparent border border-gray-400"
+            : "bg-efefef text-black"
         }`}
+        aria-label="Next page"
       >
         &gt;
       </button>
     </div>
-  );
+  )
 
   return (
     <Container className="min-h-screen py-32">
@@ -419,22 +500,16 @@ export default function Component() {
             </span>
           </button>
         </div>
-        <div className="flex  flex-col md:flex-row items-center lg:ml-[20rem] ">
-          <select
+        <div className="relative z-50 flex flex-col md:flex-row items-center lg:ml-[20rem]">
+          <CustomDropdown
+            options={[
+              { value: 'popularity', label: 'Popularity' },
+              { value: 'price-low-to-high', label: 'Low to High' },
+              { value: 'price-high-to-low', label: 'High to Low' },
+            ]}
             value={sortOption}
             onChange={handleSortChange}
-            className={`px-4 py-2 border border-gray-300 ${lexendDeca.className} rounded-md font-jost text-black`}
-          >
-            <option value="popularity" className="text-black">
-              Sort by: Popularity
-            </option>
-            <option value="price-low-to-high" className="text-black">
-              Price: Low to High
-            </option>
-            <option value="price-high-to-low" className="text-black">
-              Price: High to Low
-            </option>
-          </select>
+          />
         </div>
         <span className="hidden lg:block">{renderPagination()}</span>
       </div>
@@ -469,7 +544,7 @@ export default function Component() {
               filters.priceRange.length > 0) && (
               <button
                 onClick={clearAllFilters}
-                className={`hidden lg:block text-sm text-[#8B929D] pl-4 underline ${lexendDeca.className}`}
+                className={`hidden lg:block w-[100%] text-sm text-[#8B929D] pl-2 underline ${lexendDeca.className}`}
               >
                 Clear All
               </button>
@@ -504,7 +579,7 @@ export default function Component() {
               {filters.categories.map((categoryId) => {
                 const category = categories.find(
                   (c) => c.id.toString() === categoryId
-                );
+                )
                 return category ? (
                   <span
                     key={categoryId}
@@ -523,7 +598,7 @@ export default function Component() {
                       <RxCross2 />
                     </button>
                   </span>
-                ) : null;
+                ) : null
               })}
 
               {filters.priceRange.map((range) => (
@@ -600,9 +675,9 @@ export default function Component() {
             toggleOpen={() => setIsPriceRangeFilterOpen(!isPriceRangeFilterOpen)}
           >
             {priceRanges.map((range) => {
-              const [min, max] = range.split("-").map(Number);
-              const minConverted = Math.round(min * rate);
-              const maxConverted = Math.round(max * rate);
+              const [min, max] = range.split("-").map(Number)
+              const minConverted = Math.round(min * rate)
+              const maxConverted = Math.round(max * rate)
               
               return (
                 <CustomCheckbox
@@ -614,7 +689,7 @@ export default function Component() {
                   label={`${currencySymbol}${minConverted} - ${currencySymbol}${maxConverted}`}
                   count={getFilteredCount("priceRange", range)}
                 />
-              );
+              )
             })}
           </FilterSection>
 
@@ -641,7 +716,7 @@ export default function Component() {
         </div>
 
         <div className="w-full lg:w-3/4">
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-[30px] mt-8">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-[30px] mt-8">
             {loading
               ? Array(PRODUCTS_PER_PAGE)
                   .fill("")
@@ -745,12 +820,11 @@ export default function Component() {
                   );
                 })}
           </div>
-
           {paginatedProducts.length > 0 && (
             <div className="mt-8 flex justify-end">{renderPagination()}</div>
           )}
         </div>
       </div>
     </Container>
-  );
+  )
 }
