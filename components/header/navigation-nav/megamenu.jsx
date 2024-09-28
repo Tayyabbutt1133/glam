@@ -39,12 +39,12 @@ export default function MegaMenu({ links, hoveredLink, closeMegaMenu }) {
                         {link.name}
                       </Text>
                     </Link>
-                    <ul className="flex flex-wrap flex-col text-sm h-[300px] gap-4">
+                    <ul className="flex flex-wrap flex-col  text-sm h-[300px] gap-4">
                       {getSubMenu(link.id).length > 0 &&
                         getSubMenu(link.id).map((subLink, subIndex) => (
                           <Link key={subIndex} href={subLink.href} onClick={handleLinkClick}>
                             <li
-                              className={`flex flex-row items-center cursor-pointer ${lexendDeca.className} mr-5`}
+                              className={`flex flex-row  font-normal items-center cursor-pointer ${lexendDeca.className} mr-5`}
                             >
                               {subLink.color && (
                                 <div
