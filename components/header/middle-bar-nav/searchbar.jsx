@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from "react"
 import SearchIcon from "../../../public/icons/search"
 import axios from "axios"
-import { lexendDeca, jost } from "../../ui/fonts"
+import { lexendDeca, jost, plusJakartaSans } from "../../ui/fonts"
 import debounce from "lodash.debounce"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
@@ -122,7 +122,7 @@ export default function FastSearchBarWithDropdown({ formobile = false }) {
           <SearchIcon className="h-auto w-5" />
         </div>
         <input
-          className="h-full w-full outline-none text-sm text-secondary pr-2"
+          className={`h-full w-full outline-none text-sm text-secondary pr-2 ${plusJakartaSans.className}`}
           type="text"
           id="search"
           placeholder="Search products, trends"

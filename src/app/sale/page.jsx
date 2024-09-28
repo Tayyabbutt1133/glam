@@ -769,13 +769,13 @@ export default function Component() {
                       <div className="p-4">
                         <Link href={`/product/${product.id}`}>
                           <h1
-                            className={`text-sm ${jost.className} cursor-pointer font-bold mb-2`}
+                            className={`text-sm 2xl:text-[20px] ${jost.className} uppercase cursor-pointer font-bold mb-2`}
                           >
                             {brand}
                           </h1>
                         </Link>
                         <h3
-                          className={`text-sm ${lexendDeca.className} font-normal mb-2 h-[60px] overflow-hidden`}
+                          className={`text-sm 2xl:text-[19px] ${lexendDeca.className} font-normal mb-2 h-[60px] overflow-hidden`}
                         >
                           {product.name}
                         </h3>
