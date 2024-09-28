@@ -83,7 +83,7 @@ export default function Product({ product }) {
           </div>
           <div className="p-4 flex flex-col justify-between flex-grow">
             <div>
-              <p className={`text-gray-900 font-bold text-sm 2xl:text-[20px] mb-1 ${jost.className}`}>
+              <p className={`text-gray-900 uppercase font-bold text-sm 2xl:text-[20px] mb-1 ${jost.className}`}>
                 {getBrandName(product.attributes)}
               </p>
               <h2 className={`text-gray-900 font-normal 2xl:mt-3 text-sm 2xl:text-[19px] ${lexendDeca.className} line-clamp-2 mb-2`}>
