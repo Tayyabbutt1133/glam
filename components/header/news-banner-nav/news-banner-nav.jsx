@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import Image from "next/image"
 import ArrowDown from "../../../public/icons/arrow-down"
-import { lexendDeca } from "../../ui/fonts"
+import { lexendDeca, plusJakartaSans } from "../../ui/fonts"
 import Container from "../../container"
 import { usePopupStore } from "../../../states/use-popup-store.jsx"
 import uk_flag from "../../../public/Flag_uk.png"
@@ -80,9 +80,9 @@ export default function NewsBannerNav() {
     <div className={`hidden lg:flex ${lexendDeca.className} w-full bg-[#F7EBE0]`}>
       <Container>
         <div className="flex w-full justify-center items-center relative py-2">
-          <Text style={"sm"} className="text-center ">
+          <h1  className={`text-center ${lexendDeca.className} font-medium`}>
             Up to 50% off selected brands + UK next day delivery over £40
-          </Text>
+          </h1>
           <div className="flex flex-row gap-1 absolute right-0">
             <div className="relative flex w-10">
               {selectedCountry.countryCode === "en" && selectedCountry.code === "GBP" ? (

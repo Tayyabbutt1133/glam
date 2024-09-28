@@ -531,14 +531,14 @@ export default function Checkout() {
                   />
                   <label
                     htmlFor="phone"
-                    className={`absolute text-sm ${errors.phone ? 'text-red-500' : 'text-gray-500'} duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600 start-1 ${
+                    className={`absolute text-sm ${errors.phone ? 'text-[#BF0000]' : 'text-gray-500'} duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600 start-1 ${
                       formData.phone ? 'invisible' : 'visible'
                     } ${lexendDeca.className}`}
                   >
                     Phone*
                   </label>
                   {errors.phone && (
-                    <div className="text-red-500 text-xs">{errors.phone}</div>
+                    <div className="text-[#BF0000] text-xs">{errors.phone}</div>
                   )}
                 </div>
                 <div className="flex items-center mt-2">
@@ -799,7 +799,7 @@ export default function Checkout() {
               {/* Pay Now Button */}
               <button
                 onClick={handlePayNow}
-                className={`w-full rounded-lg bg-black text-white mt-4 hover:bg-gray-800 py-3 md:rounded ${jost.className} uppercase`}
+                className={`w-full rounded-lg bg-black text-white mt-4 hover:bg-[#CF8562] transition duration-300 py-3 md:rounded ${jost.className} uppercase`}
               >
                 PAY NOW
               </button>
