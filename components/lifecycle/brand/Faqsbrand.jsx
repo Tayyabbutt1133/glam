@@ -2,6 +2,7 @@
 
 import React, { useState } from "react"
 import { jost, lexendDeca } from "../../ui/fonts"
+import Container from "../../container"
 
 export default function Faqsbrand() {
   const [openIndex, setOpenIndex] = useState(null)
@@ -29,8 +30,9 @@ export default function Faqsbrand() {
   ]
 
   return (
-    <div className="py-4 lg:py-7">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mb-10">
+    <Container>
+    <div className="py-4 lg:py-7 mt-16">
+      <div className="mb-10">
         <h2 className={`${jost.className} text-2xl font-bold mb-6`}>
           FREQUENTLY ASKED QUESTIONS
         </h2>
@@ -80,6 +82,7 @@ export default function Faqsbrand() {
           ))}
         </div>
       </div>
-    </div>
+      </div>
+      </Container>
   )
 }

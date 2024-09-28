@@ -71,11 +71,9 @@ export default function Page() {
         <Bestseller />
         <Aboutbrand />
         <NewIn />
-        <Container>
           <InFocus />
           <MakeupTips />
           <Faqsbrand />
-        </Container>
       </div>
     </div>
   )
