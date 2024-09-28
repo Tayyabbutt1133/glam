@@ -27,12 +27,12 @@ const arrowStyles = {
 const NextArrow = ({ className, style, onClick }) => {
   return (
     <div
-      className={`absolute top-1/2 transform -translate-y-1/2 right-4 2xl:mr-8 ${className}`}
+      className={`absolute top-1/2 transform -translate-y-1/2 right-2 2xl:mr-2 ${className}`}
       onClick={onClick}
       style={{
         ...style,
         ...arrowStyles,
-        right: "-18px",
+        right: "-14px",
       }}
     >
       <NextArrowIcon />
@@ -47,7 +47,7 @@ const PrevArrow = ({ className, style, onClick }) => (
     style={{
       ...style,
       ...arrowStyles,
-      left: "-46px",
+      left: "-40px",
     }}
   >
     <PrevArrowIcon />
