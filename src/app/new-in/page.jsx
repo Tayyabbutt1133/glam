@@ -2,19 +2,18 @@
 
 import React, { useEffect, useState, useMemo } from "react"
 import axios from "axios"
-import Container from "../../../components/container"
+import Image from "next/image"
+import Link from "next/link"
 import { FaStar, FaRegStar, FaHeart } from "react-icons/fa"
 import { CiHeart } from "react-icons/ci"
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io"
 import { IoFilterOutline } from "react-icons/io5"
-import Image from "next/image"
+import { RxCross2 } from "react-icons/rx"
+import { MdKeyboardArrowDown } from 'react-icons/md'
 import { lexendDeca, jost } from "../../../components/ui/fonts"
 import filter from "../../../public/filter.svg"
-import { RxCross2 } from "react-icons/rx"
 import { useCartStore } from "../../../states/Cardstore"
 import { usePopupStore } from "../../../states/use-popup-store"
-import Link from "next/link"
-import { MdKeyboardArrowDown } from 'react-icons/md'
 
 const API_BASE_URL = "https://glam.clickable.site/wp-json/wc/v3"
 const CONSUMER_KEY = "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d"
@@ -114,7 +113,7 @@ const CustomDropdown = ({ options, value, onChange }) => {
       </div>
 
       {isOpen && (
-        <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+        <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
           <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
             {options.map((option) => (
               <button
@@ -177,11 +176,11 @@ export default function Component() {
         .filter(
           (product) =>
             product.images.length > 0 &&
-            product.images[0]?.src && // Check if image source exists
-            product.attributes.some((attr) => attr.name === "Brand" && attr.options[0]) && // Check if brand exists
-            product.name && // Check if product name exists
-            product.price && // Check if price exists
-            parseFloat(product.price) > 0 // Check if price is greater than 0
+            product.images[0]?.src &&
+            product.attributes.some((attr) => attr.name === "Brand" && attr.options[0]) &&
+            product.name &&
+            product.price &&
+            parseFloat(product.price) > 0
         )
       setProducts(fetchedProducts)
       setTotalPages(Math.ceil(fetchedProducts.length / PRODUCTS_PER_PAGE))
@@ -473,7 +472,7 @@ export default function Component() {
   )
 
   return (
-    <Container className="min-h-screen py-32">
+    <div className="min-h-screen py-24 px-4 md:px-8 lg:px-12">
       <style jsx global>{`
         .custom-scrollbar::-webkit-scrollbar {
           width: 6px;
@@ -490,233 +489,197 @@ export default function Component() {
           background: #555;
         }
       `}</style>
-      <div className="flex justify-between items-center">
-        <div className="flex items-center lg:hidden ">
-          <button onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}>
-            <span
-              className={`flex items-center gap-2 text-md ${jost.className}`}
-            >
-              Filters <IoFilterOutline className="w-6 h-6" />
-            </span>
-          </button>
-        </div>
-        <div className="relative z-50 flex flex-col md:flex-row items-center lg:ml-[20rem]">
-          <CustomDropdown
-            options={[
-              { value: 'popularity', label: 'Popularity' },
-              { value: 'price-low-to-high', label: 'Low to High' },
-              { value: 'price-high-to-low', label: 'High to Low' },
-            ]}
-            value={sortOption}
-            onChange={handleSortChange}
-          />
-        </div>
-        <span className="hidden lg:block">{renderPagination()}</span>
-      </div>
-
-      <div className="flex flex-col lg:flex-row gap-8 mb-32">
-        <div
-          style={{ boxShadow: isMobileFilterOpen ? "-115px 0 10px 0 rgba(255, 255, 255)" : "none" }}
-          className={`w-full transition-all duration-300 ease-in-out ${
-            isMobileFilterOpen
-              ? "z-[90] lg:z-auto h-screen overflow-y-auto lg:overflow-y-auto translate-x-[0] lg:translate-x-0"
-              : "translate-x-[300%] lg:translate-x-0"
-          } lg:w-1/4 p-4 fixed lg:static md:block top-0 bg-white`}
-        >
-          <div className="flex justify-between items-center mb-4">
-            <h3
-              className={`text-lg font-normal flex w-full items-center gap-4 ${lexendDeca.className}`}
-            >
-              <Image
-                src={filter}
-                width={24}
-                height={24}
-                alt="Filter icon"
-                onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
-              />
-              <span className="hidden lg:block">Filters</span>
-              <p className="lg:hidden mx-auto block text-center flex-grow">
-                Filter By
-              </p>
-            </h3>
-            {(filters.brands.length > 0 ||
-              filters.categories.length > 0 ||
-              filters.priceRange.length > 0) && (
-              <button
-                onClick={clearAllFilters}
-                className={`hidden lg:block w-[100%] text-sm text-[#8B929D] pl-2 underline ${lexendDeca.className}`}
-              >
-                Clear All
-              </button>
-            )}
-          </div>
-
-          {/* Filter chips */}
-          {(filters.brands.length > 0 ||
-            filters.categories.length > 0 ||
-            filters.priceRange.length > 0) && (
-            <div className="mb-4">
-              {filters.brands.map((brand) => (
-                <span
-                  key={brand}
-                  className={`inline-flex items-center  bg-[#F7EBE0] rounded-lg px-3 py-1 text-sm font-bold text-black mr-2 mb-2 ${lexendDeca.className}`}
+      <div className="flex flex-col lg:flex-row gap-8">
+        {/* Sidebar for filters */}
+        <div className={`lg:w-1/4 ${isMobileFilterOpen ? 'block' : 'hidden lg:block'}`}>
+          <div className="sticky top-24">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className={`text-lg font-normal flex items-center gap-4 ${lexendDeca.className}`}>
+                <Image
+                  src={filter}
+                  width={24}
+                  height={24}
+                  alt="Filter icon"
+                  className=""
+                  onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
+                />
+                <span>Filters</span>
+              </h3>
+              {(filters.brands.length > 0 || filters.categories.length > 0 || filters.priceRange.length > 0) && (
+                <button
+                  onClick={clearAllFilters}
+                  className={`text-sm text-[#8B929D] underline ${lexendDeca.className}`}
                 >
-                  <span
-                    className={`${lexendDeca.className} font-normal mr-1  text-black`}
-                  >
-                    Brand:{" "}
-                  </span>{" "}
-                  {brand}
-                  <button
-                    onClick={() => removeFilter("brands", brand)}
-                    className="ml-2 text-red-600 hover:text-red-700"
-                  >
-                    <RxCross2 />
-                  </button>
-                </span>
-              ))}
+                  Clear All
+                </button>
+              )}
+            </div>
 
-              {filters.categories.map((categoryId) => {
-                const category = categories.find(
-                  (c) => c.id.toString() === categoryId
-                )
-                return category ? (
+            {/* Filter chips */}
+            {(filters.brands.length > 0 || filters.categories.length > 0 || filters.priceRange.length > 0) && (
+              <div className="mb-4 flex flex-wrap gap-2">
+                {filters.brands.map((brand) => (
                   <span
-                    key={categoryId}
-                    className={`inline-flex items-center bg-[#F7EBE0] rounded-lg px-3 py-1 text-sm font-bold text-black mr-2 mb-2 ${lexendDeca.className}`}
+                    key={brand}
+                    className={`inline-flex items-center bg-[#F7EBE0] rounded-lg px-3 py-1 text-sm font-bold text-black ${lexendDeca.className}`}
                   >
-                    <span
-                      className={`${lexendDeca.className} font-normal mr-1 text-black`}
-                    >
-                      Category:{" "}
+                    <span className={`${lexendDeca.className} font-normal mr-1 text-black`}>
+                      Brand:{" "}
                     </span>{" "}
-                    {category.name}
+                    {brand}
                     <button
-                      onClick={() => removeFilter("categories", categoryId)}
+                      onClick={() => removeFilter("brands", brand)}
                       className="ml-2 text-red-600 hover:text-red-700"
                     >
                       <RxCross2 />
                     </button>
                   </span>
-                ) : null
-              })}
+                ))}
 
-              {filters.priceRange.map((range) => (
-                <span
-                  key={range}
-                  className={`inline-flex items-center bg-[#F7EBE0] rounded-lg px-3 py-1 text-sm font-bold text-black mr-2 mb-2 ${lexendDeca.className}`}
-                >
+                {filters.categories.map((categoryId) => {
+                  const category = categories.find(
+                    (c) => c.id.toString() === categoryId
+                  )
+                  return category ? (
+                    <span
+                      key={categoryId}
+                      className={`inline-flex items-center bg-[#F7EBE0] rounded-lg px-3 py-1 text-sm font-bold text-black ${lexendDeca.className}`}
+                    >
+                      <span className={`${lexendDeca.className} font-normal mr-1 text-black`}>
+                        Category:{" "}
+                      </span>{" "}
+                      {category.name}
+                      <button
+                        onClick={() => removeFilter("categories", categoryId)}
+                        className="ml-2 text-red-600 hover:text-red-700"
+                      >
+                        <RxCross2 />
+                      </button>
+                    </span>
+                  ) : null
+                })}
+
+                {filters.priceRange.map((range) => (
                   <span
-                    className={`${lexendDeca.className} font-normal mr-1 text-black`}
+                    key={range}
+                    className={`inline-flex items-center bg-[#F7EBE0] rounded-lg px-3 py-1 text-sm font-bold text-black ${lexendDeca.className}`}
                   >
-                    Price:{" "}
-                  </span>{" "}
-                  £{range}
-                  <button
-                    onClick={() => removeFilter("priceRange", range)}
-                    className="ml-2 text-red-600 hover:text-red-700"
-                  >
-                    <RxCross2 />
-                  </button>
-                </span>
-              ))}
-            </div>
-          )}
+                    <span className={`${lexendDeca.className} font-normal mr-1 text-black`}>
+                      Price:{" "}
+                    </span>{" "}
+                    £{range}
+                    <button
+                      onClick={() => removeFilter("priceRange", range)}
+                      className="ml-2 text-red-600 hover:text-red-700"
+                    >
+                      <RxCross2 />
+                    </button>
+                  </span>
+                ))}
+              </div>
+            )}
 
-          <hr className="bg-[#8B929D73] h-[1px] mb-4" />
+            <hr className="bg-[#8B929D73] h-[1px] mb-4" />
 
-          {/* Brand filter */}
-          <FilterSection 
-            title="Brand" 
-            isOpen={isBrandFilterOpen} 
-            toggleOpen={() => setIsBrandFilterOpen(!isBrandFilterOpen)}
-            className=""
-          >
-            {brands
-              .sort((a, b) => a.name.localeCompare(b.name))
-              .map((brand) => (
-                <CustomCheckbox
-                  key={brand.name}
-                  name="brand"
-                  value={brand.name}
-                  checked={filters.brands.includes(brand.name)}
-                  onChange={() => handleFilterChange("brands", brand.name)}
-                  label={brand.name}
-                  count={brand.count}
-                />
-              ))}
-          </FilterSection>
-
-          {/* Category filter */}
-          <FilterSection 
-            title="Category" 
-            isOpen={isCategoryFilterOpen} 
-            toggleOpen={() => setIsCategoryFilterOpen(!isCategoryFilterOpen)}
-          >
-            {getAvailableCategories
-              .sort((a, b) => a.name.localeCompare(b.name))
-              .map((category) => (
-                <CustomCheckbox
-                  key={category.id}
-                  name="category"
-                  value={category.id.toString()}
-                  checked={filters.categories.includes(category.id.toString())}
-                  onChange={() => handleFilterChange("categories", category.id.toString())}
-                  label={category.name}
-                  count={getFilteredCount("categories", category.id.toString())}
-                />
-              ))}
-          </FilterSection>
-
-          {/* Price range filter */}
-          <FilterSection 
-            title="Price Range" 
-            isOpen={isPriceRangeFilterOpen} 
-            toggleOpen={() => setIsPriceRangeFilterOpen(!isPriceRangeFilterOpen)}
-          >
-            {priceRanges.map((range) => {
-              const [min, max] = range.split("-").map(Number)
-              const minConverted = Math.round(min * rate)
-              const maxConverted = Math.round(max * rate)
-              
-              return (
-                <CustomCheckbox
-                  key={range}
-                  name="priceRange"
-                  value={range}
-                  checked={filters.priceRange.includes(range)}
-                  onChange={() => handleFilterChange("priceRange", range)}
-                  label={`${currencySymbol}${minConverted} - ${currencySymbol}${maxConverted}`}
-                  count={getFilteredCount("priceRange", range)}
-                />
-              )
-            })}
-          </FilterSection>
-
-          <section className="flex justify-around mt-auto gap-4 lg:hidden">
-            <button
-              onClick={clearAllFilters}
-              className={`text-sm text-[#8B929D] pl-4 underline ${lexendDeca.className}`}
+            {/* Brand filter */}
+            <FilterSection 
+              title="Brand" 
+              isOpen={isBrandFilterOpen} 
+              toggleOpen={() => setIsBrandFilterOpen(!isBrandFilterOpen)}
             >
-              Clear All
-            </button>
+              {brands
+                .sort((a, b) => a.name.localeCompare(b.name))
+                .map((brand) => (
+                  <CustomCheckbox
+                    key={brand.name}
+                    name="brand"
+                    value={brand.name}
+                    checked={filters.brands.includes(brand.name)}
+                    onChange={() => handleFilterChange("brands", brand.name)}
+                    label={brand.name}
+                    count={brand.count}
+                  />
+                ))}
+            </FilterSection>
 
-            <button
-              disabled={
-                filters.brands.length === 0 &&
-                filters.categories.length === 0 &&
-                filters.priceRange.length === 0
-              }
-              className="basis-1/2 bg-black text-white w-full py-2 rounded-lg"
-              onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
+            {/* Category filter */}
+            <FilterSection 
+              title="Category" 
+              isOpen={isCategoryFilterOpen} 
+              toggleOpen={() => setIsCategoryFilterOpen(!isCategoryFilterOpen)}
             >
-              Apply Filter
-            </button>
-          </section>
+              {getAvailableCategories
+                .sort((a, b) => a.name.localeCompare(b.name))
+                .map((category) => (
+                  <CustomCheckbox
+                    key={category.id}
+                    name="category"
+                    value={category.id.toString()}
+                    checked={filters.categories.includes(category.id.toString())}
+                    onChange={() => handleFilterChange("categories", category.id.toString())}
+                    label={category.name}
+                    count={getFilteredCount("categories", category.id.toString())}
+                  />
+                ))}
+            </FilterSection>
+
+            {/* Price range filter */}
+            <FilterSection 
+              title="Price Range" 
+              isOpen={isPriceRangeFilterOpen} 
+              toggleOpen={() => setIsPriceRangeFilterOpen(!isPriceRangeFilterOpen)}
+            >
+              {priceRanges.map((range) => {
+                const [min, max] = range.split("-").map(Number)
+                const minConverted = Math.round(min * rate)
+                const maxConverted = Math.round(max * rate)
+                
+                return (
+                  <CustomCheckbox
+                    key={range}
+                    name="priceRange"
+                    value={range}
+                    checked={filters.priceRange.includes(range)}
+                    onChange={() => handleFilterChange("priceRange", range)}
+                    label={`${currencySymbol}${minConverted} - ${currencySymbol}${maxConverted}`}
+                    count={getFilteredCount("priceRange", range)}
+                  />
+                )
+              })}
+            </FilterSection>
+          </div>
         </div>
 
-        <div className="w-full lg:w-3/4">
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-[30px] mt-8">
+        {/* Main content area */}
+        <div className="lg:w-3/4">
+          {/* Sort and pagination controls */}
+          <div className="flex justify-between items-center mb-6">
+            <div className="flex items-center">
+              <button onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)} className="lg:hidden mr-4">
+                <Image
+                  src={filter}
+                  width={24}
+                  height={24}
+                  alt="Filter icon"
+                />
+              </button>
+              <CustomDropdown
+                options={[
+                  { value: 'popularity', label: 'Popularity' },
+                  { value: 'price-low-to-high', label: 'Price: Low to High' },
+                  { value: 'price-high-to-low', label: 'Price: High to Low' },
+                ]}
+                value={sortOption}
+                onChange={handleSortChange}
+              />
+            </div>
+            <div className="hidden lg:block">
+              {renderPagination()}
+            </div>
+          </div>
+
+          {/* Product grid */}
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-[30px] mt-8">
             {loading
               ? Array(PRODUCTS_PER_PAGE)
                   .fill("")
@@ -820,11 +783,12 @@ export default function Component() {
                   );
                 })}
           </div>
-          {paginatedProducts.length > 0 && (
-            <div className="mt-8 flex justify-end">{renderPagination()}</div>
-          )}
+          {/* Bottom pagination for mobile */}
+          <div className="mt-8 flex justify-end">
+            {renderPagination()}
+          </div>
         </div>
       </div>
-    </Container>
+    </div>
   )
 }
