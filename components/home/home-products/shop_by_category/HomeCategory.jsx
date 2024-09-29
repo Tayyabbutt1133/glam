@@ -1,28 +1,28 @@
 "use client";
 
-import React from 'react';
-import Link from 'next/link';
-import Container from '../../../container';
-import cat_one from '../../../../public/home_categories_banner/makeup.png';
-import cat_two from '../../../../public/home_categories_banner/lips.webp';
-import cat_three from '../../../../public/home_categories_banner/hair.png';
-import cat_four from '../../../../public/home_categories_banner/fragrance.webp';
-import cat_five from '../../../../public/home_categories_banner/skincare.png'
-import Image from 'next/image';
-import { jost } from '../../../ui/fonts';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+import React from "react";
+import Link from "next/link";
+import Container from "../../../container";
+import cat_one from "../../../../public/home_categories_banner/makeup.png";
+import cat_two from "../../../../public/home_categories_banner/lips.webp";
+import cat_three from "../../../../public/home_categories_banner/hair.png";
+import cat_four from "../../../../public/home_categories_banner/fragrance.webp";
+import cat_five from "../../../../public/home_categories_banner/skincare.png";
+import Image from "next/image";
+import { jost } from "../../../ui/fonts";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import NextArrowIcon from "/public/hero-banners/next-arrow";
 import PrevArrowIcon from "/public/hero-banners/prev-arrow";
-import Text from '../../../ui/Text';
+import Text from "../../../ui/Text";
 
 // Arrow styles
 const arrowStyles = {
   width: "30px",
   height: "30px",
   zIndex: 5,
-  transition: "all 0.3s ease-in-out", // Smooth transition
+  transition: "all 0.3s ease-in-out",
 };
 
 // Next Arrow component
@@ -51,7 +51,7 @@ const PrevArrow = ({ className, style, onClick }) => {
       style={{
         ...style,
         ...arrowStyles,
-        left: "-36px", // Adjust left position as needed
+        left: "-36px",
       }}
     >
       <PrevArrowIcon />
@@ -61,11 +61,36 @@ const PrevArrow = ({ className, style, onClick }) => {
 
 export default function HomeCategory() {
   const categories = [
-    { name: "Makeup", image: cat_one, categoryLanding: "makeup", subcategories: "147" },
-    { name: "Lips", image: cat_two, categoryLanding: "lips", subcategories: "33" },
-    { name: "Hair", image: cat_three, categoryLanding: "hair", subcategories: "484" },
-    { name: "Fragrance", image: cat_four, categoryLanding: "fragrance", subcategories: "485" },
-    { name: "Skincare", image: cat_five, categoryLanding: "skincare", subcategories: "483" }
+    {
+      name: "Makeup",
+      image: cat_one,
+      categoryLanding: "makeup",
+      subcategories: "147",
+    },
+    {
+      name: "Lips",
+      image: cat_two,
+      categoryLanding: "lips",
+      subcategories: "33",
+    },
+    {
+      name: "Hair",
+      image: cat_three,
+      categoryLanding: "hair",
+      subcategories: "484",
+    },
+    {
+      name: "Fragrance",
+      image: cat_four,
+      categoryLanding: "fragrance",
+      subcategories: "485",
+    },
+    {
+      name: "Skincare",
+      image: cat_five,
+      categoryLanding: "skincare",
+      subcategories: "483",
+    },
   ];
 
   const settings = {
@@ -76,8 +101,16 @@ export default function HomeCategory() {
     autoplay: true,
     autoplaySpeed: 3000,
     arrows: true,
-    nextArrow: <div className='hidden sm:block'><NextArrow /></div>,
-    prevArrow: <div className='hidden sm:block'><PrevArrow /></div>,
+    nextArrow: (
+      <div className="hidden sm:block">
+        <NextArrow />
+      </div>
+    ),
+    prevArrow: (
+      <div className="hidden sm:block">
+        <PrevArrow />
+      </div>
+    ),
     dots: false,
     responsive: [
       {
@@ -117,17 +150,31 @@ export default function HomeCategory() {
   return (
     <>
       <Container>
-        <div className="py-16  relative md:mx-7 lg:mx-6 xl:mx-5">
-          <Text style={"h1"} className='uppercase mb-10'>Shop by Category</Text>
+        <div className="py-16 relative">
+          <h1  className={`uppercase ml-2 mb-10 ${jost.className} font-semibold 2xl:text-[36px] text-2xl`}>
+            Shop by Category
+          </h1>
           <Slider {...settings}>
             {categories.map((category, index) => (
-              <div key={index} className="px-2 w-[45%] lg:w-44 xl:w-56 2xl:w-[100%]">
+              <div
+                key={index}
+                className="px-2"
+              >
                 <Link href={`/product-categories/${category.categoryLanding}`}>
-                  <Image 
-                    src={category.image} 
-                    alt={category.name} 
-                    className="rounded-lg object-cover cursor-pointer w-full" 
-                  />
+                  <div className="relative w-full h-full">
+                    <Image
+                      src={category.image}
+                      alt={category.name}
+                      className="w-full h-full object-cover rounded-lg 2xl:w-[390px] 2xl:h-[455px]"
+                    />
+                    <div className="absolute inset-0 bg-black bg-opacity-40 rounded-lg flex items-end justify-start p-8">
+                      <h2
+                        className={`${jost.className} text-white text-[30px] xl:text-[36px] font-bold`}
+                      >
+                        {category.name}
+                      </h2>
+                    </div>
+                  </div>
                 </Link>
               </div>
             ))}

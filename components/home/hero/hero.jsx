@@ -4,13 +4,13 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import SliderBanner from "../../slider-banner";
-import banner_img from "/public/slider-image/Olaplex 1.png"
+import banner_img from "../../../public/olaplex_new.png"
 
 import mob_image_path from "/public/hero-banners/mob-banner.png";
 import NextArrowIcon from "/public/hero-banners/next-arrow";
 import PrevArrowIcon from "/public/hero-banners/prev-arrow";
-import Banner1 from "/public/hero-banners/Section1.png";
-import Banner2 from "/public/hero-banners/Banner2.png";
+// import Banner1 from "/public/hero-banners/Section1.png";
+// import Banner2 from "/public/hero-banners/Banner2.png";
 
 import useMediaQuery from "../../../hooks/useMediaQuery";
 

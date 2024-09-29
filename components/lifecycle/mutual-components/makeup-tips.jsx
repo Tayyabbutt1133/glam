@@ -59,7 +59,7 @@ export default function MakeupTips() {
       </Text>
       <div className="overflow-x-auto lg:overflow-x-visible">
         {/* Makeup tips */}
-        <div className="flex lg:grid lg:grid-cols-5 gap-4 mt-8 pb-4 w-[250vw] sm:w-[200vw] md:w-[150vw] lg:w-full">
+        <div className="flex lg:grid lg:grid-cols-5 gap-4 2xl:gap-8 mt-8 pb-4">
           {tips.map((tip, index) => (
             <Tips key={index} data={tip} className="flex-shrink-0 w-[80vw] sm:w-[45vw] md:w-[30vw] lg:w-full" />
           ))}

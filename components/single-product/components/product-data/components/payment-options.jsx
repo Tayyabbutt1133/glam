@@ -3,6 +3,7 @@ import Image from "next/image";
 import clearpay from "/public/product-payment/clearpay.png";
 import klarna from "/public/product-payment/klarna.svg";
 import laybuy from "/public/product-payment/LayBuy.png";
+import paypal from '../../../../../public/PayPal.svg'
 // import Text from "/components/ui/Text";
 import { lexendDeca } from "../../../../ui/fonts";
 import { IoIosInformationCircleOutline } from "react-icons/io";
@@ -17,7 +18,7 @@ const paymentOptions = [
   {
     title: "4 installments of ",
     amount: 2.50,
-    img: laybuy,
+    img: paypal,
     alt: "laybuy",
   },
   {

@@ -50,47 +50,40 @@ const HomeBrand = () => {
 
   return (
     <Container>
-      <div className="px-4 py-16 space-y-10">
-        <Text style={"h1"} className="uppercase" >
-          SHOP BY BRAND
-        </Text>
+      <div className=" py-16 space-y-10">
         <BrandSlide />
-        <div className="flex overflow-x-auto pb-4 space-x-4 lg:grid lg:grid-cols-4 lg:gap-8 lg:space-x-0 scrollbar-hide">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {products.map((product) => (
             <Link
               key={product.id}
               href={`/brands/${product.brandLanding}`}
-              className="cursor-pointer bg-transparent overflow-hidden transition-shadow duration-300 flex-shrink-0 w-[calc(50%-8px)] sm:w-[calc(33.333%-16px)] lg:w-full"
+              className="cursor-pointer bg-transparent overflow-hidden transition-shadow duration-300 flex flex-col"
             >
-              {/* <div className="relative   h-[120px] sm:h-72 2xl:h-[330px] w-[150px] sm:w-72 2xl:w-[330px] "> */}
-              <div className="relative w-[150px] h-[150px] sm:h-60 sm:w-60 lg:h-[255px]  lg:w-[255px]  2xl:h-[330px]    2xl:w-[330px]">
+              <div className="relative w-full aspect-square">
                 <Image
-                  className="rounded-md 2xl:rounded-lg w-full h-full brightness-75 sm:brightness-100"
+                  className="object-cover"
                   src={product.image}
                   alt={product.name}
                   layout="fill"
-                  objectFit="cover"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                 />
-                <h3
-                  className={`sm:hidden text-md absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 font-semibold text-gray-50 ${jost.className}`}
-                >
-                  {product.name}
-                </h3>
               </div>
 
-              <div className=" py-6 text-left">
-                <h3
-                  className={`hidden  sm:block text-lg font-semibold text-gray-900 ${jost.className}`}
-                >
-                  {product.name}
-                </h3>
-                <p
-                  className={`text-black font-normal text-xs sm:text-sm my-2 ${lexendDeca.className}`}
-                >
-                  {product.description}
-                </p>
+              <div className="py-4 text-left flex-grow flex flex-col justify-between">
+                <div>
+                  <h3
+                    className={`text-lg font-semibold text-gray-900 ${jost.className}`}
+                  >
+                    {product.name}
+                  </h3>
+                  <p
+                    className={`text-black font-normal text-sm my-2 ${lexendDeca.className}`}
+                  >
+                    {product.description}
+                  </p>
+                </div>
                 <button
-                  className={`sm:mt-4 bg-black text-white text-xs sm:text-sm py-2 sm:px-6 px-2 rounded-lg hover:bg-[#CF8562] transition duration-200 ${jost.className}`}
+                  className={`w-[50%] mt-2 bg-black text-white text-[14px] py-2 px-6 rounded-lg hover:bg-[#CF8562] transition duration-200 ${jost.className}`}
                 >
                   SHOP NOW
                 </button>

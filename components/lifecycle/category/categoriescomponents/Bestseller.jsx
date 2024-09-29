@@ -15,6 +15,7 @@ import PrevArrowIcon from "../../../../public/hero-banners/prev-arrow";
 import { useCategoryIdState } from "../../../../states/use-category-id";
 import Text from "../../../ui/Text";
 
+
 const arrowStyles = {
   width: "40px",
   height: "40px",
@@ -26,12 +27,12 @@ const arrowStyles = {
 const NextArrow = ({ className, style, onClick }) => {
   return (
     <div
-      className={`absolute top-1/2 transform -translate-y-1/2 right-4 2xl:mr-8 ${className}`}
+      className={`absolute top-1/2 transform -translate-y-1/2 right-2 2xl:mr-2 ${className}`}
       onClick={onClick}
       style={{
         ...style,
         ...arrowStyles,
-        right: "-18px",
+        right: "-14px",
       }}
     >
       <NextArrowIcon />
@@ -46,7 +47,7 @@ const PrevArrow = ({ className, style, onClick }) => (
     style={{
       ...style,
       ...arrowStyles,
-      left: "-46px",
+      left: "-40px",
     }}
   >
     <PrevArrowIcon />
@@ -130,7 +131,8 @@ const Bestseller = () => {
 
 
   return (
-    <main className="py-16 lg:mx-20 ">
+    <Container>
+    <main className="py-16">
       <Text
       style={"h1"}
         className={`uppercase mb-8`}
@@ -167,7 +169,8 @@ const Bestseller = () => {
           ))}
         </Slider>
       )}
-    </main>
+      </main>
+      </Container>
   );
 };
 

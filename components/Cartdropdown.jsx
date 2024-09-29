@@ -9,7 +9,7 @@ import { jost } from "./ui/fonts";
 import { usePopupStore } from "../states/use-popup-store";
 
 export default function Cartdropdown() {
-  const { cartItems, removeFromCart, updateQuantity} = useCartStore();
+  const { cartItems, removeFromCart } = useCartStore();
   const [isCartOpen, setIsCartOpen] = useState(true)
   const { rate, currencySymbol } = usePopupStore();
   
@@ -48,12 +48,12 @@ export default function Cartdropdown() {
 
   const handleViewBag = () => {
     setIsCartOpen(false);
-    
   };
+
   return (
     <div
       ref={dropdownRef}
-      className="absolute top-full right-0 mt-2 w-[90vw] sm:w-[450px] bg-white shadow-lg rounded-md overflow-hidden z-[100] border border-gray-200 max-h-[80vh] flex flex-col"
+      className="absolute top-full right-0 2xl:mt-6 mt-2 w-[90vw] sm:w-[450px] 2xl:w-[490px] bg-white shadow-lg rounded-md overflow-hidden z-[100] border border-gray-200 max-h-[80vh] flex flex-col"
     >
       <div className="p-4 border-b border-gray-200">
         <h2 className={`text-xl font-normal ${jost.className}`}>
@@ -64,7 +64,6 @@ export default function Cartdropdown() {
         {cartItems.length > 0 ? (
           <ul>
             {cartItems.map((item) => {
-              // console.log(item)
               const image = item.images ? item.images[0].src : item.image.src;
               return (
                 <li key={item.id} className="p-4 border-b border-gray-200">
@@ -72,7 +71,7 @@ export default function Cartdropdown() {
                     <div className="flex items-start">
                       <div className="w-28 flex flex-col items-center">
                         <Image
-                          src={image} //changes here
+                          src={image}
                           alt={item.name}
                           width={80}
                           height={80}
@@ -103,28 +102,9 @@ export default function Cartdropdown() {
                         <p className={`text-sm text-black ${jost.className}`}>
                           Size: {getItemSize(item)}
                         </p>
-                        <div className="flex items-center mt-2">
-                          <button
-                            className="text-sm bg-gray-200 px-2 py-1 rounded"
-                            onClick={() =>
-                              updateQuantity(
-                                item.id,
-                                Math.max(1, item.quantity - 1)
-                              )
-                            }
-                          >
-                            -
-                          </button>
-                          <span className="text-sm mx-2">{item.quantity}</span>
-                          <button
-                            className="text-sm bg-gray-200 px-2 py-1 rounded"
-                            onClick={() =>
-                              updateQuantity(item.id, item.quantity + 1)
-                            }
-                          >
-                            +
-                          </button>
-                        </div>
+                        <p className={`text-sm text-black ${jost.className}`}>
+                          Qty: {item.quantity}
+                        </p>
                       </div>
                     </div>
                     <p
