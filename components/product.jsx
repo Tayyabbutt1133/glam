@@ -36,9 +36,9 @@ export default function Product({ product }) {
   };
 
   const getBrandName = (attributes) => {
-    const brandAttr = attributes.find((attr) => attr.name === "Brand");
+    const brandAttr = attributes?.nodes?.find((attr) => attr.name === "pa_brand");
     return brandAttr
-      ? brandAttr.options[0] || "Unknown Brand"
+      ? brandAttr.options[0]
       : "Unknown Brand";
   };
 

@@ -54,41 +54,31 @@ const HomeBrand = () => {
         <BrandSlide />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {products.map((product) => (
-            <Link
+            <div
               key={product.id}
-              href={`/brands/${product.brandLanding}`}
-              className="cursor-pointer bg-transparent overflow-hidden transition-shadow duration-300 flex flex-col"
+              className="flex flex-col items-start cursor-pointer bg-transparent overflow-hidden transition-shadow duration-300 flex-shrink-0 w-[calc(50%-8px)] sm:w-[calc(33.333%-16px)] lg:w-full"
             >
-              <div className="relative w-full aspect-square">
+              <div className="relative ">
                 <Image
                   className="object-cover"
                   src={product.image}
                   alt={product.name}
-                  layout="fill"
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                  objectFit="cover"
                 />
               </div>
 
-              <div className="py-4 text-left flex-grow flex flex-col justify-between">
-                <div>
-                  <h3
-                    className={`text-lg font-semibold text-gray-900 ${jost.className}`}
-                  >
-                    {product.name}
-                  </h3>
-                  <p
-                    className={`text-black font-normal text-sm my-2 ${lexendDeca.className}`}
-                  >
-                    {product.description}
-                  </p>
-                </div>
-                <button
-                  className={`w-[50%] mt-2 bg-black text-white text-[14px] py-2 px-6 rounded-lg hover:bg-[#CF8562] transition duration-200 ${jost.className}`}
-                >
-                  SHOP NOW
-                </button>
-              </div>
-            </Link>
+              
+              <p
+                className={`text-black font-normal text-xs sm:text-sm mb-4 ${lexendDeca.className}`}
+              >
+                {product.description}
+              </p>
+              <button
+                className={`mt-auto bg-black text-white text-xs sm:text-sm py-2 sm:px-6 px-2 rounded-lg hover:bg-hover transition duration-200 ${jost.className}`}
+              >
+                SHOP NOW
+              </button>
+            </div>
           ))}
         </div>
       </div>
