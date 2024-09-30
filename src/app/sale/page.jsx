@@ -14,6 +14,9 @@ import { lexendDeca, jost } from "../../../components/ui/fonts"
 import filter from "../../../public/filter.svg"
 import { useCartStore } from "../../../states/Cardstore"
 import { usePopupStore } from "../../../states/use-popup-store"
+import arrow_previous from '../../../public/Keyboard arrow left.svg';
+import arrow_forward from '../../../public/Keyboard arrow right.svg';
+
 
 const API_BASE_URL = "https://glam.clickable.site/wp-json/wc/v3"
 const CONSUMER_KEY = "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d"
