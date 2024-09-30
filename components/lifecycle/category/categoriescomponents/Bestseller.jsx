@@ -32,7 +32,7 @@ const NextArrow = ({ className, style, onClick }) => {
       style={{
         ...style,
         ...arrowStyles,
-        right: "-14px",
+        right: "-3vw",
       }}
     >
       <NextArrowIcon />
@@ -47,7 +47,7 @@ const PrevArrow = ({ className, style, onClick }) => (
     style={{
       ...style,
       ...arrowStyles,
-      left: "-40px",
+      left: "-4vw",
     }}
   >
     <PrevArrowIcon />
@@ -131,14 +131,14 @@ const Bestseller = () => {
 
 
   return (
-    <Container>
-    <main className="py-16">
+    <Container className="my-16">
       <Text
       style={"h1"}
         className={`uppercase mb-8`}
       >
         Bestsellers
       </Text>
+    <main className="w-[92%] mx-auto">
       {!bestSellers.length ? (
         <Slider {...settings}>
           {Array(4)
