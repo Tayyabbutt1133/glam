@@ -14,7 +14,7 @@ import { usePopupStore } from "/states/use-popup-store";
 
 // ... rest of the code remains the same as in the previous response
 
-const PRODUCTS_PER_PAGE = 12; 
+const PRODUCTS_PER_PAGE = 12;
 
 const GET_PRODUCTS = gql`
   query getProducts($attribute_term: String!, $category: String!) {
