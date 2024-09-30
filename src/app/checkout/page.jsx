@@ -774,9 +774,7 @@ export default function Checkout() {
                                 type="checkbox"
                                 id="useSameAddress"
                                 checked={useSameAddress}
-                                onChange={(e) =>
-
- setUseSameAddress(e.target.checked)}
+                                onChange={(e) => setUseSameAddress(e.target.checked)}
                                 className="mr-2 h-4 w-4 rounded border-gray-300 text-black focus:ring-black accent-black"
                               />
                               <label
@@ -801,7 +799,7 @@ export default function Checkout() {
                           </PaymentOption>
                           <div className="mt-4">
                             <p className={`text-sm 2xl:text-[16px] w-[70%] text-center mx-auto text-black ${lexendDeca.className}`}>
-                              After clicking "Pay now", you will be redirected to PayPal to complete your purchase securely.
+                              After clicking &quot;Pay now&quot;, you will be redirected to PayPal to complete your purchase securely.
                             </p>
                           </div>
                         </div>
@@ -821,7 +819,7 @@ export default function Checkout() {
                               <Image src={klarna_wal} alt="Klarna Wallet" width={130} height={130} />
                             </div>
                             <p className={`text-sm font-normal mx-auto text-center max-w-[70%] text-black ${lexendDeca.className}`}>
-                              After clicking "Pay now", you will be redirected to Klarna - Flexible payments to complete your purchase securely.
+                              After clicking &quot;Pay now&quot;, you will be redirected to Klarna - Flexible payments to complete your purchase securely.
                             </p>
                           </div>
                         </div>
@@ -858,9 +856,12 @@ export default function Checkout() {
               >
                 PAY NOW
               </button>
+              <p className={`${lexendDeca.className} 2xl:text-[20px] font-normal  w-full`}>By placing this order, you are confirming that you agree to our <span className="underline">Terms and Conditions</span>  and  <span className="underline">Privacy Policy</span>.
+          </p>
+
             </div>
           </div>
-
+         
           {/* Right: Order Summary and Bag Summary */}
           <div className="lg:w-1/3 bg-gray-50 p-6 rounded-lg lg:-mt-24">
             <div className=" ">
