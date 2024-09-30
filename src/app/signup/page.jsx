@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
 import { FaApple } from "react-icons/fa";
-import { lexendDeca } from "../../../components/ui/fonts";
+import { jost, lexendDeca } from "../../../components/ui/fonts";
 import { toast } from "react-toastify";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
@@ -44,12 +44,12 @@ export default function SignUp() {
   return (
     <>
       <div className="flex justify-center items-center min-h-screen bg-white">
-        <div className="w-full max-w-md 2xl:max-w-[521px] p-8 bg-white rounded-lg pt-16">
+        <div className="w-full max-w-md 2xl:max-w-[580px] p-8 bg-white rounded-lg pt-16">
           <div className="flex justify-between mb-6">
             <div className="flex-1 text-center">
               <Link href="/login">
                 <span
-                  className={`block w-full text-2xl font-bold relative pb-2 ${
+                  className={`block w-full ${jost.className} text-2xl font-semibold relative pb-2 ${
                     activeTab === "login" ? "text-black" : "text-[#8B929D]"
                   }`}
                   onClick={() => setActiveTab("login")}
@@ -66,7 +66,7 @@ export default function SignUp() {
             <div className="flex-1 text-center">
               <Link href="/signup">
                 <span
-                  className={`block w-full text-2xl font-bold relative pb-2 ${
+                  className={`block w-full ${jost.className} text-2xl font-semibold relative pb-2 ${
                     activeTab === "signup" ? "text-black" : "text-[#8B929D]"
                   }`}
                   onClick={() => setActiveTab("signup")}
@@ -90,7 +90,7 @@ export default function SignUp() {
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 placeholder="Full Name*"
-                className={`mt-1 block w-full 2xl:w-[521px] px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent ${lexendDeca.className}`}
+                className={`mt-1 block w-full 2xl:w-[521px] px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent ${lexendDeca.className}`}
                 required
               />
             </div>
@@ -101,7 +101,7 @@ export default function SignUp() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Email Address*"
-                className={`mt-1 block w-full 2xl:w-[521px] px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent ${lexendDeca.className}`}
+                className={`mt-1 block w-full 2xl:w-[521px] px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent ${lexendDeca.className}`}
                 required
               />
             </div>
@@ -112,7 +112,7 @@ export default function SignUp() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Password*"
-                className={`mt-1 block w-full 2xl:w-[521px] px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent ${lexendDeca.className}`}
+                className={`mt-1 block w-full 2xl:w-[521px] px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent ${lexendDeca.className}`}
                 required
               />
             </div>
@@ -141,7 +141,7 @@ export default function SignUp() {
                   containerStyle={{
                     width: '100%',
                   }}
-                  inputClass="w-full h-10 pl-13 pr-4 text-base rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                  inputClass="w-full h-10 pl-13 pr-4 text-base rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black focus:border-purple-500"
                   buttonClass="absolute left-0 top-0 bottom-0 flex items-center justify-center px-2"
                   dropdownStyle={{
                     width: '300px',
@@ -176,7 +176,7 @@ export default function SignUp() {
               />
               <label
                 htmlFor="agreeToOffers"
-                className={`ml-2 block text-sm text-gray-900 ${lexendDeca.className}`}
+                className={`ml-2 block text-sm 2xl:text-[16px] text-gray-900 ${lexendDeca.className}`}
               >
                 Tick here if you do not wish to receive exclusive offers and discounts via email.
               </label>
@@ -193,7 +193,7 @@ export default function SignUp() {
               />
               <label
                 htmlFor="agreeToTerms"
-                className={`ml-2 block text-sm text-gray-900 ${lexendDeca.className}`}
+                className={`ml-2 block text-sm 2xl:text-[16px] text-gray-900 ${lexendDeca.className}`}
               >
                 By ticking, you are confirming that you agree to our{" "}
                 <a href="/terms" className="text-[#8B929D] underline">
@@ -208,7 +208,7 @@ export default function SignUp() {
             </div>
             <button
               type="submit"
-              className={`w-full 2xl:w-[521px] mt-6 py-2 bg-black text-white font-semibold rounded-lg shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-900 ${lexendDeca.className}`}
+              className={`w-full 2xl:w-[521px] mt-6 py-2 bg-black text-white font-semibold rounded-lg shadow-sm hover:bg-[#CF8562] transition duration-300 focus:outline-none focus:ring-2 focus:ring-gray-900 ${lexendDeca.className}`}
             >
               REGISTER
             </button>
@@ -216,7 +216,7 @@ export default function SignUp() {
           
           {/* Separator */}
           <div className="relative mt-8 text-center">
-            <span className={`mx-4 text-sm text-gray-500 ${lexendDeca.className}`}>
+            <span className={`mx-4 text-sm 2xl:text-[16px] text-gray-500 ${lexendDeca.className}`}>
               or Continue with
             </span>
           </div>

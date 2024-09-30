@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { FcGoogle } from "react-icons/fc"; // Google icon
-import { FaApple } from "react-icons/fa"; // Apple icon
-import axios from "axios"; // Ensure axios is installed and imported
+import { FcGoogle } from "react-icons/fc";
+import { FaApple } from "react-icons/fa";
+import axios from "axios";
 
-import { lexendDeca } from "../../../components/ui/fonts";
+import { jost, lexendDeca } from "../../../components/ui/fonts";
 import { Inter } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -15,8 +15,8 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
-  const [message, setMessage] = useState(""); // State to hold the success or error message
-  const [hoveredTab, setHoveredTab] = useState(""); // State to track the hovered tab
+  const [message, setMessage] = useState("");
+  const [hoveredTab, setHoveredTab] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,7 +42,7 @@ export default function Login() {
 
   return (
     <div className="flex justify-center items-center min-h-screen">
-      <div className="w-full max-w-md p-8 rounded-lg">
+      <div className="w-full max-w-md 2xl:max-w-[580px] p-8 rounded-lg">
         {/* Login/Sign-Up Tabs */}
         <div className="flex justify-between mb-6">
           {/* Login Tab */}
@@ -53,15 +53,13 @@ export default function Login() {
           >
             <Link href="/login">
               <span
-                className={`block w-full text-2xl font-bold relative pb-2 ${
+                className={`block w-full ${jost.className} text-2xl font-semibold relative pb-2 ${
                   hoveredTab === "login" ? "text-black" : ""
                 }`}
               >
                 Login
                 <div
-                  className={`absolute left-0 bottom-0 w-full h-[2px]  ${
-                    hoveredTab === "login" ? "bg-[#CF8562]" : " bg-[#D9D9D9]"
-                  } transition-all duration-300`}
+                  className="absolute left-0 bottom-0 w-full h-[2px] bg-[#CF8562] transition-all duration-300"
                 ></div>
               </span>
             </Link>
@@ -75,14 +73,14 @@ export default function Login() {
           >
             <Link href="/signup">
               <span
-                className={`block w-full text-2xl font-bold relative pb-2 ${
+                className={`block w-full ${jost.className} text-2xl font-semibold relative pb-2 ${
                   hoveredTab === "signup" ? "text-black" : ""
                 }`}
               >
                 Sign up
                 <div
                   className={`absolute left-0 bottom-0 w-full h-[2px] ${
-                    hoveredTab === "signup" ? "bg-[#CF8562]" : "bg-transparent"
+                    hoveredTab === "signup" ? "bg-[#CF8562]" : "bg-[#D9D9D9]"
                   } transition-all duration-300`}
                 ></div>
               </span>
@@ -99,7 +97,7 @@ export default function Login() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Email or Phone Number*"
-              className={`block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent ${lexendDeca.className}`}
+              className={`block w-full 2xl:w-[521px] px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent ${lexendDeca.className}`}
               required
             />
           </div>
@@ -110,7 +108,7 @@ export default function Login() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Password*"
-              className={`block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent ${lexendDeca.className}`}
+              className={`block w-full 2xl:w-[521px] px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent ${lexendDeca.className}`}
               required
             />
           </div>
@@ -120,11 +118,11 @@ export default function Login() {
               id="rememberMe"
               checked={rememberMe}
               onChange={(e) => setRememberMe(e.target.checked)}
-              className="h-4 w-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500"
+              className="h-4 w-4 text-black border-gray-300 rounded focus:ring-black accent-black"
             />
             <label
               htmlFor="rememberMe"
-              className={`ml-2 block text-sm text-gray-900  ${lexendDeca.className}`}
+              className={`ml-2 block text-sm 2xl:text-[16px]  text-gray-900 ${lexendDeca.className}`}
             >
               Remember Me
             </label>
@@ -132,7 +130,7 @@ export default function Login() {
 
           {/* Forgot Password Link */}
           <div className="flex">
-            <Link href="/forgot-password" className={`text-sm text-gray-600 underline ${lexendDeca.className}`}>
+            <Link href="/forgot-password" className={`text-sm 2xl:text-[16px] text-gray-600 underline ${lexendDeca.className}`}>
               Forgot your Password?
             </Link>
           </div>
@@ -140,7 +138,7 @@ export default function Login() {
           {/* Sign In Button */}
           <button
             type="submit"
-            className={`w-full py-2 bg-black text-white font-semibold rounded-lg shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-900 ${lexendDeca.className}`}
+            className={`w-full 2xl:w-[521px] py-2 bg-black text-white font-semibold rounded-lg shadow-sm hover:bg-[#CF8562] transition duration-300 focus:outline-none focus:ring-2 focus:ring-gray-900 ${lexendDeca.className}`}
           >
             SIGN IN
           </button>
@@ -150,13 +148,14 @@ export default function Login() {
         {message && (
           <div className="mt-4 text-center text-sm text-red-600">{message}</div>
         )}
-           {/* Separator */}
-           <div className="relative  text-center my-6">
-          <span className={`mx-4 text-sm text-gray-500 ${lexendDeca.className}`}>or Continue with</span>
+
+        {/* Separator */}
+        <div className="relative text-center my-6">
+          <span className={`mx-4 text-sm 2xl:text-[16px] text-gray-500 ${lexendDeca.className}`}>or Continue with</span>
         </div>
         
-            {/* Social Login Buttons */}
-            <div className={` ${inter.className} flex justify-between space-x-4`}>
+        {/* Social Login Buttons */}
+        <div className={`${inter.className} flex justify-between space-x-4`}>
           <button className="flex items-center justify-center w-full px-4 py-2 bg-white text-gray-800 font-semibold rounded-md shadow-sm hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300">
             <FcGoogle className="mr-2" />
             Google
@@ -166,8 +165,6 @@ export default function Login() {
             Apple
           </button>
         </div>
-
-     
       </div>
     </div>
   );
