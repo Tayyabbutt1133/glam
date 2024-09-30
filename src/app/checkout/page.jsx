@@ -62,7 +62,7 @@ const FloatingLabelInput = ({ label, name, value, onChange, type = "text", error
         type={type}
         id={name}
         name={name}
-        className={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-[#8B929D] bg-transparent rounded-lg border-2 ${error ? 'border-red-500' : 'border-[#EFEFEF]'} appearance-none focus:outline-none focus:ring-0 focus:border-black peer ${lexendDeca.className}`}
+        className={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-[#8B929D] bg-transparent rounded-lg border ${error ? 'border-red-500' : 'border-[#EFEFEF]'} appearance-none focus:outline-none focus:ring-0 focus:border-black peer ${lexendDeca.className}`}
         placeholder=" "
         value={value}
         onChange={onChange}
