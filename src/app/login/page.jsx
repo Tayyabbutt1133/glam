@@ -130,7 +130,7 @@ export default function Login() {
 
           {/* Forgot Password Link */}
           <div className="flex">
-            <Link href="/forgot-password" className={`text-sm 2xl:text-[16px] text-gray-600 underline ${lexendDeca.className}`}>
+            <Link href="/forgot-password" className={`text-sm 2xl:text-[16px] text-[#8B929D] underline ${lexendDeca.className}`}>
               Forgot your Password?
             </Link>
           </div>

@@ -398,20 +398,20 @@ export default function Component() {
       <button
         onClick={() => handlePageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className={`px-4 py-2 mx-1 border border-gray-300 rounded hover:bg-black hover:text-white transition duration-300 ease-in-out ${
+        className={`px-4 py-2 mx-1 border rounded-[4px] hover:bg-gray-200 hover:text-white transition duration-300 ease-in-out ${
           currentPage === 1
-            ? "opacity-50 cursor-not-allowed text-gray-400 bg-transparent border border-gray-400"
-            : "bg-efefef text-black"
+            ? "opacity-50 cursor-not-allowed text-gray-400 bg-transparent border-[#EFEFEF]"
+            : "bg-white text-black border-[#EFEFEF]"
         }`}
         aria-label="Previous page"
       >
-        &lt;
+        <Image src={arrow_previous} width={24} height={24} alt="Previous" />
       </button>
   
       {currentPage > 2 && (
         <button
           onClick={() => handlePageChange(1)}
-          className="px-4 py-2 mx-1 border border-gray-300 rounded hover:bg-black hover:text-white transition duration-300 ease-in-out bg-efefef"
+          className="px-4 py-2 mx-1 border border-[#EFEFEF] rounded-[4px] hover:bg-black hover:text-white transition duration-300 ease-in-out bg-white"
         >
           1
         </button>
@@ -422,7 +422,7 @@ export default function Component() {
       {currentPage > 1 && (
         <button
           onClick={() => handlePageChange(currentPage - 1)}
-          className="px-4 py-2 mx-1 border border-gray-300 rounded hover:bg-black hover:text-white transition duration-300 ease-in-out bg-efefef"
+          className="px-4 py-2 mx-1 border border-[#EFEFEF] rounded-[4px] hover:bg-gray-200 hover:text-white transition duration-300 ease-in-out bg-white"
         >
           {currentPage - 1}
         </button>
@@ -430,7 +430,7 @@ export default function Component() {
   
       <button
         onClick={() => handlePageChange(currentPage)}
-        className="px-4 py-2 mx-1 bg-black text-white rounded"
+        className="px-4 py-2 mx-1 bg-black text-white rounded-[4px] border border-[#EFEFEF]"
         aria-current="page"
       >
         {currentPage}
@@ -439,7 +439,7 @@ export default function Component() {
       {currentPage < totalPages && (
         <button
           onClick={() => handlePageChange(currentPage + 1)}
-          className="px-4 py-2 mx-1 border border-gray-300 rounded hover:bg-black hover:text-white transition duration-300 ease-in-out bg-efefef"
+          className="px-4 py-2 mx-1 border border-[#EFEFEF] rounded-[4px] hover:bg-gray-200 hover:text-white transition duration-300 ease-in-out bg-white"
         >
           {currentPage + 1}
         </button>
@@ -450,7 +450,7 @@ export default function Component() {
       {currentPage < totalPages - 1 && (
         <button
           onClick={() => handlePageChange(totalPages)}
-          className="px-4 py-2 mx-1 border border-gray-300 rounded hover:bg-black hover:text-white transition duration-300 ease-in-out bg-efefef"
+          className="px-4 py-2 mx-1 border border-[#EFEFEF] rounded-[4px] hover:bg-gray-200 hover:text-white transition duration-300 ease-in-out bg-white"
         >
           {totalPages}
         </button>
@@ -459,14 +459,14 @@ export default function Component() {
       <button
         onClick={() => handlePageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className={`px-4 py-2 mx-1 border border-gray-300 rounded hover:bg-black hover:text-white transition duration-300 ease-in-out ${
+        className={`px-4 py-2 mx-1 border rounded-[4px] hover:bg-gray-200 hover:text-white transition duration-300 ease-in-out ${
           currentPage === totalPages
-            ? "opacity-50 cursor-not-allowed text-gray-400 bg-transparent border border-gray-400"
-            : "bg-efefef text-black"
+            ? "opacity-50 cursor-not-allowed text-gray-400 bg-transparent border-[#EFEFEF]"
+            : "bg-white text-black border-[#EFEFEF]"
         }`}
         aria-label="Next page"
       >
-        &gt;
+        <Image src={arrow_forward} width={24} height={24} alt="Next" />
       </button>
     </div>
   )
