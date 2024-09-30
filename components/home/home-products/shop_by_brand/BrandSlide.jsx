@@ -17,10 +17,10 @@ import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 
 const brands = [
-  { id: 79, name: 'rimmel', image: rimmel, width: 168, height: 32 },
-  { id: 72, name: 'loreal', image: loreal, width: 206, height: 32 },
+  { id: 79, name: 'rimmel', image: rimmel, width: 129, height: 32 },
+  { id: 72, name: 'loreal', image: loreal, width: 129, height: 32 },
   { id: 70, name: 'bourjois', image: bourjois, width: 129, height: 32 },
-  { id: 936, name: 'kerastase', image: kerastase, width: 193, height: 32 },
+  { id: 936, name: 'kerastase', image: kerastase, width: 129, height: 32 },
   { id: 74, name: 'max-factor', image: max_factor, width: 129, height: 32 },
 ]
 
