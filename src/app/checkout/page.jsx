@@ -1,26 +1,26 @@
-"use client";
+'use client'
 
-import Image from "next/image";
-import Link from "next/link";
-import { useState, useEffect, useRef } from "react";
-import creditCardType from "credit-card-type";
-import { useCartStore } from "../../../states/Cardstore";
-import { jost, lexendDeca } from "../../../components/ui/fonts";
-import Container from "../../../components/container";
-import PayPal from "../../../public/card-logos/paypal.svg";
-import Klarna from "../../../public/Klarna.svg";
-import visa from "../../../public/card-logos/visa.svg";
-import master from "../../../public/card-logos/master.svg";
-import maestro from "../../../public/card-logos/maestro.svg";
-import ae from "../../../public/card-logos/american-express.svg";
-import paypal from "../../../public/card-logos/paypal.svg";
-import klarna_wal from "../../../public/Klarnawallet.svg";
-import klarna_pink from "../../../public/klarn_pink.svg";
-import { usePopupStore } from "/states/use-popup-store";
-import { useRouter } from "next/navigation";
-import { toast } from 'react-toastify';
-import PhoneInput from "react-phone-input-2";
-import "react-phone-input-2/lib/style.css";
+import Image from "next/image"
+import Link from "next/link"
+import { useState, useEffect, useRef } from "react"
+import creditCardType from "credit-card-type"
+import { useCartStore } from "../../../states/Cardstore"
+import { jost, lexendDeca } from "../../../components/ui/fonts"
+import Container from "../../../components/container"
+import PayPal from "../../../public/card-logos/paypal.svg"
+import Klarna from "../../../public/Klarna.svg"
+import visa from "../../../public/card-logos/visa.svg"
+import master from "../../../public/card-logos/master.svg"
+import maestro from "../../../public/card-logos/maestro.svg"
+import ae from "../../../public/card-logos/american-express.svg"
+import paypal from "../../../public/card-logos/paypal.svg"
+import klarna_wal from "../../../public/Klarnawallet.svg"
+import klarna_pink from "../../../public/klarn_pink.svg"
+import { usePopupStore } from "/states/use-popup-store"
+import { useRouter } from "next/navigation"
+import { toast } from 'react-toastify'
+import PhoneInput from "react-phone-input-2"
+import "react-phone-input-2/lib/style.css"
 
 const shippingOptions = [
   {
@@ -53,7 +53,7 @@ const shippingOptions = [
     time: "(Arrives tomorrow, 20 June before 11:00am)",
     price: 5.99,
   },
-];
+]
 
 const FloatingLabelInput = ({ label, name, value, onChange, type = "text", error }) => {
   return (
@@ -62,14 +62,14 @@ const FloatingLabelInput = ({ label, name, value, onChange, type = "text", error
         type={type}
         id={name}
         name={name}
-        className={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-2 ${error ? 'border-red-500' : 'border-gray-300'} appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer ${lexendDeca.className}`}
+        className={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-[#8B929D] bg-transparent rounded-lg border ${error ? 'border-red-500' : 'border-[#EFEFEF]'} appearance-none focus:outline-none focus:ring-0 focus:border-black peer ${lexendDeca.className}`}
         placeholder=" "
         value={value}
         onChange={onChange}
       />
       <label
         htmlFor={name}
-        className={`absolute text-sm ${error ? 'text-red-500' : 'text-gray-500'} duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 start-1 ${lexendDeca.className}`}
+        className={`absolute text-sm ${error ? 'text-red-500' : 'text-[#8B929D]'} duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-black peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 start-1 ${lexendDeca.className}`}
       >
         {label}
       </label>
@@ -82,10 +82,37 @@ const FloatingLabelInput = ({ label, name, value, onChange, type = "text", error
   )
 }
 
+function PaymentOption({ id, name, selected, onChange, children }) {
+  return (
+    <div className="flex items-center justify-between py-4">
+      <label className="flex items-center space-x-3 cursor-pointer">
+        <div className="relative">
+          <input
+            type="radio"
+            id={id}
+            checked={selected}
+            onChange={onChange}
+            className="sr-only"
+          />
+          <div className={`w-5 h-5 border-2 rounded-full ${selected ? 'border-black bg-black' : 'border-gray-300'}`}>
+            {selected && (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-2 h-2 bg-white rounded-full"></div>
+              </div>
+            )}
+          </div>
+        </div>
+        <span className={`${jost.className}`}>{name}</span>
+      </label>
+      {children}
+    </div>
+  )
+}
+
 export default function Checkout() {
-  const [isMounted, setIsMounted] = useState(false);
-  const { cartItems } = useCartStore();
-  const { rate, currencySymbol } = usePopupStore();
+  const [isMounted, setIsMounted] = useState(false)
+  const { cartItems } = useCartStore()
+  const { rate, currencySymbol } = usePopupStore()
   const [formData, setFormData] = useState({
     email: "",
     firstName: "",
@@ -100,33 +127,51 @@ export default function Checkout() {
     nameOnCard: "",
     promoCode: "",
     country: "",
-  });
-  const [errors, setErrors] = useState({});
-  const [touched, setTouched] = useState({});
-  const [saveInfo, setSaveInfo] = useState(false);
-  const [cardNumber, setCardNumber] = useState("");
-  const [subscribeToNews, setSubscribeToNews] = useState(false);
-  const [useSameAddress, setUseSameAddress] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState("");
-  const [shippingMethod, setShippingMethod] = useState(null);
-  const [showShippingDropdown, setShowShippingDropdown] = useState(false);
-  const [filteredShippingOptions, setFilteredShippingOptions] = useState(shippingOptions);
-  const [showPaymentOptions, setShowPaymentOptions] = useState(true);
-  const shippingRef = useRef(null);
-  const paymentRef = useRef(null);
-  const [cardType, setCardType] = useState("");
-  const router = useRouter();
+  })
+  const [errors, setErrors] = useState({})
+  const [touched, setTouched] = useState({})
+  const [saveInfo, setSaveInfo] = useState(false)
+  const [cardNumber, setCardNumber] = useState("")
+  const [subscribeToNews, setSubscribeToNews] = useState(false)
+  const [useSameAddress, setUseSameAddress] = useState(false)
+  const [paymentMethod, setPaymentMethod] = useState("card")
+  const [shippingMethod, setShippingMethod] = useState(null)
+  const [showShippingDropdown, setShowShippingDropdown] = useState(false)
+  const [filteredShippingOptions, setFilteredShippingOptions] = useState(shippingOptions)
+  const [showPaymentOptions, setShowPaymentOptions] = useState(false)
+  const shippingRef = useRef(null)
+  const paymentRef = useRef(null)
+  const [cardType, setCardType] = useState("")
+  const router = useRouter()
+  const [paypalOption, setPaypalOption] = useState("")
+  const [klarnaOption, setKlarnaOption] = useState("")
+  const [phone, setPhone] = useState('')
+  const [error, setError] = useState('')
+
+
+
+  const paypalOptions = [
+    "Pay in full",
+    "Pay in 4",
+    "Pay monthly",
+  ]
+
+  const klarnaOptions = [
+    "Pay in 30 days",
+    "Pay in 3 installments",
+    "6-36 month financing",
+  ]
 
   const validateField = (name, value) => {
-    let error = "";
+    let error = ""
     switch (name) {
       case "email":
         if (!value) {
-          error = "Email is required";
+          error = "Email is required"
         } else if (!/\S+@\S+\.\S+/.test(value)) {
-          error = "Enter a valid email address";
+          error = "Enter a valid email address"
         }
-        break;
+        break
       case "firstName":
       case "lastName":
       case "address":
@@ -135,97 +180,97 @@ export default function Checkout() {
       case "phone":
       case "country":
         if (!value) {
-          error = `${name.charAt(0).toUpperCase() + name.slice(1)} is required`;
+          error = `${name.charAt(0).toUpperCase() + name.slice(1)} is required`
         }
-        break;
+        break
       case "cardNumber":
         if (!value) {
-          error = "Card number is required";
+          error = "Card number is required"
         } else {
-          const cleanedValue = value.replace(/\s/g, "");
+          const cleanedValue = value.replace(/\s/g, "")
           if (!/^\d{15,16}$/.test(cleanedValue)) {
-            error = "Enter a valid 15 or 16-digit card number";
+            error = "Enter a valid 15 or 16-digit card number"
           } else if (
             cleanedValue.length === 15 &&
             cardType !== "american-express"
           ) {
-            error = "This card number is invalid for the detected card type";
+            error = "This card number is invalid for the detected card type"
           } else if (
             cleanedValue.length === 16 &&
             cardType === "american-express"
           ) {
-            error = "American Express cards should have 15 digits";
+            error = "American Express cards should have 15 digits"
           }
         }
-        break;
+        break
       case "expirationDate":
         if (!value) {
-          error = "Expiration date is required";
+          error = "Expiration date is required"
         } else if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(value)) {
-          error = "Enter a valid expiration date (MM/YY)";
+          error = "Enter a valid expiration date (MM/YY)"
         }
-        break;
+        break
       case "securityCode":
         if (!value) {
-          error = "Security code is required";
+          error = "Security code is required"
         } else if (!/^\d{3,4}$/.test(value)) {
-          error = "Enter a valid 3 or 4-digit security code";
+          error = "Enter a valid 3 or 4-digit security code"
         }
-        break;
+        break
       case "nameOnCard":
         if (!value) {
-          error = "Name on card is required";
+          error = "Name on card is required"
         }
-        break;
+        break
     }
-    return error;
-  };
+    return error
+  }
 
   const handlePayNow = () => {
-    const requiredFields = ['firstName', 'lastName', 'address', 'city', 'postcode', 'phone', 'email', 'country'];
-    const newErrors = {};
+    const requiredFields = ['firstName', 'lastName', 'address', 'city', 'postcode', 'phone', 'email', 'country']
+    const newErrors = {}
     requiredFields.forEach(field => {
-      const error = validateField(field, formData[field]);
+      const error = validateField(field, formData[field])
       if (error) {
-        newErrors[field] = error;
+        newErrors[field] = error
       }
-    });
+    })
 
     if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      toast.error(`Please fill in all required fields`);
-      return;
+      setErrors(newErrors)
+      toast.error(`Please fill in all required fields`)
+      return
     }
 
     if (!shippingMethod) {
-      toast.error('Please select a shipping method');
-      return;
+      toast.error('Please select a shipping method')
+      return
     }
 
     if (!paymentMethod) {
-      toast.error('Please select a payment method');
-      return;
+      toast.error('Please select a payment method')
+      return
     }
 
     if (paymentMethod === 'card') {
-      const cardFields = ['cardNumber', 'expirationDate', 'securityCode', 'nameOnCard'];
+      const cardFields = ['cardNumber', 'expirationDate', 'securityCode', 'nameOnCard']
       cardFields.forEach(field => {
-        const error = validateField(field, formData[field]);
+        const error = validateField(field, formData[field])
         if (error) {
-          newErrors[field] = error;
+          newErrors[field] = error
         }
-      });
+      })
 
       if (Object.keys(newErrors).length > 0) {
-        setErrors(newErrors);
-        toast.error(`Please fill in all card details correctly`);
-        return;
+        setErrors(newErrors)
+        toast.error(`Please fill in all card details correctly`)
+        return
       }
     }
 
     if (cartItems.length === 0) {
-      toast.error('Your cart is empty');
-      return;
+      toast.error('Your cart is empty')
+      return
     }
 
     try {
@@ -248,135 +293,140 @@ export default function Checkout() {
         shipping: shipping,
         total: total,
         shippingMethod: shippingMethod.name,
-      };
+      }
 
-      useCartStore.getState().setOrderDetails(orderDetails);
-      toast.success('Order placed successfully!');
+      useCartStore.getState().setOrderDetails(orderDetails)
+      toast.success('Order placed successfully!')
       
-      router.push('/confirmation-successful');
+      router.push('/confirmation-successful')
     } catch (error) {
-      console.error('Error processing order:', error);
-      toast.error('There was an error processing your order. Please try again.');
+      console.error('Error processing order:', error)
+      toast.error('There was an error processing your order. Please try again.')
     }
   }
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    setErrors((prev) => ({ ...prev, [name]: validateField(name, value) }));
+    const { name, value } = e.target
+    setFormData((prev) => ({ ...prev, [name]: value }))
+    setErrors((prev) => ({ ...prev, [name]: validateField(name, value) }))
 
     if (name === "cardNumber") {
-      handleCardNumberChange(e);
+      handleCardNumberChange(e)
     }
-  };
+  }
 
   const handleBlur = (e) => {
-    const { name } = e.target;
-    setTouched((prev) => ({ ...prev, [name]: true }));
-  };
+    const { name } = e.target
+    setTouched((prev) => ({ ...prev, [name]: true }))
+  }
 
   const handleShippingSearch = (e) => {
-    const searchTerm = e.target.value.toLowerCase();
+    const searchTerm = e.target.value.toLowerCase()
     const filtered = shippingOptions.filter(
       (option) =>
         option.name.toLowerCase().includes(searchTerm) ||
         option.time.toLowerCase().includes(searchTerm)
-    );
-    setFilteredShippingOptions(filtered);
-  };
+    )
+    setFilteredShippingOptions(filtered)
+  }
 
   const selectShippingMethod = (method) => {
-    setShippingMethod(method);
-    setShowShippingDropdown(false);
-  };
+    setShippingMethod(method)
+    setShowShippingDropdown(false)
+  }
 
   const calculateSubtotal = () => {
     return cartItems.reduce(
       (acc, item) => acc + (parseFloat(item.price) || 0) * item.quantity,
       0
-    );
-  };
+    )
+  }
 
-  const subtotal = calculateSubtotal();
-  const shipping = shippingMethod ? shippingMethod.price : 0;
-  const total = subtotal + shipping;
+  const subtotal = calculateSubtotal()
+  const shipping = shippingMethod ? shippingMethod.price : 0
+  const total = subtotal + shipping
 
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (shippingRef.current && !shippingRef.current.contains(event.target)) {
-        setShowShippingDropdown(false);
+        setShowShippingDropdown(false)
       }
-    };
+    }
 
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside)
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
+  }, [])
 
   const handleCardNumberChange = (e) => {
-    const value = e.target.value.replace(/\s/g, "");
-    setCardNumber(value);
-    setFormData((prev) => ({ ...prev, cardNumber: formatCardNumber(value) }));
+    const value = e.target.value.replace(/\s/g, "")
+    setCardNumber(value)
+    setFormData((prev) => ({ ...prev, cardNumber: formatCardNumber(value) }))
 
     if (value) {
-      const detectedTypes = creditCardType(value);
+      const detectedTypes = creditCardType(value)
       if (detectedTypes.length > 0) {
-        setCardType(detectedTypes[0].type);
+        setCardType(detectedTypes[0].type)
       } else {
-        setCardType("");
+        setCardType("")
       }
     } else {
-      setCardType("");
+      setCardType("")
     }
 
     setErrors((prev) => ({
       ...prev,
       cardNumber: validateField("cardNumber", value),
-    }));
-  };
+    }))
+  }
 
   const getCardLogo = () => {
     switch (cardType) {
       case "visa":
-        return visa;
+        return visa
       case "mastercard":
-        return master;
+        return master
       case "maestro":
-        return maestro;
+        return maestro
       case "american-express":
-        return ae;
+        return ae
       default:
-        return null;
+        return null
     }
-  };
+  }
 
   const formatCardNumber = (value) => {
-    const v = value.replace(/\s+/g, "").replace(/[^0-9]/gi, "");
-    const matches = v.match(/\d{4,16}/g);
-    const match = (matches && matches[0]) || "";
-    const parts = [];
+    const v = value.replace(/\s+/g, "").replace(/[^0-9]/gi, "")
+    const matches = v.match(/\d{4,16}/g)
+    const match = (matches && matches[0]) || ""
+    const parts = []
 
     for (let i = 0, len = match.length; i < len; i += 4) {
-      parts.push(match.substring(i, i + 4));
+      parts.push(match.substring(i, i + 4))
     }
 
     if (parts.length) {
-      return parts.join(" ");
+      return parts.join(" ")
     } else {
-      return value;
+      return value
     }
-  };
+  }
 
   const handlePaymentMethodChange = (method) => {
-    setPaymentMethod(method);
-    setShowPaymentOptions(false);
-  };
+    setPaymentMethod(method)
+    setShowPaymentOptions(false)
+    if (method === 'paypal') {
+      setPaypalOption(paypalOptions[0])
+    } else if (method === 'klarna') {
+      setKlarnaOption(klarnaOptions[0])
+    }
+  }
 
   const handlePhoneChange = (value) => {
-    setFormData(prev => ({ ...prev, phone: value }));
-    setErrors(prev => ({ ...prev, phone: validateField("phone", value) }));
-  };
+    setFormData(prev => ({ ...prev, phone: value }))
+    setErrors(prev => ({ ...prev, phone: validateField("phone", value) }))
+  }
 
   return (
     <Container>
@@ -421,13 +471,13 @@ export default function Checkout() {
 
             <div className="space-y-4">
               <div className="flex items-center justify-center my-4">
-                <hr className="flex-grow border-t border-gray-300" />
+                <hr className="flex-grow border-t border-[#EFEFEF]" />
                 <span
                   className={`px-3 text-gray-500 text-sm ${lexendDeca.className}`}
                 >
                   OR
                 </span>
-                <hr className="flex-grow border-t border-gray-300" />
+                <hr className="flex-grow border-t border-[#EFEFEF]" />
               </div>
 
               {/* Contact Section */}
@@ -516,31 +566,50 @@ export default function Checkout() {
                   />
                 </div>
                 <div className="relative">
-                  <PhoneInput
-                    country={'gb'}
-                    value={formData.phone}
-                    onChange={handlePhoneChange}
-                    inputProps={{
-                      name: 'phone',
-                      required: true,
-                      className: `block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-2 ${errors.phone ? 'border-red-500' : 'border-gray-300'} appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer pl-14 ${lexendDeca.className}`,
-                    }}
-                    containerClass="w-full"
-                    buttonClass="h-full !bg-transparent hover:!bg-transparent focus:!bg-transparent active:!bg-transparent"
-                    dropdownClass="!bg-white"
-                  />
-                  <label
-                    htmlFor="phone"
-                    className={`absolute text-sm ${errors.phone ? 'text-[#BF0000]' : 'text-gray-500'} duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600 start-1 ${
-                      formData.phone ? 'invisible' : 'visible'
-                    } ${lexendDeca.className}`}
-                  >
-                    Phone*
-                  </label>
-                  {errors.phone && (
-                    <div className="text-[#BF0000] text-xs">{errors.phone}</div>
-                  )}
-                </div>
+      <PhoneInput
+        country={'gb'}
+        value={phone}
+        onChange={handlePhoneChange}
+        inputProps={{
+          name: 'phone',
+          required: true,
+          className: `block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border ${error ? 'border-red-500' : 'border-[#EFEFEF]'} appearance-none focus:outline-none focus:ring-0 focus:border-black peer pl-14 ${lexendDeca.className}`,
+        }}
+        containerClass="w-full"
+        buttonClass="h-full !bg-[#F7F7F7A6] hover:!bg-[#F7F7F7A6] focus:!bg-[#F7F7F7A6] active:!bg-[#F7F7F7A6] border-none rounded-l-lg"
+        dropdownClass="!bg-white"
+      />
+      {/* <label
+        htmlFor="phone"
+        className={`absolute text-sm ${error ? 'text-[#BF0000]' : 'text-gray-500'} duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-[#F7F7F7A6] px-2 peer-focus:px-2 peer-focus:text-black start-1 ${
+          phone ? 'invisible' : 'visible'
+        } ${lexendDeca.className}`}
+      >
+        Phone*
+      </label> */}
+      {error && (
+        <div className="text-[#BF0000] text-xs mt-1">{error}</div>
+      )}
+      <style jsx global>{`
+        .react-tel-input .flag-dropdown {
+          border: none !important;
+          background-color: #F7F7F7A6 !important;
+        }
+        .react-tel-input .selected-flag {
+          background-color: #F7F7F7A6 !important;
+          border-top-left-radius: 0.5rem;
+          border-bottom-left-radius: 0.5rem;
+        }
+        .react-tel-input .selected-flag:hover,
+        .react-tel-input .selected-flag:focus,
+        .react-tel-input .selected-flag.open {
+          background-color: #F7F7F7A6 !important;
+        }
+        .react-tel-input .form-control {
+          width: 100% !important;
+        }
+      `}</style>
+    </div>
                 <div className="flex items-center mt-2">
                   <input
                     type="checkbox"
@@ -620,160 +689,167 @@ export default function Checkout() {
                   <h2 className={`text-xl font-semibold ${jost.className}`}>
                     Payment
                   </h2>
-                  {!showPaymentOptions && (
-                    <button
-                      onClick={() => setShowPaymentOptions(true)}
-                      className={`text-[#8B929D] ${jost.className} underline`}
-                    >
-                      Change Payment
-                    </button>
-                  )}
+                  <button
+                    onClick={() => setShowPaymentOptions(true)}
+                    className={`text-[#8B929D] ${jost.className} underline`}
+                  >
+                    Change Payment
+                  </button>
                 </div>
 
-                {showPaymentOptions ? (
-                  <div className="space-y-4 border rounded-md p-4">
-                    <label className="flex items-center space-x-3">
-                      <input
-                        type="radio"
-                        checked={paymentMethod === "card"}
-                        onChange={() => handlePaymentMethodChange("card")}
-                        className="form-radio"
-                      />
-                      <span className={`${jost.className}`}>Pay by card</span>
-                      <div className="flex space-x-2 ml-auto">
-                        <Image src={visa} alt="Visa" width={32} height={20} />
-                        <Image
-                          src={master}
-                          alt="Mastercard"
-                          width={32}
-                          height={20}
-                        />
-                        <Image
-                          src={maestro}
-                          alt="Maestro"
-                          width={32}
-                          height={20}
-                        />
-                        <Image
-                          src={ae}
-                          alt="American Express"
-                          width={32}
-                          height={20}
-                        />
+                <div className="space-y-4 border rounded-md p-4">
+                  {showPaymentOptions ? (
+                    <>
+                      <div className="border-b pb-4">
+                        <PaymentOption
+                          id="card"
+                          name={<span className={`${lexendDeca.className}`} style={{ fontWeight: 400 }}>Pay by card</span>}
+                          selected={paymentMethod === "card"}
+                          onChange={() => handlePaymentMethodChange("card")}
+                        >
+                          <div className="flex space-x-2">
+                            <Image src={visa} alt="Visa" width={32} height={20} />
+                            <Image src={master} alt="Mastercard" width={32} height={20} />
+                            <Image src={maestro} alt="Maestro" width={32} height={20} />
+                            <Image src={ae} alt="American Express" width={32} height={20} />
+                          </div>
+                        </PaymentOption>
                       </div>
-                    </label>
-                    <label className="flex items-center space-x-3">
-                      <input
-                        type="radio"
-                        checked={paymentMethod === "paypal"}
-                        onChange={() => handlePaymentMethodChange("paypal")}
-                        className="form-radio"
-                      />
-                      <span className={`${jost.className}`}>PayPal</span>
-                      <Image
-                        src={paypal}
-                        alt="PayPal"
-                        width={64}
-                        height={20}
-                        className="ml-auto"
-                      />
-                    </label>
-                    <label className="flex items-center space-x-3">
-                      <input
-                        type="radio"
-                        checked={paymentMethod === "klarna"}
-                        onChange={() => handlePaymentMethodChange("klarna")}
-                        className="form-radio"
-                      />
-                      <span className={`${jost.className}`}>
-                        Klarna - Flexible payments
-                      </span>
-                      <Image
-                        src={klarna_pink}
-                        alt="Klarna"
-                        width={64}
-                        height={20}
-                        className="ml-auto"
-                      />
-                    </label>
-                  </div>
-                ) : (
-<div className="border rounded-md p-4">
-  {paymentMethod === "card" && (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <span className={`font-medium ${jost.className}`}>Pay by card</span>
-        <div className="flex space-x-2">
-          <Image src={visa} alt="Visa" width={32} height={20} />
-          <Image src={master} alt="Mastercard" width={32} height={20} />
-          <Image src={maestro} alt="Maestro" width={32} height={20} />
-          <Image src={ae} alt="American Express" width={32} height={20} />
-        </div>
-      </div>
 
-      <FloatingLabelInput
-        label="Card number*"
-        name="cardNumber"
-        value={formData.cardNumber}
-        onChange={handleCardNumberChange}
-        error={errors.cardNumber}
-      />
+                      <div className="border-b pb-4">
+                        <PaymentOption
+                          id="paypal"
+                          name={<span className={`${lexendDeca.className}`} style={{ fontWeight: 400 }}>PayPal</span>}
+                          selected={paymentMethod === "paypal"}
+                          onChange={() => handlePaymentMethodChange("paypal")}
+                        >
+                          <Image src={paypal} alt="PayPal" width={64} height={20} />
+                        </PaymentOption>
+                      </div>
 
-      {/* Expiration date and Security code fields */}
-      <div className="flex items-center gap-4">
-        <div className="relative w-1/2">
-          <FloatingLabelInput
-            label="Expiration date (MM / YY)*"
-            name="expirationDate"
-            value={formData.expirationDate}
-            onChange={handleInputChange}
-            error={errors.expirationDate}
-            className="pr-12"
-          />
-          <span className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400">
-            {/* Add any lock or card icon here if required */}
-          </span>
-        </div>
-
-        <div className="relative w-1/2">
-          <FloatingLabelInput
-            label="Security code*"
-            name="securityCode"
-            value={formData.securityCode}
-            onChange={handleInputChange}
-            error={errors.securityCode}
-            className="pr-12"
-          />
-          <span className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400">
-            {/* Add any question mark or info icon here */}
-          </span>
-        </div>
-      </div>
-
-      <FloatingLabelInput
-        label="Name on card*"
-        name="nameOnCard"
-        value={formData.nameOnCard}
-        onChange={handleInputChange}
-        error={errors.nameOnCard}
-      />
-
-      <label className="flex items-center space-x-2">
-        <input
-          type="checkbox"
-          checked={useSameAddress}
-          onChange={() => setUseSameAddress(!useSameAddress)}
-          className="form-checkbox"
-        />
-        <span className={`${lexendDeca.className}`}>
-          Use shipping address as billing address
-        </span>
-      </label>
-    </div>
-  )}
-</div>
-
-                )}
+                      <div>
+                        <PaymentOption
+                          id="klarna"
+                          name={<span className={`${lexendDeca.className}`} style={{ fontWeight: 400 }}>Klarna - Flexible payments</span>}
+                          selected={paymentMethod === "klarna"}
+                          onChange={() => handlePaymentMethodChange("klarna")}
+                        >
+                          <Image src={klarna_pink} alt="Klarna" width={64} height={20} />
+                        </PaymentOption>
+                      </div>
+                    </>
+                  ) : (
+                    <div>
+                      {paymentMethod === "card" && (
+                        <div className="border-b pb-4">
+                          <PaymentOption
+                            id="card"
+                            name={<span className={`${lexendDeca.className}`} style={{ fontWeight: 400 }}>Pay by card</span>}
+                            selected={true}
+                            onChange={() => {}}
+                          >
+                            <div className="flex space-x-2">
+                              <Image src={visa} alt="Visa" width={32} height={20} />
+                              <Image src={master} alt="Mastercard" width={32} height={20} />
+                              <Image src={maestro} alt="Maestro" width={32} height={20} />
+                              <Image src={ae} alt="American Express" width={32} height={20} />
+                            </div>
+                          </PaymentOption>
+                          <div className="mt-4 space-y-4">
+                            <FloatingLabelInput
+                              label="Card number*"
+                              name="cardNumber"
+                              value={formData.cardNumber}
+                              onChange={handleCardNumberChange}
+                              error={errors.cardNumber}
+                            />
+                            <div className="flex items-center gap-4">
+                              <div className="relative w-1/2">
+                                <FloatingLabelInput
+                                  label="Expiration date (MM / YY)*"
+                                  name="expirationDate"
+                                  value={formData.expirationDate}
+                                  onChange={handleInputChange}
+                                  error={errors.expirationDate}
+                                  className="pr-12"
+                                />
+                              </div>
+                              <div className="relative w-1/2">
+                                <FloatingLabelInput
+                                  label="Security code*"
+                                  name="securityCode"
+                                  value={formData.securityCode}
+                                  onChange={handleInputChange}
+                                  error={errors.securityCode}
+                                  className="pr-12"
+                                />
+                              </div>
+                            </div>
+                            <FloatingLabelInput
+                              label="Name on card*"
+                              name="nameOnCard"
+                              value={formData.nameOnCard}
+                              onChange={handleInputChange}
+                              error={errors.nameOnCard}
+                            />
+                            <div className="flex items-center my-3">
+                              <input
+                                type="checkbox"
+                                id="useSameAddress"
+                                checked={useSameAddress}
+                                onChange={(e) => setUseSameAddress(e.target.checked)}
+                                className="mr-2 h-4 w-4 rounded border-gray-300 text-black focus:ring-black accent-black"
+                              />
+                              <label
+                                className={`${lexendDeca.className} font-medium`}
+                                htmlFor="useSameAddress"
+                              >
+                                Use shipping address as billing address
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                      {paymentMethod === "paypal" && (
+                        <div className="border-b pb-4">
+                          <PaymentOption
+                            id="paypal"
+                            name={<span className={`${lexendDeca.className}`} style={{ fontWeight: 400 }}>PayPal</span>}
+                            selected={true}
+                            onChange={() => {}}
+                          >
+                            <Image src={paypal} alt="PayPal" width={64} height={20} />
+                          </PaymentOption>
+                          <div className="mt-4">
+                            <p className={`text-sm 2xl:text-[16px] w-[70%] text-center mx-auto text-black ${lexendDeca.className}`}>
+                              After clicking &quot;Pay now&quot;, you will be redirected to PayPal to complete your purchase securely.
+                            </p>
+                          </div>
+                        </div>
+                      )}
+                      {paymentMethod === "klarna" && (
+                        <div>
+                          <PaymentOption
+                            id="klarna"
+                            name={<span className={`${lexendDeca.className}`} style={{ fontWeight: 400 }}>Klarna - Flexible payments</span>}
+                            selected={true}
+                            onChange={() => {}}
+                          >
+                            <Image src={klarna_pink} alt="Klarna" width={64} height={20} />
+                          </PaymentOption>
+                          <div className="mt-4 space-y-4">
+                            <div className="flex justify-center gap-6 items-center space-x-2">
+                              <Image src={klarna_wal} alt="Klarna Wallet" width={130} height={130} />
+                            </div>
+                            <p className={`text-sm font-normal mx-auto text-center max-w-[70%] text-black ${lexendDeca.className}`}>
+                              After clicking &quot;Pay now&quot;, you will be redirected to Klarna - Flexible payments to complete your purchase securely.
+                            </p>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
               </div>
 
               {/* Remember Me */}
@@ -803,9 +879,12 @@ export default function Checkout() {
               >
                 PAY NOW
               </button>
+              <p className={`${lexendDeca.className} 2xl:text-[20px] font-normal  w-full`}>By placing this order, you are confirming that you agree to our <span className="underline">Terms and Conditions</span>  and  <span className="underline">Privacy Policy</span>.
+          </p>
+
             </div>
           </div>
-
+         
           {/* Right: Order Summary and Bag Summary */}
           <div className="lg:w-1/3 bg-gray-50 p-6 rounded-lg lg:-mt-24">
             <div className=" ">
@@ -912,5 +991,5 @@ export default function Checkout() {
         </div>
       </div>
     </Container>
-  );
+  )
 }

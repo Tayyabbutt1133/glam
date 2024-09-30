@@ -167,7 +167,7 @@ export default function HomeCategory() {
                       alt={category.name}
                       className="w-full h-full object-cover rounded-lg 2xl:w-[390px] 2xl:h-[455px]"
                     />
-                    <div className="absolute inset-0 bg-black bg-opacity-40 rounded-lg flex items-end justify-start p-8">
+                    <div className="absolute inset-0  bg-opacity-40 rounded-lg flex items-end justify-start p-8">
                       <h2
                         className={`${jost.className} text-white text-[30px] xl:text-[36px] font-bold`}
                       >
