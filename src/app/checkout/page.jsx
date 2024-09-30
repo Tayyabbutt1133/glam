@@ -471,13 +471,13 @@ export default function Checkout() {
 
             <div className="space-y-4">
               <div className="flex items-center justify-center my-4">
-                <hr className="flex-grow border-t border-gray-300" />
+                <hr className="flex-grow border-t border-[#EFEFEF]" />
                 <span
                   className={`px-3 text-gray-500 text-sm ${lexendDeca.className}`}
                 >
                   OR
                 </span>
-                <hr className="flex-grow border-t border-gray-300" />
+                <hr className="flex-grow border-t border-[#EFEFEF]" />
               </div>
 
               {/* Contact Section */}
