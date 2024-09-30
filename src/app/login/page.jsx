@@ -43,23 +43,6 @@ export default function Login() {
   return (
     <div className="flex justify-center items-center min-h-screen">
       <div className="w-full max-w-md p-8 rounded-lg">
-        {/* Social Login Buttons */}
-        <div className={` ${inter.className} flex justify-between space-x-4`}>
-          <button className="flex items-center justify-center w-full px-4 py-2 bg-white text-gray-800 font-semibold rounded-md shadow-sm hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300">
-            <FcGoogle className="mr-2" />
-            Google
-          </button>
-          <button className="flex items-center justify-center w-full px-4 py-2 bg-white text-black font-semibold rounded-md shadow-sm hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-900">
-            <FaApple className="mr-2" />
-            Apple
-          </button>
-        </div>
-
-        {/* Separator */}
-        <div className="relative  text-center my-6">
-          <span className={`mx-4 text-sm text-gray-500 ${lexendDeca.className}`}>or Continue with</span>
-        </div>
-
         {/* Login/Sign-Up Tabs */}
         <div className="flex justify-between mb-6">
           {/* Login Tab */}
@@ -167,6 +150,24 @@ export default function Login() {
         {message && (
           <div className="mt-4 text-center text-sm text-red-600">{message}</div>
         )}
+           {/* Separator */}
+           <div className="relative  text-center my-6">
+          <span className={`mx-4 text-sm text-gray-500 ${lexendDeca.className}`}>or Continue with</span>
+        </div>
+        
+            {/* Social Login Buttons */}
+            <div className={` ${inter.className} flex justify-between space-x-4`}>
+          <button className="flex items-center justify-center w-full px-4 py-2 bg-white text-gray-800 font-semibold rounded-md shadow-sm hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300">
+            <FcGoogle className="mr-2" />
+            Google
+          </button>
+          <button className="flex items-center justify-center w-full px-4 py-2 bg-white text-black font-semibold rounded-md shadow-sm hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-900">
+            <FaApple className="mr-2" />
+            Apple
+          </button>
+        </div>
+
+     
       </div>
     </div>
   );
