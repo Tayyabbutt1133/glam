@@ -29,7 +29,7 @@ const NextArrow = ({ className, style, onClick }) => {
       style={{
         ...style,
         ...arrowStyles,
-        right: "-30px",
+        right: "-5vw",
       }}
     >
       <NextArrowIcon />
@@ -44,7 +44,7 @@ const PrevArrow = ({ className, style, onClick }) => (
     style={{
       ...style,
       ...arrowStyles,
-      left: "-50px",
+      left: "-5vw",
     }}
   >
     <PrevArrowIcon />
@@ -152,6 +152,9 @@ const InFocus = () => {
       >
         In focus
       </Text>
+      <main className="w-[92%] mx-auto">
+
+      
       {loading ? (
         <Slider {...settings}>
         {Array(4).fill(0).map((_, index) => (
@@ -177,6 +180,7 @@ const InFocus = () => {
           ))}
         </Slider>
       )}
+      </main>
     </Container>
   );
 };

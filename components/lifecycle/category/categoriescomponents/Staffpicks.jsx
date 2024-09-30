@@ -26,12 +26,12 @@ const arrowStyles = {
 const NextArrow = ({ className, style, onClick }) => {
   return (
     <div
-      className={`absolute top-1/2 transform -translate-y-1/2 right-4 2xl:mr-8 ${className}`}
+      className={`absolute top-1/2 transform -translate-y-1/2 right-2 2xl:mr-2 ${className}`}
       onClick={onClick}
       style={{
         ...style,
         ...arrowStyles,
-        right: "-17px",
+        right: "-2vw",
       }}
     >
       <NextArrowIcon />
@@ -46,7 +46,7 @@ const PrevArrow = ({ className, style, onClick }) => (
     style={{
       ...style,
       ...arrowStyles,
-      left: "-46px",
+      left: "-2.4vw",
     }}
   >
     <PrevArrowIcon />
@@ -78,7 +78,7 @@ const Staffpicks = () => {
         setLoading(false);
       }
     };
-    if(categoryId) fetchStaffPicks();
+    if (categoryId) fetchStaffPicks();
   }, [categoryId]);
 
   const settings = {
@@ -90,8 +90,16 @@ const Staffpicks = () => {
     autoplay: true,
     autoplaySpeed: 2000,
     arrows: true,
-    prevArrow:  <div className="hidden md:block"><PrevArrow /></div>,
-    nextArrow: <div className="hidden md:block"><NextArrow /></div>,
+    prevArrow: (
+      <div className="hidden md:block">
+        <PrevArrow />
+      </div>
+    ),
+    nextArrow: (
+      <div className="hidden md:block">
+        <NextArrow />
+      </div>
+    ),
     responsive: [
       {
         breakpoint: 1280,
@@ -137,49 +145,50 @@ const Staffpicks = () => {
       [productId]: !prevFavorites[productId],
     }));
   };
-  
+
   if (!categoryId) return;
-  
+
   return (
-    <Container>
-    <main className="my-16">
-      <Text style={"h1"}
-        className={`text-2xl font-semibold mx-4 my-8 ${jost.className} uppercase`}
-      >
-        Staff Picks
-      </Text>
-      {loading ? (
-        <Slider {...settings}>
-          {Array(4)
-            .fill(0)
-            .map((_, index) => (
-              <div key={index} className="px-2">
-                <div className="bg-white shadow-lg rounded-lg overflow-hidden relative flex flex-col h-full min-h-[420px] border border-gray-300">
-                  <div className="w-[90%] 2xl:w-[100%] h-48">
-                    <Skeleton height="100%" />
-                  </div>
-                  <div className="px-4 pb-4 flex-grow">
-                    <Skeleton height={24} width="80%" className="mb-2" />
-                    <Skeleton height={20} width="100%" className="mb-2" />
-                    <Skeleton height={20} width="90%" className="mb-2" />
-                    <Skeleton height={20} width="50%" className="mb-4" />
-                    <Skeleton height={32} width="100%" />
+    <Container className="my-16">
+        <Text
+          style={"h1"}
+          className={`text-2xl font-semibold my-8 ${jost.className} uppercase`}
+        >
+          Staff Picks
+        </Text>
+      <main className="w-[95%] mx-auto">
+        {loading ? (
+          <Slider {...settings}>
+            {Array(4)
+              .fill(0)
+              .map((_, index) => (
+                <div key={index} className="px-2">
+                  <div className="bg-white shadow-lg rounded-lg overflow-hidden relative flex flex-col h-full min-h-[420px] border border-gray-300">
+                    <div className="w-[90%] 2xl:w-[100%] h-48">
+                      <Skeleton height="100%" />
+                    </div>
+                    <div className="px-4 pb-4 flex-grow">
+                      <Skeleton height={24} width="80%" className="mb-2" />
+                      <Skeleton height={20} width="100%" className="mb-2" />
+                      <Skeleton height={20} width="90%" className="mb-2" />
+                      <Skeleton height={20} width="50%" className="mb-4" />
+                      <Skeleton height={32} width="100%" />
+                    </div>
                   </div>
                 </div>
+              ))}
+          </Slider>
+        ) : (
+          <Slider {...settings}>
+            {staffPicks?.map((product) => (
+              <div key={product.id} className="">
+                <Product product={product} />
               </div>
             ))}
-        </Slider>
-      ) : (
-        <Slider {...settings}>
-          {staffPicks?.map((product) => (
-             <div key={product.id} className=" pb-2">
-             <Product product={product} />
-           </div>
-          ))}
-        </Slider>
-      )}
+          </Slider>
+        )}
       </main>
-      </Container>
+    </Container>
   );
 };
 
