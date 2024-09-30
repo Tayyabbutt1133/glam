@@ -39,7 +39,40 @@ export default function Newsletter() {
                
                     <button
                       type="submit"
-                      className={`box-border hover:bg-hover px-7 uppercase   text-sm lg:text-[17px] 2xl:text-[20px] font-medium text-center text-white rounded-lg border cursor-pointer bg-primary-700 border-primary-600 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 bg-black ${jost.className}`}
+                      className={`
+                        box-border 
+                        hover:bg-hover 
+                        2xl:px-10
+                        2xl:py-[19px]
+                        xl:px-8
+                        xl:py-[15px]
+                        lg:px-6
+                        lg:py-[13px]
+                        md:px-5
+                        md:py-[13px]
+                        px-4
+                        py-[9px]
+                        uppercase   
+                        text-sm 
+                        lg:text-[17px] 
+                        2xl:text-[20px] 
+                        font-medium 
+                        text-center 
+                        text-white 
+                        rounded-lg 
+                        border 
+                        cursor-pointer 
+                        bg-primary-700 
+                        border-primary-600 
+                        hover:bg-primary-800 
+                        focus:ring-4 
+                        focus:ring-primary-300 
+                        bg-black 
+                        transition-all
+                        ease 
+                        duration-300
+                        ${jost.className}
+                      `}
                     >
                       Subscribe
                     </button>
