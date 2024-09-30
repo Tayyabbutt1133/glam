@@ -42,7 +42,7 @@ export default function Footer() {
         <div className="mx-auto w-full">
           <div className="md:flex md:justify-between md:items-center my-10">
             {/* logo */}
-            <div className="flex flex-col gap-8">
+            <div className="flex flex-col gap-4">
               <Link href="https://glambeauty-demo.vercel.app/" className="flex items-center space-x-3">
                   <Image src={logo} alt="GlamBeauty Logo" width={215} height={26.424} />
                 <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"></span>
