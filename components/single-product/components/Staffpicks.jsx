@@ -14,8 +14,6 @@ import NextArrowIcon from "/public/hero-banners/next-arrow";
 import PrevArrowIcon from "/public/hero-banners/prev-arrow";
 import Product from "../../product";
 
-
-
 const arrowStyles = {
   width: "40px",
   height: "40px",
@@ -31,7 +29,7 @@ const NextArrow = ({ className, style, onClick }) => {
       style={{
         ...style,
         ...arrowStyles,
-        right: "-14px",
+        right: "-2vw",
       }}
     >
       <NextArrowIcon />
@@ -46,7 +44,7 @@ const PrevArrow = ({ className, style, onClick }) => (
     style={{
       ...style,
       ...arrowStyles,
-      left: "-50px",
+      left: "-4vw",
     }}
   >
     <PrevArrowIcon />
@@ -61,7 +59,6 @@ const decodeHtmlEntities = (text) => {
 };
 
 const Staffpicks = () => {
-
   const [favorites, setFavorites] = useState({});
   const [staffPicks, setStaffPicks] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -147,8 +144,8 @@ const Staffpicks = () => {
 
   return (
     <Container className="my-24">
+      {/* This h1 tag will not use Text component */}
       <h1
-      
         className={`
           ${jost.className} 
           capitalize 
@@ -159,33 +156,35 @@ const Staffpicks = () => {
       >
         See What Others are Buying
       </h1>
-      {loading ? (
-        <Slider {...settings}>
-          {Array(4)
-            .fill(0)
-            .map((_, index) => (
-              <div key={index} className="px-2">
-                <div className="bg-white shadow-lg rounded-lg overflow-hidden relative flex flex-col h-full min-h-[350px] border border-gray-300">
-                  <div className="aspect-w-1 aspect-h-1 w-full h-48">
-                    <Skeleton height="100%" />
-                  </div>
-                  <div className="p-4 flex-grow">
-                    <Skeleton height={20} width="80%" className="mb-2" />
-                    <Skeleton height={16} width="60%" className="mb-4" />
-                    <Skeleton height={24} width="40%" className="mb-2" />
-                    <Skeleton height={32} width="100%" />
+      <main className="w-[92%] mx-auto">
+        {loading ? (
+          <Slider {...settings}>
+            {Array(4)
+              .fill(0)
+              .map((_, index) => (
+                <div key={index} className="px-2">
+                  <div className="bg-white shadow-lg rounded-lg overflow-hidden relative flex flex-col h-full min-h-[350px] border border-gray-300">
+                    <div className="aspect-w-1 aspect-h-1 w-full h-48">
+                      <Skeleton height="100%" />
+                    </div>
+                    <div className="p-4 flex-grow">
+                      <Skeleton height={20} width="80%" className="mb-2" />
+                      <Skeleton height={16} width="60%" className="mb-4" />
+                      <Skeleton height={24} width="40%" className="mb-2" />
+                      <Skeleton height={32} width="100%" />
+                    </div>
                   </div>
                 </div>
-              </div>
+              ))}
+          </Slider>
+        ) : (
+          <Slider {...settings}>
+            {staffPicks?.map((product) => (
+              <Product key={product.id} product={product} />
             ))}
-        </Slider>
-      ) : (
-        <Slider {...settings}>
-          {staffPicks?.map((product) => (
-            <Product key={product.id} product={product} />
-          ))}
-        </Slider>
-      )}
+          </Slider>
+        )}
+      </main>
     </Container>
   );
 };
