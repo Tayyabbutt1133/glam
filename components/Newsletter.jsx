@@ -1,5 +1,4 @@
 import React from "react";
-import Container from "./container";
 import { jost } from "./ui/fonts";
 
 export default function Newsletter() {
