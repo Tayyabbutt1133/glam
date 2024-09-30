@@ -22,6 +22,7 @@ export default function FastSearchBarWithDropdown({ formobile = false }) {
   const [query, setQuery] = useState("")
   const [products, setProducts] = useState([])
   const [popularSearches, setPopularSearches] = useState([])
+  const [defaultProducts, setDefaultProducts] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [hasSearched, setHasSearched] = useState(false)
   const searchBarRef = useRef(null)
@@ -61,11 +62,11 @@ export default function FastSearchBarWithDropdown({ formobile = false }) {
 
         setIsLoading(false)
       } else {
-        setIsDropdownOpen(false)
-        setProducts([])
+        setProducts(defaultProducts)
+        setHasSearched(false)
       }
     }, 150),
-    []
+    [defaultProducts]
   )
 
   const handleChange = (e) => {
@@ -88,6 +89,23 @@ export default function FastSearchBarWithDropdown({ formobile = false }) {
     }
   }
 
+  const fetchDefaultProducts = async () => {
+    try {
+      const response = await axiosInstance.get("products", {
+        params: {
+          per_page: 5,
+          _fields: "id,name,price,sale_price,regular_price,images",
+          orderby: "popularity",
+          order: "desc",
+        },
+      })
+      setDefaultProducts(response.data)
+      setProducts(response.data)
+    } catch (error) {
+      console.error("Error fetching default products:", error)
+    }
+  }
+
   const handleClickOutside = useCallback((e) => {
     if (searchBarRef.current && !searchBarRef.current.contains(e.target)) {
       setIsDropdownOpen(false)
@@ -97,6 +115,7 @@ export default function FastSearchBarWithDropdown({ formobile = false }) {
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside)
     fetchPopularSearches()
+    fetchDefaultProducts()
     return () => {
       document.removeEventListener("mousedown", handleClickOutside)
     }
@@ -111,6 +130,16 @@ export default function FastSearchBarWithDropdown({ formobile = false }) {
       </div>
     </div>
   )
+
+  const decodeHtmlEntities = (text) => {
+    const textArea = document.createElement('textarea')
+    textArea.innerHTML = text
+    return textArea.value
+  }
+
+  const formatPrice = (price) => {
+    return parseFloat(price).toFixed(2)
+  }
 
   return (
     <div ref={searchBarRef} className={`flex justify-center relative ${formobile ? 'w-full' : 'w-[768px]'}`}>
@@ -128,6 +157,7 @@ export default function FastSearchBarWithDropdown({ formobile = false }) {
           placeholder="Search products, trends"
           value={query}
           onChange={handleChange}
+          onFocus={() => setIsDropdownOpen(true)}
           aria-label="Search products and trends"
         />
       </section>
@@ -148,7 +178,7 @@ export default function FastSearchBarWithDropdown({ formobile = false }) {
                       className={`block cursor-pointer transition duration-300 hover:bg-[#CF8562] hover:text-white p-1 ${lexendDeca.className} font-medium`}
                       onClick={() => setIsDropdownOpen(false)}
                     >
-                      {term.name}
+                      {decodeHtmlEntities(term.name)}
                     </Link>
                   </li>
                 ))}
@@ -157,7 +187,7 @@ export default function FastSearchBarWithDropdown({ formobile = false }) {
 
             <div className="w-1/2 p-4">
               <h3 className={`text-xs text-[#8B929D] ${jost.className} font-normal uppercase mb-2 ml-4`}>
-                Trending Products
+                {query ? "Search Results" : "Trending Products"}
               </h3>
               <ul className="space-y-4 text-xs">
                 {isLoading ? (
@@ -177,7 +207,7 @@ export default function FastSearchBarWithDropdown({ formobile = false }) {
                         <div className="w-10 h-10 mr-4 ml-4 bg-gray-100 flex-shrink-0">
                           <Image
                             src={product.images[0]?.src || "/placeholder.svg?height=40&width=40"}
-                            alt={product.name}
+                            alt={decodeHtmlEntities(product.name)}
                             className="object-cover w-full h-full rounded-md"
                             width={40}
                             height={40}
@@ -185,16 +215,16 @@ export default function FastSearchBarWithDropdown({ formobile = false }) {
                         </div>
                         <div className="">
                           <p className={`font-medium text-wrap ${lexendDeca.className}`}>
-                            {product.name}
+                            {decodeHtmlEntities(product.name)}
                           </p>
                           <div className="flex flex-row gap-3">
                             {product.sale_price ? (
                               <>
-                                <p className="line-through text-gray-400 group-hover:text-white">£{product.regular_price}</p>
-                                <p className="text-red-600 group-hover:text-white">£{product.sale_price}</p>
+                                <p className="line-through text-gray-400 group-hover:text-white">£{formatPrice(product.regular_price)}</p>
+                                <p className="text-red-600 group-hover:text-white">£{formatPrice(product.sale_price)}</p>
                               </>
                             ) : (
-                              <p className="text-black group-hover:text-white">£{product.price}</p>
+                              <p className="text-black group-hover:text-white">£{formatPrice(product.price)}</p>
                             )}
                           </div>
                         </div>

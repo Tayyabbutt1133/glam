@@ -540,10 +540,10 @@ export default function Component() {
               {filters.brands.map((brand) => (
                 <span
                   key={brand}
-                  className={`inline-flex items-center bg-[#F7EBE0] rounded-lg px-3 py-1 text-sm font-bold text-black mr-2 mb-2 ${lexendDeca.className}`}
+                  className={`inline-flex items-center bg-[#F7EBE0] rounded-lg px-3 py-1 text-sm font-bold text-black 2xl:text-[20px] mr-2 mb-2 ${lexendDeca.className}`}
                 >
                   <span
-                    className={`${lexendDeca.className} font-normal mr-1 text-black`}
+                    className={`${lexendDeca.className} 2xl:text-[24px] font-normal mr-1 text-black`}
                   >
                     Brand:{" "}
                   </span>{" "}
@@ -564,10 +564,10 @@ export default function Component() {
                 return category ? (
                   <span
                     key={categoryId}
-                    className={`inline-flex items-center bg-[#F7EBE0] rounded-lg px-3 py-1 text-sm font-bold text-black mr-2 mb-2 ${lexendDeca.className}`}
+                    className={`inline-flex items-center bg-[#F7EBE0] rounded-lg px-3 py-1 text-sm font-bold text-black mr-2 mb-2 2xl:text-[20px] ${lexendDeca.className}`}
                   >
                     <span
-                      className={`${lexendDeca.className} font-normal mr-1 text-black`}
+                      className={`${lexendDeca.className} 2xl:text-[24px] font-normal mr-1 text-black`}
                     >
                       Category:{" "}
                     </span>{" "}
@@ -585,10 +585,10 @@ export default function Component() {
               {filters.priceRange.map((range) => (
                 <span
                   key={range}
-                  className={`inline-flex items-center bg-[#F7EBE0] rounded-lg px-3 py-1 text-sm font-bold text-black mr-2 mb-2 ${lexendDeca.className}`}
+                  className={`inline-flex items-center bg-[#F7EBE0] rounded-lg px-3 py-1 text-sm font-bold text-black mr-2 mb-2 2xl:text-[20px] ${lexendDeca.className}`}
                 >
                   <span
-                    className={`${lexendDeca.className} font-normal mr-1 text-black`}
+                    className={`${lexendDeca.className} 2xl:text-[24px] font-normal mr-1 text-black`}
                   >
                     Price:{" "}
                   </span>{" "}

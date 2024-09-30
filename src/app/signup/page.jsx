@@ -41,10 +41,19 @@ export default function SignUp() {
     }
   };
 
+  const inputStyles = `
+    mt-1 block w-full 2xl:w-[521px] px-4 py-2 
+    border border-[#D9D9D9] rounded-md 
+    focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent 
+    ${lexendDeca.className}
+    text-[#8B929D]
+    text-base font-normal leading-5 tracking-[0.2px]
+  `;
+
   return (
     <>
-      <div className="flex justify-center items-center min-h-screen bg-white">
-        <div className="w-full max-w-md 2xl:max-w-[580px] p-8 bg-white rounded-lg pt-16">
+      <div className="flex justify-center  items-center min-h-screen bg-white">
+        <div className="w-full max-w-md 2xl:max-w-[580px] p-8 bg-white rounded-lg">
           <div className="flex justify-between mb-6">
             <div className="flex-1 text-center">
               <Link href="/login">
@@ -90,7 +99,7 @@ export default function SignUp() {
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 placeholder="Full Name*"
-                className={`mt-1 block w-full 2xl:w-[521px] px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent ${lexendDeca.className}`}
+                className={inputStyles}
                 required
               />
             </div>
@@ -101,7 +110,7 @@ export default function SignUp() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Email Address*"
-                className={`mt-1 block w-full 2xl:w-[521px] px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent ${lexendDeca.className}`}
+                className={inputStyles}
                 required
               />
             </div>
@@ -112,59 +121,86 @@ export default function SignUp() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Password*"
-                className={`mt-1 block w-full 2xl:w-[521px] px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent ${lexendDeca.className}`}
+                className={inputStyles}
                 required
               />
             </div>
             <div>
-              <div className="relative w-full 2xl:w-[521px]">
-                <PhoneInput
-                  country={'gb'}
-                  value={phone}
-                  onChange={(phone) => setPhone(phone)}
-                  inputStyle={{
-                    width: '100%',
-                    height: '44px',
-                    fontSize: '16px',
-                    paddingLeft: '52px',
-                    borderRadius: '6px',
-                    border: '1px solid #e2e8f0',
-                    backgroundColor: 'white',
-                  }}
-                  buttonStyle={{
-                    border: 'none',
-                    backgroundColor: '#f3f4f6',
-                    borderTopLeftRadius: '4px',
-                    borderBottomLeftRadius: '4px',
-                    borderRight: '1px solid #e2e8f0',
-                  }}
-                  containerStyle={{
-                    width: '100%',
-                  }}
-                  inputClass="w-full h-10 pl-13 pr-4 text-base rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black focus:border-purple-500"
-                  buttonClass="absolute left-0 top-0 bottom-0 flex items-center justify-center px-2"
-                  dropdownStyle={{
-                    width: '300px',
-                  }}
-                  placeholder="Phone number"
-                />
-                <style jsx global>{`
-                  .react-tel-input .flag-dropdown.open,
-                  .react-tel-input .selected-flag:hover,
-                  .react-tel-input .selected-flag:focus,
-                  .react-tel-input .selected-flag.open {
-                    background-color: #f3f4f6 !important;
-                  }
-                  .react-tel-input .selected-flag {
-                    width: 44px;
-                    border-top-left-radius: 4px;
-                    border-bottom-left-radius: 4px;
-                  }
-                  .react-tel-input .selected-flag .arrow {
-                    left: 28px;
-                  }
-                `}</style>
-              </div>
+            <div className={`relative w-full 2xl:w-[521px] ${lexendDeca.className}`}>
+  <PhoneInput
+    country={'gb'}
+    value={phone}
+    onChange={(phone) => setPhone(phone)}
+    inputStyle={{
+      width: '100%',
+      height: '44px',
+      fontSize: '16px',
+      paddingLeft: '52px',
+      borderRadius: '6px',
+      border: '1px solid #e2e8f0',
+      backgroundColor: 'white',
+      color: '#707070',
+      fontFamily: '"Lexend Deca", sans-serif',
+      fontWeight: 400,
+      lineHeight: '20px',
+      letterSpacing: '0.2px',
+    }}
+    buttonStyle={{
+      border: 'none',
+      backgroundColor: '#E9E9E9',
+      borderTopLeftRadius: '4px',
+      borderBottomLeftRadius: '4px',
+      borderRight: '1px solid #e2e8f0',
+    }}
+    containerStyle={{
+      width: '100%',
+    }}
+    inputClass={`w-full h-10 pl-13 pr-4 text-base rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black focus:border-purple-500`}
+    buttonClass="absolute left-0 top-0 bottom-0 flex px-2"
+    dropdownStyle={{
+      width: '300px',
+    }}
+    placeholder="Phone number"
+    disableCountryCode={true}
+    countryCodeEditable={false}
+  />
+  <style jsx global>{`
+    .react-tel-input .flag-dropdown.open,
+    .react-tel-input .selected-flag:hover,
+    .react-tel-input .selected-flag:focus,
+    .react-tel-input .selected-flag.open {
+      background-color: #f3f4f6 !important;
+    }
+    .react-tel-input .selected-flag {
+      width: 44px;
+      border-top-left-radius: 4px;
+      border-bottom-left-radius: 4px;
+    }
+    .react-tel-input .selected-flag .arrow {
+      left: 28px;
+    }
+    .react-tel-input .country-list {
+      width: 300px;
+    }
+    .react-tel-input .country-list .country {
+      display: flex;
+      align-items: center;
+    }
+    .react-tel-input .country-list .country .dial-code {
+      display: none;
+    }
+    .react-tel-input input {
+      font-family: "Lexend Deca", sans-serif !important;
+      font-size: 16px !important;
+      font-style: normal !important;
+      font-weight: 400 !important;
+      line-height: 20px !important;
+      letter-spacing: 0.2px !important;
+      color: #707070 !important;
+      /* Removed text-align: center to make the text left-aligned */
+    }
+  `}</style>
+</div>
             </div>
             <div className="flex items-start">
               <input

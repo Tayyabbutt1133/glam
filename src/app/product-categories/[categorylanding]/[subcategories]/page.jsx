@@ -547,10 +547,10 @@ export default function SubcategoryPage() {
               {filters.brands.map((brand) => (
                 <span
                   key={brand}
-                  className={`inline-flex items-center bg-[#F7EBE0] rounded-lg px-3 py-1 text-sm font-bold text-black mr-2 mb-2 ${lexendDeca.className}`}
+                  className={`inline-flex items-center bg-[#F7EBE0] rounded-lg px-3 py-1 text-sm 2xl:text-[24px] font-bold text-black mr-2  mb-2 ${lexendDeca.className}`}
                 >
                   <span
-                    className={`${lexendDeca.className} font-normal mr-1 text-black`}
+                    className={`${lexendDeca.className} 2xl:text-[24px] font-normal mr-1 text-black`}
                   >
                     Brand:{" "}
                   </span>{" "}
@@ -574,7 +574,7 @@ export default function SubcategoryPage() {
                     className={`inline-flex items-center bg-[#F7EBE0] rounded-lg px-3 py-1 text-sm font-bold text-black mr-2 mb-2 ${lexendDeca.className}`}
                   >
                     <span
-                      className={`${lexendDeca.className} font-normal mr-1 text-black`}
+                      className={`${lexendDeca.className} 2xl:text-[20px] font-normal mr-1 text-black`}
                     >
                       Category:{" "}
                     </span>{" "}
@@ -595,7 +595,7 @@ export default function SubcategoryPage() {
                   className={`inline-flex items-center bg-[#F7EBE0] rounded-lg px-3 py-1 text-sm font-bold text-black mr-2 mb-2 ${lexendDeca.className}`}
                 >
                   <span
-                    className={`${lexendDeca.className} font-normal mr-1 text-black`}
+                    className={`${lexendDeca.className} 2xl:text-[20px] font-normal mr-1 text-black`}
                   >
                     Price:{" "}
                   </span>{" "}
