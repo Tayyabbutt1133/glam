@@ -9,6 +9,7 @@ import { usePopupStore } from "../../../states/use-popup-store.jsx"
 import uk_flag from "../../../public/Flag_uk.png"
 import usa_flag from  "../../../public/usa-flag.png"
 import Text from '../../../components/ui/Text'
+import uk from '../../../public/uk.svg'
 
 export default function NewsBannerNav() {
   const [mounted, setMounted] = useState(false)
@@ -87,7 +88,7 @@ export default function NewsBannerNav() {
             <div className="relative flex w-10">
               {selectedCountry.countryCode === "en" && selectedCountry.code === "GBP" ? (
                 <Image
-                  src={uk_flag}
+                  src={uk}
                   alt="United Kingdom Flag"
                   width={31}
                   height={22}
