@@ -62,14 +62,14 @@ const FloatingLabelInput = ({ label, name, value, onChange, type = "text", error
         type={type}
         id={name}
         name={name}
-        className={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-2 ${error ? 'border-red-500' : 'border-gray-300'} appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer ${lexendDeca.className}`}
+        className={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-[#8B929D] bg-transparent rounded-lg border-2 ${error ? 'border-red-500' : 'border-[#EFEFEF]'} appearance-none focus:outline-none focus:ring-0 focus:border-black peer ${lexendDeca.className}`}
         placeholder=" "
         value={value}
         onChange={onChange}
       />
       <label
         htmlFor={name}
-        className={`absolute text-sm ${error ? 'text-red-500' : 'text-gray-500'} duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 start-1 ${lexendDeca.className}`}
+        className={`absolute text-sm ${error ? 'text-red-500' : 'text-[#8B929D]'} duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-black peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 start-1 ${lexendDeca.className}`}
       >
         {label}
       </label>
@@ -569,7 +569,7 @@ export default function Checkout() {
                     inputProps={{
                       name: 'phone',
                       required: true,
-                      className: `block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-2 ${errors.phone ? 'border-red-500' : 'border-gray-300'} appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer pl-14 ${lexendDeca.className}`,
+                      className: `block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-2 ${errors.phone ? 'border-red-500' : 'border-[#8B929D]'} appearance-none focus:outline-none focus:ring-0 focus:border-black peer pl-14 ${lexendDeca.className}`,
                     }}
                     containerClass="w-full"
                     buttonClass="h-full !bg-transparent hover:!bg-transparent focus:!bg-transparent active:!bg-transparent"
@@ -577,7 +577,7 @@ export default function Checkout() {
                   />
                   <label
                     htmlFor="phone"
-                    className={`absolute text-sm ${errors.phone ? 'text-[#BF0000]' : 'text-gray-500'} duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600 start-1 ${
+                    className={`absolute text-sm ${errors.phone ? 'text-[#BF0000]' : 'text-gray-500'} duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-black start-1 ${
                       formData.phone ? 'invisible' : 'visible'
                     } ${lexendDeca.className}`}
                   >
@@ -856,7 +856,7 @@ export default function Checkout() {
               >
                 PAY NOW
               </button>
-              <p className={`${lexendDeca.className} 2xl:text-[20px] font-normal  w-full`}>By placing this order, you are confirming that you agree to our <span className="underline">Terms and Conditions</span>  and  <span className="underline">Privacy Policy</span>.
+              <p className={`${lexendDeca.className} 2xl:text-[20px] font-normal  w-full`}>By placing this order, you are confirming that you agree to our <span className="underline">Terms and Conditions</span>  and  <span className="underline">Privacy Policy</span>.
           </p>
 
             </div>
