@@ -145,6 +145,10 @@ export default function Checkout() {
   const router = useRouter()
   const [paypalOption, setPaypalOption] = useState("")
   const [klarnaOption, setKlarnaOption] = useState("")
+  const [phone, setPhone] = useState('')
+  const [error, setError] = useState('')
+
+
 
   const paypalOptions = [
     "Pay in full",
@@ -562,31 +566,50 @@ export default function Checkout() {
                   />
                 </div>
                 <div className="relative">
-                  <PhoneInput
-                    country={'gb'}
-                    value={formData.phone}
-                    onChange={handlePhoneChange}
-                    inputProps={{
-                      name: 'phone',
-                      required: true,
-                      className: `block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-2 ${errors.phone ? 'border-red-500' : 'border-[#EFEFEF]'} appearance-none focus:outline-none focus:ring-0 focus:border-black peer pl-14 ${lexendDeca.className}`,
-                    }}
-                    containerClass="w-full"
-                    buttonClass="h-full !bg-transparent hover:!bg-transparent focus:!bg-transparent active:!bg-transparent"
-                    dropdownClass="!bg-white"
-                  />
-                  <label
-                    htmlFor="phone"
-                    className={`absolute text-sm ${errors.phone ? 'text-[#BF0000]' : 'text-gray-500'} duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-black start-1 ${
-                      formData.phone ? 'invisible' : 'visible'
-                    } ${lexendDeca.className}`}
-                  >
-                    Phone*
-                  </label>
-                  {errors.phone && (
-                    <div className="text-[#BF0000] text-xs">{errors.phone}</div>
-                  )}
-                </div>
+      <PhoneInput
+        country={'gb'}
+        value={phone}
+        onChange={handlePhoneChange}
+        inputProps={{
+          name: 'phone',
+          required: true,
+          className: `block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border ${error ? 'border-red-500' : 'border-[#EFEFEF]'} appearance-none focus:outline-none focus:ring-0 focus:border-black peer pl-14 ${lexendDeca.className}`,
+        }}
+        containerClass="w-full"
+        buttonClass="h-full !bg-[#F7F7F7A6] hover:!bg-[#F7F7F7A6] focus:!bg-[#F7F7F7A6] active:!bg-[#F7F7F7A6] border-none rounded-l-lg"
+        dropdownClass="!bg-white"
+      />
+      {/* <label
+        htmlFor="phone"
+        className={`absolute text-sm ${error ? 'text-[#BF0000]' : 'text-gray-500'} duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-[#F7F7F7A6] px-2 peer-focus:px-2 peer-focus:text-black start-1 ${
+          phone ? 'invisible' : 'visible'
+        } ${lexendDeca.className}`}
+      >
+        Phone*
+      </label> */}
+      {error && (
+        <div className="text-[#BF0000] text-xs mt-1">{error}</div>
+      )}
+      <style jsx global>{`
+        .react-tel-input .flag-dropdown {
+          border: none !important;
+          background-color: #F7F7F7A6 !important;
+        }
+        .react-tel-input .selected-flag {
+          background-color: #F7F7F7A6 !important;
+          border-top-left-radius: 0.5rem;
+          border-bottom-left-radius: 0.5rem;
+        }
+        .react-tel-input .selected-flag:hover,
+        .react-tel-input .selected-flag:focus,
+        .react-tel-input .selected-flag.open {
+          background-color: #F7F7F7A6 !important;
+        }
+        .react-tel-input .form-control {
+          width: 100% !important;
+        }
+      `}</style>
+    </div>
                 <div className="flex items-center mt-2">
                   <input
                     type="checkbox"
