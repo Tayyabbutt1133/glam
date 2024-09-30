@@ -130,7 +130,7 @@ export default function Login() {
 
           {/* Forgot Password Link */}
           <div className="flex">
-            <Link href="/forgot-password" className={`text-sm 2xl:text-[16px] text-gray-600 underline ${lexendDeca.className}`}>
+            <Link href="/forgot-password" className={`text-sm 2xl:text-[16px] text-[#8B929D] underline ${lexendDeca.className}`}>
               Forgot your Password?
             </Link>
           </div>
@@ -138,7 +138,7 @@ export default function Login() {
           {/* Sign In Button */}
           <button
             type="submit"
-            className={`w-full 2xl:w-[521px] py-2 bg-black text-white font-semibold rounded-lg shadow-sm hover:bg-[#CF8562] transition duration-300 focus:outline-none focus:ring-2 focus:ring-gray-900 ${lexendDeca.className}`}
+            className={`w-full 2xl:text-[20px] 2xl:w-[521px] py-2 bg-black text-white font-medium rounded-lg shadow-sm hover:bg-[#CF8562] transition duration-300 focus:outline-none focus:ring-2 focus:ring-gray-900 ${jost.className}`}
           >
             SIGN IN
           </button>

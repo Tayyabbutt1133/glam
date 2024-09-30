@@ -36,8 +36,8 @@ export default function Product({ product }) {
   };
 
   const getBrandName = (attributes) => {
-    const brandAttr = attributes?.nodes?.find((attr) => attr.name === "pa_brand");
-    return brandAttr
+    const brandAttr = attributes?.find((attr) => attr.name.toLowerCase() === "brand" || attr.name === "pa_brand");
+    return brandAttr && brandAttr.options && brandAttr.options.length > 0
       ? brandAttr.options[0]
       : "Unknown Brand";
   };
@@ -123,7 +123,7 @@ export default function Product({ product }) {
                 className={`w-full bg-black text-white py-2 text-sm rounded-lg hover:bg-[#CF8562] font-normal transition duration-200 ${lexendDeca.className}`}
                 onClick={(e) => {
                   e.preventDefault();
-                e.stopPropagation();
+                  e.stopPropagation();
                   addToCart(product);
                 }}
               >

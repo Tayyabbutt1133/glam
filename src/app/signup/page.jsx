@@ -244,7 +244,7 @@ export default function SignUp() {
             </div>
             <button
               type="submit"
-              className={`w-full 2xl:w-[521px] mt-6 py-2 bg-black text-white font-semibold rounded-lg shadow-sm hover:bg-[#CF8562] transition duration-300 focus:outline-none focus:ring-2 focus:ring-gray-900 ${lexendDeca.className}`}
+              className={`w-full 2xl:text-[20px] 2xl:w-[521px] mt-6 py-2 bg-black text-white rounded-lg shadow-sm hover:bg-[#CF8562] transition duration-300 focus:outline-none font-medium focus:ring-2 focus:ring-gray-900 ${jost.className}`}
             >
               REGISTER
             </button>
