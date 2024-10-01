@@ -56,7 +56,7 @@ const SkeletonItem = () => (
 );
 
 const CategoryList = ({ items, getHref }) => (
-  <ul className="flex justify-center gap-8 overflow-x-scroll md:overflow-x-auto pl-[500px] md:pl-0">
+  <ul className="flex justify-start py-1 gap-8 overflow-x-scroll md:overflow-x-auto scrollbar-hide">
     {items.length > 0 ? (
       items.map((item, index) => (
         <CategoryItem
@@ -160,7 +160,7 @@ const MenuCategoryList = () => {
           <>{sanitizeText(mainCategory?.name || '')}</>
         )}
       </h1>
-      <div className="mt-10">
+      <div className="mt-10 flex justify-center">
         <CategoryList
           items={subCategories}
           getHref={(subCat) => `/product-categories/${categorylanding}/${subCat.slug}`}
