@@ -54,8 +54,10 @@ const shippingOptions = [
     price: 5.99,
   },
 ]
-
 const FloatingLabelInput = ({ label, name, value, onChange, type = "text", error }) => {
+  const formattedLabel = label === "FirstName" ? "First Name" : label === "LastName" ? "Last Name" : label;
+  const formattedError = error?.replace("FirstName", "First Name").replace("LastName", "Last Name");
+
   return (
     <div className="relative mb-4">
       <input
@@ -71,16 +73,16 @@ const FloatingLabelInput = ({ label, name, value, onChange, type = "text", error
         htmlFor={name}
         className={`absolute text-sm ${error ? 'text-[#BF0000]' : 'text-[#8B929D]'} duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-black peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 start-1 ${lexendDeca.className}`}
       >
-        {label}
+        {formattedLabel}
       </label>
       {error && (
         <div className="absolute flex items-center mt-1">
-          <div className="text-[#BF0000] text-xs bg-white px-1">{error}</div>
+          <div className="text-[#BF0000] text-xs bg-white px-1">{formattedError}</div>
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
 function PaymentOption({ id, name, selected, onChange, children }) {
   return (
@@ -526,22 +528,22 @@ export default function Checkout() {
                   onChange={handleInputChange}
                   error={errors.country}
                 />
-                <div className="grid grid-cols-1 sm:grid-cols-2 mt-7 mb-4 gap-4">
-                  <FloatingLabelInput
-                    label="First Name*"
-                    name="firstName"
-                    value={formData.firstName}
-                    onChange={handleInputChange}
-                    error={errors.firstName}
-                  />
-                  <FloatingLabelInput
-                    label="Last Name*"
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleInputChange}
-                    error={errors.lastName}
-                  />
-                </div>
+             <div className="grid grid-cols-1 sm:grid-cols-2 mt-7 mb-4 gap-4">
+  <FloatingLabelInput
+    label="First Name*"
+    name="first Name"
+    value={formData.firstName}
+    onChange={handleInputChange}
+    error={errors.firstName}
+  />
+  <FloatingLabelInput
+    label="Last Name*"
+    name="last Name"
+    value={formData.lastName}
+    onChange={handleInputChange}
+    error={errors.lastName}
+  />
+</div>
                 <FloatingLabelInput
                   label="Address*"
                   name="address"
