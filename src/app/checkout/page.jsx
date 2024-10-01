@@ -62,20 +62,20 @@ const FloatingLabelInput = ({ label, name, value, onChange, type = "text", error
         type={type}
         id={name}
         name={name}
-        className={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-[#8B929D] bg-transparent rounded-lg border ${error ? 'border-red-500' : 'border-[#EFEFEF]'} appearance-none focus:outline-none focus:ring-0 focus:border-black peer ${lexendDeca.className}`}
+        className={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-[#8B929D] bg-transparent rounded-lg border ${error ? 'border-[#BF0000]' : 'border-[#EFEFEF]'} appearance-none focus:outline-none focus:ring-0 focus:border-black peer ${lexendDeca.className}`}
         placeholder=" "
         value={value}
         onChange={onChange}
       />
       <label
         htmlFor={name}
-        className={`absolute text-sm ${error ? 'text-red-500' : 'text-[#8B929D]'} duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-black peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 start-1 ${lexendDeca.className}`}
+        className={`absolute text-sm ${error ? 'text-[#BF0000]' : 'text-[#8B929D]'} duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-black peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 start-1 ${lexendDeca.className}`}
       >
         {label}
       </label>
       {error && (
         <div className="absolute flex items-center">
-          <div className="text-red-500 text-xs bg-white px-1 -mb-2">{error}</div>
+          <div className="text-[#BF0000] text-xs bg-white px-1 -mb-2">{error}</div>
         </div>
       )}
     </div>
