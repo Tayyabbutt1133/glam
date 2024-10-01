@@ -156,11 +156,11 @@ export default function Login() {
         
         {/* Social Login Buttons */}
         <div className={`${inter.className} flex justify-between space-x-4`}>
-          <button className="flex items-center justify-center w-full px-4 py-2 bg-white text-gray-800 font-semibold rounded-md shadow-sm hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300">
+          <button className="flex items-center border border-[#EFEFEF] justify-center w-full px-4 py-2  bg-white text-gray-800 font-semibold rounded-lg  hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300">
             <FcGoogle className="mr-2" />
             Google
           </button>
-          <button className="flex items-center justify-center w-full px-4 py-2 bg-white text-black font-semibold rounded-md shadow-sm hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-900">
+          <button className="flex items-center justify-center w-full px-4 py-2 bg-white text-black  font-semibold rounded-lg border border-[#EFEFEF]  hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-900">
             <FaApple className="mr-2" />
             Apple
           </button>
