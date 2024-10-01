@@ -1,0 +1,28 @@
+<svg width="128" height="111" viewBox="0 0 128 111" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Badge" filter="url(#filter0_dd_2264_47106)">
+<g clip-path="url(#clip0_2264_47106)">
+<rect x="41.666" y="21" width="44.4444" height="28.6325" rx="1" fill="white"/>
+<path id="American Express" fill-rule="evenodd" clip-rule="evenodd" d="M86.127 26.3977H82.4483L80.5254 31.9158L78.5188 26.3977H74.7566V34.9898L70.9107 26.3977H67.8174L63.9714 35.1763H66.6467L67.3992 33.4207H71.4124L72.1648 35.1763H77.1812V29.073L79.4385 35.1763H81.5286L83.7859 29.073V35.1763H86.127V36.5139H83.0335L80.5254 39.273L77.9336 36.5139H67.3157V45.2925H77.8501L80.4417 42.45L83.0335 45.2925H86.127V46.3792H82.4483L80.4417 44.2056L78.4351 46.3792H65.978V36.3467H61.9648L66.9812 25.0598H71.8303L73.586 28.9058V25.0598H79.6057L80.6089 27.9861L81.6123 25.0598H86.127V26.3977ZM86.127 38.4368L83.8697 40.8614L86.127 43.2859V45.2925L82.0303 40.8614L86.127 36.5139V38.4368ZM74.7566 45.2925V43.2024H69.7402V41.8648H74.6729V39.8582H69.7402V38.5205H74.7566V36.5139L78.9368 40.8614L74.7566 45.2925ZM68.1516 31.4976L69.3223 28.655L70.4927 31.4976H68.1516Z" fill="#006FCF"/>
+</g>
+<rect x="41.166" y="20.5" width="45.4444" height="29.6325" rx="1.5" stroke="#D6DCE5"/>
+</g>
+<defs>
+<filter id="filter0_dd_2264_47106" x="0.666016" y="0" width="126.444" height="110.632" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="2"/>
+<feGaussianBlur stdDeviation="10"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.717647 0 0 0 0 0.717647 0 0 0 0 0.717647 0 0 0 0.08 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_2264_47106"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="20"/>
+<feGaussianBlur stdDeviation="20"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.717647 0 0 0 0 0.717647 0 0 0 0 0.717647 0 0 0 0.08 0"/>
+<feBlend mode="normal" in2="effect1_dropShadow_2264_47106" result="effect2_dropShadow_2264_47106"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect2_dropShadow_2264_47106" result="shape"/>
+</filter>
+<clipPath id="clip0_2264_47106">
+<rect x="41.666" y="21" width="44.4444" height="28.6325" rx="1" fill="white"/>
+</clipPath>
+</defs>
+</svg>

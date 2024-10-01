@@ -496,7 +496,7 @@ export default function MyBag() {
   value={shippingAddress}
   onChange={(e) => setShippingAddress(e.target.value)}
   placeholder="Enter shipping address"
-  className="border-gray-300 w-[100%] xl:w-[65%] rounded-md px-2 py-1 text-gray-800 text-right"
+  className="border-gray-300 w-[100%] xl:w-[65%] rounded-md px-2 py-1 -mr-2 text-gray-800 text-right"
 />
                 </div>
                 <p className={`text-sm 2xl:text-[18px] text-black font-normal mb-4 ${jost.className}`}>
@@ -555,42 +555,48 @@ export default function MyBag() {
                 >
                   <p>Pay by Card/Pay Later</p>
                   <section className="gap-4 items-center flex">
-                    <Image
-                      className="hover:scale-110 transition-transform duration-300 cursor-pointer"
-                      src={visa}
-                      alt="Visa"
-                      width={40}
-                      height={25}
-                    />
-                    <Image
-                      className="hover:scale-110 transition-transform duration-300 cursor-pointer"
-                      src={master}
-                      alt="Master"
-                      width={40}
-                      height={25}
-                    />
-                    <Image
-                      className="hover:scale-110 transition-transform duration-300 cursor-pointer"
-                      src={maestro}
-                      alt="Maestro"
-                      width={40}
-                      height={25}
-                    />
-                    <Image
-                      className="hover:scale-110 transition-transform duration-300 cursor-pointer"
-                      src={ae}
-                      alt="American Express"
-                      width={40}
-                      height={25}
-                    />
-                    <Image
-                      className="hover:scale-110 transition-transform duration-300 cursor-pointer"
-                      src={paypal}
-                      alt="PayPal"
-                      width={40}
-                      height={25}
-                    />
-                  </section>
+  <div className="border border-gray-300 p-2 shadow-sm hover:scale-110 transition-transform duration-300 cursor-pointer w-[65px] h-[42px] flex items-center justify-center">
+    <Image
+      src={visa}
+      alt="Visa"
+      width={40}
+      height={25}
+    />
+  </div>
+  <div className="border border-gray-300 p-2 shadow-sm hover:scale-110 transition-transform duration-300 cursor-pointer w-[65px] h-[42px] flex items-center justify-center">
+    <Image
+      src={master}
+      alt="Master"
+      width={40}
+      height={25}
+    />
+  </div>
+  <div className="border border-gray-300  p-2 shadow-sm hover:scale-110 transition-transform duration-300 cursor-pointer w-[65px] h-[42px] flex items-center justify-center">
+    <Image
+      src={maestro}
+      alt="Maestro"
+      width={40}
+      height={25}
+    />
+  </div>
+  <div className="border border-gray-300 p-2 shadow-sm hover:scale-110 transition-transform duration-300 cursor-pointer w-[65px] h-[42px] flex items-center justify-center">
+    <Image
+      src={ae}
+      alt="American Express"
+      width={40}
+      height={25}
+    />
+  </div>
+  <div className="border border-gray-300 p-2 shadow-sm hover:scale-110 transition-transform duration-300 cursor-pointer w-[65px] h-[42px] flex items-center justify-center">
+    <Image
+      src={paypal}
+      alt="PayPal"
+      width={40}
+      height={25}
+    />
+  </div>
+</section>
+
                 </div>
                 <Link href="./checkout">
                   <button
