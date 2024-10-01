@@ -10,13 +10,32 @@ import ae from "../../../public/card-logos/american-express.svg";
 import paypal from "../../../public/card-logos/paypal.svg";
 import { jost, lexendDeca } from "../../../components/ui/fonts";
 import Link from "next/link";
-import Container from "../../../components/container";
+import NextArrowIcon from '../../../public/hero-banners/next-arrow';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { usePopupStore } from "/states/use-popup-store";
 import Text from "../../../components/ui/Text";
 import { FaHeart } from "react-icons/fa";
+
+
+
+const arrowStyles = {
+  width: "40px",
+  height: "40px",
+  zIndex: 1,
+  transition: "all 0.3s ease-in-out",
+};
+
+const NextArrow = ({ className, style, onClick }) => (
+  <div
+    className={`absolute top-1/2 transform -translate-y-1/2 right-4  ${className}`}
+    onClick={onClick}
+    style={{ ...style, ...arrowStyles, right: "-38px" }}
+  >
+    <NextArrowIcon />
+  </div>
+);
 
 
 const API_URL = "https://glam.clickable.site/wp-json/wc/v3/products";
@@ -135,20 +154,36 @@ export default function MyBag() {
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 8000,
+    arrows: true,
+    nextArrow: <NextArrow />,
     pauseOnHover: true,
     responsive: [
       {
-        breakpoint: 1024,
+        breakpoint: 1280,
         settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
+          slidesToShow: 4,
+          slidesToScroll: 4,
         },
       },
       {
-        breakpoint: 600,
+        breakpoint: 1024,
         settings: {
+          slidesToShow: 3,
+          dots:true,
+          slidesToScroll: 3,
+          arrows: false,
+          
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          arrows: false,
+          dots:true,
           slidesToShow: 2,
-          slidesToScroll: 1,
+          slidesToScroll: 2,
+          rows: 2,
+          slidesPerRow: 1,
         },
       },
     ],
@@ -364,7 +399,7 @@ export default function MyBag() {
             <div key={product.id} className="px-2">
               <div className="bg-white flex flex-col pb-4 border border-gray-100 rounded-lg  min-h-[330px] overflow-hidden relative">
                 {/* Like Button (Heart Icon) */}
-                <button
+                {/* <button
                   className="absolute top-2 right-2"
                   onClick={() => toggleLike(product.id)}
                 >
@@ -372,7 +407,7 @@ export default function MyBag() {
                     className="w-6 h-6"
                     color={likedProducts[product.id] ? 'red' : 'black'}
                   />
-                </button>
+                </button> */}
 
                 {/* Link wrapping the entire product div */}
                 <Link href={`/product/${product.id}`}>
@@ -456,20 +491,20 @@ export default function MyBag() {
                 >
                   <span>Estimated Shipping:</span>
                   <input
-                    type="text"
-                    value={shippingAddress}
-                    onChange={(e) => setShippingAddress(e.target.value)}
-                    placeholder="Enter shipping address"
-                    className="border-gray-300 w-[100%] xl:w-[60%] rounded-md px-2 py-1 text-gray-800"
-                  />
+  type="text"
+  value={shippingAddress}
+  onChange={(e) => setShippingAddress(e.target.value)}
+  placeholder="Enter shipping address"
+  className="border-gray-300 w-[100%] xl:w-[65%] rounded-md px-2 py-1 text-gray-800 text-right"
+/>
                 </div>
-                <p className={`text-sm text-black mb-4 ${jost.className}`}>
+                <p className={`text-sm 2xl:text-[18px] text-black font-normal mb-4 ${jost.className}`}>
                   (Spend{" "}
-                  <span className="font-semibold">
+                  <span className={`font-medium 2xl:text-[18px] ${jost.className}`}>
                     {currencySymbol}
                     {(0.01 * rate).toFixed(2)}{" "}
                   </span>
-                  more for <span className="font-semibold">FREE DELIVERY</span>)
+                  more for <span className="font-medium 2xl:text-[2xl]">FREE DELIVERY</span>)
                 </p>
                 <hr className="h-1" />
                 <div
@@ -481,7 +516,7 @@ export default function MyBag() {
                     {parseFloat(total * rate).toFixed(2)}
                   </span>
                 </div>
-                <p className={`text-xs text-[#8B929D] mt-1 ${jost.className}`}>
+                <p className={`text-sm 2xl:text-[16px] text-[#8B929D] mt-1 ${jost.className}`}>
                   Including {currencySymbol}
                   {(3.2 * rate).toFixed(2)} in taxes
                 </p>
@@ -515,10 +550,10 @@ export default function MyBag() {
                   Payment Mode
                 </p>
                 <div
-                  className={`flex flex-col space-x-2 mt-8 mb-4 ${jost.className}`}
+                  className={`flex items-center flex-wrap justify-between space-x-2 mt-8 mb-4 ${jost.className}`}
                 >
                   <p>Pay by Card/Pay Later</p>
-                  <section className="gap-4 flex mt-2">
+                  <section className="gap-4 items-center flex">
                     <Image
                       className="hover:scale-110 transition-transform duration-300 cursor-pointer"
                       src={visa}
