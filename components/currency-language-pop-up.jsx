@@ -5,10 +5,10 @@ import { useRef, useEffect, useState } from "react";
 import name from "../src/app/currencies-with-flags.json";
 import Image from "next/image";
 import { jost, lexendDeca, plusJakartaSans } from "./ui/fonts";
-import uk_flag from '../public/Flag_uk.png'
-import us_flag from '../public/usa-flag.png';
+import uk_flag from "../public/Flag_uk.png";
+import us_flag from "../public/usa-flag.png";
 import { MdKeyboardArrowDown } from "react-icons/md";
-
+import Text from "./ui/Text";
 
 export default function CurrencyLanguagePopUp() {
   const isOpen = usePopupStore((state) => state.isOpen);
@@ -40,9 +40,15 @@ export default function CurrencyLanguagePopUp() {
   }, []);
 
   const fetchFlag = async (country) => {
-    if (country.country === "United Kingdom" && country.name === "Pound Sterling") {
+    if (
+      country.country === "United Kingdom" &&
+      country.name === "Pound Sterling"
+    ) {
       setFlagUrl("");
-    } else if (country.country === "United States" && country.name === "United States Dollar") {
+    } else if (
+      country.country === "United States" &&
+      country.name === "United States Dollar"
+    ) {
       setFlagUrl("");
     } else {
       try {
@@ -93,8 +99,12 @@ export default function CurrencyLanguagePopUp() {
     };
   }, [isOpen, closeModal]);
 
-  const isUK = selectedCountry.country === "United Kingdom" && selectedCountry.name === "Pound Sterling";
-  const isUS = selectedCountry.country === "United States" && selectedCountry.name === "United States Dollar";
+  const isUK =
+    selectedCountry.country === "United Kingdom" &&
+    selectedCountry.name === "Pound Sterling";
+  const isUS =
+    selectedCountry.country === "United States" &&
+    selectedCountry.name === "United States Dollar";
 
   return (
     <>
@@ -102,7 +112,8 @@ export default function CurrencyLanguagePopUp() {
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[150]">
           <div
             ref={modalRef}
-            className="bg-white rounded-lg shadow-lg p-8 relative  w-full max-w-md 2xl:max-w-lg"
+            className="flex flex-col justify-between items-center bg-white rounded-lg shadow-lg p-8 relative 
+            w-[90vw] max-w-[537px] h-[483px]"
           >
             <div className="flex justify-center mb-6">
               {isUK ? (
@@ -111,7 +122,7 @@ export default function CurrencyLanguagePopUp() {
                   alt="United Kingdom flag"
                   width={110}
                   height={100}
-                  className="w-36 2xl:w-40 h-auto object-contain absolute -top-14"
+                  className="w-44 2xl:w-48 h-auto object-contain absolute -top-14"
                 />
               ) : isUS ? (
                 <Image
@@ -119,7 +130,7 @@ export default function CurrencyLanguagePopUp() {
                   alt="United States flag"
                   width={110}
                   height={100}
-                  className="w-36 2xl:w-40 h-auto object-contain absolute -top-14"
+                  className="w-44 2xl:w-48 h-auto object-contain absolute -top-14"
                 />
               ) : flagUrl ? (
                 <Image
@@ -127,60 +138,72 @@ export default function CurrencyLanguagePopUp() {
                   alt={`${selectedCountry.country} flag`}
                   width={110}
                   height={100}
-                  className="w-36 2xl:w-40 h-auto object-contain absolute -top-14"
+                  className="w-44 2xl:w-48 h-auto object-contain absolute -top-14"
                 />
               ) : null}
             </div>
-            <h2 className={`text-center ${jost.className} text-2xl font-bold mb-2`}>
-              CHOOSE YOUR SHIPPING COUNTRY/REGION
-            </h2>
-            <p className={`text-center ${lexendDeca.className} text-sm mb-6`}>
-              Prices are shown and charged in {selectedCurrency}
-            </p>
+            <section>
+              <Text style={"h3"} className={`text-center mb-4`}>
+                CHOOSE YOUR SHIPPING COUNTRY/REGION
+              </Text>
+              <p
+                className={`text-center ${lexendDeca.className} text-xl font-light`}
+              >
+                Prices are shown and charged in {selectedCurrency}
+              </p>
+            </section>
 
-            <div className="space-y-4">
-              <div className="relative">
-                <select
-                  className={`w-full p-3 pr-10 border border-gray-300 rounded-md ${lexendDeca.className} text-sm appearance-none`}
-                  onChange={handleCountryChange}
-                  value={selectedCountry?.code || ""}
-                >
-                  {name.map((country) => (
-                    <option key={country.code} value={country.code}>
-                      {country.country}
-                    </option>
-                  ))}
-                </select>
-                <MdKeyboardArrowDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-black pointer-events-none" size={20} />
+            <section className="w-[90%]">
+              <div className="space-y-4">
+                <div className="relative">
+                  <select
+                    className={`w-full py-4 px-6 border border-gray-300 rounded-md ${lexendDeca.className} appearance-none`}
+                    onChange={handleCountryChange}
+                    value={selectedCountry?.code || ""}
+                  >
+                    {name.map((country) => (
+                      <option key={country.code} value={country.code}>
+                        <Text style={"sm"}>{country.country}</Text>
+                      </option>
+                    ))}
+                  </select>
+                  <MdKeyboardArrowDown
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-black pointer-events-none"
+                    size={20}
+                  />
+                </div>
+                <div className="relative">
+                  <select
+                    className={`w-full py-4 px-6 border border-gray-300 rounded-md ${lexendDeca.className} appearance-none`}
+                    onChange={(e) => setSelectedCurrency(e.target.value)}
+                    value={selectedCurrency || ""}
+                  >
+                    {name.map((country) => (
+                      <option key={country.code} value={country.code}>
+                        <Text style={"sm"}>{country.name}</Text>
+                      </option>
+                    ))}
+                  </select>
+                  <MdKeyboardArrowDown
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-black pointer-events-none"
+                    size={20}
+                  />
+                </div>
               </div>
-              <div className="relative">
-                <select
-                  className={`w-full p-3 pr-10 border border-gray-300 rounded-md ${lexendDeca.className} text-sm appearance-none`}
-                  onChange={(e) => setSelectedCurrency(e.target.value)}
-                  value={selectedCurrency || ""}
-                >
-                  {name.map((country) => (
-                    <option key={country.code} value={country.code}>
-                      {country.name}
-                    </option>
-                  ))}
-                </select>
-                <MdKeyboardArrowDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-black pointer-events-none" size={20} />
-              </div>
-            </div>
 
-            <button
-              className={`${plusJakartaSans.className} w-full mt-6 p-3 bg-black text-white font-bold rounded-md transition-colors hover:bg-[#CF8562] ease-linear duration-100`}
-              onClick={() => {
-                setSelectedCountryInStore({
-                  ...selectedCountry,
-                  code: selectedCurrency,
-                });
-                closeModal();
-              }}
-            >
-              CONTINUE SHOPPING
-            </button>
+              <button
+                className={`${plusJakartaSans.className} w-full mt-8 py-4 bg-black text-white tracking-wider font-bold uppercase rounded-md transition-colors hover:bg-hover ease-linear duration-100`}
+                onClick={() => {
+                  setSelectedCountryInStore({
+                    ...selectedCountry,
+                    code: selectedCurrency,
+                  });
+                  closeModal();
+                }}
+              >
+                CONTINUE SHOPPING
+              </button>
+            </section>
           </div>
         </div>
       )}
