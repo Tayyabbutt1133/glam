@@ -41,8 +41,8 @@ export default function Login() {
   };
 
   return (
-    <div className="flex justify-center items-center  min-h-screen">
-      <div className="w-full max-w-md 2xl:max-w-[580px] p-8 rounded-lg">
+    <div className="flex justify-center items-center">
+      <div className=" p-8 rounded-lg w-full max-w-md 2xl:max-w-[580px]">
         {/* Login/Sign-Up Tabs */}
         <div className="flex justify-between mb-6">
           {/* Login Tab */}

@@ -52,7 +52,7 @@ export default function SignUp() {
 
   return (
     <>
-      <div className="flex justify-center  items-center min-h-screen bg-white">
+      <div className="flex justify-center  items-center  bg-white">
         <div className="w-full max-w-md 2xl:max-w-[580px] p-8 bg-white rounded-lg">
           <div className="flex justify-between mb-6">
             <div className="flex-1 text-center">
