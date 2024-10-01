@@ -252,7 +252,7 @@ export default function SignUp() {
           
           {/* Separator */}
           <div className="relative mt-8 text-center">
-            <span className={`mx-4 text-sm 2xl:text-[16px] text-gray-500 ${lexendDeca.className}`}>
+            <span className={`mx-4 text-sm 2xl:text-[16px] text-[#8B929D] ${lexendDeca.className}`}>
               or Continue with
             </span>
           </div>
