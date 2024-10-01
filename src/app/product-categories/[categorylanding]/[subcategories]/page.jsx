@@ -398,72 +398,79 @@ export default function SubcategoryPage() {
       <button
         onClick={() => handlePageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className={`px-4 py-2 mx-1 border rounded-[4px] hover:bg-gray-200 hover:text-white transition duration-300 ease-in-out ${
+        className={`mx-1 flex items-center justify-center rounded-[4px] border transition duration-300 ease-in-out ${
           currentPage === 1
             ? "opacity-50 cursor-not-allowed text-gray-400 bg-transparent border-[#EFEFEF]"
-            : "bg-white text-black border-[#EFEFEF]"
+            : "bg-white text-black border-[#EFEFEF] hover:bg-gray-200 hover:text-white"
         }`}
+        style={{ width: 'var(--Spacing-5, 40px)', height: 'var(--Spacing-5, 40px)' }}
         aria-label="Previous page"
       >
         <Image src={arrow_previous} width={24} height={24} alt="Previous" />
       </button>
-  
+
       {currentPage > 2 && (
         <button
           onClick={() => handlePageChange(1)}
-          className="px-4 py-2 mx-1 border border-[#EFEFEF] rounded-[4px] hover:bg-black hover:text-white transition duration-300 ease-in-out bg-white"
+          className="mx-1 flex items-center justify-center rounded-[4px] border border-[#EFEFEF] bg-white hover:bg-gray-200 hover:text-white transition duration-300 ease-in-out"
+          style={{ width: 'var(--Spacing-5, 40px)', height: 'var(--Spacing-5, 40px)' }}
         >
           1
         </button>
       )}
-  
-      {currentPage > 3 && <span className="px-4 py-2">...</span>}
-  
+
+      {currentPage > 3 && <span className="px-2">...</span>}
+
       {currentPage > 1 && (
         <button
           onClick={() => handlePageChange(currentPage - 1)}
-          className="px-4 py-2 mx-1 border border-[#EFEFEF] rounded-[4px] hover:bg-gray-200 hover:text-white transition duration-300 ease-in-out bg-white"
+          className="mx-1 flex items-center justify-center rounded-[4px] border border-[#EFEFEF] bg-white hover:bg-gray-200 hover:text-white transition duration-300 ease-in-out"
+          style={{ width: 'var(--Spacing-5, 40px)', height: 'var(--Spacing-5, 40px)' }}
         >
           {currentPage - 1}
         </button>
       )}
-  
+
       <button
         onClick={() => handlePageChange(currentPage)}
-        className="px-4 py-2 mx-1 bg-black text-white rounded-[4px] border border-[#EFEFEF]"
+        className="mx-1 flex items-center justify-center rounded-[4px] border border-[#EFEFEF] bg-black text-white"
+        style={{ width: 'var(--Spacing-5, 40px)', height: 'var(--Spacing-5, 40px)' }}
         aria-current="page"
       >
         {currentPage}
       </button>
-  
+
       {currentPage < totalPages && (
         <button
           onClick={() => handlePageChange(currentPage + 1)}
-          className="px-4 py-2 mx-1 border border-[#EFEFEF] rounded-[4px] hover:bg-gray-200 hover:text-white transition duration-300 ease-in-out bg-white"
+          className="mx-1 flex items-center justify-center rounded-[4px] border border-[#EFEFEF] bg-white hover:bg-gray-200 hover:text-white transition duration-300 ease-in-out"
+          style={{ width: 'var(--Spacing-5, 40px)', height: 'var(--Spacing-5, 40px)' }}
         >
           {currentPage + 1}
         </button>
       )}
-  
-      {currentPage < totalPages - 2 && <span className="px-4 py-2">...</span>}
-  
+
+      {currentPage < totalPages - 2 && <span className="px-2">...</span>}
+
       {currentPage < totalPages - 1 && (
         <button
           onClick={() => handlePageChange(totalPages)}
-          className="px-4 py-2 mx-1 border border-[#EFEFEF] rounded-[4px] hover:bg-gray-200 hover:text-white transition duration-300 ease-in-out bg-white"
+          className="mx-1 flex items-center justify-center rounded-[4px] border border-[#EFEFEF] bg-white hover:bg-gray-200 hover:text-white transition duration-300 ease-in-out"
+          style={{ width: 'var(--Spacing-5, 40px)', height: 'var(--Spacing-5, 40px)' }}
         >
           {totalPages}
         </button>
       )}
-  
+
       <button
         onClick={() => handlePageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className={`px-4 py-2 mx-1 border rounded-[4px] hover:bg-gray-200 hover:text-white transition duration-300 ease-in-out ${
+        className={`mx-1 flex items-center justify-center rounded-[4px] border transition duration-300 ease-in-out ${
           currentPage === totalPages
             ? "opacity-50 cursor-not-allowed text-gray-400 bg-transparent border-[#EFEFEF]"
-            : "bg-white text-black border-[#EFEFEF]"
+            : "bg-white text-black border-[#EFEFEF] hover:bg-gray-200 hover:text-white"
         }`}
+        style={{ width: 'var(--Spacing-5, 40px)', height: 'var(--Spacing-5, 40px)' }}
         aria-label="Next page"
       >
         <Image src={arrow_forward} width={24} height={24} alt="Next" />
