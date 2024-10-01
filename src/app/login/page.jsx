@@ -151,16 +151,16 @@ export default function Login() {
 
         {/* Separator */}
         <div className="relative text-center my-6">
-          <span className={`mx-4 text-sm 2xl:text-[16px] text-gray-500 ${lexendDeca.className}`}>or Continue with</span>
+          <span className={`text-sm 2xl:text-[16px] text-[#8B929D] ${lexendDeca.className}`}>or Continue with</span>
         </div>
         
         {/* Social Login Buttons */}
         <div className={`${inter.className} flex justify-between space-x-4`}>
-          <button className="flex items-center border border-[#EFEFEF] justify-center w-full px-4 py-2  bg-white text-gray-800 font-semibold rounded-lg  hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300">
+          <button className="flex items-center border border-[#EFEFEF] justify-center w-full px-4 py-2  bg-white text-gray-800 font-semibold rounded-lg  focus:outline-none focus:ring-2 focus:ring-gray-300">
             <FcGoogle className="mr-2" />
             Google
           </button>
-          <button className="flex items-center justify-center w-full px-4 py-2 bg-white text-black  font-semibold rounded-lg border border-[#EFEFEF]  hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-900">
+          <button className="flex items-center justify-center w-full px-4 py-2 bg-white text-black  font-semibold rounded-lg border border-[#EFEFEF] focus:outline-none focus:ring-2 focus:ring-gray-900">
             <FaApple className="mr-2" />
             Apple
           </button>
