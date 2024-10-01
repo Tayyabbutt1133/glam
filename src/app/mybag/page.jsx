@@ -224,9 +224,10 @@ export default function MyBag() {
             Your Bag ({cartItems.length})
           </h1>
         </div>
-        <hr className="h-2" />
+        <hr className="h-2 w-[65%]" />
 
         <div className="flex flex-col md:flex-row md:items-stretch gap-8">
+       
           <div className="md:w-2/3">
             <div
               ref={cartRef}
