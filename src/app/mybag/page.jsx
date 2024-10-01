@@ -555,7 +555,7 @@ export default function MyBag() {
                 >
                   <p>Pay by Card/Pay Later</p>
                   <section className="gap-4 items-center flex">
-  <div className="border border-gray-300 p-2 shadow-sm hover:scale-110 transition-transform duration-300 cursor-pointer w-[65px] h-[42px] flex items-center justify-center">
+  <div className="hover:scale-110 transition-transform duration-300 cursor-pointer flex items-center justify-center">
     <Image
       src={visa}
       alt="Visa"
@@ -563,7 +563,7 @@ export default function MyBag() {
       height={25}
     />
   </div>
-  <div className="border border-gray-300 p-2 shadow-sm hover:scale-110 transition-transform duration-300 cursor-pointer w-[65px] h-[42px] flex items-center justify-center">
+  <div className=" p-2  hover:scale-110 transition-transform duration-300 cursor-pointer ] flex items-center justify-center">
     <Image
       src={master}
       alt="Master"
@@ -571,7 +571,7 @@ export default function MyBag() {
       height={25}
     />
   </div>
-  <div className="border border-gray-300  p-2 shadow-sm hover:scale-110 transition-transform duration-300 cursor-pointer w-[65px] h-[42px] flex items-center justify-center">
+  <div className="  p-2  hover:scale-110 transition-transform duration-300 cursor-pointer  flex items-center justify-center">
     <Image
       src={maestro}
       alt="Maestro"
@@ -579,7 +579,7 @@ export default function MyBag() {
       height={25}
     />
   </div>
-  <div className="border border-gray-300 p-2 shadow-sm hover:scale-110 transition-transform duration-300 cursor-pointer w-[65px] h-[42px] flex items-center justify-center">
+  <div className=" p-2  hover:scale-110 transition-transform duration-300 cursor-pointer  flex items-center justify-center">
     <Image
       src={ae}
       alt="American Express"
@@ -587,7 +587,7 @@ export default function MyBag() {
       height={25}
     />
   </div>
-  <div className="border border-gray-300 p-2 shadow-sm hover:scale-110 transition-transform duration-300 cursor-pointer w-[65px] h-[42px] flex items-center justify-center">
+  <div className=" p-2  hover:scale-110 transition-transform duration-300 cursor-pointer  flex items-center justify-center">
     <Image
       src={paypal}
       alt="PayPal"
