@@ -314,19 +314,19 @@ export default function MyBag() {
 
                           <div className="space-x-4">
                             <button
-                              className={`text-sm text-black ${jost.className} font-medium`}
+                              className={` font-medium 2xl:text-[20px] text-black ${jost.className} font-medium`}
                               onClick={() => handleSaveForLater(item.id)}
                             >
                               Save For Later
                             </button>
                             <button
-                              className={`text-sm text-black ${jost.className} font-medium`}
+                              className={` font-medium 2xl:text-[20px] text-black ${jost.className} font-medium`}
                               onClick={() => handleEdit(item)}
                             >
                               Edit
                             </button>
                             <button
-                              className={`text-sm text-black ${jost.className} font-medium`}
+                              className={`font-medium 2xl:text-[20px] text-black ${jost.className} font-medium`}
                               onClick={() => removeFromCart(item.id)}
                             >
                               Remove
@@ -452,7 +452,7 @@ export default function MyBag() {
                   </span>
                 </div>
                 <div
-                  className={`flex  justify-between mb-2 ${jost.className}`}
+                  className={`flex items-center flex-wrap  justify-between mb-2 ${jost.className}`}
                 >
                   <span>Estimated Shipping:</span>
                   <input
@@ -460,7 +460,7 @@ export default function MyBag() {
                     value={shippingAddress}
                     onChange={(e) => setShippingAddress(e.target.value)}
                     placeholder="Enter shipping address"
-                    className="border-gray-300 rounded-md px-2 py-1 text-gray-800"
+                    className="border-gray-300 w-[100%] xl:w-[60%] rounded-md px-2 py-1 text-gray-800"
                   />
                 </div>
                 <p className={`text-sm text-black mb-4 ${jost.className}`}>
