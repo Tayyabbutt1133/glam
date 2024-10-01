@@ -259,11 +259,11 @@ export default function SignUp() {
 
           {/* Social Login Buttons */}
           <div className="flex justify-between space-x-4 mt-6">
-            <button className={`flex items-center border border-[#EFEFEF] justify-center w-full 2xl:w-[253px] px-4 py-2 bg-white text-gray-800 font-semibold rounded-lg shadow-sm hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300 ${lexendDeca.className}`}>
+            <button className={`flex items-center border border-[#EFEFEF] justify-center w-full 2xl:w-[253px] px-4 py-2 bg-white text-gray-800 font-semibold rounded-lg  hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300 ${lexendDeca.className}`}>
               <FcGoogle className="mr-2" />
               Google
             </button>
-            <button className={`flex items-center border border-[#EFEFEF] justify-center w-full 2xl:w-[253px] px-4 py-2 bg-white text-black font-semibold rounded-lg shadow-sm hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-900 ${lexendDeca.className}`}>
+            <button className={`flex items-center border border-[#EFEFEF] justify-center w-full 2xl:w-[253px] px-4 py-2 bg-white text-black font-semibold rounded-lg hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-900 ${lexendDeca.className}`}>
               <FaApple className="mr-2" />
               Apple
             </button>
