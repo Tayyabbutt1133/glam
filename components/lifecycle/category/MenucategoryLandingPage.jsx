@@ -26,17 +26,18 @@ const sanitizeText = (text) => {
 };
 
 const CategoryItem = ({ href, logo, name }) => (
-  <li className="flex flex-col items-center text-center max-w-[120px] 2xl:max-w-[170px]">
+  <li className="flex flex-col items-center text-center  max-w-[120px] 2xl:max-w-[170px]">
     <Link href={href} passHref className="flex  flex-col items-center">
-      <div className="flex justify-center items-center w-[90] h-[90] md:w-[115px] md:h-[115px] 2xl:w-[153px] 2xl:h-[153px] rounded-full overflow-hidden border-4 border-transparent hover:scale-110 transition-transform duration-300 ">
-        <Image
-          src={logo}
-          alt={sanitizeText(name)}
-          className="object-cover w-full h-full cursor-pointer"
-          width={116}
-          height={116}
-        />
-      </div>
+    <div className="flex justify-center items-center w-[90px] h-[90px] md:w-[115px] md:h-[115px] 2xl:w-[153px] 2xl:h-[153px] rounded-full overflow-hidden border-transparent hover:scale-110 transition-transform duration-300 p-2">
+  <Image
+    src={logo}
+    alt={sanitizeText(name)}
+    className="w-full h-full cursor-pointer"
+    width={116}
+    height={116}
+  />
+</div>
+
       <p className={`mt-2 text-sm 2xl:text-[20px] text-center w-[88px] 2xl:w-[116px] font-medium ${jost.className}`}>
         {sanitizeText(name)}
       </p>
