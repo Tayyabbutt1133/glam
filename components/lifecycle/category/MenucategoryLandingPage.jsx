@@ -26,19 +26,18 @@ const sanitizeText = (text) => {
 };
 
 const CategoryItem = ({ href, logo, name }) => (
-  <li className="flex flex-col items-center text-center  max-w-[120px] 2xl:max-w-[170px]">
-    <Link href={href} passHref className="flex  flex-col items-center">
-    <div className="flex justify-center items-center w-[90px] h-[90px] md:w-[115px] md:h-[115px] 2xl:w-[153px] 2xl:h-[153px] rounded-full overflow-hidden border-transparent hover:scale-110 transition-transform duration-300 p-2">
-  <Image
-    src={logo}
-    alt={sanitizeText(name)}
-    className="w-full h-full cursor-pointer"
-    width={116}
-    height={116}
-  />
-</div>
-
-      <p className={`mt-2 text-sm 2xl:text-[20px] text-center w-[88px] 2xl:w-[116px] font-medium ${jost.className}`}>
+  <li className="flex-shrink-0 flex flex-col items-center text-center w-[110px] md:w-[150px] 2xl:w-[200px]">
+    <Link href={href} passHref className="flex flex-col items-center">
+      <div className="flex justify-center items-center w-[110px] h-[110px] md:w-[150px] md:h-[150px] 2xl:w-[200px] 2xl:h-[200px] rounded-full overflow-hidden border-transparent hover:scale-110 transition-transform duration-300 p-2">
+        <Image
+          src={logo}
+          alt={sanitizeText(name)}
+          className="w-full h-full object-contain cursor-pointer"
+          width={200}
+          height={200}
+        />
+      </div>
+      <p className={`mt-2 text-sm 2xl:text-[20px] text-center w-full font-medium ${jost.className}`}>
         {sanitizeText(name)}
       </p>
     </Link>
@@ -46,31 +45,33 @@ const CategoryItem = ({ href, logo, name }) => (
 );
 
 const SkeletonItem = () => (
-  <li className="flex flex-col items-center text-center">
-    <div className="flex justify-center items-center w-24 h-24 2xl:w-[116px] 2xl:h-[116px] rounded-full overflow-hidden border-4 border-transparent">
-      <Skeleton circle={true} width={96} height={96} />
+  <li className="flex-shrink-0 flex flex-col items-center text-center w-[110px] md:w-[150px] 2xl:w-[200px]">
+    <div className="w-[110px] h-[110px] md:w-[150px] md:h-[150px] 2xl:w-[200px] 2xl:h-[200px] rounded-full overflow-hidden">
+      <Skeleton circle={true} width="100%" height="100%" />
     </div>
-    <p className={`mt-2 text-sm 2xl:text-base font-semibold ${jost.className}`}>
-      <Skeleton width={80} height={15} />
-    </p>
+    <div className="mt-2 w-full">
+      <Skeleton width="80%" height={15} />
+    </div>
   </li>
 );
 
 const CategoryList = ({ items, getHref }) => (
-  <ul className="flex justify-center gap-8 overflow-x-scroll md:overflow-x-auto pl-[500px] md:pl-0">
-    {items.length > 0 ? (
-      items.map((item, index) => (
-        <CategoryItem
-          key={item.id || item.category_id}
-          href={getHref(item)}
-          logo={logos[index % logos.length]}
-          name={item.name || item.category_name}
-        />
-      ))
-    ) : (
-      Array(7).fill(null).map((_, index) => <SkeletonItem key={index} />)
-    )}
-  </ul>
+  <div className="overflow-x-auto pb-4 scrollbar-hide">
+    <ul className="flex gap-8 md:gap-12 2xl:gap-16 w-max mx-auto px-4">
+      {items.length > 0 ? (
+        items.map((item, index) => (
+          <CategoryItem
+            key={item.id || item.category_id}
+            href={getHref(item)}
+            logo={logos[index % logos.length]}
+            name={item.name || item.category_name}
+          />
+        ))
+      ) : (
+        Array(7).fill(null).map((_, index) => <SkeletonItem key={index} />)
+      )}
+    </ul>
+  </div>
 );
 
 const BrandsMenuCategoryList = ({ brands }) => {
@@ -151,8 +152,8 @@ const MenuCategoryList = () => {
     <>
       <div className="-mt-12">
         <Breadcrumb links={breadcrumbLinks} />
-        </div>
-      <h1 className={`text-2xl 2xl:text-[36px] ${jost.className}  uppercase font-semibold text-center mt-10`}>
+      </div>
+      <h1 className={`text-2xl 2xl:text-[36px] ${jost.className} uppercase font-semibold text-center mt-10`}>
         {isLoading ? (
           <Skeleton width={200} height={30}>
             <span className="opacity-0">Shop all</span>
@@ -173,15 +174,17 @@ const MenuCategoryList = () => {
 
 const SkeletonList = () => (
   <>
-    <h1 className={`text-2xl  ${jost.className} uppercase font-bold text-center mt-10`}>
+    <h1 className={`text-2xl ${jost.className} uppercase font-bold text-center mt-10`}>
       <Skeleton width={200} height={30}>
         <span className="opacity-0">Shop all</span>
       </Skeleton>
     </h1>
     <div className="mt-10">
-      <ul className="flex justify-center gap-8 overflow-x-scroll md:overflow-x-auto pl-[500px] md:pl-0">
-        {Array(7).fill(null).map((_, index) => <SkeletonItem key={index} />)}
-      </ul>
+      <div className="overflow-x-auto pb-4 scrollbar-hide">
+        <ul className="flex gap-8 md:gap-12 2xl:gap-16 w-max mx-auto px-4">
+          {Array(7).fill(null).map((_, index) => <SkeletonItem key={index} />)}
+        </ul>
+      </div>
     </div>
   </>
 );
