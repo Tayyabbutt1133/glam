@@ -253,7 +253,7 @@ export default function MyBag() {
                               </h2>
                             </Link>
                             <p
-                              className={`text-sm text-black ${jost.className} font-normal`}
+                              className={`text-sm 2xl:text-[20px] leading-normal text-black ${jost.className} font-normal mt-2`}
                             >
                               Shade:{" "}
                               {item.attributes.find(
@@ -261,7 +261,7 @@ export default function MyBag() {
                               )?.options[0] || "N/A"}
                             </p>
                             <p
-                              className={`text-sm text-black ${jost.className} font-normal`}
+                              className={`text-sm 2xl:text-[20px] text-black ${jost.className} font-normal`}
                             >
                               Size:{" "}
                               {item.attributes.find(
