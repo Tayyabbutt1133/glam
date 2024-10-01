@@ -312,7 +312,7 @@ export default function MyBag() {
                             </div>
                           </div>
 
-                          <div className="space-x-4">
+                          <div className="space-x-8">
                             <button
                               className={` font-medium 2xl:text-[20px] text-black ${jost.className} font-medium`}
                               onClick={() => handleSaveForLater(item.id)}
