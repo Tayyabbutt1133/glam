@@ -96,7 +96,7 @@ export default function ProductListing() {
   const [sortOption, setSortOption] = useState("popularity");
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
 
-  const { data, loading, error } = useQuery(GET_PRODUCTS, {
+  const { data, error } = useQuery(GET_PRODUCTS, {
     variables: { attribute_term: brandLanding, category: brandListing },
   });
 
@@ -194,7 +194,6 @@ export default function ProductListing() {
     { name: brandListing, url: `/brands/${brandLanding}/${brandListing}` },
   ];
 
-  if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
 
   return (
