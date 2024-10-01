@@ -452,7 +452,7 @@ export default function MyBag() {
                   </span>
                 </div>
                 <div
-                  className={`flex md:flex-col justify-between mb-2 ${jost.className}`}
+                  className={`flex  justify-between mb-2 ${jost.className}`}
                 >
                   <span>Estimated Shipping:</span>
                   <input
