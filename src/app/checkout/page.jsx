@@ -74,8 +74,8 @@ const FloatingLabelInput = ({ label, name, value, onChange, type = "text", error
         {label}
       </label>
       {error && (
-        <div className="absolute flex items-center">
-          <div className="text-[#BF0000] text-xs bg-white px-1 -mb-2">{error}</div>
+        <div className="absolute flex items-center mt-1">
+          <div className="text-[#BF0000] text-xs bg-white px-1">{error}</div>
         </div>
       )}
     </div>
@@ -497,7 +497,7 @@ export default function Checkout() {
                   type="email"
                   error={errors.email}
                 />
-                <div className="flex items-center my-3">
+                <div className="flex items-center my-3 mt-8">
                   <input
                     type="checkbox"
                     id="subscribe"
