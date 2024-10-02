@@ -2,23 +2,16 @@
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { FaRegStar, FaStar, FaHeart } from 'react-icons/fa';
-import { CiHeart } from 'react-icons/ci';
 import Slider from 'react-slick';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { jost, lexendDeca } from '../../../ui/fonts';
+import { jost } from '../../../ui/fonts';
 import Container from '../../../container';
 import NextArrowIcon from '../../../../public/hero-banners/next-arrow';
 import PrevArrowIcon from '../../../../public/hero-banners/prev-arrow';
 import { useCartStore } from '../../../../states/Cardstore';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-
-import { usePopupStore } from '../../../../states/use-popup-store';
-import Text from '../../../ui/Text';
 import Product from '../../../product';
 
 

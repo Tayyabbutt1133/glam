@@ -16,9 +16,9 @@ const Breadcrumb = ({ links }) => {
 
   return (
     <nav aria-label="Breadcrumb" className="my-4">
-      <ol className="flex space-x-2 text-sm">
+      <ol className="flex space-x-2">
         {links.map((link, index) => (
-          <li key={index} className={`flex items-center ${jost.className}`}>
+          <li key={index} className={`flex  items-center ${jost.className}`}>
             {link.route ? (
               <Link
                 href={link.route}
@@ -27,7 +27,7 @@ const Breadcrumb = ({ links }) => {
                 {capitalizeFirstLetter(link.name)}
               </Link>
             ) : (
-              <span className="text-gray-400">{capitalizeFirstLetter(link.name)}</span>
+              <span className="text-gray-400 text-sm 2xl:text-[16px]">{capitalizeFirstLetter(link.name)}</span>
             )}
             {index < links.length - 1 && <span className="mx-1 text-[#8B929D]">/</span>}
           </li>

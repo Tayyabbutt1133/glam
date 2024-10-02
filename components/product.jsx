@@ -86,7 +86,7 @@ export default function Product({ product }) {
               <p className={`text-gray-900 uppercase font-bold text-sm 2xl:text-[20px] mb-1 ${jost.className}`}>
                 {getBrandName(product.attributes)}
               </p>
-              <h2 className={`text-gray-900 mt-4 font-normal 2xl:mt-3 text-sm 2xl:text-[19px] ${lexendDeca.className} line-clamp-2 leading-normal mb-2`}>
+              <h2 className={`text-gray-900 mt-4 font-normal 2xl:mt-3 text-sm 2xl:text-[19px] ${lexendDeca.className} line-clamp-2 leading-normal 2xl:leading-relaxed mb-2`}>
                 {sanitizeText(product.name)}
               </h2>
               <div className="flex items-center mb-2 2xl:mt-6">

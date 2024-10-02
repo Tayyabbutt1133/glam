@@ -48,8 +48,8 @@ export default function MiddleBarNav() {
             <Image
               src={glam_logo}
               alt="Glam Beauty Logo"
-              width={160}
-              height={80}
+              width={193}
+              height={45}
             />
           </Link>
 

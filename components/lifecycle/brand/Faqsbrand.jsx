@@ -47,7 +47,7 @@ export default function Faqsbrand() {
                 className="flex items-center justify-between w-full text-left transition-colors duration-300 ease-in-out focus:outline-none"
                 onClick={() => toggleAccordion(index)}
               >
-                <h3 className={`${lexendDeca.className} text-lg font-medium transition-colors duration-300 ease-in-out ${openIndex === index ? 'text-primary' : 'text-gray-900'}`}>
+                <h3 className={`${lexendDeca.className} text-lg font-medium transition-colors duration-300 ease-in-out ${openIndex === index ? 'text-primary' : 'text-[#121212]'}`}>
                   {faq.question}
                 </h3>
                 <svg
@@ -74,7 +74,7 @@ export default function Faqsbrand() {
                   openIndex === index ? "max-h-40 opacity-100" : "max-h-0 opacity-0"
                 }`}
               >
-                <p className={`${lexendDeca.className} text-gray-600 transition-opacity duration-300 ease-in-out ${openIndex === index ? 'opacity-100' : 'opacity-0'}`}>
+                <p className={`${lexendDeca.className} text-[#121212] transition-opacity duration-300 font-medium text-2xl:text-[20px] ease-in-out ${openIndex === index ? 'opacity-100' : 'opacity-0'}`}>
                   {faq.answer}
                 </p>
               </div>

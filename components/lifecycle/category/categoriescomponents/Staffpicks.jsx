@@ -1,85 +1,81 @@
-"use client";
+"use client"
 
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-
-import Container from "../../../container";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
-import { jost } from "../../../ui/fonts";
-import NextArrowIcon from "../../../../public/hero-banners/next-arrow";
-import PrevArrowIcon from "../../../../public/hero-banners/prev-arrow";
-import { useCategoryIdState } from "../../../../states/use-category-id";
-import Product from "../../../product";
-import Text from "../../../ui/Text";
+import React, { useState, useEffect } from "react"
+import axios from "axios"
+import Container from "../../../container"
+import Slider from "react-slick"
+import "slick-carousel/slick/slick.css"
+import "slick-carousel/slick/slick-theme.css"
+import Skeleton from "react-loading-skeleton"
+import "react-loading-skeleton/dist/skeleton.css"
+import { jost } from "../../../ui/fonts"
+import NextArrowIcon from "../../../../public/hero-banners/next-arrow"
+import PrevArrowIcon from "../../../../public/hero-banners/prev-arrow"
+import { useCategoryIdState } from "../../../../states/use-category-id"
+import Product from "../../../product"
+import Text from "../../../ui/Text"
 
 const arrowStyles = {
   width: "40px",
   height: "40px",
   zIndex: 1,
   transition: "all 0.3s ease-in-out",
-};
-// Next Arrow component
+}
+
 const NextArrow = ({ className, style, onClick }) => {
   return (
     <div
-      className={`absolute top-1/2 transform -translate-y-1/2 right-2 2xl:mr-2 ${className}`}
+      className={`absolute top-1/2 transform -translate-y-1/2 -right-4 ${className}`}
       onClick={onClick}
       style={{
         ...style,
         ...arrowStyles,
-        right: "-2vw",
       }}
     >
       <NextArrowIcon />
     </div>
-  );
-};
+  )
+}
 
 const PrevArrow = ({ className, style, onClick }) => (
   <div
-    className={`absolute top-1/2 transform -translate-y-1/2 left-4 ${className}`}
+    className={`absolute top-1/2 transform -translate-y-1/2 -left-7 ${className}`}
     onClick={onClick}
     style={{
       ...style,
       ...arrowStyles,
-      left: "-2.4vw",
     }}
   >
     <PrevArrowIcon />
   </div>
-);
+)
 
-// Utility function to decode HTML entities
 const decodeHtmlEntities = (text) => {
-  const textarea = document.createElement("textarea");
-  textarea.innerHTML = text;
-  return textarea.value;
-};
+  const textarea = document.createElement("textarea")
+  textarea.innerHTML = text
+  return textarea.value
+}
 
-const Staffpicks = () => {
-  const [favorites, setFavorites] = useState({});
-  const [staffPicks, setStaffPicks] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const categoryId = useCategoryIdState((state) => state.categoryId);
+export default function Staffpicks() {
+  const [favorites, setFavorites] = useState({})
+  const [staffPicks, setStaffPicks] = useState([])
+  const [loading, setLoading] = useState(true)
+  const categoryId = useCategoryIdState((state) => state.categoryId)
 
   useEffect(() => {
     const fetchStaffPicks = async () => {
       try {
-        setLoading(true);
-        const response = await axios.get(`/api/staffpicks/${categoryId}`);
-        setStaffPicks(response.data);
+        setLoading(true)
+        const response = await axios.get(`/api/staffpicks/${categoryId}`)
+        setStaffPicks(response.data)
       } catch (error) {
-        console.error("Error fetching staff picks:", error);
+        console.error("Error fetching staff picks:", error)
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
-    };
-    if (categoryId) fetchStaffPicks();
-  }, [categoryId]);
+    }
+    if (categoryId) fetchStaffPicks()
+  }, [categoryId])
 
   const settings = {
     dots: false,
@@ -90,16 +86,8 @@ const Staffpicks = () => {
     autoplay: true,
     autoplaySpeed: 2000,
     arrows: true,
-    prevArrow: (
-      <div className="hidden md:block">
-        <PrevArrow />
-      </div>
-    ),
-    nextArrow: (
-      <div className="hidden md:block">
-        <NextArrow />
-      </div>
-    ),
+    prevArrow: <div className="hidden md:block"><PrevArrow /></div>,
+    nextArrow: <div className="hidden md:block"><NextArrow /></div>,
     responsive: [
       {
         breakpoint: 1280,
@@ -133,30 +121,30 @@ const Staffpicks = () => {
         },
       },
     ],
-  };
+  }
 
   const handleProductClick = (productId) => {
-    console.log(`Product clicked: ${productId}`);
-  };
+    console.log(`Product clicked: ${productId}`)
+  }
 
   const handleFavoriteClick = (productId) => {
     setFavorites((prevFavorites) => ({
       ...prevFavorites,
       [productId]: !prevFavorites[productId],
-    }));
-  };
+    }))
+  }
 
-  if (!categoryId) return;
+  if (!categoryId) return null
 
   return (
     <Container className="my-16">
-        <Text
-          style={"h1"}
-          className={`text-2xl font-semibold my-8 ${jost.className} uppercase`}
-        >
-          Staff Picks
-        </Text>
-      <main className="w-[95%] mx-auto">
+      <Text
+        style="h1"
+        className={`text-2xl font-semibold mb-8 ${jost.className} uppercase`}
+      >
+        Staff Picks
+      </Text>
+      <div className="relative">
         {loading ? (
           <Slider {...settings}>
             {Array(4)
@@ -164,7 +152,7 @@ const Staffpicks = () => {
               .map((_, index) => (
                 <div key={index} className="px-2">
                   <div className="bg-white shadow-lg rounded-lg overflow-hidden relative flex flex-col h-full min-h-[420px] border border-gray-300">
-                    <div className="w-[90%] 2xl:w-[100%] h-48">
+                    <div className="w-full h-48">
                       <Skeleton height="100%" />
                     </div>
                     <div className="px-4 pb-4 flex-grow">
@@ -187,9 +175,7 @@ const Staffpicks = () => {
             ))}
           </Slider>
         )}
-      </main>
+      </div>
     </Container>
-  );
-};
-
-export default Staffpicks;
+  )
+}

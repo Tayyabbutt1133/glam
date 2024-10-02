@@ -169,7 +169,7 @@ export default function HomeCategory() {
                     />
                     <div className="absolute inset-0  bg-opacity-40 rounded-lg flex items-end justify-start p-8">
                       <h2
-                        className={`${jost.className} text-white text-[30px] xl:text-[36px] font-bold`}
+                        className={`${jost.className} text-white text-[30px] xl:text-[36px] font-semibold`}
                       >
                         {category.name}
                       </h2>

@@ -1,6 +1,7 @@
 import React from "react";
 import { jost,lexendDeca } from "../../../components/ui/fonts";
 import Breadcrumb from "../../../components/BreadCrumb";
+import Container from "../../../components/container";
 const Head = ({ children }) => {
     return (
       <h2 className={`text-[24px] font-semibold mt-[40px] my-2 ${jost.className}`}>
@@ -17,9 +18,12 @@ const Para = ({ children }) => {
     );
   };
 function page() {
-  return <main className=" mx-4 sm:mx-6 lg:mx-28 xl:mx-32">
-    <Breadcrumb links={[{ name: "Home", route: "/" }, { name: "Terms and Conditions", route: "/terms-and-conditions" }]} />
-    <h1 className={`${jost.className} mb-7 mt-14 font-bold text-4xl`}>TERMS AND CONDITIONS</h1>
+  return <main className="">
+    <Container>
+      <Breadcrumb links={[{ name: "Home", route: "/" }, { name: "Terms and Conditions", route: "/terms-and-conditions" }]} />
+      </Container>
+    <Container className="my-14">
+    <h1 className={`${jost.className} mb-7 mt-14 font-semibold text-lg 2xl:text-4xl`}>TERMS AND CONDITIONS</h1>
     <Para>These terms and conditions ( Terms ) govern the use of the website https://www.glambeauty.com/ ( Website ) by users ( you  or  your ) and their relationship with GLAMBEAUTY INTERNATIONAL LIMITED (trading as www.glambeauty.com) whose registered office is at 133 Ley Street, Ilford, Essex, IG1 4BH, company registration number 14517764. <br /> <br />
     Please read the terms and conditions carefully, as they affect your legal rights and obligations. If you do not agree to these Terms and Conditions, please do not access or use the Website. By ordering our goods or services, you agree to comply with these Terms and Conditions. It is recommended that you print a copy of these Terms and Conditions so that you have them at your fingertips. If you have any questions about these Terms and Conditions, please contact us.</Para>
     <Head>Agreement</Head>
@@ -312,7 +316,7 @@ We do not issue tax invoices for shipments to the EU from the UK. Any proof-of-s
 
 
 
-
+      </Container>
   </main>;
 }
 

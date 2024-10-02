@@ -105,7 +105,7 @@ const CustomDropdown = ({ options, value, onChange }) => {
       <div>
         <button
           type="button"
-          className={`inline-flex justify-between items-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-sm ${jost.className} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 `}
+          className={`inline-flex justify-between items-center w-full rounded-md border border-[#EFEFEF] px-4 py-2 bg-white text-sm ${jost.className} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 `}
           id="options-menu"
           aria-haspopup="true"
           aria-expanded="true"
@@ -398,72 +398,79 @@ export default function SubcategoryPage() {
       <button
         onClick={() => handlePageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className={`px-4 py-2 mx-1 border rounded-[4px] hover:bg-gray-200 hover:text-white transition duration-300 ease-in-out ${
+        className={`mx-1 flex items-center justify-center rounded-[4px] border transition duration-300 ease-in-out ${
           currentPage === 1
             ? "opacity-50 cursor-not-allowed text-gray-400 bg-transparent border-[#EFEFEF]"
-            : "bg-white text-black border-[#EFEFEF]"
+            : "bg-white text-black border-[#EFEFEF] hover:bg-gray-200 hover:text-white"
         }`}
+        style={{ width: 'var(--Spacing-5, 40px)', height: 'var(--Spacing-5, 40px)' }}
         aria-label="Previous page"
       >
         <Image src={arrow_previous} width={24} height={24} alt="Previous" />
       </button>
-  
+
       {currentPage > 2 && (
         <button
           onClick={() => handlePageChange(1)}
-          className="px-4 py-2 mx-1 border border-[#EFEFEF] rounded-[4px] hover:bg-black hover:text-white transition duration-300 ease-in-out bg-white"
+          className="mx-1 flex items-center justify-center rounded-[4px] border border-[#EFEFEF] bg-white hover:bg-gray-200 hover:text-white transition duration-300 ease-in-out"
+          style={{ width: 'var(--Spacing-5, 40px)', height: 'var(--Spacing-5, 40px)' }}
         >
           1
         </button>
       )}
-  
-      {currentPage > 3 && <span className="px-4 py-2">...</span>}
-  
+
+      {currentPage > 3 && <span className="px-2">...</span>}
+
       {currentPage > 1 && (
         <button
           onClick={() => handlePageChange(currentPage - 1)}
-          className="px-4 py-2 mx-1 border border-[#EFEFEF] rounded-[4px] hover:bg-gray-200 hover:text-white transition duration-300 ease-in-out bg-white"
+          className="mx-1 flex items-center justify-center rounded-[4px] border border-[#EFEFEF] bg-white hover:bg-gray-200 hover:text-white transition duration-300 ease-in-out"
+          style={{ width: 'var(--Spacing-5, 40px)', height: 'var(--Spacing-5, 40px)' }}
         >
           {currentPage - 1}
         </button>
       )}
-  
+
       <button
         onClick={() => handlePageChange(currentPage)}
-        className="px-4 py-2 mx-1 bg-black text-white rounded-[4px] border border-[#EFEFEF]"
+        className="mx-1 flex items-center justify-center rounded-[4px] border border-[#EFEFEF] bg-black text-white"
+        style={{ width: 'var(--Spacing-5, 40px)', height: 'var(--Spacing-5, 40px)' }}
         aria-current="page"
       >
         {currentPage}
       </button>
-  
+
       {currentPage < totalPages && (
         <button
           onClick={() => handlePageChange(currentPage + 1)}
-          className="px-4 py-2 mx-1 border border-[#EFEFEF] rounded-[4px] hover:bg-gray-200 hover:text-white transition duration-300 ease-in-out bg-white"
+          className="mx-1 flex items-center justify-center rounded-[4px] border border-[#EFEFEF] bg-white hover:bg-gray-200 hover:text-white transition duration-300 ease-in-out"
+          style={{ width: 'var(--Spacing-5, 40px)', height: 'var(--Spacing-5, 40px)' }}
         >
           {currentPage + 1}
         </button>
       )}
-  
-      {currentPage < totalPages - 2 && <span className="px-4 py-2">...</span>}
-  
+
+      {currentPage < totalPages - 2 && <span className="px-2">...</span>}
+
       {currentPage < totalPages - 1 && (
         <button
           onClick={() => handlePageChange(totalPages)}
-          className="px-4 py-2 mx-1 border border-[#EFEFEF] rounded-[4px] hover:bg-gray-200 hover:text-white transition duration-300 ease-in-out bg-white"
+          className="mx-1 flex items-center justify-center rounded-[4px] border border-[#EFEFEF] bg-white hover:bg-gray-200 hover:text-white transition duration-300 ease-in-out"
+          style={{ width: 'var(--Spacing-5, 40px)', height: 'var(--Spacing-5, 40px)' }}
         >
           {totalPages}
         </button>
       )}
-  
+
       <button
         onClick={() => handlePageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className={`px-4 py-2 mx-1 border rounded-[4px] hover:bg-gray-200 hover:text-white transition duration-300 ease-in-out ${
+        className={`mx-1 flex items-center justify-center rounded-[4px] border transition duration-300 ease-in-out ${
           currentPage === totalPages
             ? "opacity-50 cursor-not-allowed text-gray-400 bg-transparent border-[#EFEFEF]"
-            : "bg-white text-black border-[#EFEFEF]"
+            : "bg-white text-black border-[#EFEFEF] hover:bg-gray-200 hover:text-white"
         }`}
+        style={{ width: 'var(--Spacing-5, 40px)', height: 'var(--Spacing-5, 40px)' }}
         aria-label="Next page"
       >
         <Image src={arrow_forward} width={24} height={24} alt="Next" />
@@ -479,20 +486,20 @@ export default function SubcategoryPage() {
 
   return (
     <Container className="min-h-screen py-7">
-      <style jsx global>{`
+   <style jsx global>{`
         .custom-scrollbar::-webkit-scrollbar {
           width: 6px;
         }
         .custom-scrollbar::-webkit-scrollbar-track {
-          background: #f1f1f1;
+          background: #EFEFEF;
           border-radius: 3px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: #888;
+          background: #EFEFEF;
           border-radius: 3px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: #555;
+          background: #EFEFEF;
         }
       `}</style>
       <div className="-mt-7">
@@ -735,7 +742,7 @@ export default function SubcategoryPage() {
                 .map((_, index) => (
                   <div
                     key={index}
-                    className="border p-4 rounded-lg relative bg-white animate-pulse"
+                    className="border p-4 border-[#EFEFEF] rounded-lg relative bg-white animate-pulse"
                   >
                     <div className="w-full h-64 bg-gray-300 mb-4"></div>
                     <div className="h-6 bg-gray-300 mb-2"></div>
@@ -790,7 +797,7 @@ export default function SubcategoryPage() {
                     </Link>
                     <Link href={`/product/${product.id}`}>
                       <h3
-                        className={`text-sm 2xl:text-[19px] ${lexendDeca.className} font-normal mb-2 h-[60px] overflow-hidden cursor-pointer`}
+                        className={`text-sm 2xl:text-[19px] ${lexendDeca.className} font-normal mb-2 h-[60px] overflow-hidden  cursor-pointer`}
                       >
                         {product.name}
                       </h3>

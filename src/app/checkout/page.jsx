@@ -21,6 +21,7 @@ import { useRouter } from "next/navigation"
 import { toast } from 'react-toastify'
 import PhoneInput from "react-phone-input-2"
 import "react-phone-input-2/lib/style.css"
+import { CountryDropdown, RegionDropdown } from 'react-country-region-selector'
 
 const shippingOptions = [
   {
@@ -56,31 +57,34 @@ const shippingOptions = [
 ]
 
 const FloatingLabelInput = ({ label, name, value, onChange, type = "text", error }) => {
+  const formattedLabel = label === "FirstName" ? "First Name" : label === "LastName" ? "Last Name" : label;
+  const formattedError = error?.replace("FirstName", "First Name").replace("LastName", "Last Name");
+
   return (
     <div className="relative mb-4">
       <input
         type={type}
         id={name}
         name={name}
-        className={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-[#8B929D] bg-transparent rounded-lg border ${error ? 'border-red-500' : 'border-[#EFEFEF]'} appearance-none focus:outline-none focus:ring-0 focus:border-black peer ${lexendDeca.className}`}
+        className={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-[#8B929D] bg-transparent rounded-lg border ${error ? 'border-[#BF0000]' : 'border-[#EFEFEF]'} appearance-none focus:outline-none focus:ring-0 focus:border-black peer ${lexendDeca.className}`}
         placeholder=" "
         value={value}
         onChange={onChange}
       />
       <label
         htmlFor={name}
-        className={`absolute text-sm ${error ? 'text-red-500' : 'text-[#8B929D]'} duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-black peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 start-1 ${lexendDeca.className}`}
+        className={`absolute text-sm ${error ? 'text-[#BF0000]' : 'text-[#8B929D]'} duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-black peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 start-1 ${lexendDeca.className}`}
       >
-        {label}
+        {formattedLabel}
       </label>
       {error && (
-        <div className="absolute flex items-center">
-          <div className="text-red-500 text-xs bg-white px-1 -mb-2">{error}</div>
+        <div className="absolute flex items-center mt-1">
+          <div className="text-[#BF0000] text-xs bg-white px-1">{formattedError}</div>
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
 function PaymentOption({ id, name, selected, onChange, children }) {
   return (
@@ -127,6 +131,7 @@ export default function Checkout() {
     nameOnCard: "",
     promoCode: "",
     country: "",
+    region: "",
   })
   const [errors, setErrors] = useState({})
   const [touched, setTouched] = useState({})
@@ -147,8 +152,6 @@ export default function Checkout() {
   const [klarnaOption, setKlarnaOption] = useState("")
   const [phone, setPhone] = useState('')
   const [error, setError] = useState('')
-
-
 
   const paypalOptions = [
     "Pay in full",
@@ -179,6 +182,7 @@ export default function Checkout() {
       case "postcode":
       case "phone":
       case "country":
+      case "region":
         if (!value) {
           error = `${name.charAt(0).toUpperCase() + name.slice(1)} is required`
         }
@@ -284,6 +288,7 @@ export default function Checkout() {
           phone: formData.phone,
           email: formData.email,
           country: formData.country,
+          region: formData.region,
         },
         paymentMethod: paymentMethod,
         cardType: cardType,
@@ -428,10 +433,20 @@ export default function Checkout() {
     setErrors(prev => ({ ...prev, phone: validateField("phone", value) }))
   }
 
+  const handleCountryChange = (val) => {
+    setFormData(prev => ({ ...prev, country: val, region: '' }))
+    setErrors(prev => ({ ...prev, country: validateField("country", val) }))
+  }
+
+  const handleRegionChange = (val) => {
+    setFormData(prev => ({ ...prev, region: val }))
+    setErrors(prev => ({ ...prev, region: validateField("region", val) }))
+  }
+
   return (
     <Container>
-      <div className="flex justify-between w-[65%] mt-16 items-center">
-        <h1 className={`text-3xl font-semibold mb-6 ${jost.className}`}>
+      <div className="flex justify-between w-[65%] mt-16 mb-20 items-center">
+        <h1 className={`text-3xl font-semibold ${jost.className}`}>
           Checkout
         </h1>
         <div className="md:flex items-center gap-4 hidden">
@@ -445,10 +460,10 @@ export default function Checkout() {
           </Link>
         </div>
       </div>
-      <div className="container px-4 py-8">
+      <div className="container">
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Left: Checkout Form */}
-          <div className="lg:w-2/3 space-y-6">
+          <div className="lg:w-2/3 mb-8">
             {/* Header with Payment Options */}
             <div className="flex flex-row justify-evenly sm:justify-between gap-4 mb-6">
               <button
@@ -477,7 +492,7 @@ export default function Checkout() {
                 >
                   OR
                 </span>
-                <hr className="flex-grow border-t border-[#EFEFEF]" />
+                {/* <hr className="flex-grow border-t border-[#EFEFEF]" /> */}
               </div>
 
               {/* Contact Section */}
@@ -497,7 +512,7 @@ export default function Checkout() {
                   type="email"
                   error={errors.email}
                 />
-                <div className="flex items-center my-3">
+                <div className="flex items-center my-3 mt-8">
                   <input
                     type="checkbox"
                     id="subscribe"
@@ -519,13 +534,39 @@ export default function Checkout() {
                 <h2 className={`text-xl font-semibold mb-2 mt-20 ${jost.className}`}>
                   Delivery
                 </h2>
-                <FloatingLabelInput
-                  label="Country/Region*"
-                  name="country"
-                  value={formData.country}
-                  onChange={handleInputChange}
-                  error={errors.country}
-                />
+                <div className="relative mb-4">
+                  <CountryDropdown
+                    value={formData.country}
+                    onChange={handleCountryChange}
+                    classes={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-[#8B929D] bg-transparent rounded-lg border ${errors.country ? 'border-[#BF0000]' : 'border-[#EFEFEF]'} appearance-none focus:outline-none focus:ring-0 focus:border-black peer ${lexendDeca.className}`}
+                  />
+                  <label
+                    htmlFor="country"
+                    className={`absolute text-sm ${errors.country ? 'text-[#BF0000]' : 'text-[#8B929D]'} duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-black peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 start-1 ${lexendDeca.className}`}
+                  >
+                    Country/Region*
+                  </label>
+                  {errors.country && (
+                    <div className="text-[#BF0000] text-xs mt-1">{errors.country}</div>
+                  )}
+                </div>
+                {/* <div className="relative mb-4">
+                  <RegionDropdown
+                    country={formData.country}
+                    value={formData.region}
+                    onChange={handleRegionChange}
+                    classes={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-[#8B929D] bg-transparent rounded-lg border ${errors.region ? 'border-[#BF0000]' : 'border-[#EFEFEF]'} appearance-none focus:outline-none focus:ring-0 focus:border-black peer ${lexendDeca.className}`}
+                  />
+                  <label
+                    htmlFor="region"
+                    className={`absolute text-sm ${errors.region ? 'text-[#BF0000]' : 'text-[#8B929D]'} duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-black peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 start-1 ${lexendDeca.className}`}
+                  >
+                    Region*
+                  </label>
+                  {errors.region && (
+                    <div className="text-[#BF0000] text-xs mt-1">{errors.region}</div>
+                  )}
+                </div> */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 mt-7 mb-4 gap-4">
                   <FloatingLabelInput
                     label="First Name*"
@@ -566,50 +607,23 @@ export default function Checkout() {
                   />
                 </div>
                 <div className="relative">
-      <PhoneInput
-        country={'gb'}
-        value={phone}
-        onChange={handlePhoneChange}
-        inputProps={{
-          name: 'phone',
-          required: true,
-          className: `block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border ${error ? 'border-red-500' : 'border-[#EFEFEF]'} appearance-none focus:outline-none focus:ring-0 focus:border-black peer pl-14 ${lexendDeca.className}`,
-        }}
-        containerClass="w-full"
-        buttonClass="h-full !bg-[#F7F7F7A6] hover:!bg-[#F7F7F7A6] focus:!bg-[#F7F7F7A6] active:!bg-[#F7F7F7A6] border-none rounded-l-lg"
-        dropdownClass="!bg-white"
-      />
-      {/* <label
-        htmlFor="phone"
-        className={`absolute text-sm ${error ? 'text-[#BF0000]' : 'text-gray-500'} duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-[#F7F7F7A6] px-2 peer-focus:px-2 peer-focus:text-black start-1 ${
-          phone ? 'invisible' : 'visible'
-        } ${lexendDeca.className}`}
-      >
-        Phone*
-      </label> */}
-      {error && (
-        <div className="text-[#BF0000] text-xs mt-1">{error}</div>
-      )}
-      <style jsx global>{`
-        .react-tel-input .flag-dropdown {
-          border: none !important;
-          background-color: #F7F7F7A6 !important;
-        }
-        .react-tel-input .selected-flag {
-          background-color: #F7F7F7A6 !important;
-          border-top-left-radius: 0.5rem;
-          border-bottom-left-radius: 0.5rem;
-        }
-        .react-tel-input .selected-flag:hover,
-        .react-tel-input .selected-flag:focus,
-        .react-tel-input .selected-flag.open {
-          background-color: #F7F7F7A6 !important;
-        }
-        .react-tel-input .form-control {
-          width: 100% !important;
-        }
-      `}</style>
-    </div>
+                  <PhoneInput
+                    country={'gb'}
+                    value={phone}
+                    onChange={handlePhoneChange}
+                    inputProps={{
+                      name: 'phone',
+                      required: true,
+                      className: `block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border ${error ? 'border-red-500' : 'border-[#EFEFEF]'} appearance-none focus:outline-none focus:ring-0 focus:border-black peer pl-14 ${lexendDeca.className}`,
+                    }}
+                    containerClass="w-full"
+                    buttonClass="h-full !bg-[#F7F7F7A6] hover:!bg-[#F7F7F7A6] focus:!bg-[#F7F7F7A6] active:!bg-[#F7F7F7A6] border-none rounded-l-lg"
+                    dropdownClass="!bg-white"
+                  />
+                  {error && (
+                    <div className="text-[#BF0000] text-xs mt-1">{error}</div>
+                  )}
+                </div>
                 <div className="flex items-center mt-2">
                   <input
                     type="checkbox"
@@ -741,7 +755,7 @@ export default function Checkout() {
                   ) : (
                     <div>
                       {paymentMethod === "card" && (
-                        <div className="border-b pb-4">
+                        <div className=" pb-4">
                           <PaymentOption
                             id="card"
                             name={<span className={`${lexendDeca.className}`} style={{ fontWeight: 400 }}>Pay by card</span>}
@@ -811,7 +825,7 @@ export default function Checkout() {
                         </div>
                       )}
                       {paymentMethod === "paypal" && (
-                        <div className="border-b pb-4">
+                        <div className="pb-4">
                           <PaymentOption
                             id="paypal"
                             name={<span className={`${lexendDeca.className}`} style={{ fontWeight: 400 }}>PayPal</span>}
@@ -866,7 +880,7 @@ export default function Checkout() {
                 />
                 <label
                   htmlFor="save-info"
-                  className={` text-[#8B929D] ${lexendDeca.className}`}
+                  className={` text-[#8B929D] 2xl:text-[20px] font-normal ${lexendDeca.className}`}
                 >
                   Save my information for a faster checkout
                 </label>
@@ -879,14 +893,14 @@ export default function Checkout() {
               >
                 PAY NOW
               </button>
-              <p className={`${lexendDeca.className} 2xl:text-[20px] font-normal  w-full`}>By placing this order, you are confirming that you agree to our <span className="underline">Terms and Conditions</span>  and  <span className="underline">Privacy Policy</span>.
+              <p className={`${lexendDeca.className}   2xl:text-[20px] font-normal  w-full`}>By placing this order, you are confirming that you agree to our <span className="underline">Terms and Conditions</span>  and  <span className="underline">Privacy Policy</span>.
           </p>
 
             </div>
           </div>
          
           {/* Right: Order Summary and Bag Summary */}
-          <div className="lg:w-1/3 bg-gray-50 p-6 rounded-lg lg:-mt-24">
+          <div className="lg:w-1/3 bg-gray-50 p-6  lg:-mt-[180px]">
             <div className=" ">
               <div className=" bg-white rounded-lg p-6 shadow-sm">
                 <h2 className={`text-xl font-semibold mb-4 ${jost.className}`}>
