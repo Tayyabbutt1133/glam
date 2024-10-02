@@ -105,7 +105,7 @@ const CustomDropdown = ({ options, value, onChange }) => {
       <div>
         <button
           type="button"
-          className={`inline-flex justify-between items-center w-full rounded-md border border-[#FFFFFF] px-4 py-2 bg-white text-sm ${jost.className} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 `}
+          className={`inline-flex justify-between items-center w-full rounded-md border border-[#EFEFEF] px-4 py-2 bg-white text-sm ${jost.className} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 `}
           id="options-menu"
           aria-haspopup="true"
           aria-expanded="true"
@@ -742,7 +742,7 @@ export default function SubcategoryPage() {
                 .map((_, index) => (
                   <div
                     key={index}
-                    className="border p-4 rounded-lg relative bg-white animate-pulse"
+                    className="border p-4 border-[#EFEFEF] rounded-lg relative bg-white animate-pulse"
                   >
                     <div className="w-full h-64 bg-gray-300 mb-4"></div>
                     <div className="h-6 bg-gray-300 mb-2"></div>
