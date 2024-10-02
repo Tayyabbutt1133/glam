@@ -5,8 +5,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { jost } from "./ui/fonts";
-
 import { usePopupStore } from "../states/use-popup-store";
+
+// Function to decode HTML entities
+function decodeHTMLEntities(text) {
+  const textArea = document.createElement('textarea');
+  textArea.innerHTML = text;
+  return textArea.value;
+}
 
 export default function Cartdropdown() {
   const { cartItems, removeFromCart } = useCartStore();
@@ -40,7 +46,7 @@ export default function Cartdropdown() {
       (attr) => attr.name === "Size" || attr.slug === "Size"
     );
     return sizeAttribute && sizeAttribute.options.length > 0
-      ? sizeAttribute.options[0]
+      ? decodeHTMLEntities(sizeAttribute.options[0])
       : "N/A";
   };
 
@@ -72,7 +78,7 @@ export default function Cartdropdown() {
                       <div className="w-28 flex flex-col items-center">
                         <Image
                           src={image}
-                          alt={item.name}
+                          alt={decodeHTMLEntities(item.name)}
                           width={80}
                           height={80}
                           className="rounded-md object-cover"
@@ -89,15 +95,15 @@ export default function Cartdropdown() {
                           <h3
                             className={`font-semibold text-base ${jost.className} cursor-pointer`}
                           >
-                            {item.name}
+                            {decodeHTMLEntities(item.name)}
                           </h3>
                         </Link>
                         <p
                           className={`text-sm text-black ${jost.className} mt-1`}
                         >
                           Shade:{" "}
-                          {item?.attributes.find((attr) => attr.name === "Shade")
-                            ?.options[0] || "N/A"}
+                          {decodeHTMLEntities(item?.attributes.find((attr) => attr.name === "Shade")
+                            ?.options[0] || "N/A")}
                         </p>
                         <p className={`text-sm text-black ${jost.className}`}>
                           Size: {getItemSize(item)}

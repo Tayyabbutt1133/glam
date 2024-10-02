@@ -19,6 +19,13 @@ import Text from "../../../components/ui/Text";
 import { FaHeart } from "react-icons/fa";
 import { CiHeart } from "react-icons/ci";
 
+// Function to decode HTML entities
+function decodeHTMLEntities(text) {
+  const textArea = document.createElement('textarea');
+  textArea.innerHTML = text;
+  return textArea.value;
+}
+
 const arrowStyles = {
   width: "40px",
   height: "40px",
@@ -39,6 +46,18 @@ const NextArrow = ({ className, style, onClick }) => (
 const API_URL = "https://glam.clickable.site/wp-json/wc/v3/products";
 const CK = "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d";
 const CS = "cs_3f70ee2600a3ac17a5692d7ac9c358d47275d6fc";
+
+const ProductSkeleton = () => (
+  <div className="bg-white rounded-lg shadow-md overflow-hidden animate-pulse">
+    <div className="relative pb-[100%] bg-gray-300"></div>
+    <div className="p-4">
+      <div className="h-4 bg-gray-300 rounded w-1/2 mb-2"></div>
+      <div className="h-4 bg-gray-300 rounded w-3/4 mb-2"></div>
+      <div className="h-6 bg-gray-300 rounded w-1/4 mb-4"></div>
+      <div className="h-10 bg-gray-300 rounded"></div>
+    </div>
+  </div>
+);
 
 export default function MyBag() {
   const { cartItems, removeFromCart, updateQuantity, saveForLater, editItem } =
@@ -127,23 +146,9 @@ export default function MyBag() {
   };
 
   const getBrand = (product) => {
-    return (
-      product.attributes.find((attr) => attr.name === "Brand")?.options[0] ||
-      "Unknown Brand"
-    );
+    const brandAttribute = product.attributes.find((attr) => attr.name === "Brand");
+    return brandAttribute ? decodeHTMLEntities(brandAttribute.options[0]) : "Unknown Brand";
   };
-
-  const ProductSkeleton = () => (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden animate-pulse">
-      <div className="relative pb-[100%] bg-gray-300"></div>
-      <div className="p-4">
-        <div className="h-4 bg-gray-300 rounded w-1/2 mb-2"></div>
-        <div className="h-4 bg-gray-300 rounded w-3/4 mb-2"></div>
-        <div className="h-6 bg-gray-300 rounded w-1/4 mb-4"></div>
-        <div className="h-10 bg-gray-300 rounded"></div>
-      </div>
-    </div>
-  );
 
   const sliderSettings = {
     dots: false,
@@ -242,7 +247,7 @@ export default function MyBag() {
                   <div className="w-[120px] md:w-48 md:flex-shrink-0">
                     <Image
                       src={item.images[0].src}
-                      alt={item.name}
+                      alt={decodeHTMLEntities(item.name)}
                       width={200}
                       height={200}
                       className="rounded-md object-cover w-full h-auto"
@@ -255,7 +260,7 @@ export default function MyBag() {
                       <div>
                         <input
                           type="text"
-                          value={editingItem.name}
+                          value={decodeHTMLEntities(editingItem.name)}
                           onChange={(e) =>
                             setEditingItem({
                               ...editingItem,
@@ -279,24 +284,24 @@ export default function MyBag() {
                               <h2
                                 className={`text-lg cursor-pointer font-medium w-[80%] ${jost.className}`}
                               >
-                                {item.name}
+                                {decodeHTMLEntities(item.name)}
                               </h2>
                             </Link>
                             <p
                               className={`text-sm 2xl:text-[20px] leading-normal text-black ${jost.className} font-normal mt-[15px]`}
                             >
                               Shade:{" "}
-                              {item.attributes.find(
+                              {decodeHTMLEntities(item.attributes.find(
                                 (attr) => attr.name === "Shade"
-                              )?.options[0] || "N/A"}
+                              )?.options[0] || "N/A")}
                             </p>
                             <p
                               className={`text-sm 2xl:text-[20px] text-black ${jost.className} font-normal mt-[10px]`}
                             >
                               Size:{" "}
-                              {item.attributes.find(
+                              {decodeHTMLEntities(item.attributes.find(
                                 (attr) => attr.name === "Size"
-                              )?.options[0] || "N/A"}
+                              )?.options[0] || "N/A")}
                             </p>
                           </div>
                           <p
@@ -403,7 +408,7 @@ export default function MyBag() {
                             <div className="relative pb-[100%]">
                               <Image
                                 src={product.images[0]?.src || '/placeholder.svg'}
-                                alt={product.name}
+                                alt={decodeHTMLEntities(product.name)}
                                 layout="fill"
                                 objectFit="cover"
                               />
@@ -416,7 +421,7 @@ export default function MyBag() {
                               <p
                                 className={`text-sm mb-2 h-10 overflow-hidden ${lexendDeca.className}`}
                               >
-                                {product.name}
+                                {decodeHTMLEntities(product.name)}
                               </p>
                             </div>
 
@@ -614,7 +619,7 @@ export default function MyBag() {
                       <div className="relative pb-[100%]">
                         <Image
                           src={product.images[0]?.src || "/placeholder.svg"}
-                          alt={product.name}
+                          alt={decodeHTMLEntities(product.name)}
                           layout="fill"
                           objectFit="cover"
                         />
@@ -628,7 +633,7 @@ export default function MyBag() {
                         <p
                           className={`text-sm mb-2 h-10 overflow-hidden ${lexendDeca.className}`}
                         >
-                          {product.name}
+                          {decodeHTMLEntities(product.name)}
                         </p>
                       </div>
                       <div className="flex flex-col justify-end px-2 pb-2 mt-auto">
