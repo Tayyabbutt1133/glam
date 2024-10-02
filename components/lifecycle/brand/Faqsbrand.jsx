@@ -74,7 +74,7 @@ export default function Faqsbrand() {
                   openIndex === index ? "max-h-40 opacity-100" : "max-h-0 opacity-0"
                 }`}
               >
-                <p className={`${lexendDeca.className} text-gray-600 transition-opacity duration-300 ease-in-out ${openIndex === index ? 'opacity-100' : 'opacity-0'}`}>
+                <p className={`${lexendDeca.className} text-[#8B929D] transition-opacity duration-300 ease-in-out ${openIndex === index ? 'opacity-100' : 'opacity-0'}`}>
                   {faq.answer}
                 </p>
               </div>
