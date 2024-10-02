@@ -111,7 +111,7 @@ const CustomDropdown = ({ options, value, onChange }) => {
           aria-expanded="true"
           onClick={handleToggle}
         >
-          <span className={`text-[#8B929D] font-normal ${lexendDeca.className}`}>
+          <span className={`text-[#8B929D]  font-normal ${lexendDeca.className}`}>
             Sort by: <span className={`text-black ${lexendDeca.className} font-normal`}>{selectedOption?.label}</span>
           </span>
           <MdKeyboardArrowDown className="text-black text-xl ml-2" />
@@ -710,7 +710,7 @@ export default function SubcategoryPage() {
         </div>
 
         <div className="w-full lg:w-3/4">
-          <div className="flex justify-between items-center mb-8">
+          <div className="flex justify-between items-center  mt-3">
             <div className="flex items-center">
               <button onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)} className="lg:hidden mr-4">
                 <Image
