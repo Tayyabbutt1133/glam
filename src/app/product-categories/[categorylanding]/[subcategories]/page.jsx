@@ -105,7 +105,7 @@ const CustomDropdown = ({ options, value, onChange }) => {
       <div>
         <button
           type="button"
-          className={`inline-flex justify-between items-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-sm ${jost.className} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 `}
+          className={`inline-flex justify-between items-center w-full rounded-md border border-[#FFFFFF] px-4 py-2 bg-white text-sm ${jost.className} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 `}
           id="options-menu"
           aria-haspopup="true"
           aria-expanded="true"

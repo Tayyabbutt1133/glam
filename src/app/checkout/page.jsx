@@ -479,7 +479,7 @@ export default function Checkout() {
                 >
                   OR
                 </span>
-                <hr className="flex-grow border-t border-[#EFEFEF]" />
+                {/* <hr className="flex-grow border-t border-[#EFEFEF]" /> */}
               </div>
 
               {/* Contact Section */}
@@ -743,7 +743,7 @@ export default function Checkout() {
                   ) : (
                     <div>
                       {paymentMethod === "card" && (
-                        <div className="border-b pb-4">
+                        <div className=" pb-4">
                           <PaymentOption
                             id="card"
                             name={<span className={`${lexendDeca.className}`} style={{ fontWeight: 400 }}>Pay by card</span>}
@@ -813,7 +813,7 @@ export default function Checkout() {
                         </div>
                       )}
                       {paymentMethod === "paypal" && (
-                        <div className="border-b pb-4">
+                        <div className=" pb-4">
                           <PaymentOption
                             id="paypal"
                             name={<span className={`${lexendDeca.className}`} style={{ fontWeight: 400 }}>PayPal</span>}
@@ -868,7 +868,7 @@ export default function Checkout() {
                 />
                 <label
                   htmlFor="save-info"
-                  className={` text-[#8B929D] ${lexendDeca.className}`}
+                  className={` text-[#8B929D] 2xl:text-[20px] font-normal ${lexendDeca.className}`}
                 >
                   Save my information for a faster checkout
                 </label>
@@ -881,7 +881,7 @@ export default function Checkout() {
               >
                 PAY NOW
               </button>
-              <p className={`${lexendDeca.className} 2xl:text-[20px] font-normal  w-full`}>By placing this order, you are confirming that you agree to our <span className="underline">Terms and Conditions</span>  and  <span className="underline">Privacy Policy</span>.
+              <p className={`${lexendDeca.className}  2xl:text-[20px] font-normal  w-full`}>By placing this order, you are confirming that you agree to our <span className="underline">Terms and Conditions</span>  and  <span className="underline">Privacy Policy</span>.
           </p>
 
             </div>
