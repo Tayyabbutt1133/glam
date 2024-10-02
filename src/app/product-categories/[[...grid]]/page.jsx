@@ -702,7 +702,7 @@ export default function Component() {
         </div>
 
         <div className="w-full lg:w-3/4">
-          <div className="flex justify-between items-center mb-8">
+          <div className="flex justify-between items-center mt-3">
             <div className="flex items-center">
               <button onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)} className="lg:hidden mr-4">
                 <Image
