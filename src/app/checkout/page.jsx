@@ -888,7 +888,7 @@ export default function Checkout() {
           </div>
          
           {/* Right: Order Summary and Bag Summary */}
-          <div className="lg:w-1/3 bg-gray-50 p-6 rounded-lg lg:-mt-[180px]">
+          <div className="lg:w-1/3 bg-gray-50 p-6  lg:-mt-[180px]">
             <div className=" ">
               <div className=" bg-white rounded-lg p-6 shadow-sm">
                 <h2 className={`text-xl font-semibold mb-4 ${jost.className}`}>
