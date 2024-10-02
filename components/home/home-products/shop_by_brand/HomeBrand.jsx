@@ -58,22 +58,20 @@ const HomeBrand = () => {
               key={product.id}
               className="flex flex-col items-start cursor-pointer bg-transparent overflow-hidden transition-shadow duration-300 flex-shrink-0 w-[calc(50%-8px)] sm:w-[calc(33.333%-16px)] lg:w-full"
             >
-              <div className="relative ">
-                <Image
-                  className="object-cover"
-                  src={product.image}
-                  alt={product.name}
-                  objectFit="cover"
-                />
-              </div>
-              <p
+              <Image
+                className="rounded-lg w-full h-auto"
+                src={product.image}
+                alt={product.name}
+              />
+ 
+ <p
                 className={`text-black mt-5 lg:text-[24px] font-semibold text-xs sm:text-sm mb-4 ${jost.className}`}
               >
                 {product.name}
               </p>
-              
+
               <p
-              className={`text-black font-normal text-xs sm:text-sm xl::text-[20px] mb-4 leading-normal ${lexendDeca.className}`}
+                className={`text-black font-normal text-xs sm:text-sm mb-4 ${lexendDeca.className}`}
               >
                 {product.description}
               </p>
