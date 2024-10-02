@@ -66,10 +66,14 @@ const HomeBrand = () => {
                   objectFit="cover"
                 />
               </div>
-
+              <p
+                className={`text-black mt-5 lg:text-[24px] font-semibold text-xs sm:text-sm mb-4 ${jost.className}`}
+              >
+                {product.name}
+              </p>
               
               <p
-                className={`text-black font-normal text-xs sm:text-sm mb-4 ${lexendDeca.className}`}
+                className={`text-black font-normal text-xs sm:text-sm xl::text-[20px] mb-4 leading-normal ${lexendDeca.className}`}
               >
                 {product.description}
               </p>

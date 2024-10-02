@@ -432,8 +432,8 @@ export default function Checkout() {
 
   return (
     <Container>
-      <div className="flex justify-between w-[65%] mt-16 items-center">
-        <h1 className={`text-3xl font-semibold mb-6 ${jost.className}`}>
+      <div className="flex justify-between w-[65%] mt-16 mb-20 items-center">
+        <h1 className={`text-3xl font-semibold ${jost.className}`}>
           Checkout
         </h1>
         <div className="md:flex items-center gap-4 hidden">
@@ -447,10 +447,10 @@ export default function Checkout() {
           </Link>
         </div>
       </div>
-      <div className="container px-4 py-8">
+      <div className="container">
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Left: Checkout Form */}
-          <div className="lg:w-2/3 space-y-6">
+          <div className="lg:w-2/3">
             {/* Header with Payment Options */}
             <div className="flex flex-row justify-evenly sm:justify-between gap-4 mb-6">
               <button
@@ -888,7 +888,7 @@ export default function Checkout() {
           </div>
          
           {/* Right: Order Summary and Bag Summary */}
-          <div className="lg:w-1/3 bg-gray-50 p-6 rounded-lg lg:-mt-24">
+          <div className="lg:w-1/3 bg-gray-50 p-6 rounded-lg lg:-mt-[180px]">
             <div className=" ">
               <div className=" bg-white rounded-lg p-6 shadow-sm">
                 <h2 className={`text-xl font-semibold mb-4 ${jost.className}`}>
