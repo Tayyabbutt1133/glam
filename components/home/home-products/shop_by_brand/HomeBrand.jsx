@@ -73,7 +73,7 @@ const HomeBrand = () => {
               </p>
               
               <p
-                className={`text-black font-normal text-xs sm:text-sm xl::text-[20px] mb-4 leading-normal ${lexendDeca.className}`}
+              className={`text-black font-normal text-xs sm:text-sm xl::text-[20px] mb-4 leading-normal ${lexendDeca.className}`}
               >
                 {product.description}
               </p>
