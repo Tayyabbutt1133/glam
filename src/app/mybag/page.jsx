@@ -190,22 +190,22 @@ export default function MyBag() {
 
   return (
     <main className="mx-6">
-      <div className=" lg:w-[98%] xl:w-[98%] mx-auto px-4 mt-8">
-        <div className="flex flex-col md:flex-row items-center md:justify-between  md:pr-2  w-full md:w-[69%]">
-          <p className={` text-sm md:text-[15px] 2xl:text-[20px] md:w-full text-black ${jost.className} sm:font-medium`}>
+      <div className="lg:w-[98%] xl:w-[98%] mx-auto px-4 mt-8">
+        <div className="flex flex-col md:flex-row items-center md:justify-between md:pr-2 w-full md:w-[69%]">
+          <p className={`text-sm md:text-[15px] 2xl:text-[20px] md:w-full text-black ${jost.className} sm:font-medium`}>
             Log in or create an account now to get these exclusive benefits.
           </p>
-          <div className="flex mt-3 md:mt-0 items-center justify-between w-[80%] sm:w-8/12 md:w-[59%] lg:w-[40%]  mr-10 md:justify-end flex-row gap-4 md:gap-1 lg:gap-4 ">
+          <div className="flex mt-3 md:mt-0 items-center justify-between w-[80%] sm:w-8/12 md:w-[59%] lg:w-[40%] mr-10 md:justify-end flex-row gap-4 md:gap-1 lg:gap-4">
             <Link href="/signup">
               <button
-                className={` ${jost.className} lg:text-base hover:bg-gray-100 text-gray-800 sm:border border-gray-300 px-4 py-[5px] font-medium  rounded-lg`}
+                className={`${jost.className} lg:text-base hover:bg-gray-100 text-gray-800 sm:border border-gray-300 px-4 py-[5px] font-medium rounded-lg`}
               >
                 Register
               </button>
             </Link>
             <Link href="/login">
               <button
-                className={` lg:text-base  font-medium  hover:bg-gray-100 text-gray-800 sm:border border-gray-300 px-4 py-[5px] rounded-lg ${jost.className}`}
+                className={`lg:text-base font-medium hover:bg-gray-100 text-gray-800 sm:border border-gray-300 px-4 py-[5px] rounded-lg ${jost.className}`}
               >
                 Log in
               </button>
@@ -232,10 +232,12 @@ export default function MyBag() {
                 scrollbarColor: "#888 #f1f1f1",
               }}
             >
-              {cartItems.map((item) => (
+              {cartItems.map((item, index) => (
                 <div
                   key={item.id}
-                  className="flex flex-row gap-4  items-start md:items-center border-b border-gray-200 py-6"
+                  className={`flex flex-row gap-4 items-start md:items-center py-6 ${
+                    cartItems.length > 1 && index !== cartItems.length - 1 ? "border-b border-gray-200" : ""
+                  }`}
                 >
                   <div className="w-[120px] md:w-48 md:flex-shrink-0">
                     <Image
@@ -306,12 +308,9 @@ export default function MyBag() {
                             ).toFixed(2)}
                           </p>
                         </div>
-                        <div className="block w-fit ml-auto items-center border border-gray-300 rounded-lg overflow-hidden">
-                          
-                        </div>
                         <div className="mt-6 sm:mt-24 flex items-center justify-between">
                           <div className="flex items-center">
-                            <div className="inline-flex items-center justify-between w-[102px] h-[35px] border rounded-lg overflow-hidden sm:max-w-[102px] max-w-[80px] sm:h-[35px] ">
+                            <div className="inline-flex items-center justify-between w-[102px] h-[35px] border rounded-lg overflow-hidden sm:max-w-[102px] max-w-[80px] sm:h-[35px]">
                               <button
                                 className="text-sm w-1/3 h-full text-b-03 hover:bg-gray-100 focus:outline-none"
                                 onClick={() =>
@@ -342,19 +341,19 @@ export default function MyBag() {
 
                           <div className="space-x-8">
                             <button
-                              className={` font-medium 2xl:text-[20px] text-black ${jost.className} font-medium`}
+                              className={`font-medium 2xl:text-[20px] text-black ${jost.className}`}
                               onClick={() => handleSaveForLater(item.id)}
                             >
                               Save For Later
                             </button>
                             <button
-                              className={` font-medium 2xl:text-[20px] text-black ${jost.className} font-medium`}
+                              className={`font-medium 2xl:text-[20px] text-black ${jost.className}`}
                               onClick={() => handleEdit(item)}
                             >
                               Edit
                             </button>
                             <button
-                              className={`font-medium 2xl:text-[20px] text-black ${jost.className} font-medium`}
+                              className={`font-medium 2xl:text-[20px] text-black ${jost.className}`}
                               onClick={() => removeFromCart(item.id)}
                             >
                               Remove
@@ -369,7 +368,7 @@ export default function MyBag() {
             </div>
 
             {/* You May Also Like section */}
-            <div className="container mx-auto px-4 py-8 mb-24 md:mb-0  hidden md:block">
+            <div className="container mx-auto px-4 py-8 mb-24 md:mb-0 hidden md:block">
               <h2 className={`text-2xl font-bold mb-14 ${jost.className}`}>
                 You May Also Like
               </h2>
@@ -385,7 +384,7 @@ export default function MyBag() {
                 <Slider {...sliderSettings}>
                   {products.map((product) => (
                     <div key={product.id} className="px-2">
-                      <div className="bg-white flex flex-col pb-4 border border-gray-100 rounded-lg  min-h-[330px] overflow-hidden relative">
+                      <div className="bg-white flex flex-col pb-4 border border-gray-100 rounded-lg min-h-[330px] overflow-hidden relative">
                         <div className="absolute top-2 right-2 z-10">
                           <button
                             className="focus:outline-none"
@@ -449,7 +448,7 @@ export default function MyBag() {
           </div>
 
           {/* order summary */}
-          <div className="md:w-1/3 md:-mt-44 bg-[#F7F7F7A6] md:flex-grow   rounded-xl md:rounded-none  border-red-700">
+          <div className="md:w-1/3 md:-mt-44 bg-[#F7F7F7A6] md:flex-grow rounded-xl md:rounded-none border-red-700">
             <div className="p-2 rounded-lg bg-[#F7F7F7A6]">
               <div className="bg-white p-4 rounded-lg mt-4">
                 <h2 className={`text-xl 2xl:text-[22px] font-medium mb-4 ${jost.className}`}>
@@ -463,7 +462,7 @@ export default function MyBag() {
                   </span>
                 </div>
                 <div
-                  className={`flex items-center flex-wrap  justify-between mb-2 ${jost.className}`}
+                  className={`flex items-center flex-wrap justify-between mb-2 ${jost.className}`}
                 >
                   <span>Estimated Shipping:</span>
                   <input
@@ -538,7 +537,7 @@ export default function MyBag() {
                         height={25}
                       />
                     </div>
-                    <div className=" p-2  hover:scale-110 transition-transform duration-300 cursor-pointer ] flex items-center justify-center">
+                    <div className="p-2 hover:scale-110 transition-transform duration-300 cursor-pointer flex items-center justify-center">
                       <Image
                         src={master}
                         alt="Master"
@@ -546,7 +545,7 @@ export default function MyBag() {
                         height={25}
                       />
                     </div>
-                    <div className="  p-2  hover:scale-110 transition-transform duration-300 cursor-pointer  flex items-center justify-center">
+                    <div className="p-2 hover:scale-110 transition-transform duration-300 cursor-pointer flex items-center justify-center">
                       <Image
                         src={maestro}
                         alt="Maestro"
@@ -554,7 +553,7 @@ export default function MyBag() {
                         height={25}
                       />
                     </div>
-                    <div className=" p-2  hover:scale-110 transition-transform duration-300 cursor-pointer  flex items-center justify-center">
+                    <div className="p-2 hover:scale-110 transition-transform duration-300 cursor-pointer flex items-center justify-center">
                       <Image
                         src={ae}
                         alt="American Express"
@@ -562,7 +561,7 @@ export default function MyBag() {
                         height={25}
                       />
                     </div>
-                    <div className=" p-2  hover:scale-110 transition-transform duration-300 cursor-pointer  flex items-center justify-center">
+                    <div className="p-2 hover:scale-110 transition-transform duration-300 cursor-pointer flex items-center justify-center">
                       <Image
                         src={paypal}
                         alt="PayPal"
@@ -632,16 +631,16 @@ export default function MyBag() {
                           {product.name}
                         </p>
                       </div>
-                      <div className="flex flex-col justify-end px-2 pb-2  mt-auto">
+                      <div className="flex flex-col justify-end px-2 pb-2 mt-auto">
                         <p
-                          className={`text-[15px] sm:text-base  mt-auto  font-bold mb-3 ${lexendDeca.className}`}
+                          className={`text-[15px] sm:text-base mt-auto font-bold mb-3 ${lexendDeca.className}`}
                         >
                           {currencySymbol}
                           {parseFloat(product.price * rate).toFixed(2)}
                         </p>
 
                         <button
-                          className={`w-full bg-black  text-xs rounded-lg sm:text-sm md:text-base text-white py-2 px-1  hover:bg-[#CF8562] transition ${jost.className}`}
+                          className={`w-full bg-black text-xs rounded-lg sm:text-sm md:text-base text-white py-2 px-1 hover:bg-[#CF8562] transition ${jost.className}`}
                           onClick={() => addToCart(product)}
                         >
                           ADD TO BAG
