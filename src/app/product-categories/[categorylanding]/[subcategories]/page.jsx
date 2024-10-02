@@ -486,20 +486,20 @@ export default function SubcategoryPage() {
 
   return (
     <Container className="min-h-screen py-7">
-      <style jsx global>{`
+   <style jsx global>{`
         .custom-scrollbar::-webkit-scrollbar {
           width: 6px;
         }
         .custom-scrollbar::-webkit-scrollbar-track {
-          background: #f1f1f1;
+          background: #EFEFEF;
           border-radius: 3px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: #888;
+          background: #EFEFEF;
           border-radius: 3px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: #555;
+          background: #EFEFEF;
         }
       `}</style>
       <div className="-mt-7">
@@ -797,7 +797,7 @@ export default function SubcategoryPage() {
                     </Link>
                     <Link href={`/product/${product.id}`}>
                       <h3
-                        className={`text-sm 2xl:text-[19px] ${lexendDeca.className} font-normal mb-2 h-[60px] overflow-hidden cursor-pointer`}
+                        className={`text-sm 2xl:text-[19px] ${lexendDeca.className} font-normal mb-2 h-[60px] overflow-hidden  cursor-pointer`}
                       >
                         {product.name}
                       </h3>
