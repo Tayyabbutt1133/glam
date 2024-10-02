@@ -18,7 +18,6 @@ const demo = [
 ];
 
 export default async function SingleProductData({ productId }) {
-  console.log(productId);
   // Fetch a product using its id
   const productFromApi = await fetch(
     `https://glam.clickable.site/wp-json/wc/v3/products/${productId}`,
@@ -36,7 +35,7 @@ export default async function SingleProductData({ productId }) {
   );
   
   const product = await productFromApi.json();
-  console.log({ productcat: product.categories });
+
 
   let categories = [];
 
