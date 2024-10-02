@@ -17,8 +17,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { usePopupStore } from "/states/use-popup-store";
 import Text from "../../../components/ui/Text";
 import { FaHeart } from "react-icons/fa";
-
-
+import { CiHeart } from "react-icons/ci";
 
 const arrowStyles = {
   width: "40px",
@@ -37,7 +36,6 @@ const NextArrow = ({ className, style, onClick }) => (
   </div>
 );
 
-
 const API_URL = "https://glam.clickable.site/wp-json/wc/v3/products";
 const CK = "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d";
 const CS = "cs_3f70ee2600a3ac17a5692d7ac9c358d47275d6fc";
@@ -49,7 +47,7 @@ export default function MyBag() {
   const [shippingAddress, setShippingAddress] = useState("");
   const [editingItem, setEditingItem] = useState(null);
   const [showScroll, setShowScroll] = useState(false);
-  const [likedProducts, setLikedProducts] = useState({}); // State to keep track of liked products
+  const [favorites, setFavorites] = useState({});
   const cartRef = useRef(null);
 
   const { rate, currencySymbol } = usePopupStore();
@@ -120,10 +118,11 @@ export default function MyBag() {
     fetchProducts();
   }, []);
 
-  const toggleLike = (productId) => {
-    setLikedProducts((prevLiked) => ({
-      ...prevLiked,
-      [productId]: !prevLiked[productId], // Toggle like state for each product
+  const handleFavoriteClick = (productId, e) => {
+    e.preventDefault(); // Prevent navigation when clicking the heart icon
+    setFavorites((prevFavorites) => ({
+      ...prevFavorites,
+      [productId]: !prevFavorites[productId],
     }));
   };
 
@@ -169,17 +168,16 @@ export default function MyBag() {
         breakpoint: 1024,
         settings: {
           slidesToShow: 3,
-          dots:true,
+          dots: true,
           slidesToScroll: 3,
           arrows: false,
-          
         },
       },
       {
         breakpoint: 768,
         settings: {
           arrows: false,
-          dots:true,
+          dots: true,
           slidesToShow: 2,
           slidesToScroll: 2,
           rows: 2,
@@ -214,10 +212,6 @@ export default function MyBag() {
             </Link>
           </div>
         </div>
-     
-
-
-
 
         <div className="flex justify-between items-center mb-6 mt-8">
           <h1 className={`text-3xl font-medium ${jost.className}`}>
@@ -227,7 +221,6 @@ export default function MyBag() {
         <hr className="h-2 w-[65%]" />
 
         <div className="flex flex-col md:flex-row md:items-stretch gap-8">
-       
           <div className="md:w-2/3">
             <div
               ref={cartRef}
@@ -255,7 +248,6 @@ export default function MyBag() {
                     />
                   </div>
 
-                  
                   <div className="ml-4 md:flex-grow">
                     {editingItem?.id === item.id ? (
                       <div>
@@ -376,101 +368,84 @@ export default function MyBag() {
               ))}
             </div>
 
-            
-
-
-
-
             {/* You May Also Like section */}
-    <div className="container mx-auto px-4 py-8 mb-24 md:mb-0  hidden md:block">
-      <h2 className={`text-2xl font-bold mb-14 ${jost.className}`}>
-        You May Also Like
-      </h2>
-      {loading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {Array(3)
-            .fill(0)
-            .map((_, index) => (
-              <ProductSkeleton key={index} />
-            ))}
-        </div>
-      ) : (
-        <Slider {...sliderSettings}>
-          {products.map((product) => (
-            <div key={product.id} className="px-2">
-              <div className="bg-white flex flex-col pb-4 border border-gray-100 rounded-lg  min-h-[330px] overflow-hidden relative">
-                {/* Like Button (Heart Icon) */}
-                {/* <button
-                  className="absolute top-2 right-2"
-                  onClick={() => toggleLike(product.id)}
-                >
-                  <FaHeart
-                    className="w-6 h-6"
-                    color={likedProducts[product.id] ? 'red' : 'black'}
-                  />
-                </button> */}
-
-                {/* Link wrapping the entire product div */}
-                <Link href={`/product/${product.id}`}>
-                  <div>
-                    {/* Product Image */}
-                    <div className="relative pb-[100%]">
-                      <Image
-                        src={product.images[0]?.src || '/placeholder.svg'}
-                        alt={product.name}
-                        layout="fill"
-                        objectFit="cover"
-                      />
-                    </div>
-
-                    {/* Product Details */}
-                    <div className="px-2 mt-6">
-                      <h3 className={`text-sm font-bold mb-1 ${jost.className}`}>
-                        {getBrand(product)}
-                      </h3>
-                      <p
-                        className={`text-sm mb-2 h-10 overflow-hidden ${lexendDeca.className}`}
-                      >
-                        {product.name}
-                      </p>
-                    </div>
-
-                    {/* Product Price */}
-                    <div className="flex flex-col justify-end px-2 pb-2 mt-auto">
-                      <p
-                        className={`text-[15px] sm:text-base font-bold mb-3 ${lexendDeca.className}`}
-                      >
-                        {currencySymbol}
-                        {parseFloat(product.price * rate).toFixed(2)}
-                      </p>
-                    </div>
-                  </div>
-                </Link>
-
-                {/* Add to Bag Button (outside of the Link to prevent navigating) */}
-                <div className="px-2 pb-2">
-                  <button
-                    className={`w-full bg-black text-xs rounded-lg sm:text-sm md:text-base text-white py-2 px-1 hover:bg-[#CF8562] transition ${jost.className}`}
-                    onClick={() => addToCart(product)}
-                  >
-                    ADD TO BAG
-                  </button>
+            <div className="container mx-auto px-4 py-8 mb-24 md:mb-0  hidden md:block">
+              <h2 className={`text-2xl font-bold mb-14 ${jost.className}`}>
+                You May Also Like
+              </h2>
+              {loading ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {Array(3)
+                    .fill(0)
+                    .map((_, index) => (
+                      <ProductSkeleton key={index} />
+                    ))}
                 </div>
-              </div>
+              ) : (
+                <Slider {...sliderSettings}>
+                  {products.map((product) => (
+                    <div key={product.id} className="px-2">
+                      <div className="bg-white flex flex-col pb-4 border border-gray-100 rounded-lg  min-h-[330px] overflow-hidden relative">
+                        <div className="absolute top-2 right-2 z-10">
+                          <button
+                            className="focus:outline-none"
+                            onClick={(e) => handleFavoriteClick(product.id, e)}
+                          >
+                            {favorites[product.id] ? (
+                              <FaHeart className="text-red-500 w-6 h-6" />
+                            ) : (
+                              <CiHeart className="text-black w-6 h-6" />
+                            )}
+                          </button>
+                        </div>
+
+                        <Link href={`/product/${product.id}`}>
+                          <div>
+                            <div className="relative pb-[100%]">
+                              <Image
+                                src={product.images[0]?.src || '/placeholder.svg'}
+                                alt={product.name}
+                                layout="fill"
+                                objectFit="cover"
+                              />
+                            </div>
+
+                            <div className="px-2 mt-6">
+                              <h3 className={`text-sm font-bold mb-1 ${jost.className}`}>
+                                {getBrand(product)}
+                              </h3>
+                              <p
+                                className={`text-sm mb-2 h-10 overflow-hidden ${lexendDeca.className}`}
+                              >
+                                {product.name}
+                              </p>
+                            </div>
+
+                            <div className="flex flex-col justify-end px-2 pb-2 mt-auto">
+                              <p
+                                className={`text-[15px] sm:text-base font-bold mb-3 ${lexendDeca.className}`}
+                              >
+                                {currencySymbol}
+                                {parseFloat(product.price * rate).toFixed(2)}
+                              </p>
+                            </div>
+                          </div>
+                        </Link>
+
+                        <div className="px-2 pb-2">
+                          <button
+                            className={`w-full bg-black text-xs rounded-lg sm:text-sm md:text-base text-white py-2 px-1 hover:bg-[#CF8562] transition ${jost.className}`}
+                            onClick={() => addToCart(product)}
+                          >
+                            ADD TO BAG
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </Slider>
+              )}
             </div>
-          ))}
-        </Slider>
-      )}
-    </div>
-
-
-
-
-
-
-
-
-
           </div>
 
           {/* order summary */}
@@ -492,12 +467,12 @@ export default function MyBag() {
                 >
                   <span>Estimated Shipping:</span>
                   <input
-  type="text"
-  value={shippingAddress}
-  onChange={(e) => setShippingAddress(e.target.value)}
-  placeholder="Enter shipping address"
-  className="border-gray-300 w-[100%] xl:w-[65%] rounded-md px-2 py-1 -mr-2 text-gray-800 text-right"
-/>
+                    type="text"
+                    value={shippingAddress}
+                    onChange={(e) => setShippingAddress(e.target.value)}
+                    placeholder="Enter shipping address"
+                    className="border-gray-300 w-[100%] xl:w-[65%] rounded-md px-2 py-1 -mr-2 text-gray-800 text-right"
+                  />
                 </div>
                 <p className={`text-sm 2xl:text-[18px] text-black font-normal mb-4 ${jost.className}`}>
                   (Spend{" "}
@@ -555,48 +530,47 @@ export default function MyBag() {
                 >
                   <p>Pay by Card/Pay Later</p>
                   <section className="gap-4 items-center flex">
-  <div className="hover:scale-110 transition-transform duration-300 cursor-pointer flex items-center justify-center">
-    <Image
-      src={visa}
-      alt="Visa"
-      width={40}
-      height={25}
-    />
-  </div>
-  <div className=" p-2  hover:scale-110 transition-transform duration-300 cursor-pointer ] flex items-center justify-center">
-    <Image
-      src={master}
-      alt="Master"
-      width={40}
-      height={25}
-    />
-  </div>
-  <div className="  p-2  hover:scale-110 transition-transform duration-300 cursor-pointer  flex items-center justify-center">
-    <Image
-      src={maestro}
-      alt="Maestro"
-      width={40}
-      height={25}
-    />
-  </div>
-  <div className=" p-2  hover:scale-110 transition-transform duration-300 cursor-pointer  flex items-center justify-center">
-    <Image
-      src={ae}
-      alt="American Express"
-      width={40}
-      height={25}
-    />
-  </div>
-  <div className=" p-2  hover:scale-110 transition-transform duration-300 cursor-pointer  flex items-center justify-center">
-    <Image
-      src={paypal}
-      alt="PayPal"
-      width={40}
-      height={25}
-    />
-  </div>
-</section>
-
+                    <div className="hover:scale-110 transition-transform duration-300 cursor-pointer flex items-center justify-center">
+                      <Image
+                        src={visa}
+                        alt="Visa"
+                        width={40}
+                        height={25}
+                      />
+                    </div>
+                    <div className=" p-2  hover:scale-110 transition-transform duration-300 cursor-pointer ] flex items-center justify-center">
+                      <Image
+                        src={master}
+                        alt="Master"
+                        width={40}
+                        height={25}
+                      />
+                    </div>
+                    <div className="  p-2  hover:scale-110 transition-transform duration-300 cursor-pointer  flex items-center justify-center">
+                      <Image
+                        src={maestro}
+                        alt="Maestro"
+                        width={40}
+                        height={25}
+                      />
+                    </div>
+                    <div className=" p-2  hover:scale-110 transition-transform duration-300 cursor-pointer  flex items-center justify-center">
+                      <Image
+                        src={ae}
+                        alt="American Express"
+                        width={40}
+                        height={25}
+                      />
+                    </div>
+                    <div className=" p-2  hover:scale-110 transition-transform duration-300 cursor-pointer  flex items-center justify-center">
+                      <Image
+                        src={paypal}
+                        alt="PayPal"
+                        width={40}
+                        height={25}
+                      />
+                    </div>
+                  </section>
                 </div>
                 <Link href="./checkout">
                   <button
@@ -608,15 +582,6 @@ export default function MyBag() {
               </div>
             </div>
           </div>
-          
-          
-          
-          
-          
-          
-          
-          
-          
           
           <div className="container mx-auto px-4 py-8 mb-24 md:mb-0 md:hidden block">
             <h2 className={`text-2xl font-bold mb-14 ${jost.className}`}>
@@ -635,22 +600,18 @@ export default function MyBag() {
                 {products.map((product) => (
                   <div key={product.id} className="px-2">
                     <div className="bg-white flex flex-col rounded-lg shadow-md min-h-[330px] overflow-hidden">
-                      <button className="ml-auto pt-1 pr-1   rounded-full">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          className="w-6 h-6"
+                      <div className="absolute top-2 right-2 z-10">
+                        <button
+                          className="focus:outline-none"
+                          onClick={(e) => handleFavoriteClick(product.id, e)}
                         >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                          />
-                        </svg>
-                      </button>
+                          {favorites[product.id] ? (
+                            <FaHeart className="text-red-500 w-6 h-6" />
+                          ) : (
+                            <CiHeart className="text-black w-6 h-6" />
+                          )}
+                        </button>
+                      </div>
                       <div className="relative pb-[100%]">
                         <Image
                           src={product.images[0]?.src || "/placeholder.svg"}

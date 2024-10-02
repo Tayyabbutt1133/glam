@@ -28,7 +28,7 @@ const sanitizeText = (text) => {
 const CategoryItem = ({ href, logo, name }) => (
   <li className="flex-shrink-0 flex flex-col items-center text-center w-[110px] md:w-[150px] 2xl:w-[200px]">
     <Link href={href} passHref className="flex flex-col items-center">
-      <div className="flex justify-center items-center w-[110px] h-[110px] md:w-[150px] md:h-[150px] 2xl:w-[200px] 2xl:h-[200px] rounded-full overflow-hidden border-transparent hover:scale-110 transition-transform duration-300 p-2">
+      <div className="flex justify-center items-center w-[110px] h-[110px] md:w-[150px] md:h-[150px] 2xl:w-[200px] 2xl:h-[200px] rounded-full overflow-hidden border-transparent hover:scale-105 transition-transform duration-300 p-2">
         <Image
           src={logo}
           alt={sanitizeText(name)}
