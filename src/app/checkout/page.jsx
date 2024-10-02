@@ -231,7 +231,7 @@ export default function Checkout() {
   }
 
   const handlePayNow = () => {
-    const requiredFields = ['firstName', 'lastName', 'address', 'city', 'postcode', 'phone', 'email', 'country', 'region']
+    const requiredFields = ['firstName', 'lastName', 'address', 'city', 'postcode', 'phone', 'email', 'country']
     const newErrors = {}
     requiredFields.forEach(field => {
       const error = validateField(field, formData[field])
