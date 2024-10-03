@@ -162,7 +162,7 @@ const MenuCategoryList = () => {
           <>{sanitizeText(mainCategory?.name || '')}</>
         )}
       </h1>
-      <div className="mt-10">
+      <div className="mt-10 flex justify-center">
         <CategoryList
           items={subCategories}
           getHref={(subCat) => `/product-categories/${categorylanding}/${subCat.slug}`}

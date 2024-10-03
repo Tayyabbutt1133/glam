@@ -29,15 +29,14 @@ const StickyProductBar = ({ product, addToCart }) => {
     <div className="fixed bottom-0 left-0 right-0 bg-white shadow-md p-4 flex items-center justify-between z-50">
       <div className="flex items-center">
         <Image
-          src={product.images[0].src}
-          alt={product.name}
+          src={""}
+          alt={""}
           width={50}
           height={50}
           className="object-cover mr-4"
         />
         <div>
-          <h3 className={`text-sm font-semibold ${jost.className}`}>{product.name}</h3>
-          <p className={`text-lg font-bold ${lexendDeca.className}`}>${product.price}</p>
+          <h3 className={`text-sm font-semibold ${jost.className}`}>{"product.name"}</h3>
         </div>
       </div>
       <div className="flex items-center">
