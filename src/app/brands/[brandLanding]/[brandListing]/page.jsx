@@ -666,13 +666,13 @@ export default function ProductListing() {
                   />
                 </Link>
                 <div className="p-4">
-                  <Link href={`/product/${product.slug}`}>
+                  {/* <Link href={`/product/${product.slug}`}>
                     <h1
                       className={`text-sm 2xl:text-[20px] ${jost.className} uppercase cursor-pointer font-bold mb-2`}
                     >
                       {product.attributes.nodes.find(attr => attr.name === "Brand")?.options[0] || "Unknown Brand"}
                     </h1>
-                  </Link>
+                  </Link> */}
                   <h3
                     className={`text-sm 2xl:text-[20px] ${lexendDeca.className} font-normal mb-2 h-[60px] overflow-hidden`}
                   >
