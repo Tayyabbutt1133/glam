@@ -36,7 +36,7 @@ export default function ProductData({product}) {
       <Price price={product.price} regularPrice={product.regular_price} salePrice={product.sale_price} isOnsale={product.on_sale} />
       <PaymentOptions  />
       <SkinToneSelector  product={product} />
-      <PurchaseOptions options={purchaseOptions} />
+      {/* <PurchaseOptions options={purchaseOptions} /> */}
       <QuantityBag product={product} />
     </div>
   );

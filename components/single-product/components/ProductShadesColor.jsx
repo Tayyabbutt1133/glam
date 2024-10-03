@@ -45,9 +45,9 @@ export default function SkinToneSelector({product}) {
   };
   return (
     <div className={`${jost.className} w-full  py-4 px-2 bg-white rounded-lg`}>
-      <div className="mb-4 w-full">
-        <h3 className="text-xl font-semibold text-gray-700 mb-2">Shade</h3>
-        <div className="flex flex-wrap gap-3 text-[9px] sm:text-sm  sm:gap-4">
+      {/* <div className="mb-4 w-full"> */}
+        {/* <h3 className="text-xl font-semibold text-gray-700 mb-2">Shade</h3> */}
+        {/* <div className="flex flex-wrap gap-3 text-[9px] sm:text-sm  sm:gap-4">
           {availableShades.map((shade) => (
             <button
               key={shade}
@@ -61,10 +61,10 @@ export default function SkinToneSelector({product}) {
               {shade}
             </button>
           ))}
-        </div>
-      </div>
+        </div> */}
+      {/* </div> */}
 
-      <div className="mb-4">
+      {/* <div className="mb-4">
         <h3 className="text-xl font-semibold text-gray-700 mb-2">Undertone</h3>
         <div className="flex  flex-nowrap gap-4 text-[9px] sm:text-sm">
           {undertones.map((undertone) => (
@@ -81,10 +81,10 @@ export default function SkinToneSelector({product}) {
             </button>
           ))}
         </div>
-      </div>
+      </div> */}
 
 
-      <div className="my-4">
+      <div className="">
     <h3 className="text-xl font-semibold text-gray-700 mb-2">Colour</h3>
 
     {/* Color Circles */}

@@ -156,13 +156,13 @@ const Staffpicks = () => {
       >
         See What Others are Buying
       </h1>
-      <main className="w-[92%] mx-auto">
+      <main className="">
         {loading ? (
           <Slider {...settings}>
             {Array(4)
               .fill(0)
               .map((_, index) => (
-                <div key={index} className="px-2">
+                <div key={index} className="">
                   <div className="bg-white shadow-lg rounded-lg overflow-hidden relative flex flex-col h-full min-h-[350px] border border-gray-300">
                     <div className="aspect-w-1 aspect-h-1 w-full h-48">
                       <Skeleton height="100%" />

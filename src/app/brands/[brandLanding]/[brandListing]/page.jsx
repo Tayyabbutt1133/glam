@@ -413,20 +413,20 @@ export default function ProductListing() {
         <Breadcrumb links={breadLinks} />
     </Container>
     <Container className="min-h-screen py-24">
-      <style jsx global>{`
+    <style jsx global>{`
         .custom-scrollbar::-webkit-scrollbar {
           width: 6px;
         }
         .custom-scrollbar::-webkit-scrollbar-track {
-          background: #f1f1f1;
+          background: #EFEFEF;
           border-radius: 3px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: #888;
+          background: #EFEFEF;
           border-radius: 3px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: #555;
+          background: #EFEFEF;
         }
       `}</style>
       <div className="flex flex-col lg:flex-row gap-8">

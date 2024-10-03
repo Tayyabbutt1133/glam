@@ -1,13 +1,12 @@
 "use client";
+
 import { jost } from "/components/ui/fonts";
 import React, { useState, useRef, useEffect } from "react";
 import { IoChevronDownOutline } from "react-icons/io5";
 
-
-
-export default function Accordion({product}) {
+export default function Accordion({ product }) {
   const accordionData = [
-    { title: "Description", content: product.description,isHtml:true },
+    { title: "Description", content: product.description, isHtml: true },
     { title: "Benefits", content: "List of product benefits." },
     { title: "How To Use", content: "Instructions on how to use the product." },
     {
@@ -31,10 +30,8 @@ export default function Accordion({product}) {
     });
   }, [openSection]);
 
-
-
   return (
-    <div>
+    <div className="w-full lg:w-1/2">
       {accordionData.map((section, index) => (
         <div key={index} className="border-b border-gray-200">
           <button
@@ -43,7 +40,7 @@ export default function Accordion({product}) {
             aria-expanded={openSection === index}
             aria-controls={`content-${index}`}
           >
-            <span className="text-lg font-medium">{section.title}</span>
+            <span className={`text-lg 2xl:text-[24px] ${jost.className} font-medium`}>{section.title}</span>
             <IoChevronDownOutline
               className={`w-5 h-5 transition-transform duration-200 text-secondary ${
                 openSection === index ? "transform rotate-180" : ""
@@ -60,7 +57,7 @@ export default function Accordion({product}) {
               {section.isHtml ? (
                 <div dangerouslySetInnerHTML={{ __html: section.content }} className={`${jost.className} text-sm`} />
               ) : (
-                <p>{section.content}</p>
+                <p className={`${jost.className} text-sm`}>{section.content}</p>
               )}
             </div>
           </div>
