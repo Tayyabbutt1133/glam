@@ -67,7 +67,7 @@ export default function FrequentlyBoughtTogether() {
       <div className="flex flex-col sm:flex-row items-stretch justify-between gap-6">
         {products.map((product, index) => (
           <React.Fragment key={product.id}>
-            <div className="w-full sm:w-1/3 flex flex-col h-[400px] sm:h-[350px] 2xl:h-[400px] justify-between">
+            <div className="w-full sm:w-1/3 flex flex-col h-[400px] lg:h-[350px] 2xl:h-[400px] justify-between">
               <div>
                 <Link href={`/product/${product.id}`} className="block aspect-square mb-4">
                   <Image

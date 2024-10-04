@@ -11,6 +11,7 @@ import Recientlyviewed from "./components/Recientlyviewed";
 
 import demo1 from "/public/product-slider/demo1.png";
 import demo2 from "/public/product-slider/demo2.png";
+import PaymentOptions from "./components/product-data/components/payment-options";
 
 const demo = [
   { src: demo1, alt: "Image 1" },
@@ -89,7 +90,10 @@ export default async function SingleProductData({ productId }) {
       <div className="flex-grow container  py-8">
         <div className="w-full justify-between gap-[3%] overflow-hidden">
           <section className="grid md:grid-cols-2 justify-between h-auto gap-5">
-            <ProductSlider images={product.images} />
+            <div>
+              <ProductSlider images={product.images} />
+              <PaymentOptions className=""/>
+              </div>
             <ProductData product={product} />
           </section>
           <section className="">
