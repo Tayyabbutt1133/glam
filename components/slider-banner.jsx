@@ -17,7 +17,7 @@ export default function SliderBanner({ bannerObject, hero = false }) {
         <div className={`flex flex-col w-full sm:w-[90%] lg:w-[80%] gap-3 sm:gap-4 lg:gap-6 ${hero ? "items-center text-center" : "items-start"}`}>
           <h1 
            
-            className={`${jost.className} 2xl:text-[36px] xs:text-2xl text-[16px] font-medium`}>
+            className={`${jost.className} ${hero ? "hero-title" : "lifecycle-banner_title"} 2xl:text-[36px] xs:text-2xl text-[16px] font-medium`}>
             {title}
           </h1>
 
