@@ -7,6 +7,7 @@ export default function Newsletter() {
     <section className="bg-bg-01 h-[140px] sm:h-[238px] grid place-items-center">
       <Container>
         <div className="flex flex-col lg:flex-row items-center lg:justify-center gap-6">
+        
           {/* title */}
           <div className="sm:px-3 lg:px-0 min-w-fit w-full lg:w-auto">
             <h2
