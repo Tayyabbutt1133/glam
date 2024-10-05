@@ -485,12 +485,12 @@ export default function Checkout() {
             </div>
 
             <div className="space-y-4">
-              <div className="flex items-center justify-center my-4">
-                <hr className="flex-grow border-t border-[#EFEFEF]" />
+              <div className="flex items-center flex-col justify-center my-4">
+                {/* <hr className="flex-grow border-t border-[#EFEFEF]" /> */}
                 <span
                   className={`px-3 text-gray-500 text-sm ${lexendDeca.className}`}
                 >
-                  OR
+                   or Continue with
                 </span>
                 {/* <hr className="flex-grow border-t border-[#EFEFEF]" /> */}
               </div>
@@ -900,7 +900,7 @@ export default function Checkout() {
           </div>
          
           {/* Right: Order Summary and Bag Summary */}
-          <div className="lg:w-1/3 bg-gray-50 p-6  lg:-mt-[180px]">
+          <div className="lg:w-1/3 bg-gray-50 p-6  lg:-mt-[180px] xs:block hidden">
             <div className=" ">
               <div className=" bg-white rounded-lg p-6 shadow-sm">
                 <h2 className={`text-xl font-semibold mb-4 ${jost.className}`}>
