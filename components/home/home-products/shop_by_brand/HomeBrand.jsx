@@ -91,7 +91,7 @@ const HomeBrand = () => {
       key={product.id}
       className="flex flex-col items-start cursor-pointer bg-transparent overflow-hidden transition-shadow duration-300 flex-shrink-0 w-full p-4"
     >
-      <h1 className={`${jost.className} mb-8 sm:hidden text-[20px] font-medium`}>Summer Essentials</h1>
+      <h1 className={`${jost.className} mb-8 xs:hidden text-[20px] font-medium`}>Summer Essentials</h1>
       <div className="w-full h-auto relative aspect-[4/3] lg:aspect-square lg:max-w-[390px] lg:max-h-[390px]">
         <Image
           className="rounded-lg object-cover"

@@ -9,6 +9,9 @@ module.exports = {
   },
   theme: {
     extend: {
+      screens: {
+        xs: "430px",  // Custom breakpoint at 430px
+      },
       colors: {
         primary: "var(--text-primary)",
         secondary: "var(--text-secondary)",

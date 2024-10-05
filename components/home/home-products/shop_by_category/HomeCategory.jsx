@@ -151,7 +151,7 @@ export default function HomeCategory() {
     <>
       <Container>
         <div className="py-16 relative">
-          <h1  className={`uppercase ml-2 mb-10 ${jost.className} font-semibold 2xl:text-[36px] text-2xl`}>
+          <h1  className={`uppercase ml-2 mb-10 ${jost.className} font-semibold 2xl:text-[36px] xs:text-2xl text-[20px]`}>
             Shop by Category
           </h1>
           <Slider {...settings}>

@@ -68,7 +68,7 @@ export default function BrandSlide() {
 
   return (
     <div className="my-12 container">
-      <h2 className={`2xl:text-[36px] text-2xl font-semibold mb-8 uppercase ${jost.className}`}>Shop by Brand</h2>
+      <h2 className={`2xl:text-[36px] xs:text-2xl text-[20px] font-semibold mb-8 uppercase ${jost.className}`}>Shop by Brand</h2>
       <div className="overflow-hidden">
         <Slider {...settings} className="brand-slider -mx-4">
           {brands.map((brand) => (
