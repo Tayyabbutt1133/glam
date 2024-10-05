@@ -123,7 +123,7 @@ const ProductList = () => {
   return (
     <Container>
       <div className="py-16 md:mb-20">
-        <h1 className={`uppercase font-semibold mb-8 ${jost.className} 2xl:text-[36px] text-2xl`}>TRENDING NOW</h1>
+        <h1 className={`uppercase font-semibold mb-8 ${jost.className} 2xl:text-[36px] xs:text-2xl text-[20px]`}>TRENDING NOW</h1>
         {loading ? (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {Array(4).fill(0).map((_, index) => (

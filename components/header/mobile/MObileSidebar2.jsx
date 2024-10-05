@@ -11,6 +11,7 @@ import Text from "../../ui/Text";
 import Container from "../../container";
 import { brands } from "../navigation-nav/data/brands";
 import { MdHome } from "react-icons/md";
+
 export default function MobileSidebar({ isOpen, onClose }) {
   const [links, setLinks] = useState([]);
   const [currentCategory, setCurrentCategory] = useState(null);
@@ -106,7 +107,6 @@ export default function MobileSidebar({ isOpen, onClose }) {
           throw new Error("Failed to fetch navigation data");
         }
         const data = await res.json();
-        // console.log({linkdata:data})
         setLinks(data);
       } catch (err) {
         console.error(err);
@@ -136,6 +136,7 @@ export default function MobileSidebar({ isOpen, onClose }) {
   const getSubMenu = (parentId) => {
     return links.filter((link) => link.parent === parentId?.toString());
   };
+
   const categorizeBrands = (brands) => {
     const categories = {
       "0 - 9": [],
@@ -168,6 +169,10 @@ export default function MobileSidebar({ isOpen, onClose }) {
     return categories;
   };
 
+  const handleLinkClick = () => {
+    onClose();
+  };
+
   const renderMegaMenu = () => {
     if (hoveredLink.href === "/brands") {
       const categorizedBrands = categorizeBrands(brands);
@@ -181,7 +186,7 @@ export default function MobileSidebar({ isOpen, onClose }) {
                     {category}
                   </h2>
                   {categorizedBrands[category].map((brand) => (
-                    <Link key={brand.slug} href={`/brands/${brand.slug}`}>
+                    <Link key={brand.slug} href={`/brands/${brand.slug}`} onClick={handleLinkClick}>
                       <p className="text-lg my-1 font-light">{brand.name}</p>
                     </Link>
                   ))}
@@ -200,7 +205,7 @@ export default function MobileSidebar({ isOpen, onClose }) {
         <div className="flex flex-col w-full">
           {expandedSubMenu.map((item) => (
             <div key={item.id} className="mb-4">
-              <Link href={item.href} className="flex items-center">
+              <Link href={item.href} className="flex items-center" onClick={handleLinkClick}>
                 {item.color && (
                   <div
                     style={{ backgroundColor: item.color }}
@@ -231,6 +236,7 @@ export default function MobileSidebar({ isOpen, onClose }) {
                     : subCategory.href
                 }
                 className="relative inline-block"
+                onClick={handleLinkClick}
               >
                 <Text style="h4" className="uppercase mb-2 ">
                   {subCategory.name}
@@ -267,18 +273,13 @@ export default function MobileSidebar({ isOpen, onClose }) {
     if (currentCategory) {
       return (
         <>
-          
-            
-            <h2 className="text-xl font-semibold mb-8 flex ">
-              {/* {expandedSubCategory ? <p className="flex justify-center mr-1">  {expandedSubCategory.name} { currentCategory == currentCategory}</p> : currentCategory} { currentCategory!="Home" &&" Home"} */}
-              {expandedSubCategory ? expandedSubCategory.name: currentCategory}
-            </h2>
-          
+          <h2 className="text-xl font-semibold mb-8 flex ">
+            {expandedSubCategory ? expandedSubCategory.name : currentCategory}
+          </h2>
           {renderMegaMenu()}
         </>
       );
     }
-    //`Sibty-In future when brands will be sdded in the menu remove them from isSpecialCategory and handle there logic with other links e.g skincare, makeup etc
 
     return mainLinks?.map((category, index) => {
       const lowerCaseName = category.name.toLowerCase();
@@ -289,7 +290,6 @@ export default function MobileSidebar({ isOpen, onClose }) {
         .replace(/-+/g, "-")
         .replace(/^-|-$/g, "");
 
-      // Special case for "skin care"
       if (categorySlug === "skin-care") {
         categorySlug = "skincare";
       }
@@ -306,7 +306,7 @@ export default function MobileSidebar({ isOpen, onClose }) {
           <Link
             href={href}
             className={` ${index === 0 ? "text-sale" : ""}`}
-            onClick={onClose}
+            onClick={handleLinkClick}
           >
             {category.name}
           </Link>
@@ -351,16 +351,20 @@ export default function MobileSidebar({ isOpen, onClose }) {
           <button onClick={onClose} className="py-2" aria-label="Close sidebar">
             <X className=" size-8" />
           </button>
-        {currentCategory!=null || currentSubCategory !=null?<button onClick={goBack} className="mr-2 flex gap-2  items-center" aria-label="Go back">
+          {currentCategory != null || currentSubCategory != null ? (
+            <button onClick={goBack} className="mr-2 flex gap-2  items-center" aria-label="Go back">
               <ChevronLeft className="w-6 h-6" /><span>Back</span>
-            </button>:  <Link
-            href="/"
-            className="py-2"
-            onClick={onClose}
-            aria-label="Go to home"
-          >
-            <MdHome className=" size-8" />
-          </Link>}
+            </button>
+          ) : (
+            <Link
+              href="/"
+              className="py-2"
+              onClick={handleLinkClick}
+              aria-label="Go to home"
+            >
+              <MdHome className=" size-8" />
+            </Link>
+          )}
         </div>
         <div className="p-4 overflow-y-auto ">{renderCategories()}</div>
         {currentCategory == null && currentSubCategory == null && (
@@ -377,16 +381,12 @@ export default function MobileSidebar({ isOpen, onClose }) {
                     />
                   </div>
                 )}
-                <p
-                  className="flex items-center gap-2 font-normal text-base"
-              
-                >
+                <p className="flex items-center gap-2 font-normal text-base">
                   <span className="lowercase">
                     {selectedCountry.countryCode}
                   </span>
                   {" - "}
                   {selectedCountry.code}
-                  
                 </p>
               </div>
             </div>

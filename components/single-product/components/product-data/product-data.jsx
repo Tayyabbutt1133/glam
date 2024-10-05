@@ -2,7 +2,7 @@ import PurchaseOptions from "./components/options";
 import ProductLogo from "./components/product-logo";
 import ProductTitle from "./components/product-title";
 import Rating from "./components/rating";
-import PaymentOptions from "./components/payment-options";
+// import PaymentOptions from "./components/payment-options";
 import Price from "./components/price";
 import QuantityBag from "./components/quantity-bag-button";
 import SkinToneSelector from "../ProductShadesColor";
@@ -34,9 +34,7 @@ export default function ProductData({product}) {
       <ProductTitle title={product.name} />
       <Rating ratingCount={product.rating_count} averageRating={product.average_rating} />
       <Price price={product.price} regularPrice={product.regular_price} salePrice={product.sale_price} isOnsale={product.on_sale} />
-      <PaymentOptions  />
       <SkinToneSelector  product={product} />
-      <PurchaseOptions options={purchaseOptions} />
       <QuantityBag product={product} />
     </div>
   );

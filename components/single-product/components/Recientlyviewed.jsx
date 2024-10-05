@@ -66,8 +66,10 @@ const Recientlyviewed = () => {
   }
 
   return (
-    <Container className="space-y-6 mb-14 mt-20">
-   <h1 className={`${jost.className} font-semibold text-2xl`}> Recently Viewed</h1>
+    // <Container>
+    <>
+      <div className='hidden md:block'>
+        <h1 className={`${jost.className} font-semibold md:text-2xl mb-4`}> Recently Viewed</h1>
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         {loading
           ? Array(4).fill().map((_, index) => <SkeletonLoader key={index} />)
@@ -75,8 +77,10 @@ const Recientlyviewed = () => {
               <RecentlyViewedItem key={product.id} product={product} />
             ))
         }
-      </div>
-    </Container>
+        </div>
+        </div>
+      </>
+    // </Container>
   )
 }
 

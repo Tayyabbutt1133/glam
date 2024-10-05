@@ -413,20 +413,20 @@ export default function ProductListing() {
         <Breadcrumb links={breadLinks} />
     </Container>
     <Container className="min-h-screen py-24">
-      <style jsx global>{`
+    <style jsx global>{`
         .custom-scrollbar::-webkit-scrollbar {
           width: 6px;
         }
         .custom-scrollbar::-webkit-scrollbar-track {
-          background: #f1f1f1;
+          background: #EFEFEF;
           border-radius: 3px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: #888;
+          background: #EFEFEF;
           border-radius: 3px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: #555;
+          background: #EFEFEF;
         }
       `}</style>
       <div className="flex flex-col lg:flex-row gap-8">
@@ -666,13 +666,13 @@ export default function ProductListing() {
                   />
                 </Link>
                 <div className="p-4">
-                  <Link href={`/product/${product.slug}`}>
+                  {/* <Link href={`/product/${product.slug}`}>
                     <h1
                       className={`text-sm 2xl:text-[20px] ${jost.className} uppercase cursor-pointer font-bold mb-2`}
                     >
                       {product.attributes.nodes.find(attr => attr.name === "Brand")?.options[0] || "Unknown Brand"}
                     </h1>
-                  </Link>
+                  </Link> */}
                   <h3
                     className={`text-sm 2xl:text-[20px] ${lexendDeca.className} font-normal mb-2 h-[60px] overflow-hidden`}
                   >

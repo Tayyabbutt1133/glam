@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Container from "../../../container";
@@ -11,8 +11,26 @@ import brand_four from "../../../../public/home_banners/brand_four.svg";
 import { jost, lexendDeca } from "../../../ui/fonts";
 import BrandSlide from "./BrandSlide";
 import Text from "../../../ui/Text";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const HomeBrand = () => {
+  const [isSlider, setIsSlider] = useState(true);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSlider(window.innerWidth < 1024); // Use 768px as the breakpoint for md
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   const products = [
     {
       id: 1009,
@@ -48,41 +66,71 @@ const HomeBrand = () => {
     },
   ];
 
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 2,
+    slidesToScroll: 1,
+    arrows: false,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    responsive: [
+      {
+        breakpoint: 640,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
+
+  const renderProductCard = (product) => (
+    <div
+      key={product.id}
+      className="flex flex-col items-start cursor-pointer bg-transparent overflow-hidden transition-shadow duration-300 flex-shrink-0 w-full p-4"
+    >
+      <h1 className={`${jost.className} mb-8 xs:hidden text-[20px] font-medium`}>Summer Essentials</h1>
+      <div className="w-full h-auto relative aspect-[4/3] lg:aspect-square lg:max-w-[390px] lg:max-h-[390px]">
+        <Image
+          className="rounded-lg object-cover"
+          src={product.image}
+          alt={product.name}
+          layout="fill"
+        />
+      </div>
+      <p
+        className={`text-black mt-5 md:text-[24px] font-semibold text-xs sm:text-sm mb-4 ${jost.className}`}
+      >
+        {product.name}
+      </p>
+      <p
+        className={`text-black font-normal text-[14px] sm:text-sm mb-4 ${lexendDeca.className}`}
+      >
+        {product.description}
+      </p>
+      <button
+        className={`mt-auto bg-black text-white text-xs sm:text-sm py-2 px-4 sm:px-6 rounded-lg hover:bg-hover transition duration-200 ${jost.className} w-[116px] h-[36px] sm:w-auto sm:h-auto`}
+      >
+        SHOP NOW
+      </button>
+    </div>
+  );
+
   return (
     <Container>
-      <div className=" py-16 space-y-10">
+      <div className="py-16 space-y-10">
         <BrandSlide />
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {products.map((product) => (
-            <div
-              key={product.id}
-              className="flex flex-col items-start cursor-pointer bg-transparent overflow-hidden transition-shadow duration-300 flex-shrink-0 w-[calc(50%-8px)] sm:w-[calc(33.333%-16px)] lg:w-full"
-            >
-              <Image
-                className="rounded-lg w-full h-auto"
-                src={product.image}
-                alt={product.name}
-              />
- 
- <p
-                className={`text-black mt-5 lg:text-[24px] font-semibold text-xs sm:text-sm mb-4 ${jost.className}`}
-              >
-                {product.name}
-              </p>
-
-              <p
-                className={`text-black font-normal text-xs sm:text-sm mb-4 ${lexendDeca.className}`}
-              >
-                {product.description}
-              </p>
-              <button
-                className={`mt-auto bg-black text-white text-xs sm:text-sm py-2 sm:px-6 px-2 rounded-lg hover:bg-hover transition duration-200 ${jost.className}`}
-              >
-                SHOP NOW
-              </button>
-            </div>
-          ))}
-        </div>
+        {isSlider ? (
+          <Slider {...settings}>
+            {products.map(renderProductCard)}
+          </Slider>
+        ) : (
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+            {products.map(renderProductCard)}
+          </div>
+        )}
       </div>
     </Container>
   );

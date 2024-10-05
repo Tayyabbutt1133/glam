@@ -32,7 +32,7 @@ const paymentOptions = [
 export default function PaymentOptions() {
   const { currencySymbol, rate } = usePopupStore();
   return (
-    <section className="flex  flex-wrap gap-3 mb-10">
+    <section className="flex flex-wrap gap-4">
       {paymentOptions.map((option, index) => {
         const convertedAmount = (option.amount * rate).toFixed(2);
         return (

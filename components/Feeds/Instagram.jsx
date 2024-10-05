@@ -16,7 +16,7 @@ export default function Instagram() {
     <div className="flex w-full mb-20 ">
       <Container>
         <div className="flex flex-col w-full mt-10 overflow-hidden">
-        <h1  className={`uppercase mb-10 ${jost.className} font-semibold 2xl:text-[36px] text-2xl`}>
+        <h1  className={`uppercase mb-10 ${jost.className} font-semibold 2xl:text-[36px] xs:text-2xl text-[20px]`}>
             SHOP OUR IG
           </h1>
           <div className="ig-container lg:mx-1 scrollbar-hide">

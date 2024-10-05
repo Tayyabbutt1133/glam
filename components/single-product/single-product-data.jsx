@@ -11,6 +11,7 @@ import Recientlyviewed from "./components/Recientlyviewed";
 
 import demo1 from "/public/product-slider/demo1.png";
 import demo2 from "/public/product-slider/demo2.png";
+import PaymentOptions from "./components/product-data/components/payment-options";
 
 const demo = [
   { src: demo1, alt: "Image 1" },
@@ -86,28 +87,21 @@ export default async function SingleProductData({ productId }) {
           <BreadCrumbs links={breadcrumblinks} />
         </div>
       </div>
-      <div className="flex-grow container mx-auto px-4 py-8">
+      <div className="flex-grow container  py-8">
         <div className="w-full justify-between gap-[3%] overflow-hidden">
           <section className="grid md:grid-cols-2 justify-between h-auto gap-5">
-            <ProductSlider images={product.images} />
+            <div>
+              <ProductSlider images={product.images} />
+              <PaymentOptions className=""/>
+              </div>
             <ProductData product={product} />
           </section>
-          <section className="grid md:grid-cols-2 gap-5 mt-8">
-            <div className="hidden md:grid grid-cols-2 gap-2">
-              {demo.map((image, index) => (
-                <Image
-                  key={index}
-                  src={image.src}
-                  alt={image.alt}
-                  className="object-contain w-full h-auto"
-                />
-              ))}
-            </div>
-            <div className="flex flex-col gap-2">
-              <Accordion product={product} />
-              <div className="hidden lg:block mt-4">
+          <section className="">
+            <div className="flex justify-between mt-8">
+            <div className="hidden lg:block">
                 <FrequentlyBoughtTogether />
               </div>
+              <Accordion product={product} />
             </div>
           </section>
           <div className="lg:hidden mt-8">
@@ -117,9 +111,9 @@ export default async function SingleProductData({ productId }) {
         <div className="mt-12">
           <Staffpicks />
         </div>
-        <div className="mt-12">
+        {/* <div className="mt-12">
           <Reviews />
-        </div>
+        </div> */}
         <div className="mt-12">
           <Recientlyviewed />
         </div>
