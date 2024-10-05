@@ -61,7 +61,7 @@ export default function FrequentlyBoughtTogether() {
   }
 
   return (
-    <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="w-full max-w-4xl">
       <h2 className={`sm:text-2xl text-[16px] font-medium mb-6 ${jost.className}`}>Frequently Bought Together</h2>
 
       <div className="flex flex-col sm:flex-row items-stretch justify-between gap-6">

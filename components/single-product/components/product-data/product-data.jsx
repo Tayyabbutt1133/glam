@@ -34,9 +34,7 @@ export default function ProductData({product}) {
       <ProductTitle title={product.name} />
       <Rating ratingCount={product.rating_count} averageRating={product.average_rating} />
       <Price price={product.price} regularPrice={product.regular_price} salePrice={product.sale_price} isOnsale={product.on_sale} />
-      {/* <PaymentOptions  /> */}
       <SkinToneSelector  product={product} />
-      {/* <PurchaseOptions options={purchaseOptions} /> */}
       <QuantityBag product={product} />
     </div>
   );

@@ -111,9 +111,9 @@ export default async function SingleProductData({ productId }) {
         <div className="mt-12">
           <Staffpicks />
         </div>
-        <div className="mt-12">
+        {/* <div className="mt-12">
           <Reviews />
-        </div>
+        </div> */}
         <div className="mt-12">
           <Recientlyviewed />
         </div>
