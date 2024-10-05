@@ -38,8 +38,8 @@ export default function MobileHeader({ onOpenSidebar }) {
           <Image
             src={glam_logo}
             alt="Glam Beauty Logo"
-            width={120}
-            height={40}
+            width={160}
+            height={60}
           />
         </Link>
         <div className="flex items-center space-x-4">

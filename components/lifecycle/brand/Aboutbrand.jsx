@@ -9,7 +9,7 @@ export default function Aboutbrand() {
     <Container>
       <main className="">
         <h1
-          className={`text-2xl mt-8 font-semibold uppercase 2xl:text-[36px] ${jost.className}`}
+          className={`text-[20px] xs:text-2xl mt-8 font-semibold uppercase 2xl:text-[36px] ${jost.className}`}
         >
           About Cosmetics
         </h1>

@@ -6,7 +6,14 @@ export default function Button({ children, className = "" }) {
         bg-button 
         hover:bg-hover 
         text-white 
+        text-[10px]
+        px-6
+        py-2
         font-normal 
+        xs:px-6
+        xs:py-1
+        sm:px-8
+        sm:py-2
         lg:text-xl 
         lg:px-6 
         lg:py-2 

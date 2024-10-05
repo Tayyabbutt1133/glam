@@ -2,6 +2,7 @@ import Image from "next/image";
 import Text from "./ui/Text";
 import Button from "./ui/button";
 import Link from "next/link";
+import { jost } from "./ui/fonts";
 
 export default function SliderBanner({ bannerObject, hero = false }) {
   const { title, description, src } = bannerObject;
@@ -14,11 +15,11 @@ export default function SliderBanner({ bannerObject, hero = false }) {
       {/* Left side of slider */}
       <div className="w-[38%] flex flex-col bg-bg-01 justify-center items-center p-4 sm:p-6 lg:p-8">
         <div className={`flex flex-col w-full sm:w-[90%] lg:w-[80%] gap-3 sm:gap-4 lg:gap-6 ${hero ? "items-center text-center" : "items-start"}`}>
-          <Text 
-            style={"h1"} 
-            className={`hero-title text-lg sm:text-xl lg:text-3xl xl:text-4xl hero-title`}>
+          <h1 
+           
+            className={`${jost.className} 2xl:text-[36px] xs:text-2xl text-[16px] font-medium`}>
             {title}
-          </Text>
+          </h1>
 
           <Text style={"sm"} className="text-light capitalize text-xs sm:text-sm lg:text-base">
             {description}

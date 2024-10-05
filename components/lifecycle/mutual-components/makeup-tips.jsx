@@ -1,6 +1,13 @@
+"use client"
+
+import React from "react";
 import Image from "next/image";
 import Container from "../../container";
 import Text from "../../ui/Text";
+import { jost } from "../../ui/fonts";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 import tip1 from "/public/lifecycle/makeup tips/tip1.png";
 import tip2 from "/public/lifecycle/makeup tips/tip2.png";
@@ -34,14 +41,16 @@ const tips = [
 const Tips = ({ data }) => {
   return (
     <div className="relative hover:scale-110 transition-transform duration-300 cursor-pointer">
-      <div className="relative">
+      <div className="relative w-full h-full">
         <Image
           src={data.image}
           alt={data.title}
-          style={{ width: "100%" }}
-          className="object-cover"
+          layout="responsive"
+          width={300}
+          height={400}
+          className="object-cover rounded-lg xs:w-[152px] xs:h-[200px]"
         />
-        <div className="tips-overlay"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-lg"></div>
       </div>
 
       <Text style={"sm"} className="absolute bottom-4 px-3 text-white">
@@ -52,16 +61,52 @@ const Tips = ({ data }) => {
 };
 
 export default function MakeupTips() {
+  const sliderSettings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    arrows: false,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    pauseOnHover: true,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2.2,
+          slidesToScroll: 1,
+        }
+      },
+      {
+        breakpoint: 640,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        }
+      }
+    ]
+  };
+
   return (
     <Container className="my-3 lg:my-9">
-      <Text style={"h1"} className="uppercase mt-28">
+      <h1 className={`uppercase mb-3 ${jost.className} font-semibold 2xl:text-[36px] xs:text-2xl text-[20px]`}>
         makeup tips for you
-      </Text>
-      <div className="overflow-x-auto lg:overflow-x-visible">
-        {/* Makeup tips */}
-        <div className="flex lg:grid lg:grid-cols-5 gap-4 2xl:gap-8 mt-8 pb-4">
+      </h1>
+      <div className="lg:hidden">
+        <Slider {...sliderSettings}>
           {tips.map((tip, index) => (
-            <Tips key={index} data={tip} className="flex-shrink-0 w-[80vw] sm:w-[45vw] md:w-[30vw] lg:w-full" />
+            <div key={index} className="pr-4">
+              <Tips data={tip} />
+            </div>
+          ))}
+        </Slider>
+      </div>
+      <div className="hidden lg:block">
+        <div className="grid grid-cols-5 gap-4 2xl:gap-8 mt-8">
+          {tips.map((tip, index) => (
+            <Tips key={index} data={tip} />
           ))}
         </div>
       </div>

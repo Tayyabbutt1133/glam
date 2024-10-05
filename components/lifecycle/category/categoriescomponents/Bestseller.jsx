@@ -13,6 +13,7 @@ import NextArrowIcon from "../../../../public/hero-banners/next-arrow"
 import PrevArrowIcon from "../../../../public/hero-banners/prev-arrow"
 import { useCategoryIdState } from "../../../../states/use-category-id"
 import Text from "../../../ui/Text"
+import { jost } from "../../../ui/fonts"
 
 const arrowStyles = {
   width: "40px",
@@ -119,9 +120,9 @@ export default function Bestseller() {
 
   return (
     <Container className="my-16">
-      <Text style="h1" className="uppercase mb-8">
+      <h1 className={`uppercase mb-8 2xl:text-[36px] xs:text-2xl text-[20px] ${jost.className} font-semibold`}>
         Bestsellers
-      </Text>
+      </h1>
       <div className="relative">
         {!bestSellers.length ? (
           <Slider {...settings}>

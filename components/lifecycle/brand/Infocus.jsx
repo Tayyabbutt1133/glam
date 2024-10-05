@@ -11,7 +11,8 @@ import "react-loading-skeleton/dist/skeleton.css"
 import NextArrowIcon from "/public/hero-banners/next-arrow"
 import PrevArrowIcon from "/public/hero-banners/prev-arrow"
 import Product from "/components/product"
-import Text from "../../ui/Text"
+// import Text from "../../ui/Text
+import { jost } from "../../ui/fonts"
 
 const arrowStyles = {
   width: "40px",
@@ -97,7 +98,7 @@ export default function InFocus() {
       {
         breakpoint: 768,
         settings: {
-          dots: true,
+          dots: false,
           arrows: false,
           slidesToShow: 2,
           slidesToScroll: 1,
@@ -109,7 +110,7 @@ export default function InFocus() {
           slidesToShow: 2,
           slidesToScroll: 2,
           arrows: false,
-          dots: true,
+          dots: false,
           rows: 2,
         },
       },
@@ -131,9 +132,9 @@ export default function InFocus() {
 
   return (
     <Container className="mb-16">
-      <Text style="h1" className="uppercase mb-10">
+      <h1 className={`uppercase mb-3 ${jost.className}  font-semibold 2xl:text-[36px] xs:text-2xl text-[20px]`}>
         In focus
-      </Text>
+      </h1>
       <div className="relative">
         {loading ? (
           <Slider {...settings}>
