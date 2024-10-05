@@ -203,17 +203,17 @@ export default function MyBag() {
           <p className={`text-[16px] md:text-[15px] 2xl:text-[20px] md:w-full text-black ${jost.className} font-normal sm:font-medium`}>
             Log in or create an account now to get these exclusive benefits.
           </p>
-          <div className="flex mt-3 md:mt-0 items-center justify-between w-[80%] sm:w-8/12 md:w-[59%] lg:w-[40%] mr-10 md:justify-end flex-row gap-4 md:gap-1 lg:gap-4">
+          <div className="flex mt-3 md:mt-0 items-center justify-between  w-[80%] sm:w-8/12 md:w-[59%] lg:w-[40%]  md:mr-10 md:justify-end flex-row gap-4 md:gap-1 lg:gap-4">
             <Link href="/signup">
               <button
-                className={`${jost.className} lg:text-base hover:bg-gray-100 text-gray-800 border border-gray-300 px-10 sm:px-4 py-[5px] font-medium rounded-lg`}
+                className={`${jost.className} lg:text-base hover:bg-gray-100 text-gray-800 border border-gray-300 px-10 md:px-4 py-[5px] font-medium rounded-lg`}
               >
                 Register
               </button>
             </Link>
             <Link href="/login">
               <button
-                className={`lg:text-base font-medium hover:bg-gray-100 text-gray-800 border border-gray-300 px-10 sm:px-4 py-[5px] rounded-lg ${jost.className}`}
+                className={`lg:text-base font-medium hover:bg-gray-100 text-gray-800 border border-gray-300 px-10 md:px-4 py-[5px] rounded-lg ${jost.className}`}
               >
                 Log in
               </button>
