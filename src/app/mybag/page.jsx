@@ -173,7 +173,7 @@ export default function MyBag() {
         breakpoint: 1024,
         settings: {
           slidesToShow: 3,
-          dots: true,
+          dots: false,
           slidesToScroll: 3,
           arrows: false,
         },
@@ -182,10 +182,13 @@ export default function MyBag() {
         breakpoint: 768,
         settings: {
           arrows: false,
-          dots: true,
+          dots: false,
           slidesToShow: 2,
+          autoplay: true,
+          autoplaySpeed: 8000,
+          infinite: true,
           slidesToScroll: 2,
-          rows: 2,
+          // rows: 2,
           slidesPerRow: 1,
         },
       },
@@ -197,20 +200,20 @@ export default function MyBag() {
     <main className="mx-6">
       <div className="lg:w-[98%] xl:w-[98%] mx-auto px-4 mt-8">
         <div className="flex flex-col md:flex-row items-center md:justify-between md:pr-2 w-full md:w-[69%]">
-          <p className={`text-sm md:text-[15px] 2xl:text-[20px] md:w-full text-black ${jost.className} sm:font-medium`}>
+          <p className={`text-[16px] md:text-[15px] 2xl:text-[20px] md:w-full text-black ${jost.className} font-normal sm:font-medium`}>
             Log in or create an account now to get these exclusive benefits.
           </p>
           <div className="flex mt-3 md:mt-0 items-center justify-between w-[80%] sm:w-8/12 md:w-[59%] lg:w-[40%] mr-10 md:justify-end flex-row gap-4 md:gap-1 lg:gap-4">
             <Link href="/signup">
               <button
-                className={`${jost.className} lg:text-base hover:bg-gray-100 text-gray-800 sm:border border-gray-300 px-4 py-[5px] font-medium rounded-lg`}
+                className={`${jost.className} lg:text-base hover:bg-gray-100 text-gray-800 border border-gray-300 px-4 py-[5px] font-medium rounded-lg`}
               >
                 Register
               </button>
             </Link>
             <Link href="/login">
               <button
-                className={`lg:text-base font-medium hover:bg-gray-100 text-gray-800 sm:border border-gray-300 px-4 py-[5px] rounded-lg ${jost.className}`}
+                className={`lg:text-base font-medium hover:bg-gray-100 text-gray-800 border border-gray-300 px-4 py-[5px] rounded-lg ${jost.className}`}
               >
                 Log in
               </button>
@@ -219,7 +222,7 @@ export default function MyBag() {
         </div>
 
         <div className="flex justify-between items-center mb-6 mt-8">
-          <h1 className={`text-3xl font-medium ${jost.className}`}>
+          <h1 className={`2xl:text-[36px] sm:text-2xl text-[16px] font-medium ${jost.className}`}>
             Your Bag ({cartItems.length})
           </h1>
         </div>
@@ -282,7 +285,7 @@ export default function MyBag() {
                           <div>
                             <Link href={`/product/${item.id}`}>
                               <h2
-                                className={`text-lg cursor-pointer font-medium w-[80%] ${jost.className}`}
+                                className={`2xl:text-[24px] xs:text-lg text-[16px] cursor-pointer font-medium w-[80%] ${jost.className}`}
                               >
                                 {decodeHTMLEntities(item.name)}
                               </h2>
@@ -302,20 +305,61 @@ export default function MyBag() {
                               {decodeHTMLEntities(item.attributes.find(
                                 (attr) => attr.name === "Size"
                               )?.options[0] || "N/A")}
-                            </p>
-                          </div>
-                          <p
-                            className={`font-semibold text-lg ${jost.className}`}
+                              </p>
+                              
+                              <p
+                            className={`font-medium sm:hidden mt-4 sm:mt-0 block  text-[16px] ${jost.className}`}
                           >
                             {currencySymbol}
                             {parseFloat(
                               item.price * rate * item.quantity
                             ).toFixed(2)}
                           </p>
-                        </div>
-                        <div className="mt-6 sm:mt-24 flex items-center justify-between">
+
+                          </div>
+                          <p
+                            className={`font-medium  hidden sm:block text-lg ${jost.className}`}
+                          >
+                            {currencySymbol}
+                            {parseFloat(
+                              item.price * rate * item.quantity
+                            ).toFixed(2)}
+                          </p>
+                          </div>
+                          
+
+                          
+
+
+
+
+
+                          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                          <div className=" -mt-12 sm:-mt-0 flex sm:flex-row flex-col sm:items-center items-end gap-4 justify-between ">
+                            
+                            {/* adding up product's */}
                           <div className="flex items-center">
-                            <div className="inline-flex items-center justify-between w-[102px] h-[35px] border rounded-lg overflow-hidden sm:max-w-[102px] max-w-[80px] sm:h-[35px]">
+                            <div className="inline-flex items-center justify-between border w-[102px] h-[35px]  rounded-lg overflow-hidden sm:max-w-[102px] max-w-[80px] sm:h-[35px]">
                               <button
                                 className="text-sm w-1/3 h-full text-b-03 hover:bg-gray-100 focus:outline-none"
                                 onClick={() =>
@@ -344,6 +388,7 @@ export default function MyBag() {
                             </div>
                           </div>
 
+                            {/* button's */}
                           <div className="space-x-8">
                             <button
                               className={`font-medium 2xl:text-[20px] text-black ${jost.className}`}
@@ -363,8 +408,42 @@ export default function MyBag() {
                             >
                               Remove
                             </button>
+                            </div>
+                            
+
                           </div>
-                        </div>
+                          
+
+
+
+
+                          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                       </>
                     )}
                   </div>
@@ -453,8 +532,8 @@ export default function MyBag() {
           </div>
 
           {/* order summary */}
-          <div className="md:w-1/3 md:-mt-44 bg-[#F7F7F7A6] md:flex-grow rounded-xl md:rounded-none border-red-700">
-            <div className="p-2 rounded-lg bg-[#F7F7F7A6]">
+          <div className="md:w-1/3 md:-mt-44  md:flex-grow rounded-xl md:rounded-none">
+            <div className="p-2 rounded-lg sm:bg-[#F7F7F7A6]">
               <div className="bg-white p-4 rounded-lg mt-4">
                 <h2 className={`text-xl 2xl:text-[22px] font-medium mb-4 ${jost.className}`}>
                   Order Summary
@@ -501,7 +580,7 @@ export default function MyBag() {
                   {(3.2 * rate).toFixed(2)} in taxes
                 </p>
               </div>
-
+                 <hr className="h-2" />
               <div className="mt-4 bg-white p-6 rounded-lg">
                 <label
                   htmlFor="promo"
@@ -509,6 +588,7 @@ export default function MyBag() {
                 >
                   Promo code
                 </label>
+                
                 <div className="flex items-center mt-5">
                   <input
                     type="text"
@@ -524,7 +604,7 @@ export default function MyBag() {
                   </button>
                 </div>
               </div>
-
+              <hr className="h-2" />
               <div className="mt-6 bg-white p-6 rounded-lg">
                 <p className={`mb-2 text-lg ${jost.className} font-medium`}>
                   Payment Mode
@@ -603,7 +683,7 @@ export default function MyBag() {
               <Slider {...sliderSettings}>
                 {products.map((product) => (
                   <div key={product.id} className="px-2">
-                    <div className="bg-white flex flex-col rounded-lg shadow-md min-h-[330px] overflow-hidden">
+                    <div className="bg-white flex flex-col rounded-lg border border-[#EFEFEF]  min-h-[330px] overflow-hidden">
                       <div className="absolute top-2 right-2 z-10">
                         <button
                           className="focus:outline-none"
