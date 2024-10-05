@@ -3,12 +3,14 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Container from '../../../../components/container'
-// import Text from "../../../../ui/Text"
 import Text from '../../../../components/ui/Text'
 import Image from "next/image"
 import Link from "next/link"
 import { jost } from "../../../../components/ui/fonts"
 import { useCartStore } from '/states/Cardstore'
+import Slider from "react-slick"
+import "slick-carousel/slick/slick.css"
+import "slick-carousel/slick/slick-theme.css"
 
 const decodeHtmlEntities = (text) => {
   return text.replace(/&amp;/g, '&')
@@ -52,7 +54,7 @@ const SingleMakeupPick = ({ product }) => {
   }
 
   return (
-    <div className="flex flex-col items-start gap-5 h-full">
+    <div className="flex flex-col items-start gap-5 h-full px-2">
       <Link href={`/product/${product.id}`} className="w-full">
         <div className="aspect-square w-full relative cursor-pointer">
           <Image
@@ -73,9 +75,9 @@ const SingleMakeupPick = ({ product }) => {
         </Text>
       </div>
       <Link href={`/product/${product.id}`}>
-      <CustomButton onClick={handleAddToCart} className="mt-auto  uppercase hover:bg-[#CF8562]">
-        Shop Now
-      </CustomButton>
+        <CustomButton onClick={handleAddToCart} className="mt-auto uppercase hover:bg-[#CF8562]">
+          Shop Now
+        </CustomButton>
       </Link>
     </div>
   )
@@ -112,10 +114,39 @@ const Newin = () => {
     return <Container className="text-center py-10 text-red-500">{error}</Container>
   }
 
+  const sliderSettings = {
+    dots: false,
+    infinite: true,
+    speed: 700,
+    slidesToShow: 2,
+    slidesToScroll: 1,
+    arrows: false,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    pauseOnHover: true,
+  }
+
   return (
     <Container className="space-y-10 mb-28 mt-20">
-      <Text style="h1" className="uppercase">New In</Text>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <h1 className={`uppercase ${jost.className} font-semibold 2xl:text-[36px] xs:text-2xl text-[20px]`}>New In</h1>
+      <div className="md:hidden">
+        {loading ? (
+          <Slider {...sliderSettings}>
+            {Array(4).fill().map((_, index) => (
+              <div key={index} className="px-2">
+                <SkeletonLoader />
+              </div>
+            ))}
+          </Slider>
+        ) : (
+          <Slider {...sliderSettings}>
+            {products.map((product) => (
+              <SingleMakeupPick key={product.id} product={product} />
+            ))}
+          </Slider>
+        )}
+      </div>
+      <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-6">
         {loading
           ? Array(4).fill().map((_, index) => <SkeletonLoader key={index} />)
           : products.map((product) => (

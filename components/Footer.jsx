@@ -3,6 +3,9 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { ChevronDown, ChevronUp } from "lucide-react";
+import { lexendDeca, jost } from "./ui/fonts";
+import Container from "./container";
 
 import logo from "../public/logo.svg";
 import app_store from "../public/app_store.svg";
@@ -16,9 +19,6 @@ import master from "../public/card-logos/master.svg"
 import maestro from "../public/card-logos/maestro.svg"
 import ae from "../public/card-logos/american-express.svg"
 import paypal from "../public/card-logos/paypal.svg"
-import { lexendDeca, jost } from "./ui/fonts";
-import { ChevronDown, ChevronUp } from "lucide-react";
-import Container from "./container";
 
 export default function Footer() {
   const [openSections, setOpenSections] = useState({
@@ -28,24 +28,21 @@ export default function Footer() {
   });
 
   const toggleSection = (section) => {
-    setOpenSections((prev) => {
-      const newState = { ...prev };
-      newState[section] = !prev[section];
-      return newState;
-    });
+    setOpenSections((prev) => ({
+      ...prev,
+      [section]: !prev[section],
+    }));
   };
 
   return (
     <Container>
-    <main className="">
-      <footer>
-        <div className="mx-auto w-full">
+      <footer className="w-full">
+        <div className="w-full">
           <div className="md:flex md:justify-between md:items-center my-10">
             {/* logo */}
             <div className="flex flex-col gap-4">
               <Link href="https://glambeauty-demo.vercel.app/" className="flex items-center space-x-3">
-                  <Image src={logo} alt="GlamBeauty Logo" width={193} height={45} />
-                <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"></span>
+                <Image src={logo} alt="GlamBeauty Logo" width={193} height={45} />
               </Link>
               <p className={`text-sm lg:text-[14px] 2xl:text-[16px] text-[#8B929D] md:w-64 ${lexendDeca.className} font-normal leading-6`}>
                 We are the fastest-growing beauty retailer, always offering huge discounts off the RRP.
@@ -67,123 +64,82 @@ export default function Footer() {
             </div>
 
             {/* Nav links */}
-            {/* Nav links */}
-            <div className="grid px-3 py-2 sm:px-0 mt-4 grid-cols-1 space-y-1 md:grid-cols-4 sm:space-y-0 lg:ml-16 md:ml-6">
+            <div className="grid  py-2  mt-4 grid-cols-1 md:grid-cols-4 lg:ml-16 md:ml-6">
               {/* GlamBeauty Section */}
-              <div>
+              <div className="border-b border-gray-200 md:border-none">
                 <h2
-                  className={`mb-4 text-sm mt-4 md:text-[18px] 2xl:text-[20px] capitalize flex items-center justify-between font-semibold text-black ${jost.className}`}
+                  className={`py-4 text-[16px] md:text-[18px] 2xl:text-[20px] capitalize flex items-center justify-between font-medium text-black ${jost.className}`}
                   onClick={() => toggleSection("glamBeauty")}
                 >
-                  GlamBeauty{" "}
-                  {openSections.glamBeauty ? (
-                    <ChevronUp className="inline-flex ml-auto md:hidden" />
-                  ) : (
-                    <ChevronDown className="inline-flex ml-auto md:hidden" />
-                  )}
+                  GlamBeauty
+                  <span className="md:hidden">
+                    {openSections.glamBeauty ? (
+                      <ChevronUp className="w-6 h-6" />
+                    ) : (
+                      <ChevronDown className="w-6 h-6" />
+                    )}
+                  </span>
                 </h2>
-                <ul className={`text-[#8B929D] lg:text-[14px] 2xl:text-[16px] text-sm pb-3 space-y-3 ${lexendDeca.className} font-normal transition-all duration-300 ease-in-out ${openSections.glamBeauty || 'md:block' ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
-                  <li>
-                    <Link href="/aboutus" className="hover:underline">
-                      About us
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="#" className="hover:underline">
-                      Partnerships & Suppliers
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="#" className="hover:underline">
-                      Sitemap
-                    </Link>
-                  </li>
+                <ul className={`text-[#8B929D] lg:text-[14px] 2xl:text-[16px] text-sm space-y-3 ${lexendDeca.className} font-normal transition-all duration-300 ease-in-out ${openSections.glamBeauty ? 'max-h-screen opacity-100 pb-4' : 'max-h-0 opacity-0 overflow-hidden'} md:max-h-screen md:opacity-100 md:overflow-visible`}>
+                  <li><Link href="/aboutus" className="hover:underline">About us</Link></li>
+                  <li><Link href="#" className="hover:underline">Partnerships & Suppliers</Link></li>
+                  <li><Link href="#" className="hover:underline">Sitemap</Link></li>
                 </ul>
               </div>
 
               {/* Help & Information Section */}
-              <div>
+              <div className="border-b border-gray-200 md:border-none">
                 <h2
-                  className={`mb-4 text-sm mt-4 md:text-[18px] 2xl:text-[20px] capitalize flex items-center justify-between font-semibold text-black ${jost.className}`}
+                  className={`py-4 text-[16px] md:text-[18px] 2xl:text-[20px] capitalize flex items-center justify-between font-semibold text-black ${jost.className}`}
                   onClick={() => toggleSection("helpInfo")}
                 >
-                  Help & Information{" "}
-                  {openSections.helpInfo ? (
-                    <ChevronUp className="inline-flex ml-auto md:hidden" />
-                  ) : (
-                    <ChevronDown className="inline-flex ml-auto md:hidden" />
-                  )}
+                  Help & Information
+                  <span className="md:hidden">
+                    {openSections.helpInfo ? (
+                      <ChevronUp className="w-6 h-6" />
+                    ) : (
+                      <ChevronDown className="w-6 h-6" />
+                    )}
+                  </span>
                 </h2>
-                <ul className={`text-[#8B929D] text-sm lg:text-[14px] 2xl:text-[16px] space-y-3 ${lexendDeca.className} font-normal transition-all duration-300 ease-in-out ${openSections.helpInfo || 'md:block' ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
-                  <li>
-                    <Link href="#" className="hover:underline">
-                      Delivery Information
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="#" className="hover:underline">
-                      Returns Policy
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="#" className="hover:underline">
-                      FAQs
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/contact-us" className="hover:underline">
-                      Contact Us
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="#" className="hover:underline">
-                      Student Discounts
-                    </Link>
-                  </li>
+                <ul className={`text-[#8B929D] text-sm lg:text-[14px] 2xl:text-[16px] space-y-3 ${lexendDeca.className} font-normal transition-all duration-300 ease-in-out ${openSections.helpInfo ? 'max-h-screen opacity-100 pb-4' : 'max-h-0 opacity-0 overflow-hidden'} md:max-h-screen md:opacity-100 md:overflow-visible`}>
+                  <li><Link href="#" className="hover:underline">Delivery Information</Link></li>
+                  <li><Link href="#" className="hover:underline">Returns Policy</Link></li>
+                  <li><Link href="#" className="hover:underline">FAQs</Link></li>
+                  <li><Link href="/contact-us" className="hover:underline">Contact Us</Link></li>
+                  <li><Link href="#" className="hover:underline">Student Discounts</Link></li>
                 </ul>
               </div>
 
               {/* Legal Section */}
-              <div>
+              <div className="border-b border-gray-200 md:border-none">
                 <h2
-                  className={`mb-4 text-sm mt-4 md:text-[18px] 2xl:text-[20px] capitalize flex items-center justify-between font-semibold text-black ${jost.className}`}
+                  className={`py-4 text-[16px] md:text-[18px] 2xl:text-[20px] capitalize flex items-center justify-between font-semibold text-black ${jost.className}`}
                   onClick={() => toggleSection("legal")}
                 >
-                  Legal{" "}
-                  {openSections.legal ? (
-                    <ChevronUp className="inline-flex ml-auto md:hidden" />
-                  ) : (
-                    <ChevronDown className="inline-flex ml-auto md:hidden" />
-                  )}
+                  Legal
+                  <span className="md:hidden">
+                    {openSections.legal ? (
+                      <ChevronUp className="w-6 h-6" />
+                    ) : (
+                      <ChevronDown className="w-6 h-6" />
+                    )}
+                  </span>
                 </h2>
-                <ul className={`text-[#8B929D] text-sm lg:text-[14px] 2xl:text-[16px] space-y-3 ${lexendDeca.className} font-normal transition-all duration-300 ease-in-out ${openSections.legal || 'md:block' ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
-                  <li>
-                    <Link href="/terms-and-conditions" className="hover:underline">
-                      Terms &amp; Conditions
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="#" className="hover:underline">
-                      Privacy Policy
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="#" className="hover:underline">
-                      Cookie Policy (EU)
-                    </Link>
-                  </li>
+                <ul className={`text-[#8B929D] text-sm lg:text-[14px] 2xl:text-[16px] space-y-3 ${lexendDeca.className} font-normal transition-all duration-300 ease-in-out ${openSections.legal ? 'max-h-screen opacity-100 pb-4' : 'max-h-0 opacity-0 overflow-hidden'} md:max-h-screen md:opacity-100 md:overflow-visible`}>
+                  <li><Link href="/terms-and-conditions" className="hover:underline">Terms & Conditions</Link></li>
+                  <li><Link href="#" className="hover:underline">Privacy Policy</Link></li>
+                  <li><Link href="#" className="hover:underline">Cookie Policy (EU)</Link></li>
                 </ul>
               </div>
 
               {/* Download App Section */}
-              <div className="">
-                <h2 className={`mb-4 text-sm mt-4 md:text-[18px] 2xl:text-[20px] capitalize flex items-center justify-between font-semibold text-black ${jost.className}`}>
+              <div className="mt-8 md:mt-0">
+                <h2 className={`mb-4 text-[20px] capitalize font-semibold text-black ${jost.className}`}>
                   Download App
                 </h2>
-                <p
-                  className={`text-[#8B929D] text-sm lg:text-[14px] 2xl:text-[16px] space-y-3 ${lexendDeca.className} font-normal mb-4`}
-                >
-                  Download the App and get an extra 10% off your first order...!
+                <p className={`text-[#8B929D] text-sm lg:text-[14px] 2xl:text-[16px] ${lexendDeca.className} font-normal mb-4`}>
+                  Download the App and get extra 10% off your First Order...!
                 </p>
                 <div className="flex sm:flex-col xl:flex-row gap-6 2xl:gap-3">
                   <Image className="hover:scale-110 cursor-pointer transition-transform duration-300" src={app_store} alt="App Store" />
@@ -195,31 +151,30 @@ export default function Footer() {
 
           <hr className="border-gray-200 sm:mx-auto dark:border-gray-700" />
 
-          <div className="sm:flex sm:items-center sm:justify-between my-4">
-            <span className="text-sm lg:text-[14px] 2xl:text-[16px] text-[#8B929D] font-normal sm:text-center">
-              GLAMBEAUTY © 2024. All Rights Reserved.
-            </span>
-            <div className="flex sm:justify-between mt-2 sm:mt-0 items-center gap-3">
-              <Link className="grid place-items-center w-[50px] h-[32px] border border-gray-300 rounded-[8px]" href="#">
-                <Image className="hover:scale-110 transition-transform duration-300" width={35} height={0} src={visa} alt="Visa" />
-              </Link>
-              <Link className="grid place-items-center w-[50px] h-[32px] border border-gray-300 rounded-[8px]" href="#">
-                <Image className="hover:scale-110 transition-transform duration-300" width={24} height={0} src={maestro} alt="Maestro" />
-              </Link>
-              <Link className="grid place-items-center w-[50px] h-[32px] border border-gray-300 rounded-[8px]" href="#">
-                <Image className="hover:scale-110 transition-transform duration-300" width={27} height={0} src={master} alt="Mastercard" />
-              </Link>
-              <Link className="flex justify-end w-[50px] h-[32px] border border-gray-300 rounded-[8px]" href="#">
-                <Image className="hover:scale-110 transition-transform duration-300" width={27} height={0} src={ae} alt="American Express" />
-              </Link>
-              <Link className="grid place-items-center w-[50px] h-[32px] border border-gray-300 rounded-[8px]" href="#">
-                <Image className="hover:scale-110 transition-transform duration-300" width={35} height={0} src={paypal} alt="PayPal" />
-              </Link>
-            </div>
-          </div>
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between my-4">
+            <span className={`text-sm lg:text-[14px] ${lexendDeca.className} 2xl:text-[16px] text-[#8B929D] font-normal`}>
+    GLAMBEAUTY © 2024. All Rights Reserved.
+  </span>
+  <div className="flex flex-row sm:justify-between mt-4 sm:mt-0 items-start sm:items-center gap-3">
+    <Link className="grid place-items-center w-[50px] h-[32px] border border-gray-300 rounded-[8px]" href="#">
+      <Image className="hover:scale-110 transition-transform duration-300" width={35} height={0} src={visa} alt="Visa" />
+    </Link>
+    <Link className="grid place-items-center w-[50px] h-[32px] border border-gray-300 rounded-[8px]" href="#">
+      <Image className="hover:scale-110 transition-transform duration-300" width={24} height={0} src={maestro} alt="Maestro" />
+    </Link>
+    <Link className="grid place-items-center w-[50px] h-[32px] border border-gray-300 rounded-[8px]" href="#">
+      <Image className="hover:scale-110 transition-transform duration-300" width={27} height={0} src={master} alt="Mastercard" />
+    </Link>
+    <Link className="grid place-items-center w-[50px] h-[32px] border border-gray-300 rounded-[8px]" href="#">
+      <Image className="hover:scale-110 transition-transform duration-300" width={27} height={0} src={ae} alt="American Express" />
+    </Link>
+    <Link className="grid place-items-center w-[50px] h-[32px] border border-gray-300 rounded-[8px]" href="#">
+      <Image className="hover:scale-110 transition-transform duration-300" width={35} height={0} src={paypal} alt="PayPal" />
+    </Link>
+  </div>
+</div>
         </div>
       </footer>
-      </main>
-      </Container>
+    </Container>
   );
 }

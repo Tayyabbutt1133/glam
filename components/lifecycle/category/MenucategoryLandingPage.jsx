@@ -6,6 +6,9 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import axios from "axios";
 import Skeleton from "react-loading-skeleton";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 import logo_one from "../../../public/product_category_landing/rounded_cat/one.svg";
 import logo_two from "../../../public/product_category_landing/rounded_cat/two.svg";
@@ -55,24 +58,69 @@ const SkeletonItem = () => (
   </li>
 );
 
-const CategoryList = ({ items, getHref }) => (
-  <div className="overflow-x-auto pb-4 scrollbar-hide">
-    <ul className="flex gap-8 md:gap-12 2xl:gap-16 w-max mx-auto px-4">
-      {items.length > 0 ? (
-        items.map((item, index) => (
-          <CategoryItem
-            key={item.id || item.category_id}
-            href={getHref(item)}
-            logo={logos[index % logos.length]}
-            name={item.name || item.category_name}
-          />
-        ))
-      ) : (
-        Array(7).fill(null).map((_, index) => <SkeletonItem key={index} />)
-      )}
-    </ul>
-  </div>
-);
+const CategoryList = ({ items, getHref }) => {
+  const sliderSettings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    arrows: false,
+    responsive: [
+      {
+        breakpoint: 640,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
+
+  return (
+    <>
+      <div className="sm:hidden">
+        <Slider {...sliderSettings}>
+          {items.length > 0
+            ? items.map((item, index) => (
+                <div key={item.id || item.category_id} className="px-2">
+                  <CategoryItem
+                    href={getHref(item)}
+                    logo={logos[index % logos.length]}
+                    name={item.name || item.category_name}
+                  />
+                </div>
+              ))
+            : Array(7)
+                .fill(null)
+                .map((_, index) => (
+                  <div key={index} className="px-2">
+                    <SkeletonItem />
+                  </div>
+                ))}
+        </Slider>
+      </div>
+      <div className="hidden sm:block overflow-x-auto pb-4 scrollbar-hide">
+        <ul className="flex gap-8 md:gap-12 2xl:gap-16 w-max mx-auto px-4">
+          {items.length > 0
+            ? items.map((item, index) => (
+                <CategoryItem
+                  key={item.id || item.category_id}
+                  href={getHref(item)}
+                  logo={logos[index % logos.length]}
+                  name={item.name || item.category_name}
+                />
+              ))
+            : Array(7)
+                .fill(null)
+                .map((_, index) => <SkeletonItem key={index} />)}
+        </ul>
+      </div>
+    </>
+  );
+};
 
 const BrandsMenuCategoryList = ({ brands }) => {
   const { brandLanding } = useParams();
@@ -146,7 +194,7 @@ const MenuCategoryList = () => {
   const breadcrumbLinks = [
     { name: "Home", route: "/" },
     { name: categorylanding, route: `/product-categories/${categorylanding}` },
-  ]
+  ];
 
   return (
     <>
