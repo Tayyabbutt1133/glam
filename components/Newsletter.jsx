@@ -8,7 +8,7 @@ export default function Newsletter() {
         <main className=" w-[97%] mx-auto">
           <div className="lg:flex justify-center items-center mx-auto w-full sm:py-10">
 
-            <div className="sm:text-center block md:flex flex-col sm:flex-row space-y-6 md:space-y-0 md:gap-16">
+            <div className="flex flex-col items-center space-y-6 md:space-y-0 md:gap-16">
               <div className="flex items-center justify-center sm:px-3 lg:px-0 sm:justify-start">
                 <h2 className={` text-[17px] mx-2 sm:mx-0 sm:text-2xl md:text-[24px] ${jost.className} capitalize  text-black sm:text-2xl`}>
                   <span className="text-[#CF8562] font-medium">SIGN UP</span> TO RECEIVE
@@ -16,8 +16,8 @@ export default function Newsletter() {
                 </h2>
               </div>
   
-              <form action="#">
-                <div className="items-center mx-auto justify-center  sm:justify-normal   gap-3 max-w-screen-sm flex flex-row sm:space-y-0 sm:space-x-4">
+              <form action="#" className="w-[80%] max-w-[450px]">
+                <div className="items-center mx-auto justify-center sm:justify-normal gap-3 max-w-screen-sm flex flex-row sm:space-y-0 sm:space-x-4">
 
                   <div className="  relative w-[60%] sm:w-full">
                     <label
