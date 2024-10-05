@@ -226,7 +226,7 @@ export default function MyBag() {
             Your Bag ({cartItems.length})
           </h1>
         </div>
-        <hr className="h-2 w-[65%]" />
+        <hr className="h-2 md:w-[65%] w-[100%]" />
 
         <div className="flex flex-col md:flex-row md:items-stretch gap-8">
           <div className="md:w-2/3">
