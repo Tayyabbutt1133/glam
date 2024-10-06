@@ -1,10 +1,11 @@
 import Container from "../../../../container";
 import Text from "../../../../ui/Text";
+import { jost } from "../../../../ui/fonts";
 
 export default function GetGlam() {
   return (
     <Container className="space-y-10 my-28">
-      <Text style="h1" className="uppercase">Get Glam With Glambeauty</Text>
+      <h1 className={`uppercase font-medium xs:font-semibold mt-14 text-[20px] xs:text-2xl 2xl:text-[36px] ${jost.className}`}>Get Glam With Glambeauty</h1>
         <Text style={"sm"}>
           Achieve your perfect makeup look every time with the incredible range of products at GLAMBEAUTY. Featuring all your favorite iconic designer brands, you&apos;ll find <span className="font-bold"> high-quality eye makeup, lip makeup, complexion makeup</span>, and the <span className="font-bold"> best accessories</span> to suit every personality, look, and occasion. Whether you’re gearing up for a date night, bridal makeup for the big day, or simply your everyday essentials, explore our collection to find your go-to items.
           <br/>

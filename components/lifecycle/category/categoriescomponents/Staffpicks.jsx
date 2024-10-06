@@ -138,12 +138,11 @@ export default function Staffpicks() {
 
   return (
     <Container className="my-16">
-      <Text
-        style="h1"
-        className={`text-2xl font-semibold mb-8 ${jost.className} uppercase`}
+      <h1
+       className={`uppercase font-medium xs:font-semibold mb-14  mt-14 text-[20px] xs:text-2xl 2xl:text-[36px] ${jost.className}`}
       >
         Staff Picks
-      </Text>
+      </h1>
       <div className="relative">
         {loading ? (
           <Slider {...settings}>
