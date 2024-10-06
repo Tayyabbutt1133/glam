@@ -93,7 +93,7 @@ export default function Rimmel() {
               Off
             </Text>
           </div>
-          <Link href={`/brands/${rimmelBrandLanding}/${rimmelBrandListing}`}>
+          <Link href={`/brands/${rimmelBrandLanding}`}>
           <Button className={`mt-10 uppercase w-max mx-auto ${jost.className}`}>
             Shop Now
           </Button>
