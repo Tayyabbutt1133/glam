@@ -109,7 +109,7 @@ const Staffpicks = () => {
       {
         breakpoint: 768,
         settings: {
-          dots: true,
+          dots: false,
           arrows: false,
           slidesToShow: 2,
           slidesToScroll: 1,
@@ -122,8 +122,7 @@ const Staffpicks = () => {
           slidesToShow: 2,
           slidesToScroll: 2,
           arrows: false,
-          dots: true,
-          rows: 2,
+          dots: false,
         },
       },
     ],
@@ -151,7 +150,7 @@ const Staffpicks = () => {
           capitalize 
           font-medium 
           mb-10 
-          text-[clamp(1rem,2.5vw,1.5rem)]
+          sm:text-2xl text-[20px]
         `}
       >
         See What Others are Buying

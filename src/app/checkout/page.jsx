@@ -8,6 +8,7 @@ import { useCartStore } from "../../../states/Cardstore"
 import { jost, lexendDeca } from "../../../components/ui/fonts"
 import Container from "../../../components/container"
 import PayPal from "../../../public/card-logos/paypal.svg"
+import {ChevronDown} from 'lucide-react'
 import Klarna from "../../../public/Klarna.svg"
 import visa from "../../../public/card-logos/visa.svg"
 import master from "../../../public/card-logos/master.svg"
@@ -540,9 +541,10 @@ export default function Checkout() {
                     onChange={handleCountryChange}
                     classes={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-[#8B929D] bg-transparent rounded-lg border ${errors.country ? 'border-[#BF0000]' : 'border-[#EFEFEF]'} appearance-none focus:outline-none focus:ring-0 focus:border-black peer ${lexendDeca.className}`}
                   />
+                  <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-black pointer-events-none" size={20} />
                   <label
                     htmlFor="country"
-                    className={`absolute text-sm ${errors.country ? 'text-[#BF0000]' : 'text-[#8B929D]'} duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-black peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 start-1 ${lexendDeca.className}`}
+                    className={`absolute text-sm ${errors.country ? 'text-[#BF0000]' : 'text-black'} duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-black peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 start-1 ${lexendDeca.className}`}
                   >
                     Country/Region*
                   </label>
@@ -550,23 +552,7 @@ export default function Checkout() {
                     <div className="text-[#BF0000] text-xs mt-1">{errors.country}</div>
                   )}
                 </div>
-                {/* <div className="relative mb-4">
-                  <RegionDropdown
-                    country={formData.country}
-                    value={formData.region}
-                    onChange={handleRegionChange}
-                    classes={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-[#8B929D] bg-transparent rounded-lg border ${errors.region ? 'border-[#BF0000]' : 'border-[#EFEFEF]'} appearance-none focus:outline-none focus:ring-0 focus:border-black peer ${lexendDeca.className}`}
-                  />
-                  <label
-                    htmlFor="region"
-                    className={`absolute text-sm ${errors.region ? 'text-[#BF0000]' : 'text-[#8B929D]'} duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-black peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 start-1 ${lexendDeca.className}`}
-                  >
-                    Region*
-                  </label>
-                  {errors.region && (
-                    <div className="text-[#BF0000] text-xs mt-1">{errors.region}</div>
-                  )}
-                </div> */}
+      
                 <div className="grid grid-cols-1 sm:grid-cols-2 mt-7 mb-4 gap-4">
                   <FloatingLabelInput
                     label="First Name*"
@@ -880,7 +866,7 @@ export default function Checkout() {
                 />
                 <label
                   htmlFor="save-info"
-                  className={` text-[#8B929D] 2xl:text-[20px] font-normal ${lexendDeca.className}`}
+                  className={` text-[#8B929D] text-[14px] sm:text-[20px] font-normal ${lexendDeca.className}`}
                 >
                   Save my information for a faster checkout
                 </label>
@@ -893,7 +879,7 @@ export default function Checkout() {
               >
                 PAY NOW
               </button>
-              <p className={`${lexendDeca.className}   2xl:text-[20px] font-normal  w-full`}>By placing this order, you are confirming that you agree to our <span className="underline">Terms and Conditions</span>  and  <span className="underline">Privacy Policy</span>.
+              <p className={`${lexendDeca.className} text-[12px]  sm:text-[20px] font-normal  w-full`}>By placing this order, you are confirming that you agree to our <span className="underline">Terms and Conditions</span>  and  <span className="underline">Privacy Policy</span>.
           </p>
 
             </div>
