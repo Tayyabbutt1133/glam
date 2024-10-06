@@ -27,7 +27,7 @@ const RecentlyViewedItem = ({ product }) => {
           alt={decodedName}
           layout="fill"
           objectFit="cover"
-          className="rounded-lg"
+          className="rounded-lg p-2"
         />
       </div>
     </Link>
@@ -66,7 +66,6 @@ const Recientlyviewed = () => {
   }
 
   return (
-    // <Container>
     <>
       <div className='hidden md:block'>
         <h1 className={`${jost.className} font-semibold md:text-2xl mb-4`}> Recently Viewed</h1>
@@ -80,7 +79,6 @@ const Recientlyviewed = () => {
         </div>
         </div>
       </>
-    // </Container>
   )
 }
 
