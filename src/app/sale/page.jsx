@@ -481,7 +481,7 @@ export default function Component() {
           width: 6px;
         }
         .custom-scrollbar::-webkit-scrollbar-track {
-          background: #f1f1f1;
+          background: #EFEFEF;
           border-radius: 3px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
