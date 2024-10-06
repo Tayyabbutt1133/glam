@@ -7,6 +7,7 @@ import { useCartStore } from "../../../states/Cardstore";
 import { CartIcon } from "../../../public/icons/cart";
 import { UserIcon } from "../../../public/icons/user";
 import { MenuIcon, SearchIcon } from "lucide-react";
+import { HiOutlineMenuAlt1 } from "react-icons/hi";
 import glam_logo from "../../../public/logo.svg";
 import SearchBarWithDropdown from "../middle-bar-nav/searchbar";
 import Cartdropdown from "../../Cartdropdown";
@@ -28,7 +29,7 @@ export default function MobileHeader({ onOpenSidebar }) {
       <header className="flex items-center justify-between px-4 py-2 bg-white shadow-md lg:hidden z-50">
         <aside className="flex items-center space-x-4">
           <button onClick={onOpenSidebar} className="p-2">
-            <MenuIcon className="w-6 h-6" />
+            <HiOutlineMenuAlt1 className="w-6 h-6" />
           </button>
           <button onClick={toggleSearch}>
             <SearchIcon className="w-6 h-6" />
