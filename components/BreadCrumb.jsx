@@ -18,11 +18,11 @@ const Breadcrumb = ({ links }) => {
     <nav aria-label="Breadcrumb" className="my-4">
       <ol className="flex space-x-2">
         {links.map((link, index) => (
-          <li key={index} className={`flex  items-center ${jost.className}`}>
+          <li key={index} className={`sm:flex hidden sm:text-[14px] 2xl:text-[16px]  items-center ${jost.className}`}>
             {link.route ? (
               <Link
                 href={link.route}
-                className={`${index === links.length - 1 ? 'font-semibold' : 'text-[#8B929D]'}`}
+                className={`${index === links.length - 1 ? 'font-semibold' : 'text-[#8B929D]'} `}
               >
                 {capitalizeFirstLetter(link.name)}
               </Link>

@@ -120,7 +120,7 @@ export default function Bestseller() {
 
   return (
     <Container className="my-16">
-      <h1 className={`uppercase mb-8 2xl:text-[36px] xs:text-2xl text-[20px] ${jost.className} font-semibold`}>
+      <h1 className={`uppercase font-medium xs:font-semibold mb-14 mt-14 text-[20px] xs:text-2xl 2xl:text-[36px] ${jost.className}`}>
         Bestsellers
       </h1>
       <div className="relative">

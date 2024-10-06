@@ -1,7 +1,13 @@
+"use client"
+
 import Link from 'next/link'
 import Image from 'next/image'
 import Container from "../../../../container"
 import Text from "../../../../ui/Text"
+import { jost } from '../../../../ui/fonts'
+import Slider from "react-slick"
+import "slick-carousel/slick/slick.css"
+import "slick-carousel/slick/slick-theme.css"
 
 import bourjois from "/public/lifecycle/trending brands/bourjois.png"
 import bourjoisLogo from "/public/lifecycle/trending brands/bourjois.svg"
@@ -59,39 +65,81 @@ const brands = [
   }
 ]
 
+const BrandItem = ({ brand }) => (
+  <Link 
+    href={`/brands/${brand.brandLanding}/${brand.brandListing}`}
+    className="block px-2"
+  >
+    <div className="aspect-square relative mb-4">
+      <Image
+        src={brand.img}
+        alt={`${brand.name} products`}
+        layout="fill"
+        objectFit="cover"
+        className="rounded-lg"
+      />
+    </div>
+    <div className="flex justify-center">
+      <Image
+        src={brand.logo}
+        alt={`${brand.name} logo`}
+        width={206}
+        height={32}
+      />
+    </div>
+  </Link>
+)
+
 export default function TrendingBrand() {
+  const sliderSettings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    arrows: false,
+    responsive: [
+      {
+        breakpoint: 640,
+        settings: {
+          slidesToShow: 2,
+          centerMode: true,
+          centerPadding: '60px',
+        }
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 2,
+        }
+      },
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+        }
+      }
+    ]
+  }
   
   return (
     <Container className="my-24">
-      <Text style={"h1"} className="uppercase mb-14 mt-14">
+      <h1 className={`uppercase font-medium xs:font-semibold mb-14 mt-14 text-[20px] xs:text-2xl 2xl:text-[36px] ${jost.className}`}>
         trending brands
-      </Text>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      </h1>
+      <div className="hidden xl:grid xl:grid-cols-4 gap-6">
         {brands.map((brand) => (
-          <Link 
-            key={brand.id} 
-            href={`/brands/${brand.brandLanding}/${brand.brandListing}`}
-            className="block"
-          >
-            <div className="aspect-square relative mb-4">
-              <Image
-                src={brand.img}
-                alt={`${brand.name} products`}
-                layout="fill"
-                objectFit="cover"
-                className="rounded-lg"
-              />
-            </div>
-            <div className="flex ">
-              <Image
-                src={brand.logo}
-                alt={`${brand.name} logo`}
-                width={206}
-                height={32}
-              />
-            </div>
-          </Link>
+          <BrandItem key={brand.id} brand={brand} />
         ))}
+      </div>
+      <div className="xl:hidden">
+        <Slider {...sliderSettings}>
+          {brands.map((brand) => (
+            <BrandItem key={brand.id} brand={brand} />
+          ))}
+        </Slider>
       </div>
     </Container>
   )

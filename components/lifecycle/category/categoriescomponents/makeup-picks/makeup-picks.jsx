@@ -7,7 +7,9 @@ import Text from "../../../../ui/Text"
 import Image from "next/image"
 import Link from "next/link"
 import { jost, lexendDeca } from "../../../../ui/fonts"
-// import { useCartStore } from '/states/Cardstore'
+import Slider from "react-slick"
+import "slick-carousel/slick/slick.css"
+import "slick-carousel/slick/slick-theme.css"
 
 const decodeHtmlEntities = (text) => {
   return text.replace(/&amp;/g, '&')
@@ -40,18 +42,11 @@ const CustomButton = ({ onClick, children, className }) => (
 )
 
 const SingleMakeupPick = ({ product }) => {
-  // const addToCart = useCartStore((state) => state.addToCart)
   const brand = product.attributes.find((attr) => attr.name === "Brand")?.options[0] || "Unknown Brand"
   const decodedName = decodeHtmlEntities(product.name)
-  // const shortName = shortenProductName(decodedName)
-
-  // const handleAddToCart = (e) => {
-  //   e.preventDefault()
-  //   addToCart(product)
-  // }
 
   return (
-    <div className="flex flex-col items-start gap-5 h-full">
+    <div className="flex flex-col items-start gap-5 h-full px-2">
       <Link href={`/product/${product.id}`} className="w-full">
         <div className="aspect-square w-full relative cursor-pointer">
           <Image
@@ -67,15 +62,15 @@ const SingleMakeupPick = ({ product }) => {
         <h1 className={`font-semibold uppercase ${jost.className}`}>
           {brand}
         </h1>
-        <p  className={` ${lexendDeca.className} font-normal`}>
+        <p className={`${lexendDeca.className} font-normal`}>
           {decodedName}
         </p>
       </div>
       <Link href={`/product/${product.id}`} className="w-full">
-      <CustomButton  className="mt-auto text-sm xl:w-[40%] hover:bg-[#CF8562] uppercase">
-        Shop Now
+        <CustomButton className="mt-auto text-sm xl:w-[55%] hover:bg-[#CF8562] uppercase">
+          Shop Now
         </CustomButton>
-        </Link>
+      </Link>
     </div>
   )
 }
@@ -107,20 +102,57 @@ const MakeupPicks = () => {
       })
   }, [])
 
+  const sliderSettings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 2,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    arrows: false,
+    responsive: [
+      {
+        breakpoint: 640,
+        settings: {
+          slidesToShow: 1,
+          centerMode: true,
+          centerPadding: '60px',
+        }
+      }
+    ]
+  }
+
   if (error) {
     return <Container className="text-center py-10 text-red-500">{error}</Container>
   }
 
   return (
-    <Container className="space-y-10 mb-14 mt-20">
-      <Text style="h1" className="uppercase">Makeup Picks for You</Text>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    <Container className="space-y-10 mb-32 mt-20">
+      <h1 className={`uppercase font-medium xs:font-semibold mt-14 text-[20px] xs:text-2xl 2xl:text-[36px] ${jost.className}`}>
+        Makeup Picks for You
+      </h1>
+      <div className="hidden lg:grid lg:grid-cols-4 gap-6">
         {loading
           ? Array(4).fill().map((_, index) => <SkeletonLoader key={index} />)
           : products.map((product) => (
               <SingleMakeupPick key={product.id} product={product} />
             ))
         }
+      </div>
+      <div className="lg:hidden">
+        <Slider {...sliderSettings}>
+          {loading
+            ? Array(4).fill().map((_, index) => (
+                <div key={index} className="px-2">
+                  <SkeletonLoader />
+                </div>
+              ))
+            : products.map((product) => (
+                <SingleMakeupPick key={product.id} product={product} />
+              ))
+          }
+        </Slider>
       </div>
     </Container>
   )

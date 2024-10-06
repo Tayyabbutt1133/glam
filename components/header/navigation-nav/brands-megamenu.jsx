@@ -32,7 +32,7 @@ export default function BrandMegaMenu({ closeMegaMenu }) {
   };
 
   return (
-    <div className="flex flex-col h-full w-full max-h-[460px]">
+    <div className="flex flex-col h-full w-full max-h-[460px] border">
       <Container>
         <div className="flex space-x-3 my-4 justify-between">
           {alphabet.map((letter, index) => (
@@ -51,7 +51,7 @@ export default function BrandMegaMenu({ closeMegaMenu }) {
         </div>
       </Container>
       <hr />
-      <div className="flex flex-row gap-28 justify-start overflow-x-auto w-4/5 py-5 mx-auto">
+      <div className="flex flex-row gap-28 justify-start  overflow-x-auto w-4/5 py-5 mx-auto">
         {brandCategories?.map((category) => (
           <div
             key={category?.label}
