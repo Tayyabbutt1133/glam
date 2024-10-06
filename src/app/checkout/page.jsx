@@ -17,6 +17,8 @@ import ae from "../../../public/card-logos/american-express.svg"
 import paypal from "../../../public/card-logos/paypal.svg"
 import klarna_wal from "../../../public/Klarnawallet.svg"
 import klarna_pink from "../../../public/klarn_pink.svg"
+import {Search, Lock, HelpCircle} from 'lucide-react'
+
 import { usePopupStore } from "/states/use-popup-store"
 import { useRouter } from "next/navigation"
 import { toast } from 'react-toastify'
@@ -57,7 +59,7 @@ const shippingOptions = [
   },
 ]
 
-const FloatingLabelInput = ({ label, name, value, onChange, type = "text", error }) => {
+const FloatingLabelInput = ({ label, name, value, onChange, type = "text", error, icon }) => {
   const formattedLabel = label === "FirstName" ? "First Name" : label === "LastName" ? "Last Name" : label;
   const formattedError = error?.replace("FirstName", "First Name").replace("LastName", "Last Name");
 
@@ -83,6 +85,11 @@ const FloatingLabelInput = ({ label, name, value, onChange, type = "text", error
           <div className="text-[#BF0000] text-xs bg-white px-1">{formattedError}</div>
         </div>
       )}
+      {icon && (
+  <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+    {icon}
+  </div>
+)}
     </div>
   );
 };
@@ -570,12 +577,21 @@ export default function Checkout() {
                   />
                 </div>
                 <FloatingLabelInput
-                  label="Address*"
-                  name="address"
-                  value={formData.address}
-                  onChange={handleInputChange}
-                  error={errors.address}
+  label="Address*"
+  name="address"
+  value={formData.address}
+  onChange={handleInputChange}
+  error={errors.address}
+  icon={<Search size={20} />}
                 />
+                   <FloatingLabelInput
+  label="Address, suite, etc. (optional)"
+  name="address"
+  value={formData.address}
+  onChange={handleInputChange}
+  error={errors.address}
+  icon={<HelpCircle size={20} />}
+/>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-7 mb-4">
                   <FloatingLabelInput
                     label="City*"
@@ -756,13 +772,14 @@ export default function Checkout() {
                             </div>
                           </PaymentOption>
                           <div className="mt-4 space-y-4">
-                            <FloatingLabelInput
-                              label="Card number*"
-                              name="cardNumber"
-                              value={formData.cardNumber}
-                              onChange={handleCardNumberChange}
-                              error={errors.cardNumber}
-                            />
+                          <FloatingLabelInput
+  label="Card number*"
+  name="cardNumber"
+  value={formData.cardNumber}
+  onChange={handleCardNumberChange}
+  error={errors.cardNumber}
+  icon={<Lock size={20} />}
+/>
                             <div className="flex items-center gap-4">
                               <div className="relative w-1/2">
                                 <FloatingLabelInput
@@ -776,12 +793,13 @@ export default function Checkout() {
                               </div>
                               <div className="relative w-1/2">
                                 <FloatingLabelInput
-                                  label="Security code*"
-                                  name="securityCode"
-                                  value={formData.securityCode}
-                                  onChange={handleInputChange}
-                                  error={errors.securityCode}
-                                  className="pr-12"
+                                    label="Security code*"
+                                    name="securityCode"
+                                    value={formData.securityCode}
+                                    onChange={handleInputChange}
+                                    error={errors.securityCode}
+                                    className="pr-12"
+                                    icon={<HelpCircle size={20} />}
                                 />
                               </div>
                             </div>
@@ -866,7 +884,7 @@ export default function Checkout() {
                 />
                 <label
                   htmlFor="save-info"
-                  className={` text-[#8B929D] text-[14px] sm:text-[20px] font-normal ${lexendDeca.className}`}
+                  className={` text-[#8B929D] text-[15px] 2xl:text-[20px] font-normal ${lexendDeca.className}`}
                 >
                   Save my information for a faster checkout
                 </label>
@@ -879,7 +897,7 @@ export default function Checkout() {
               >
                 PAY NOW
               </button>
-              <p className={`${lexendDeca.className} text-[12px]  sm:text-[20px] font-normal  w-full`}>By placing this order, you are confirming that you agree to our <span className="underline">Terms and Conditions</span>  and  <span className="underline">Privacy Policy</span>.
+              <p className={`${lexendDeca.className} text-[12px] xs:text-[15px]  2xl:text-[20px] font-normal  w-full`}>By placing this order, you are confirming that you agree to our <span className="underline">Terms and Conditions</span>  and  <span className="underline">Privacy Policy</span>.
           </p>
 
             </div>
