@@ -142,7 +142,7 @@ export default function Login() {
           {/* Sign In Button */}
           <button
             type="submit"
-            className={`w-full text-sm 2xl:text-[20px] 2xl:w-[521px] py-2 bg-black text-white font-medium rounded-lg shadow-sm hover:bg-[#CF8562] transition duration-300 focus:outline-none focus:ring-2 focus:ring-gray-900 ${jost.className}`}
+            className={`w-full text-sm 2xl:text-[20px] 2xl:w-[521px] py-2 2xl:py-3 bg-black text-white font-medium rounded-lg shadow-sm hover:bg-[#CF8562] transition duration-300 focus:outline-none focus:ring-2 focus:ring-gray-900 ${jost.className}`}
           >
             SIGN IN
           </button>
