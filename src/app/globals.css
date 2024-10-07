@@ -48,6 +48,9 @@
     line-height: 3.3rem !important;
 }
 
+.lifecycle-banner_title{
+    line-height: 2.5rem !important;
+}
 
 ul.slick-dots.slick-thumb {
   display: flex !important;

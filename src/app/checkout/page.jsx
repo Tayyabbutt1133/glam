@@ -8,6 +8,7 @@ import { useCartStore } from "../../../states/Cardstore"
 import { jost, lexendDeca } from "../../../components/ui/fonts"
 import Container from "../../../components/container"
 import PayPal from "../../../public/card-logos/paypal.svg"
+import {ChevronDown} from 'lucide-react'
 import Klarna from "../../../public/Klarna.svg"
 import visa from "../../../public/card-logos/visa.svg"
 import master from "../../../public/card-logos/master.svg"
@@ -16,6 +17,8 @@ import ae from "../../../public/card-logos/american-express.svg"
 import paypal from "../../../public/card-logos/paypal.svg"
 import klarna_wal from "../../../public/Klarnawallet.svg"
 import klarna_pink from "../../../public/klarn_pink.svg"
+import {Search, Lock, HelpCircle} from 'lucide-react'
+
 import { usePopupStore } from "/states/use-popup-store"
 import { useRouter } from "next/navigation"
 import { toast } from 'react-toastify'
@@ -56,7 +59,7 @@ const shippingOptions = [
   },
 ]
 
-const FloatingLabelInput = ({ label, name, value, onChange, type = "text", error }) => {
+const FloatingLabelInput = ({ label, name, value, onChange, type = "text", error, icon }) => {
   const formattedLabel = label === "FirstName" ? "First Name" : label === "LastName" ? "Last Name" : label;
   const formattedError = error?.replace("FirstName", "First Name").replace("LastName", "Last Name");
 
@@ -82,6 +85,11 @@ const FloatingLabelInput = ({ label, name, value, onChange, type = "text", error
           <div className="text-[#BF0000] text-xs bg-white px-1">{formattedError}</div>
         </div>
       )}
+      {icon && (
+  <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+    {icon}
+  </div>
+)}
     </div>
   );
 };
@@ -485,12 +493,12 @@ export default function Checkout() {
             </div>
 
             <div className="space-y-4">
-              <div className="flex items-center justify-center my-4">
-                <hr className="flex-grow border-t border-[#EFEFEF]" />
+              <div className="flex items-center flex-col justify-center my-4">
+                {/* <hr className="flex-grow border-t border-[#EFEFEF]" /> */}
                 <span
                   className={`px-3 text-gray-500 text-sm ${lexendDeca.className}`}
                 >
-                  OR
+                   or Continue with
                 </span>
                 {/* <hr className="flex-grow border-t border-[#EFEFEF]" /> */}
               </div>
@@ -540,9 +548,10 @@ export default function Checkout() {
                     onChange={handleCountryChange}
                     classes={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-[#8B929D] bg-transparent rounded-lg border ${errors.country ? 'border-[#BF0000]' : 'border-[#EFEFEF]'} appearance-none focus:outline-none focus:ring-0 focus:border-black peer ${lexendDeca.className}`}
                   />
+                  <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-black pointer-events-none" size={20} />
                   <label
                     htmlFor="country"
-                    className={`absolute text-sm ${errors.country ? 'text-[#BF0000]' : 'text-[#8B929D]'} duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-black peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 start-1 ${lexendDeca.className}`}
+                    className={`absolute text-sm ${errors.country ? 'text-[#BF0000]' : 'text-black'} duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-black peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 start-1 ${lexendDeca.className}`}
                   >
                     Country/Region*
                   </label>
@@ -550,23 +559,7 @@ export default function Checkout() {
                     <div className="text-[#BF0000] text-xs mt-1">{errors.country}</div>
                   )}
                 </div>
-                {/* <div className="relative mb-4">
-                  <RegionDropdown
-                    country={formData.country}
-                    value={formData.region}
-                    onChange={handleRegionChange}
-                    classes={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-[#8B929D] bg-transparent rounded-lg border ${errors.region ? 'border-[#BF0000]' : 'border-[#EFEFEF]'} appearance-none focus:outline-none focus:ring-0 focus:border-black peer ${lexendDeca.className}`}
-                  />
-                  <label
-                    htmlFor="region"
-                    className={`absolute text-sm ${errors.region ? 'text-[#BF0000]' : 'text-[#8B929D]'} duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-black peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 start-1 ${lexendDeca.className}`}
-                  >
-                    Region*
-                  </label>
-                  {errors.region && (
-                    <div className="text-[#BF0000] text-xs mt-1">{errors.region}</div>
-                  )}
-                </div> */}
+      
                 <div className="grid grid-cols-1 sm:grid-cols-2 mt-7 mb-4 gap-4">
                   <FloatingLabelInput
                     label="First Name*"
@@ -584,12 +577,21 @@ export default function Checkout() {
                   />
                 </div>
                 <FloatingLabelInput
-                  label="Address*"
-                  name="address"
-                  value={formData.address}
-                  onChange={handleInputChange}
-                  error={errors.address}
+  label="Address*"
+  name="address"
+  value={formData.address}
+  onChange={handleInputChange}
+  error={errors.address}
+  icon={<Search size={20} />}
                 />
+                   <FloatingLabelInput
+  label="Address, suite, etc. (optional)"
+  name="address"
+  value={formData.address}
+  onChange={handleInputChange}
+  error={errors.address}
+  icon={<HelpCircle size={20} />}
+/>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-7 mb-4">
                   <FloatingLabelInput
                     label="City*"
@@ -770,13 +772,14 @@ export default function Checkout() {
                             </div>
                           </PaymentOption>
                           <div className="mt-4 space-y-4">
-                            <FloatingLabelInput
-                              label="Card number*"
-                              name="cardNumber"
-                              value={formData.cardNumber}
-                              onChange={handleCardNumberChange}
-                              error={errors.cardNumber}
-                            />
+                          <FloatingLabelInput
+  label="Card number*"
+  name="cardNumber"
+  value={formData.cardNumber}
+  onChange={handleCardNumberChange}
+  error={errors.cardNumber}
+  icon={<Lock size={20} />}
+/>
                             <div className="flex items-center gap-4">
                               <div className="relative w-1/2">
                                 <FloatingLabelInput
@@ -790,12 +793,13 @@ export default function Checkout() {
                               </div>
                               <div className="relative w-1/2">
                                 <FloatingLabelInput
-                                  label="Security code*"
-                                  name="securityCode"
-                                  value={formData.securityCode}
-                                  onChange={handleInputChange}
-                                  error={errors.securityCode}
-                                  className="pr-12"
+                                    label="Security code*"
+                                    name="securityCode"
+                                    value={formData.securityCode}
+                                    onChange={handleInputChange}
+                                    error={errors.securityCode}
+                                    className="pr-12"
+                                    icon={<HelpCircle size={20} />}
                                 />
                               </div>
                             </div>
@@ -880,7 +884,7 @@ export default function Checkout() {
                 />
                 <label
                   htmlFor="save-info"
-                  className={` text-[#8B929D] 2xl:text-[20px] font-normal ${lexendDeca.className}`}
+                  className={` text-[#8B929D] text-[15px] 2xl:text-[20px] font-normal ${lexendDeca.className}`}
                 >
                   Save my information for a faster checkout
                 </label>
@@ -893,14 +897,14 @@ export default function Checkout() {
               >
                 PAY NOW
               </button>
-              <p className={`${lexendDeca.className}   2xl:text-[20px] font-normal  w-full`}>By placing this order, you are confirming that you agree to our <span className="underline">Terms and Conditions</span>  and  <span className="underline">Privacy Policy</span>.
+              <p className={`${lexendDeca.className} text-[12px] xs:text-[15px]  2xl:text-[20px] font-normal  w-full`}>By placing this order, you are confirming that you agree to our <span className="underline">Terms and Conditions</span>  and  <span className="underline">Privacy Policy</span>.
           </p>
 
             </div>
           </div>
          
           {/* Right: Order Summary and Bag Summary */}
-          <div className="lg:w-1/3 bg-gray-50 p-6  lg:-mt-[180px]">
+          <div className="lg:w-1/3 bg-gray-50 p-6  lg:-mt-[180px] xs:block hidden">
             <div className=" ">
               <div className=" bg-white rounded-lg p-6 shadow-sm">
                 <h2 className={`text-xl font-semibold mb-4 ${jost.className}`}>
