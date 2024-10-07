@@ -11,6 +11,7 @@ import { HiOutlineMenuAlt1 } from "react-icons/hi";
 import glam_logo from "../../../public/logo.svg";
 import SearchBarWithDropdown from "../middle-bar-nav/searchbar";
 import Cartdropdown from "../../Cartdropdown";
+import { lexendDeca } from "../../ui/fonts";
 
 export default function MobileHeader({ onOpenSidebar }) {
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -31,8 +32,8 @@ export default function MobileHeader({ onOpenSidebar }) {
           <button onClick={onOpenSidebar} className="p-2">
             <HiOutlineMenuAlt1 className="w-6 h-6" />
           </button>
-          <button onClick={toggleSearch}>
-            <SearchIcon className="w-6 h-6" />
+          <button onClick={toggleSearch} className="p-1">
+            <SearchIcon className="w-5" />
           </button>
         </aside>
         <Link href="/">
@@ -43,19 +44,25 @@ export default function MobileHeader({ onOpenSidebar }) {
             height={60}
           />
         </Link>
-        <div className="flex items-center space-x-4">
-          <Link href="/signup">
-            <UserIcon className="w-6 h-6" />
+        <div className="flex items-center gap-4">
+          <Link href="/signup" className="p-1">
+            <UserIcon className="w-4" />
           </Link>
           <div className="relative">
             <div
-              className="flex flex-row justify-center items-center gap-3 cursor-pointer"
+              className="flex flex-row justify-center items-center gap-3 p-1 cursor-pointer"
               onClick={toggleCartDropdown}
             >
               <div className="relative">
-                <CartIcon className="w-7" />
+                <CartIcon className="w-5" />
                 {cartItems.length > 0 && (
-                  <span className="absolute top-0 right-0 inline-flex items-center justify-center h-4 w-4 bg-black text-white text-xs font-bold leading-none rounded-full">
+                  <span className={`
+                    absolute top-[-4px] right-[-2px] 
+                    inline-flex items-center justify-center 
+                    h-4 w-4 bg-black text-white text-xs 
+                    font-normal leading-none rounded-full
+                    ${lexendDeca.className}
+                  `}>
                     {cartItems.length}
                   </span>
                 )}
