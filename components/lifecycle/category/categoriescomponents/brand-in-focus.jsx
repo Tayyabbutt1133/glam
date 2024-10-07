@@ -25,9 +25,9 @@ export default function BrandInFocus() {
   return (
     <div className="flex flex-col gap-8 mb-10">
       <Container>
-        <Text style={"h1"} className="uppercase">
+        <h1 className={`uppercase font-medium xs:font-semibold  mt-14 text-[20px] xs:text-2xl 2xl:text-[36px] ${jost.className}`}>
           Brand In Focus
-        </Text>
+        </h1>
       </Container>
 
       <section className="lg:hidden">

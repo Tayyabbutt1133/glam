@@ -91,7 +91,7 @@ export default function MakeupTips() {
 
   return (
     <Container className="my-3 lg:my-9">
-      <h1 className={`uppercase mb-3 ${jost.className} font-semibold 2xl:text-[36px] xs:text-2xl text-[20px]`}>
+      <h1 className={`uppercase mb-3 ${jost.className} font-semibold  2xl:text-[36px] xs:text-2xl text-[20px]`}>
         makeup tips for you
       </h1>
       <div className="lg:hidden">

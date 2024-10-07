@@ -187,7 +187,7 @@ export default function MobileSidebar({ isOpen, onClose }) {
                   </h2>
                   {categorizedBrands[category].map((brand) => (
                     <Link key={brand.slug} href={`/brands/${brand.slug}`} onClick={handleLinkClick}>
-                      <p className="text-lg my-1 font-light">{brand.name}</p>
+                      <p className="text-lg my-4  font-light">{brand.name}</p>
                     </Link>
                   ))}
                 </div>
