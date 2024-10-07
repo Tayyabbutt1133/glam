@@ -65,6 +65,7 @@ export default function MiddleBarNav() {
                 onMouseEnter={handleMouseEnterAccount}
                 onMouseLeave={handleMouseLeaveAccount}
               >
+                
                 <Link href="/signup">
                   <div className="flex flex-row justify-center items-center gap-3 ">
                     <UserIcon className={"w-4"} />
