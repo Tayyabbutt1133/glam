@@ -8,6 +8,7 @@ import { jost, lexendDeca } from "../../../components/ui/fonts";
 import { toast } from "react-toastify";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
+import axios from "axios";
 
 export default function SignUp() {
   const [fullName, setFullName] = useState("");
@@ -131,6 +132,24 @@ export default function SignUp() {
                   country={'gb'}
                   value={phone}
                   onChange={(phone) => setPhone(phone)}
+                  inputProps={{
+                    name: 'phone',
+                    required: true,
+                    className: inputStyles
+                  }}
+                  containerStyle={{
+                    width: '100%',
+                  }}
+                  dropdownStyle={{
+                    width: '300px',
+                  }}
+                  buttonStyle={{
+                    border: 'none',
+                    backgroundColor: '#E9E9E9',
+                    borderTopLeftRadius: '4px',
+                    borderBottomLeftRadius: '4px',
+                    borderRight: '1px solid #D9D9D9',
+                  }}
                   inputStyle={{
                     width: '100%',
                     height: '44px',
@@ -140,65 +159,8 @@ export default function SignUp() {
                     border: '1px solid #D9D9D9',
                     backgroundColor: 'white',
                     color: '#707070',
-                    fontFamily: '"Lexend Deca", sans-serif',
-                    fontWeight: 400,
-                    lineHeight: '20px',
-                    letterSpacing: '0.2px',
                   }}
-                  buttonStyle={{
-                    border: 'none',
-                    backgroundColor: '#E9E9E9',
-                    borderTopLeftRadius: '4px',
-                    borderBottomLeftRadius: '4px',
-                    borderRight: '1px solid #D9D9D9',
-                  }}
-                  containerStyle={{
-                    width: '100%',
-                  }}
-                  inputClass={`w-full h-10 pl-13 pr-4 text-base rounded-md border border-[#D9D9D9] focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent`}
-                  buttonClass="absolute left-0 top-0 bottom-0 flex px-2"
-                  dropdownStyle={{
-                    width: '300px',
-                  }}
-                  placeholder="Phone number"
-                  disableCountryCode={true}
-                  countryCodeEditable={false}
                 />
-                <style jsx global>{`
-                  .react-tel-input .flag-dropdown.open,
-                  .react-tel-input .selected-flag:hover,
-                  .react-tel-input .selected-flag:focus,
-                  .react-tel-input .selected-flag.open {
-                    background-color: #f3f4f6 !important;
-                  }
-                  .react-tel-input .selected-flag {
-                    width: 44px;
-                    border-top-left-radius: 4px;
-                    border-bottom-left-radius: 4px;
-                  }
-                  .react-tel-input .selected-flag .arrow {
-                    left: 28px;
-                  }
-                  .react-tel-input .country-list {
-                    width: 300px;
-                  }
-                  .react-tel-input .country-list .country {
-                    display: flex;
-                    align-items: center;
-                  }
-                  .react-tel-input .country-list .country .dial-code {
-                    display: none;
-                  }
-                  .react-tel-input input {
-                    font-family: "Lexend Deca", sans-serif !important;
-                    font-size: 16px !important;
-                    font-style: normal !important;
-                    font-weight: 400 !important;
-                    line-height: 20px !important;
-                    letter-spacing: 0.2px !important;
-                    color: #707070 !important;
-                  }
-                `}</style>
               </div>
             </div>
             <div className="flex items-start">
@@ -269,6 +231,41 @@ export default function SignUp() {
           </div>
         </div>
       </div>
+      <style jsx global>{`
+        .react-tel-input .flag-dropdown.open,
+        .react-tel-input .selected-flag:hover,
+        .react-tel-input .selected-flag:focus,
+        .react-tel-input .selected-flag.open {
+          background-color: #f3f4f6 !important;
+        }
+        .react-tel-input .selected-flag {
+          width: 44px;
+          border-top-left-radius: 4px;
+          border-bottom-left-radius: 4px;
+        }
+        .react-tel-input .selected-flag .arrow {
+          left: 28px;
+        }
+        .react-tel-input .country-list {
+          width: 300px;
+        }
+        .react-tel-input .country-list .country {
+          display: flex;
+          align-items: center;
+        }
+        .react-tel-input .country-list .country .dial-code {
+          display: none;
+        }
+        .react-tel-input input {
+          font-family: "Lexend Deca", sans-serif !important;
+          font-size: 16px !important;
+          font-style: normal !important;
+          font-weight: 400 !important;
+          line-height: 20px !important;
+          letter-spacing: 0.2px !important;
+          color: #707070 !important;
+        }
+      `}</style>
     </>
   );
 }
