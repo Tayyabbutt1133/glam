@@ -86,7 +86,7 @@ export default function FrequentlyBoughtTogether() {
   };
 
   const ProductCard = ({ product, index }) => (
-    <div className="w-full flex flex-col h-[400px] lg:h-[350px] 2xl:h-[400px] justify-between mb-8 sm:mb-0 px-4">
+    <div className="w-full flex flex-col h-[400px] lg:h-[400px] 2xl:h-[450px] justify-between mb-8 sm:mb-0 px-4">
       <div>
         <Link href={`/product/${product.id}`} className="block aspect-square mb-4">
           <Image
