@@ -93,7 +93,7 @@ const ProductList = () => {
         breakpoint: 1024,
         settings: {
           slidesToShow: 3,
-          dots:true,
+          dots:false,
           slidesToScroll: 3,
           arrows: false,
           
@@ -103,7 +103,7 @@ const ProductList = () => {
         breakpoint: 768,
         settings: {
           arrows: false,
-          dots:true,
+          dots:false,
           slidesToShow: 2,
           slidesToScroll: 2,
           rows: 2,
