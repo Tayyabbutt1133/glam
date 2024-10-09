@@ -22,7 +22,15 @@ import { jost } from "/components/ui/fonts";
 import { useCategoryIdState } from "/states/use-category-id";
 import Container from "/components/container";
 
-const logos = [logo_one, logo_two, logo_three, logo_four, logo_five, logo_six, logo_seven];
+const logos = [
+  logo_one,
+  logo_two,
+  logo_three,
+  logo_four,
+  logo_five,
+  logo_six,
+  logo_seven,
+];
 
 const sanitizeText = (text) => {
   return text?.replace(/&amp;/g, "&");
@@ -40,7 +48,9 @@ const CategoryItem = ({ href, logo, name }) => (
           height={200}
         />
       </div>
-      <p className={`mt-2 text-sm 2xl:text-[20px] text-center w-full font-medium ${jost.className}`}>
+      <p
+        className={`mt-2 text-sm 2xl:text-[20px] text-center w-full font-medium ${jost.className}`}
+      >
         {sanitizeText(name)}
       </p>
     </Link>
@@ -107,10 +117,10 @@ const CategoryList = ({ items, getHref }) => {
           {items.length > 0
             ? items.map((item, index) => (
                 <CategoryItem
-                  key={item.id || item.category_id}
+                  key={item.id || item.categoryId}
                   href={getHref(item)}
                   logo={logos[index % logos.length]}
-                  name={item.name || item.category_name}
+                  name={item.name || item.categoryName}
                 />
               ))
             : Array(7)
@@ -124,31 +134,37 @@ const CategoryList = ({ items, getHref }) => {
 
 const BrandsMenuCategoryList = ({ brands }) => {
   const { brandLanding } = useParams();
-  const [brandsData, setBrandsData] = useState(null);
 
-  useEffect(() => {
-    if (brands && brands.length > 0) {
-      const [brand] = brands.filter((brand) => brand.brand_slug === brandLanding);
-      setBrandsData(brand);
-    }
-  }, [brands, brandLanding]);
-
-  if (!brandsData) {
+  if (!brands) {
     return <SkeletonList />;
   }
 
+  const breadcrumbLinks = [
+    { name: "Home", route: "/" },
+    { name: brandLanding, route: `/product-categories/${brandLanding}` },
+  ];
+
   return (
     <>
-      <h1 className={`text-2xl ${jost.className} uppercase font-bold text-center mt-10`}>
-        shop all {sanitizeText(brandsData.brand_name)}
+      <div className="-mt-12">
+        <Breadcrumb links={breadcrumbLinks} />
+      </div>
+      <h1
+        className={`text-2xl ${jost.className} uppercase font-bold text-center mt-10`}
+      >
+        shop all {sanitizeText(brands?.brandName)}
       </h1>
       <div className="mt-10">
-        {brandsData.categories?.length === 0 ? (
-          <p className={`${jost.className} text-center`}>No categories available under this brand</p>
+        {brands?.categories?.length === 0 ? (
+          <p className={`${jost.className} text-center`}>
+            No categories available under this brand
+          </p>
         ) : (
           <CategoryList
-            items={brandsData.categories}
-            getHref={(category) => `/brands/${brandLanding}/${category.category_slug}`}
+            items={brands.categories}
+            getHref={(category) =>
+              `/brands/${brandLanding}/${category.categorySlug}`
+            }
           />
         )}
       </div>
@@ -177,7 +193,9 @@ const MenuCategoryList = () => {
         setCategoryId(cateId.data);
 
         if (cateId.data) {
-          const mainCateData = await axios.get(`/api/categoryData/${cateId.data}`);
+          const mainCateData = await axios.get(
+            `/api/categoryData/${cateId.data}`
+          );
           setMainCategory(mainCateData.data.mainCategory);
           setSubCategories(mainCateData.data.subCategories);
         }
@@ -196,24 +214,29 @@ const MenuCategoryList = () => {
     { name: categorylanding, route: `/product-categories/${categorylanding}` },
   ];
 
+
   return (
     <>
       <div className="-mt-12">
         <Breadcrumb links={breadcrumbLinks} />
       </div>
-      <h1 className={`text-2xl 2xl:text-[36px] ${jost.className} uppercase font-semibold text-center mt-10`}>
+      <h1
+        className={`text-2xl 2xl:text-[36px] ${jost.className} uppercase font-semibold text-center mt-10`}
+      >
         {isLoading ? (
           <Skeleton width={200} height={30}>
             <span className="opacity-0">Shop all</span>
           </Skeleton>
         ) : (
-          <>{sanitizeText(mainCategory?.name || '')}</>
+          <>{sanitizeText(mainCategory?.name || "")}</>
         )}
       </h1>
       <div className="mt-10 flex justify-center">
         <CategoryList
           items={subCategories}
-          getHref={(subCat) => `/product-categories/${categorylanding}/${subCat.slug}`}
+          getHref={(subCat) =>
+            `/product-categories/${categorylanding}/${subCat.slug}`
+          }
         />
       </div>
     </>
@@ -222,7 +245,9 @@ const MenuCategoryList = () => {
 
 const SkeletonList = () => (
   <>
-    <h1 className={`text-2xl ${jost.className} uppercase font-bold text-center mt-10`}>
+    <h1
+      className={`text-2xl ${jost.className} uppercase font-bold text-center mt-10`}
+    >
       <Skeleton width={200} height={30}>
         <span className="opacity-0">Shop all</span>
       </Skeleton>
@@ -230,7 +255,11 @@ const SkeletonList = () => (
     <div className="mt-10">
       <div className="overflow-x-auto pb-4 scrollbar-hide">
         <ul className="flex gap-8 md:gap-12 2xl:gap-16 w-max mx-auto px-4">
-          {Array(7).fill(null).map((_, index) => <SkeletonItem key={index} />)}
+          {Array(7)
+            .fill(null)
+            .map((_, index) => (
+              <SkeletonItem key={index} />
+            ))}
         </ul>
       </div>
     </div>
@@ -240,7 +269,11 @@ const SkeletonList = () => (
 const MenucategoryLandingPage = ({ brands }) => {
   return (
     <Container className="my-14">
-      {brands ? <BrandsMenuCategoryList brands={brands} /> : <MenuCategoryList />}
+      {brands ? (
+        <BrandsMenuCategoryList brands={brands} />
+      ) : (
+        <MenuCategoryList />
+      )}
     </Container>
   );
 };
