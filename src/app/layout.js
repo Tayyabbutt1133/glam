@@ -1,7 +1,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 
-import ApolloProvider from "./components/ApolloProvider";
+import { ApolloWrapper } from "./components/ApolloProvider";
 import CurrencyLanguagePopUp from "../../components/currency-language-pop-up";
 import Header from "../../components/header/header";
 import Newsletter from "../../components/Newsletter";
@@ -19,25 +19,27 @@ export const metadata = {
 //
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <head>{/* Include any other meta tags or link elements */}</head>
-      <body className={inter.className}>
-        <ApolloProvider>
-          <CurrencyLanguagePopUp />
-          <Header />
 
-          {children}
-          <ToastContainer position="top-right" />
-          <Newsletter />
-          <Footer />
-        </ApolloProvider>
-        {/* Add BugHerd script */}
-        <Script
-          id="bugherd-script"
-          strategy="afterInteractive" // Ensures script loads after the page is interactive
-          src="https://www.bugherd.com/sidebarv2.js?apikey=fhpij2lzixqjqywxhkpnba"
-        />
-      </body>
-    </html>
+      <html lang="en">
+        <head>{/* Include any other meta tags or link elements */}</head>
+        <body className={inter.className}>
+          <ApolloWrapper>
+            <CurrencyLanguagePopUp />
+            <Header />
+
+            {children}
+            <ToastContainer position="top-right" />
+            <Newsletter />
+            <Footer />
+          </ApolloWrapper>
+          {/* Add BugHerd script */}
+          <Script
+            id="bugherd-script"
+            strategy="afterInteractive" // Ensures script loads after the page is interactive
+            src="https://www.bugherd.com/sidebarv2.js?apikey=fhpij2lzixqjqywxhkpnba"
+          />
+        </body>
+      </html>
+
   );
 }
