@@ -61,7 +61,6 @@ const ProductList = () => {
       })
       .then((response) => {
         setProducts(response.data);
-        console.log(response.data[0])
         setLoading(false);
       })
       .catch((error) => {
