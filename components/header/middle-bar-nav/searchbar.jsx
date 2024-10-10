@@ -69,9 +69,18 @@ export default function FastSearchBarWithDropdown({ formobile = false }) {
     [defaultProducts]
   )
 
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter' && query.trim()) {
+      e.preventDefault()
+      setIsDropdownOpen(false)
+      router.push(`/search?q=${encodeURIComponent(query.trim())}`)
+    }
+  }
+
   const handleChange = (e) => {
     const searchQuery = e.target.value
     setQuery(searchQuery)
+    console.log(searchQuery)
     handleSearch(searchQuery)
   }
 
@@ -157,6 +166,7 @@ export default function FastSearchBarWithDropdown({ formobile = false }) {
           placeholder="Search products, trends"
           value={query}
           onChange={handleChange}
+          onKeyPress={handleKeyPress}
           onFocus={() => setIsDropdownOpen(true)}
           aria-label="Search products and trends"
         />
