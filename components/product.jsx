@@ -59,7 +59,7 @@ export default function Product({ product }) {
 
   return (
     <div className="relative flex h-full border border-[#EFEFEF] rounded-lg duration-300">
-      <Link href={`/product/${product.id}`} className="flex flex-col h-auto px-2 py-2">
+      <Link href={`/product/${product.id}`} className="flex flex-col h-auto px-2 py-2 w-full">
         {/* Product tag */}
         {isOnSale && (
           <div className="grid place-items-center absolute top-2 left-2 bg-sale text-white text-xs font-bold h-16 w-16 rounded-full">
@@ -130,9 +130,9 @@ export default function Product({ product }) {
         </div>
 
         {discountAmount > 0 && (
-          <div className="flex items-center flex-wrap text-[#8B929D] text-xs mb-1">
+          <div className="flex items-center flex-wrap text-[#8B929D] text-xs lg:text-sm xl:text-base 2xl:text-lg font-normal mb-1">
             <span className={`line-through mr-2 flex ${lexendDeca.className}`}>
-              <span className="hidden sm:block">RRP: </span>
+              <span className="hidden mr-1 sm:block">RRP: </span>
               {formatPrice(rrp)}
             </span>
             <span
@@ -148,14 +148,15 @@ export default function Product({ product }) {
           {formatPrice(currentPrice)}
         </p>
         <button
-          className={`w-full bg-black text-white py-2 mt-auto text-sm rounded-lg hover:bg-[#CF8562] font-normal transition duration-200 ${lexendDeca.className}`}
+          className={`w-full ${product.stock_quantity === null ? "bg-gray-300 text-gray-400" : "bg-black text-white  hover:bg-hover"} py-2 mt-auto text-sm rounded-lg font-normal transition duration-200 ${lexendDeca.className}`}
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
             addToCart(product);
           }}
+          disabled={product.stock_quantity === null}
         >
-          ADD TO BAG
+          {product.stock_quantity === null ? "OUT OF STOCK" : "ADD TO BAG"}
         </button>
       </Link>
     </div>
