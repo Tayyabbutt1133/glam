@@ -3,13 +3,13 @@ import { gql } from "@apollo/client";
 import { query } from "../../../../../lib/apollo-client";
 
 const GET_PRODUCTS = gql`
-  query getProducts($attribute_term: String!, $category: String!) {
+  query getProducts($attribute_term: String!) {
     products(
       where: {
         attribute: "pa_brand"
         attributeTerm: $attribute_term
-        category: $category
       }
+      first: 100
     ) {
       nodes {
         databaseId
@@ -32,6 +32,7 @@ const GET_PRODUCTS = gql`
             nodes {
               databaseId
               name
+              slug
             }
           }
           attributes {
@@ -54,6 +55,7 @@ const GET_PRODUCTS = gql`
             nodes {
               databaseId
               name
+              slug
             }
           }
           attributes {
@@ -77,7 +79,7 @@ const GET_BRAND_CATEGORY_DATA = gql`
         categorySlug
       }
     }
-    products(where: { attributeTerm: $brand, attribute: "pa_brand" }) {
+    products(where: { attributeTerm: $brand, attribute: "pa_brand" } first: 100) {
       nodes {
         ... on SimpleProduct {
           productCategories {
@@ -103,7 +105,7 @@ export default async function Page({ params }) {
 
   const { data, error } = await query({
     query: GET_PRODUCTS,
-    variables: { attribute_term: brandLanding, category: brandListing},
+    variables: { attribute_term: brandLanding},
   });
   
   const {data: {brandCategories, products}, error: brandError} = await query({

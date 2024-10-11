@@ -8,7 +8,6 @@ import Link from "next/link";
 import { FaStar, FaRegStar, FaHeart } from "react-icons/fa";
 import { CiHeart } from "react-icons/ci";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import { IoFilterOutline } from "react-icons/io5";
 import { RxCross2 } from "react-icons/rx";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { lexendDeca, jost } from "/components/ui/fonts";
@@ -19,6 +18,7 @@ import { useCartStore } from "/states/Cardstore";
 import Breadcrumb from "../../../../components/BreadCrumb";
 import arrow_forward from "../../../../public/Keyboard arrow right.svg";
 import arrow_previous from "../../../../public/Keyboard arrow left.svg";
+import Product from "../../../../components/product";
 
 const API_BASE_URL = "https://glam.clickable.site/wp-json/wc/v3";
 const CONSUMER_KEY = "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d";
@@ -817,82 +817,9 @@ export default function Component({ params: { grid } }) {
                   return (
                     <div
                       key={product.id}
-                      className="border p-4 rounded-lg  relative bg-white"
+                      className=""
                     >
-                      {product.sale_price && (
-                        <span className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
-                          Sale
-                        </span>
-                      )}
-                      <div className="absolute top-2 right-2">
-                        <button
-                          className="focus:outline-none"
-                          onClick={() => handleFavoriteClick(product.id)}
-                        >
-                          {favorites[product.id] ? (
-                            <FaHeart className="text-red-500 w-6 h-6" />
-                          ) : (
-                            <CiHeart className="text-black w-6 h-6" />
-                          )}
-                        </button>
-                      </div>
-                      <Link href={`/product/${product.id}`}>
-                        <Image
-                          src={product.images[0]?.src}
-                          alt={product.name}
-                          width={200}
-                          height={200}
-                          className="w-full h-64 object-contain mb-4"
-                        />
-                      </Link>
-                      <Link href={`/product/${product.id}`}>
-                        <h1
-                          className={`text-sm 2xl:text-[20px] uppercase ${jost.className} cursor-pointer font-bold mb-2`}
-                        >
-                          {brand}
-                        </h1>
-                      </Link>
-                      <h3
-                        className={`text-sm 2xl:text-[19px] ${lexendDeca.className} font-normal mb-2 h-[60px] overflow-hidden`}
-                      >
-                        {product.name}
-                      </h3>
-                      <div className="flex items-center mb-2">
-                        {[...Array(5)].map((_, index) => (
-                          <span key={index}>
-                            {index < Math.round(product.average_rating) ? (
-                              <FaStar className="text-[#7E7E7E] w-4 h-4" />
-                            ) : (
-                              <FaRegStar className="text-[#7E7E7E] w-4 h-4" />
-                            )}
-                          </span>
-                        ))}
-                        <span className="text-gray-600 text-sm ml-2">
-                          ({product.rating_count})
-                        </span>
-                      </div>
-                      <p
-                        className={`font-bold text-lg mb-3 ${lexendDeca.className}`}
-                      >
-                        {product.sale_price ? (
-                          <>
-                            <span className="line-through text-gray-600 mr-2">
-                              {currencySymbol}
-                              {(product.regular_price * rate).toFixed(2)}
-                            </span>
-                            {currencySymbol}
-                            {(product.sale_price * rate).toFixed(2)}
-                          </>
-                        ) : (
-                          `${currencySymbol}${(product.price * rate).toFixed(2)}`
-                        )}
-                      </p>
-                      <button
-                        className={`w-full bg-black text-white py-2 rounded-lg hover:bg-gray-800 transition ${jost.className}`}
-                        onClick={() => addToCart(product)}
-                      >
-                        ADD TO BAG
-                      </button>
+                      <Product product={product}/>
                     </div>
                   );
                 })}

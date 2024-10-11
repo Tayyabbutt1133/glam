@@ -1,4 +1,6 @@
 import axios from "axios";
+import { gql } from "@apollo/client";
+import { query } from "../../../../../lib/apollo-client";
 
 export async function GET(request, { params }) {
   try {

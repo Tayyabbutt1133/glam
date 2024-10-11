@@ -15,11 +15,11 @@ import FilterSidebar from './brand-listing/filter-sidebar'
 
 const PRODUCTS_PER_PAGE = 12
 
-export default function BrandListing({productsData, filterData}) {
+export default function BrandListing({ productsData, filterData }) {
   const { brandLanding, brandListing } = useParams()
   const { rate, currencySymbol } = usePopupStore()
   const addToCart = useCartStore((state) => state.addToCart)
-  
+
   const [currentPage, setCurrentPage] = useState(1)
   const [filters, setFilters] = useState({
     categories: [],
@@ -31,29 +31,41 @@ export default function BrandListing({productsData, filterData}) {
 
   const products = useMemo(() => productsData?.products?.nodes || [], [productsData])
 
-  // Helper function to check if a product belongs to a category
   const productBelongsToCategory = (product, categoryId) => {
-    return product.productCategories.nodes.some(cat => 
-      // Convert both to strings for comparison since categoryId might come as string
+    return product.productCategories.nodes.some(cat =>
       cat.databaseId.toString() === categoryId.toString()
-    );
+    )
   }
+  
 
+  // Filter products based on initial category (brandListing)
+  const initialProducts = useMemo(() => {
+    if (brandListing) {
+      return products.filter(product =>
+        product.productCategories.nodes.some(cat => cat.slug === brandListing)
+      )
+    }
+    
+    return products
+  }, [products, brandListing])
+  
+  
   const filteredAndSortedProducts = useMemo(() => {
-    let result = [...products]
-
-    // Apply category filters
-    if (filters.categories && filters.categories.length > 0) {
-      result = result.filter(product => 
-        // Product should match ANY of the selected categories
-        filters.categories.some(categoryId => 
-          productBelongsToCategory(product, categoryId)
+    let result = [...initialProducts]
+  
+    console.log('At the Start Filters:', filters);
+    console.log('At the Start Initial products:', initialProducts);
+    console.log('At the Start Filtered products:', result);
+    
+    if (filters.categories.length > 0) {
+      result = result.filter(product =>
+        filters.categories.some(categoryId =>
+          product.productCategories.nodes.some(cat => cat.databaseId === parseInt(categoryId))
         )
       )
     }
-
-    // Apply price range filters
-    if (filters.priceRange && filters.priceRange.length > 0) {
+  
+    if (filters.priceRange.length > 0) {
       result = result.filter(product => {
         const price = parseFloat(product.price)
         return filters.priceRange.some(range => {
@@ -62,8 +74,7 @@ export default function BrandListing({productsData, filterData}) {
         })
       })
     }
-
-    // Apply sorting
+  
     switch (sortOption) {
       case "price-low-to-high":
         result.sort((a, b) => parseFloat(a.price) - parseFloat(b.price))
@@ -72,15 +83,18 @@ export default function BrandListing({productsData, filterData}) {
         result.sort((a, b) => parseFloat(b.price) - parseFloat(a.price))
         break
       case "newest":
-        // If you have a date field, use it here
         result.sort((a, b) => new Date(b.date) - new Date(a.date))
         break
-      default: // 'popularity'
+      default:
         result.sort((a, b) => b.reviewCount - a.reviewCount)
     }
-
+  
+    console.log('At the end Filters:', filters);
+    console.log('At the end Initial products:', initialProducts);
+    console.log('At the end Filtered products:', result);
     return result
-  }, [products, filters, sortOption])
+  }, [initialProducts, filters, sortOption])
+  
 
   const paginatedProducts = useMemo(() => {
     const startIndex = (currentPage - 1) * PRODUCTS_PER_PAGE
@@ -95,7 +109,6 @@ export default function BrandListing({productsData, filterData}) {
   const handlePageChange = (page) => {
     if (page >= 1 && page <= totalPages) {
       setCurrentPage(page)
-      // Scroll to top when changing pages
       window.scrollTo({ top: 0, behavior: 'smooth' })
     }
   }
@@ -106,10 +119,8 @@ export default function BrandListing({productsData, filterData}) {
       let newValues
 
       if (currentValues.includes(value)) {
-        // Remove value if it's already selected
         newValues = currentValues.filter(v => v !== value)
       } else {
-        // Add value if it's not selected
         newValues = [...currentValues, value]
       }
 
@@ -118,8 +129,6 @@ export default function BrandListing({productsData, filterData}) {
         [filterType]: newValues
       }
     })
-    
-    // Reset to first page when filters change
     setCurrentPage(1)
   }
 
@@ -180,8 +189,8 @@ export default function BrandListing({productsData, filterData}) {
           <div className="lg:w-3/4">
             <div className="flex justify-between items-center mb-6">
               <div className="flex items-center gap-4">
-                <button 
-                  onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)} 
+                <button
+                  onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
                   className="lg:hidden"
                 >
                   <Image
@@ -213,12 +222,12 @@ export default function BrandListing({productsData, filterData}) {
                 />
               </div>
             </div>
-            
+
             {filteredAndSortedProducts.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-12">
                 <h3 className="text-xl font-semibold mb-2">No Products Found</h3>
                 <p className="text-gray-500 mb-4">Try adjusting your filters or search criteria</p>
-                <button 
+                <button
                   onClick={clearAllFilters}
                   className="text-primary hover:text-primary-dark underline"
                 >
