@@ -1,13 +1,13 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import { useSearchParams } from 'next/navigation'
 import axios from 'axios'
 import Image from 'next/image'
 import Link from 'next/link'
 import { FaStar, FaRegStar, FaHeart } from "react-icons/fa"
 import { CiHeart } from "react-icons/ci"
-import { MdKeyboardArrowDown } from "react-icons/md"
+import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { lexendDeca, jost, plusJakartaSans } from "../components/ui/fonts"
 import { useCartStore } from '../states/Cardstore'
@@ -75,6 +75,23 @@ const SortDropdown = ({ value, onChange }) => {
   )
 }
 
+const FilterSection = ({ title, children, isOpen, toggleOpen }) => (
+  <div className="mb-4">
+    <button
+      className={`w-full flex justify-between items-center py-2 px-4 ${lexendDeca.className} text-base`}
+      onClick={toggleOpen}
+    >
+      <span className="font-semibold">{title}</span>
+      {isOpen ? <MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}
+    </button>
+    {isOpen && (
+      <div className="mt-2 pl-4 max-h-60 overflow-y-auto">
+        {children}
+      </div>
+    )}
+  </div>
+)
+
 export default function SearchResults() {
   const searchParams = useSearchParams()
   const query = searchParams.get('q')
@@ -87,6 +104,20 @@ export default function SearchResults() {
   const [favorites, setFavorites] = useState({})
   const [sortBy, setSortBy] = useState('popularity')
   const addToCart = useCartStore((state) => state.addToCart)
+
+  const [filters, setFilters] = useState({
+    brands: [],
+    categories: [],
+    priceRange: [],
+  })
+  const [availableBrands, setAvailableBrands] = useState([])
+  const [availableCategories, setAvailableCategories] = useState([])
+  const [availablePriceRanges, setAvailablePriceRanges] = useState([])
+  const [openFilters, setOpenFilters] = useState({
+    brands: true,
+    categories: true,
+    priceRange: true,
+  })
 
   useEffect(() => {
     const fetchSearchResults = async () => {
@@ -103,7 +134,7 @@ export default function SearchResults() {
             per_page: PRODUCTS_PER_PAGE,
             orderby: sortBy === 'popularity' ? 'popularity' : 'price',
             order: sortBy === 'price_desc' ? 'desc' : 'asc',
-            _fields: "id,name,price,sale_price,regular_price,images,short_description,average_rating,rating_count,total_sales,attributes",
+            _fields: "id,name,price,sale_price,regular_price,images,short_description,average_rating,rating_count,total_sales,attributes,categories",
           },
         })
         
@@ -111,6 +142,35 @@ export default function SearchResults() {
         setTotalResults(totalProducts)
         setTotalPages(Math.ceil(totalProducts / PRODUCTS_PER_PAGE))
         setProducts(response.data)
+
+        // Extract unique brands and categories from the fetched products
+        const brands = new Set()
+        const categories = new Set()
+        const prices = []
+
+        response.data.forEach(product => {
+          const brand = product.attributes.find(attr => attr.name === "Brand")?.options[0]
+          if (brand) brands.add(brand)
+          product.categories.forEach(cat => categories.add(cat))
+          prices.push(parseFloat(product.price))
+        })
+
+        setAvailableBrands(Array.from(brands).map(name => ({ id: name, name })))
+        setAvailableCategories(Array.from(categories))
+
+        // Calculate price ranges
+        const minPrice = Math.floor(Math.min(...prices))
+        const maxPrice = Math.ceil(Math.max(...prices))
+        const range = maxPrice - minPrice
+        const step = Math.ceil(range / 4)
+
+        setAvailablePriceRanges([
+          `${minPrice}-${minPrice + step}`,
+          `${minPrice + step + 1}-${minPrice + 2 * step}`,
+          `${minPrice + 2 * step + 1}-${minPrice + 3 * step}`,
+          `${minPrice + 3 * step + 1}-${maxPrice}`,
+        ])
+
       } catch (error) {
         console.error("Error fetching search results:", error)
         setError("Failed to fetch search results. Please try again later.")
@@ -122,8 +182,32 @@ export default function SearchResults() {
     fetchSearchResults()
   }, [query, currentPage, sortBy])
 
+  const handleFilterChange = (filterType, value) => {
+    setFilters(prevFilters => ({
+      ...prevFilters,
+      [filterType]: prevFilters[filterType].includes(value)
+        ? prevFilters[filterType].filter(item => item !== value)
+        : [...prevFilters[filterType], value]
+    }))
+    setCurrentPage(1)
+  }
+
+  const filteredProducts = useMemo(() => {
+    return products.filter(product => {
+      const brandMatch = filters.brands.length === 0 || filters.brands.includes(product.attributes.find(attr => attr.name === "Brand")?.options[0])
+      const categoryMatch = filters.categories.length === 0 || product.categories.some(cat => filters.categories.includes(cat.id.toString()))
+      const priceMatch = filters.priceRange.length === 0 || filters.priceRange.some(range => {
+        const [min, max] = range.split("-").map(Number)
+        const price = parseFloat(product.price)
+        return price >= min && price <= max
+      })
+      return brandMatch && categoryMatch && priceMatch
+    })
+  }, [products, filters])
+
   const handleFavoriteClick = (productId, e) => {
     e.preventDefault()
+    e.stopPropagation()
     setFavorites(prev => ({
       ...prev,
       [productId]: !prev[productId]
@@ -167,16 +251,17 @@ export default function SearchResults() {
     }
 
     return (
-      <div className="flex justify-end items-center mt-8">
+      <nav className="flex justify-center items-center mt-8" aria-label="Pagination">
         <button
           onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
           disabled={currentPage === 1}
-          className={`mx-1 flex items-center justify-center w-8 h-8 ${
-            currentPage === 1 ? 'text-gray-300 cursor-not-allowed' : 'text-black hover:bg-gray-100'
-          }`}
+          className={`px-4 py-2 mx-1 rounded-md ${
+            currentPage === 1 ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-white text-black hover:bg-gray-100'
+          } ${lexendDeca.className}`}
           aria-label="Previous page"
         >
-          <ChevronLeft className="w-5 h-5" />
+          <ChevronLeft className="w-5 h-5 inline-block" />
+          <span className="sr-only">Previous</span>
         </button>
 
         {pageNumbers.map((page, index) => 
@@ -186,11 +271,12 @@ export default function SearchResults() {
             <button
               key={page}
               onClick={() => setCurrentPage(page)}
-              className={`mx-1 flex items-center justify-center w-8 h-8 ${
+              className={`px-4 py-2 mx-1 rounded-md ${
                 currentPage === page
                   ? "bg-black text-white"
                   : "bg-white text-black hover:bg-gray-100"
-              }`}
+              } ${lexendDeca.className}`}
+              aria-current={currentPage === page ? "page" : undefined}
             >
               {page}
             </button>
@@ -200,14 +286,15 @@ export default function SearchResults() {
         <button
           onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
           disabled={currentPage === totalPages}
-          className={`mx-1 flex items-center justify-center w-8 h-8 ${
-            currentPage === totalPages ? 'text-gray-300 cursor-not-allowed' : 'text-black hover:bg-gray-100'
-          }`}
+          className={`px-4 py-2 mx-1 rounded-md ${
+            currentPage === totalPages ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-white text-black hover:bg-gray-100'
+          } ${lexendDeca.className}`}
           aria-label="Next page"
         >
-          <ChevronRight className="w-5 h-5" />
+          <ChevronRight className="w-5 h-5 inline-block" />
+          <span className="sr-only">Next</span>
         </button>
-      </div>
+      </nav>
     )
   }
 
@@ -241,122 +328,200 @@ export default function SearchResults() {
             </p>
           )}
         </div>
-
-        <div className="flex justify-start mb-4">
-          <SortDropdown
-            value={sortBy}
-            onChange={(value) => setSortBy(value)}
-          />
-        </div>
-
-        {isLoading ? (
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
-            {Array(PRODUCTS_PER_PAGE).fill(null).map((_, index) => (
-              <ProductSkeleton key={index} />
-            ))}
-          </div>
-        ) : error ? (
-          <div className={`text-red-500 ${plusJakartaSans.className}`}>{error}</div>
-        ) : products.length === 0 ? (
-          <div className={`text-center py-12 ${plusJakartaSans.className}`}>
-            <p className="text-lg mb-4">
-              No products found for &quot;{query}&quot;.
-            </p>
-            <p className="text-gray-600">
-              Try searching with different keywords or check the spelling.
-            </p>
-          </div>
-        ) : (
-          <>
-            <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 ml-36">
-              {products.map((product) => {
-                const brand = product.attributes.find(
-                  (attr) => attr.name === "Brand"
-                )?.options[0] || "Unknown Brand";
-                return (
-                  <Link
-                    key={product.id}
-                    href={`/product/${product.id}`}
-                    className="border p-4 rounded-lg relative bg-white"
+        
+        <div className="flex flex-col md:flex-row gap-8">
+          {/* Sidebar for filters */}
+          <div className="md:w-1/4">
+            <FilterSection
+              title="Brand"
+              isOpen={openFilters.brands}
+              toggleOpen={() => setOpenFilters(prev => ({ ...prev, brands: !prev.brands }))}
+            >
+              {availableBrands.map(brand => (
+                <div key={brand.id} className="flex items-center space-x-2 mb-2">
+                  <input
+                    type="checkbox"
+                
+                    id={`brand-${brand.id}`}
+                    checked={filters.brands.includes(brand.name)}
+                    onChange={() => handleFilterChange("brands", brand.name)}
+                    className="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
+                  />
+                  <label htmlFor={`brand-${brand.id}`} 
+                    className={`${lexendDeca.className} text-sm`}
                   >
-                    {product.sale_price && (
-                      <span className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
-                        Sale
-                      </span>
-                    )}
-                    <div className="absolute top-2 right-2">
-                      <button
-                        className="focus:outline-none"
-                        onClick={(e) => handleFavoriteClick(product.id, e)}
-                      >
-                        {favorites[product.id] ? (
-                          <FaHeart className="text-red-500 w-6 h-6" />
-                        ) : (
-                          <CiHeart className="text-black w-6 h-6" />
-                        )}
-                      </button>
-                    </div>
-                    <div className="w-full h-64 relative mb-4">
-                      <Image
-                        src={product.images[0]?.src || "/placeholder.svg"}
-                        alt={decodeHtmlEntities(product.name)}
-                        className="object-contain"
-                        fill
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw"
-                      />
-                    </div>
-                    <h3 className={`text-sm  2xl:text-[22px] font-bold mb-1 ${lexendDeca.className}`}>{brand}</h3>
-                    <h2 className={`text-sm 2xl:text-[20px] ${lexendDeca.className} font-normal mb-2 h-[60px] overflow-hidden`}>
-                      {decodeHtmlEntities(product.name)}
-                    </h2>
-                    <div className="flex items-center mb-2">
-                      {[...Array(5)].map((_, index) => (
-                        <span key={index}>
-                          {index < Math.round(product.average_rating) ? (
-                            <FaStar className="text-[#7E7E7E] w-4 h-4" />
-                          ) : (
-                            <FaRegStar className="text-[#7E7E7E] w-4 h-4" />
-                          )}
-                        </span>
-                      ))}
-                      <span className="text-gray-600 text-sm ml-2">
-                        ({product.rating_count || 0})
-                      </span>
-                    </div>
-                    <div className={`font-bold text-lg mb-3 ${lexendDeca.className}`}>
-                      {product.sale_price ? (
-                        <>
-                          <span className="line-through text-gray-600 mr-2">
-                            £{formatPrice(product.regular_price)}
-                          </span>
-                          <span className="text-black">
-                            £{formatPrice(product.sale_price)}
-                          </span>
-                        </>
-                      ) : (
-                        <span className="text-black">
-                          £{formatPrice(product.price)}
-                        </span>
-                      
-                      )}
-                    </div>
-                    <button
-                      className={`w-full bg-black text-white py-2 rounded-lg hover:bg-[#CF8562] duration-300 transition ${jost.className}`}
-                      onClick={(e) => {
-                        e.preventDefault()
-                        addToCart(product)
-                      }}
-                    >
-                      ADD TO BAG
-                    </button>
-                  </Link>
-                )
-              })}
+                    {brand.name}
+                  </label>
+                </div>
+              ))}
+            </FilterSection>
+
+            <FilterSection
+              title="Category"
+              isOpen={openFilters.categories}
+              toggleOpen={() => setOpenFilters(prev => ({ ...prev, categories: !prev.categories }))}
+            >
+              {availableCategories.map(category => (
+                <div key={category.id} className="flex items-center space-x-2 mb-2">
+                  <input
+                    type="checkbox"
+                    id={`category-${category.id}`}
+                    checked={filters.categories.includes(category.id.toString())}
+                    onChange={() => handleFilterChange("categories", category.id.toString())}
+                    className="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
+                  />
+                  <label htmlFor={`category-${category.id}`}
+                    className={`${lexendDeca.className} text-sm`}
+                  >
+                    {category.name}
+                  </label>
+                </div>
+              ))}
+            </FilterSection>
+
+            <FilterSection
+              title="Price Range"
+              isOpen={openFilters.priceRange}
+              toggleOpen={() => setOpenFilters(prev => ({ ...prev, priceRange: !prev.priceRange }))}
+            >
+              {availablePriceRanges.map(range => (
+                <div key={range} className="flex items-center space-x-2 mb-2">
+                  <input
+                    type="checkbox"
+                    id={`price-${range}`}
+                    checked={filters.priceRange.includes(range)}
+                    onChange={() => handleFilterChange("priceRange", range)}
+                    className="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
+                  />
+                  <label htmlFor={`price-${range}`}
+                    className={`${lexendDeca.className} text-sm`}
+                  >
+                    £{range}
+                  </label>
+                </div>
+              ))}
+            </FilterSection>
+          </div>
+
+          {/* Main content area */}
+          <div className="md:w-3/4">
+            <div className="flex justify-between items-center mb-4">
+              <SortDropdown
+                value={sortBy}
+                onChange={(value) => setSortBy(value)}
+              />
             </div>
-            
-            {totalPages > 1 && renderPagination()}
-          </>
-        )}
+
+            {isLoading ? (
+              <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
+                {Array(PRODUCTS_PER_PAGE).fill(null).map((_, index) => (
+                  <ProductSkeleton key={index} />
+                ))}
+              </div>
+            ) : error ? (
+              <div className={`text-red-500 ${plusJakartaSans.className}`}>{error}</div>
+            ) : filteredProducts.length === 0 ? (
+              <div className={`text-center py-12 ${plusJakartaSans.className}`}>
+                <p className="text-lg mb-4">
+                  No products found for &quot;{query}&quot; with the selected filters.
+                </p>
+                <p className="text-gray-600">
+                  Try adjusting your filters or search with different keywords.
+                </p>
+              </div>
+            ) : (
+              <>
+                <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
+                  {filteredProducts.slice((currentPage - 1) * PRODUCTS_PER_PAGE, currentPage * PRODUCTS_PER_PAGE).map((product) => {
+                    const brand = product.attributes.find(
+                      (attr) => attr.name === "Brand"
+                    )?.options[0] || "Unknown Brand";
+                    return (
+                      <Link
+                        key={product.id}
+                        href={`/product/${product.id}`}
+                        className="border p-4 rounded-lg relative bg-white group"
+                      >
+                        {product.sale_price && (
+                          <span className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full z-10">
+                            Sale
+                          </span>
+                        )}
+                        <div className="absolute top-2 right-2 z-10">
+                          <button
+                            className="focus:outline-none bg-white rounded-full p-1 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
+                            onClick={(e) => handleFavoriteClick(product.id, e)}
+                            aria-label={favorites[product.id] ? "Remove from favorites" : "Add to favorites"}
+                          >
+                            {favorites[product.id] ? (
+                              <FaHeart className="text-red-500 w-6 h-6" />
+                            ) : (
+                              <CiHeart className="text-black w-6 h-6" />
+                            )}
+                          </button>
+                        </div>
+                        <div className="w-full h-64 relative mb-4">
+                          <Image
+                            src={product.images[0]?.src || "/placeholder.svg"}
+                            alt={decodeHtmlEntities(product.name)}
+                            className="object-contain"
+                            fill
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw"
+                          />
+                        </div>
+                        <h3 className={`text-sm  2xl:text-[22px] font-bold mb-1 ${lexendDeca.className}`}>{brand}</h3>
+                        <h2 className={`text-sm 2xl:text-[20px] ${lexendDeca.className} font-normal mb-2 h-[60px] overflow-hidden`}>
+                          {decodeHtmlEntities(product.name)}
+                        </h2>
+                        <div className="flex items-center mb-2">
+                          {[...Array(5)].map((_, index) => (
+                            <span key={index}>
+                              {index < Math.round(product.average_rating) ? (
+                                <FaStar className="text-[#7E7E7E] w-4 h-4" />
+                              ) : (
+                                <FaRegStar className="text-[#7E7E7E] w-4 h-4" />
+                              )}
+                            </span>
+                          ))}
+                          <span className="text-gray-600 text-sm ml-2">
+                            ({product.rating_count || 0})
+                          </span>
+                        </div>
+                        <div className={`font-bold text-lg mb-3 ${lexendDeca.className}`}>
+                          {product.sale_price ? (
+                            <>
+                              <span className="line-through text-gray-600 mr-2">
+                                £{formatPrice(product.regular_price)}
+                              </span>
+                              <span className="text-black">
+                                £{formatPrice(product.sale_price)}
+                              </span>
+                            </>
+                          ) : (
+                            <span className="text-black">
+                              £{formatPrice(product.price)}
+                            </span>
+                          )}
+                        </div>
+                        <button
+                          className={`w-full bg-black text-white py-2 rounded-lg hover:bg-[#CF8562] duration-300 transition ${jost.className}`}
+                          onClick={(e) => {
+                            e.preventDefault()
+                            addToCart(product)
+                          }}
+                        >
+                          ADD TO BAG
+                        </button>
+                      </Link>
+                    )
+                  })}
+                </div>
+                
+                {renderPagination()}
+              </>
+            )}
+          </div>
+        </div>
       </div>
     </Container>
   )
