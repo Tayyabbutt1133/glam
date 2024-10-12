@@ -85,15 +85,6 @@ export default function FilterSidebar({
 
   const priceRanges = ["0-50", "51-100", "101-200", "201-500", "501+"];
 
-  // // Group categories by parent
-  // const categoryGroups = filterData?.reduce((acc, category) => {
-  //   const parentSlug = category.categorySlug.split('-').slice(-1)[0];
-  //   if (!acc[parentSlug]) {
-  //     acc[parentSlug] = [];
-  //   }
-  //   acc[parentSlug].push(category);
-  //   return acc;
-  // }, {}) || {};
 
   return (
     <div
