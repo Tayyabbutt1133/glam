@@ -87,6 +87,18 @@ ul.slick-dots.slick-thumb {
   width: 0;
 }
 
+.slick-slide > div {
+  height: 100%;
+}
+
+.slick-track {
+  display: flex !important;
+}
+
+.slick-slide {
+  height: inherit !important;
+}
+
 /* @media (min-width: 1200px) {
   .prev-arrow {
     left: calc((100% - 1200px) / 2 - 10px) !important;
