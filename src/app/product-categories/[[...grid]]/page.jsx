@@ -814,6 +814,7 @@ export default function Component({ params: { grid } }) {
                   const brand =
                     product.attributes.find((attr) => attr.name === "Brand")
                       ?.options[0] || "Unknown Brand";
+                  if(!product.name || !product.price || Number(product.price) === 0 || !product.regular_price || Number(product.regular_price) === 0 || !product.images || product.images.length === 0) return null
                   return (
                     <div
                       key={product.id}

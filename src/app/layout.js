@@ -10,8 +10,6 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Script from "next/script"; // Use next/script instead of Head
 
-const inter = Inter({ subsets: ["latin"] });
-
 export const metadata = {
   title: "Glam Studio",
   description: "Home page glam studio",
@@ -19,27 +17,25 @@ export const metadata = {
 //
 export default function RootLayout({ children }) {
   return (
+    <html lang="en">
+      <head>{/* Include any other meta tags or link elements */}</head>
+      <body>
+        <ApolloWrapper>
+          <CurrencyLanguagePopUp />
+          <Header />
 
-      <html lang="en">
-        <head>{/* Include any other meta tags or link elements */}</head>
-        <body className={inter.className}>
-          <ApolloWrapper>
-            <CurrencyLanguagePopUp />
-            <Header />
-
-            {children}
-            <ToastContainer position="top-right" />
-            <Newsletter />
-            <Footer />
-          </ApolloWrapper>
-          {/* Add BugHerd script */}
-          <Script
-            id="bugherd-script"
-            strategy="afterInteractive" // Ensures script loads after the page is interactive
-            src="https://www.bugherd.com/sidebarv2.js?apikey=fhpij2lzixqjqywxhkpnba"
-          />
-        </body>
-      </html>
-
+          {children}
+          <ToastContainer position="top-right" />
+          <Newsletter />
+          <Footer />
+        </ApolloWrapper>
+        {/* Add BugHerd script */}
+        <Script
+          id="bugherd-script"
+          strategy="afterInteractive" // Ensures script loads after the page is interactive
+          src="https://www.bugherd.com/sidebarv2.js?apikey=fhpij2lzixqjqywxhkpnba"
+        />
+      </body>
+    </html>
   );
 }

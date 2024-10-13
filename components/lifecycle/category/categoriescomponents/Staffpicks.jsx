@@ -168,7 +168,7 @@ export default function Staffpicks() {
         ) : (
           <Slider {...settings}>
             {staffPicks?.map((product) => (
-              <div key={product.id} className="">
+              <div key={product.id} className="px-2 h-full">
                 <Product product={product} />
               </div>
             ))}
