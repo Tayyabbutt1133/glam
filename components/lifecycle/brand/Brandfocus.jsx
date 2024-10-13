@@ -94,15 +94,13 @@ const Brandfocus = ({ staffPicks = [] }) => {
       },
       {
         breakpoint: 480,
-        
+
         settings: {
           slidesToShow: 2,
           slidesToScroll: 2,
           arrows: false,
           dots: true,
           rows: 2,
-          
-          
         },
       },
     ],
@@ -121,7 +119,11 @@ const Brandfocus = ({ staffPicks = [] }) => {
 
   return (
     <div className="py-4 pb-10 lg:py-7 lg:pb-14">
-      <h2 className={`text-2xl font-semibold mx-4 my-8 ${jost.className} uppercase`}>IN FOCUS</h2>
+      <h2
+        className={`text-2xl font-semibold mx-4 my-8 ${jost.className} uppercase`}
+      >
+        IN FOCUS
+      </h2>
       {!staffPicks.length ? (
         <Slider {...settings}>
           {Array(4)
@@ -146,7 +148,9 @@ const Brandfocus = ({ staffPicks = [] }) => {
       ) : (
         <Slider {...settings}>
           {staffPicks.map((product) => (
-            <Product key={product.id} product={product} />
+            <div key={product.id} className="px-2 h-full">
+              <Product product={product} />
+            </div>
           ))}
         </Slider>
       )}

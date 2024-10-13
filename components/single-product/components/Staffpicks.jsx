@@ -146,10 +146,10 @@ const Staffpicks = () => {
       {/* This h1 tag will not use Text component */}
       <h1
         className={`
-          ${jost.className} 
-          capitalize 
-          font-medium 
-          mb-10 
+          ${jost.className}
+          capitalize
+          font-medium
+          mb-10
           sm:text-2xl text-[20px]
         `}
       >
@@ -179,7 +179,9 @@ const Staffpicks = () => {
         ) : (
           <Slider {...settings}>
             {staffPicks?.map((product) => (
-              <Product key={product.id} product={product} />
+              <div key={product.id} className="px-2 h-full">
+                <Product key={product.id} product={product} />
+              </div>
             ))}
           </Slider>
         )}
