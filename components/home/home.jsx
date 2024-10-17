@@ -41,7 +41,7 @@ export default function HomePage() {
       </Suspense>
 
       <Suspense fallback={<div>Loading Trustpilot...</div>}>
-        {/* <Trustpilot /> */}
+        <Trustpilot />
       </Suspense>
     </main>
   );

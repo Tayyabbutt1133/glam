@@ -7,11 +7,15 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { FaStar, FaRegStar, FaHeart } from "react-icons/fa"
 import { CiHeart } from "react-icons/ci"
-import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md"
-import { ChevronLeft, ChevronRight } from "lucide-react"
+import { MdKeyboardArrowDown } from "react-icons/md"
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io"
+import { RxCross2 } from "react-icons/rx"
 import { lexendDeca, jost, plusJakartaSans } from "../components/ui/fonts"
 import { useCartStore } from '../states/Cardstore'
 import Container from './container'
+import arrow_forward from "../public/Keyboard arrow right.svg"
+import arrow_previous from "../public/Keyboard arrow left.svg"
+import filter from "../public/filter.svg"
 
 const axiosInstance = axios.create({
   baseURL: "https://glam.clickable.site/wp-json/wc/v3/",
@@ -75,21 +79,65 @@ const SortDropdown = ({ value, onChange }) => {
   )
 }
 
-const FilterSection = ({ title, children, isOpen, toggleOpen }) => (
-  <div className="mb-4">
-    <button
-      className={`w-full flex justify-between items-center py-2 px-4 ${lexendDeca.className} text-base`}
+const FilterSection = ({ title, isOpen, toggleOpen, children }) => (
+  <div className="mb-6">
+    <h4
+      className={`font-bold text-lg mb-2 flex justify-between items-center cursor-pointer ${jost.className}`}
       onClick={toggleOpen}
     >
-      <span className="font-semibold">{title}</span>
-      {isOpen ? <MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}
-    </button>
+      <span>{title}</span>
+      {isOpen ? (
+        <IoIosArrowUp className="text-gray-500" />
+      ) : (
+        <IoIosArrowDown className="text-gray-500" />
+      )}
+    </h4>
     {isOpen && (
-      <div className="mt-2 pl-4 max-h-60 overflow-y-auto">
+      <div className={`pl-2 ${lexendDeca.className} font-normal max-h-60 overflow-y-auto custom-scrollbar`}>
         {children}
       </div>
     )}
   </div>
+)
+
+const CustomCheckbox = ({ name, value, checked, onChange, label, count }) => (
+  <label className="flex items-center mb-2 cursor-pointer">
+    <div className="relative mr-2">
+      <input
+        type="checkbox"
+        name={name}
+        value={value}
+        checked={checked}
+        onChange={onChange}
+        className="sr-only"
+      />
+      <div
+        className={`w-5 h-5 border rounded-md transition-colors ${
+          checked ? "border-primary bg-primary" : "border-gray-300"
+        }`}
+      >
+        {checked && (
+          <svg
+            className="w-4 h-4 text-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M5 13l4 4L19 7"
+            />
+          </svg>
+        )}
+      </div>
+    </div>
+    <span className="text-sm 2xl:text-lg">
+      {label} <span className="text-gray-500">({count})</span>
+    </span>
+  </label>
 )
 
 export default function SearchResults() {
@@ -118,6 +166,7 @@ export default function SearchResults() {
     categories: true,
     priceRange: true,
   })
+  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false)
 
   useEffect(() => {
     const fetchSearchResults = async () => {
@@ -145,18 +194,24 @@ export default function SearchResults() {
 
         // Extract unique brands and categories from the fetched products
         const brands = new Set()
-        const categories = new Set()
+        const categoryCounts = {}
         const prices = []
 
         response.data.forEach(product => {
           const brand = product.attributes.find(attr => attr.name === "Brand")?.options[0]
           if (brand) brands.add(brand)
-          product.categories.forEach(cat => categories.add(cat))
+          product.categories.forEach(cat => {
+            if (categoryCounts[cat.name]) {
+              categoryCounts[cat.name]++
+            } else {
+              categoryCounts[cat.name] = 1
+            }
+          })
           prices.push(parseFloat(product.price))
         })
 
         setAvailableBrands(Array.from(brands).map(name => ({ id: name, name })))
-        setAvailableCategories(Array.from(categories))
+        setAvailableCategories(Object.entries(categoryCounts).map(([name, count]) => ({ id: name, name, count })))
 
         // Calculate price ranges
         const minPrice = Math.floor(Math.min(...prices))
@@ -164,12 +219,20 @@ export default function SearchResults() {
         const range = maxPrice - minPrice
         const step = Math.ceil(range / 4)
 
-        setAvailablePriceRanges([
+        const priceRanges = [
           `${minPrice}-${minPrice + step}`,
           `${minPrice + step + 1}-${minPrice + 2 * step}`,
           `${minPrice + 2 * step + 1}-${minPrice + 3 * step}`,
           `${minPrice + 3 * step + 1}-${maxPrice}`,
-        ])
+        ]
+
+        // Filter out price ranges with no products
+        const availablePriceRanges = priceRanges.filter(range => {
+          const [min, max] = range.split("-").map(Number)
+          return prices.some(price => price >= min && price <= max)
+        })
+
+        setAvailablePriceRanges(availablePriceRanges)
 
       } catch (error) {
         console.error("Error fetching search results:", error)
@@ -195,7 +258,7 @@ export default function SearchResults() {
   const filteredProducts = useMemo(() => {
     return products.filter(product => {
       const brandMatch = filters.brands.length === 0 || filters.brands.includes(product.attributes.find(attr => attr.name === "Brand")?.options[0])
-      const categoryMatch = filters.categories.length === 0 || product.categories.some(cat => filters.categories.includes(cat.id.toString()))
+      const categoryMatch = filters.categories.length === 0 || product.categories.some(cat => filters.categories.includes(cat.name))
       const priceMatch = filters.priceRange.length === 0 || filters.priceRange.some(range => {
         const [min, max] = range.split("-").map(Number)
         const price = parseFloat(product.price)
@@ -251,17 +314,16 @@ export default function SearchResults() {
     }
 
     return (
-      <nav className="flex justify-center items-center mt-8" aria-label="Pagination">
+      <nav className="flex items-center" aria-label="Pagination">
         <button
           onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
           disabled={currentPage === 1}
-          className={`px-4 py-2 mx-1 rounded-md ${
-            currentPage === 1 ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-white text-black hover:bg-gray-100'
+          className={`w-8 h-8 flex items-center justify-center mx-1 rounded-md ${
+            currentPage === 1 ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-white text-black border border-gray-300 hover:bg-gray-100'
           } ${lexendDeca.className}`}
           aria-label="Previous page"
         >
-          <ChevronLeft className="w-5 h-5 inline-block" />
-          <span className="sr-only">Previous</span>
+          <Image src={arrow_previous} alt="Previous" width={24} height={24} />
         </button>
 
         {pageNumbers.map((page, index) => 
@@ -271,12 +333,12 @@ export default function SearchResults() {
             <button
               key={page}
               onClick={() => setCurrentPage(page)}
-              className={`px-4 py-2 mx-1 rounded-md ${
+              className={`w-8 h-8 flex items-center justify-center mx-1 rounded-md ${
                 currentPage === page
                   ? "bg-black text-white"
-                  : "bg-white text-black hover:bg-gray-100"
+                  : "bg-white text-black border border-gray-300 hover:bg-gray-100"
               } ${lexendDeca.className}`}
-              aria-current={currentPage === page ? "page" : undefined}
+              aria-current={currentPage === page ?   "page" : undefined}
             >
               {page}
             </button>
@@ -286,16 +348,31 @@ export default function SearchResults() {
         <button
           onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
           disabled={currentPage === totalPages}
-          className={`px-4 py-2 mx-1 rounded-md ${
-            currentPage === totalPages ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-white text-black hover:bg-gray-100'
+          className={`w-8 h-8 flex items-center justify-center mx-1 rounded-md ${
+            currentPage === totalPages ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-white text-black border border-gray-300 hover:bg-gray-100'
           } ${lexendDeca.className}`}
           aria-label="Next page"
         >
-          <ChevronRight className="w-5 h-5 inline-block" />
-          <span className="sr-only">Next</span>
+          <Image src={arrow_forward} alt="Next" width={24} height={24} />
         </button>
       </nav>
     )
+  }
+
+  const clearAllFilters = () => {
+    setFilters({
+      brands: [],
+      categories: [],
+      priceRange: [],
+    })
+    setCurrentPage(1)
+  }
+
+  const removeFilter = (filterType, value) => {
+    setFilters(prevFilters => ({
+      ...prevFilters,
+      [filterType]: prevFilters[filterType].filter(item => item !== value),
+    }))
   }
 
   if (!query) {
@@ -314,45 +391,143 @@ export default function SearchResults() {
   return (
     <Container>
       <div className="py-16">
-        <div className="mb-8">
-          <h1 className={`text-3xl font-bold mb-2 ${lexendDeca.className}`}>
-            Search Results: &quot;{query}&quot;
+        <div className="flex flex-col mb-8">
+          <h1 className={`text-3xl font-bold ${lexendDeca.className}`}>
+            Search Results
           </h1>
-          {isLoading ? (
-            <p className={`text-gray-600 ${plusJakartaSans.className}`}>Loading...</p>
-          ) : error ? (
-            <p className={`text-red-500 ${plusJakartaSans.className}`}>{error}</p>
-          ) : (
-            <p className={`text-gray-600 ${plusJakartaSans.className}`}>
-              {totalResults} result{totalResults !== 1 ? 's' : ''}
-            </p>
-          )}
+          <p className={`text-lg mt-2 ${lexendDeca.className}`}>
+            {totalResults} results found for &quot;{query}&quot;
+          </p>
         </div>
         
         <div className="flex flex-col md:flex-row gap-8">
           {/* Sidebar for filters */}
-          <div className="md:w-1/4">
+          <div
+            style={{
+              boxShadow: isMobileFilterOpen
+                ? "-115px 0 10px 0 rgba(255, 255, 255)"
+                : "none",
+            }}
+            className={`w-full transition-all duration-300 ease-in-out ${
+              isMobileFilterOpen
+                ? "z-[90] lg:z-auto h-screen overflow-y-auto lg:overflow-y-auto translate-x-[0] lg:translate-x-0"
+                : "translate-x-[300%] lg:translate-x-0"
+            } lg:w-1/4 p-4 fixed lg:static md:block top-0 bg-white`}
+          >
+            <div className="flex justify-between items-center mb-4">
+              <h3
+                className={`text-lg font-normal flex w-full items-center gap-4 ${lexendDeca.className}`}
+              >
+                <Image
+                  src={filter}
+                  width={24}
+                  height={24}
+                  alt="Filter icon"
+                  onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
+                />
+                <span className="hidden lg:block">Filters</span>
+                <p className="lg:hidden mx-auto block text-center flex-grow">
+                  Filter By
+                </p>
+              </h3>
+              {(filters.brands.length > 0 ||
+                filters.categories.length > 0 ||
+                filters.priceRange.length > 0) && (
+                <button
+                  onClick={clearAllFilters}
+                  className={`hidden lg:block text-sm text-[#8B929D] pl-4 underline ${lexendDeca.className}`}
+                >
+                  Clear All
+                </button>
+              )}
+            </div>
+
+            {/* Filter chips */}
+            {(filters.brands.length > 0 ||
+              filters.categories.length > 0 ||
+              filters.priceRange.length > 0) && (
+              <div className="mb-4">
+                {filters.brands.map((brand) => (
+                  <span
+                    key={brand}
+                    className={`inline-flex items-center bg-[#F7EBE0] rounded-lg px-3 py-1 text-sm font-bold text-black 2xl:text-[20px] mr-2 mb-2 ${lexendDeca.className}`}
+                  >
+                    <span
+                      className={`${lexendDeca.className} 2xl:text-[24px] font-normal mr-1 text-black`}
+                    >
+                      Brand:{' '}
+                    </span>{' '}
+                    {brand}
+                    <button
+                      onClick={() => removeFilter("brands", brand)}
+                      className="ml-2 text-red-600 hover:text-red-700"
+                    >
+                      <RxCross2 />
+                    </button>
+                  </span>
+                ))}
+
+                {filters.categories.map((category) => (
+                  <span
+                    key={category}
+                    className={`inline-flex items-center bg-[#F7EBE0] rounded-lg px-3 py-1 text-sm font-bold text-black mr-2 mb-2 2xl:text-[20px] ${lexendDeca.className}`}
+                  >
+                    <span
+                      className={`${lexendDeca.className} 2xl:text-[24px] font-normal mr-1 text-black`}
+                    >
+                      Category:{' '}
+                    </span>{' '}
+                    {category}
+                    <button
+                      onClick={() => removeFilter("categories", category)}
+                      className="ml-2 text-red-600 hover:text-red-700"
+                    >
+                      <RxCross2 />
+                    </button>
+                  </span>
+                ))}
+
+                {filters.priceRange.map((range) => (
+                  <span
+                    key={range}
+                    className={`inline-flex items-center bg-[#F7EBE0] rounded-lg px-3 py-1 text-sm font-bold text-black mr-2 mb-2 2xl:text-[20px] ${lexendDeca.className}`}
+                  >
+                    <span
+                      className={`${lexendDeca.className} 2xl:text-[24px] font-normal mr-1 text-black`}
+                    >
+                      Price:{' '}
+                    </span>{' '}
+                    £{range}
+                    <button
+                      onClick={() => removeFilter("priceRange", range)}
+                      className="ml-2 text-red-600 hover:text-red-700"
+                    >
+                      <RxCross2 />
+                    </button>
+                  </span>
+                ))}
+              </div>
+            )}
+
+            <hr className="bg-[#8B929D73] h-[1px] mb-4" />
+
             <FilterSection
               title="Brand"
               isOpen={openFilters.brands}
               toggleOpen={() => setOpenFilters(prev => ({ ...prev, brands: !prev.brands }))}
             >
               {availableBrands.map(brand => (
-                <div key={brand.id} className="flex items-center space-x-2 mb-2">
-                  <input
-                    type="checkbox"
-                
-                    id={`brand-${brand.id}`}
-                    checked={filters.brands.includes(brand.name)}
-                    onChange={() => handleFilterChange("brands", brand.name)}
-                    className="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
-                  />
-                  <label htmlFor={`brand-${brand.id}`} 
-                    className={`${lexendDeca.className} text-sm`}
-                  >
-                    {brand.name}
-                  </label>
-                </div>
+                <CustomCheckbox
+                  key={brand.id}
+                  name="brand"
+                  value={brand.name}
+                  checked={filters.brands.includes(brand.name)}
+                  onChange={() => handleFilterChange("brands", brand.name)}
+                  label={brand.name}
+                  count={filteredProducts.filter(product => 
+                    product.attributes.find(attr => attr.name === "Brand")?.options[0] === brand.name
+                  ).length}
+                />
               ))}
             </FilterSection>
 
@@ -362,20 +537,15 @@ export default function SearchResults() {
               toggleOpen={() => setOpenFilters(prev => ({ ...prev, categories: !prev.categories }))}
             >
               {availableCategories.map(category => (
-                <div key={category.id} className="flex items-center space-x-2 mb-2">
-                  <input
-                    type="checkbox"
-                    id={`category-${category.id}`}
-                    checked={filters.categories.includes(category.id.toString())}
-                    onChange={() => handleFilterChange("categories", category.id.toString())}
-                    className="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
-                  />
-                  <label htmlFor={`category-${category.id}`}
-                    className={`${lexendDeca.className} text-sm`}
-                  >
-                    {category.name}
-                  </label>
-                </div>
+                <CustomCheckbox
+                  key={category.id}
+                  name="category"
+                  value={category.name}
+                  checked={filters.categories.includes(category.name)}
+                  onChange={() => handleFilterChange("categories", category.name)}
+                  label={category.name}
+                  count={category.count}
+                />
               ))}
             </FilterSection>
 
@@ -385,35 +555,64 @@ export default function SearchResults() {
               toggleOpen={() => setOpenFilters(prev => ({ ...prev, priceRange: !prev.priceRange }))}
             >
               {availablePriceRanges.map(range => (
-                <div key={range} className="flex items-center space-x-2 mb-2">
-                  <input
-                    type="checkbox"
-                    id={`price-${range}`}
-                    checked={filters.priceRange.includes(range)}
-                    onChange={() => handleFilterChange("priceRange", range)}
-                    className="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
-                  />
-                  <label htmlFor={`price-${range}`}
-                    className={`${lexendDeca.className} text-sm`}
-                  >
-                    £{range}
-                  </label>
-                </div>
+                <CustomCheckbox
+                  key={range}
+                  name="priceRange"
+                  value={range}
+                  checked={filters.priceRange.includes(range)}
+                  onChange={() => handleFilterChange("priceRange", range)}
+                  label={`£${range}`}
+                  count={filteredProducts.filter(product => {
+                    const [min, max] = range.split("-").map(Number)
+                    const price = parseFloat(product.price)
+                    return price >= min && price <= max
+                  }).length}
+                />
               ))}
             </FilterSection>
+
+            <section className="flex justify-around mt-auto gap-4 lg:hidden">
+              <button
+                onClick={clearAllFilters}
+                className={`text-sm text-[#8B929D] pl-4 underline ${lexendDeca.className}`}
+              >
+                Clear All
+              </button>
+
+              <button
+                disabled={
+                  filters.brands.length === 0 &&
+                  filters.categories.length === 0 &&
+                  filters.priceRange.length === 0
+                }
+                className="basis-1/2 bg-black text-white w-full py-2 rounded-lg"
+                onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
+              >
+                Apply Filter
+              </button>
+            </section>
           </div>
 
           {/* Main content area */}
           <div className="md:w-3/4">
-            <div className="flex justify-between items-center mb-4">
-              <SortDropdown
-                value={sortBy}
-                onChange={(value) => setSortBy(value)}
-              />
+            <div className="flex justify-between items-center mt-3">
+              <div className="flex items-center">
+                <button
+                  onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
+                  className="lg:hidden mr-4"
+                >
+                  <Image src={filter} width={24} height={24} alt="Filter icon" />
+                </button>
+                <SortDropdown
+                  value={sortBy}
+                  onChange={(value) => setSortBy(value)}
+                />
+              </div>
+              <div className="hidden lg:block">{renderPagination()}</div>
             </div>
 
             {isLoading ? (
-              <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
                 {Array(PRODUCTS_PER_PAGE).fill(null).map((_, index) => (
                   <ProductSkeleton key={index} />
                 ))}
@@ -431,8 +630,9 @@ export default function SearchResults() {
               </div>
             ) : (
               <>
-                <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
-                  {filteredProducts.slice((currentPage - 1) * PRODUCTS_PER_PAGE, currentPage * PRODUCTS_PER_PAGE).map((product) => {
+                <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
+                  {filteredProducts.map((product) => {
+                    if (!product.name || !product.price) return null; // Skip products without name or price
                     const brand = product.attributes.find(
                       (attr) => attr.name === "Brand"
                     )?.options[0] || "Unknown Brand";
@@ -444,7 +644,7 @@ export default function SearchResults() {
                       >
                         {product.sale_price && (
                           <span className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full z-10">
-                            Sale
+                            SALE
                           </span>
                         )}
                         <div className="absolute top-2 right-2 z-10">
@@ -461,16 +661,18 @@ export default function SearchResults() {
                           </button>
                         </div>
                         <div className="w-full h-64 relative mb-4">
-                          <Image
-                            src={product.images[0]?.src || "/placeholder.svg"}
-                            alt={decodeHtmlEntities(product.name)}
-                            className="object-contain"
-                            fill
-                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw"
-                          />
+                          {product.images && product.images[0] && (
+                            <Image
+                              src={product.images[0].src || "/placeholder.svg"}
+                              alt={decodeHtmlEntities(product.name)}
+                              className="object-contain"
+                              fill
+                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw"
+                            />
+                          )}
                         </div>
-                        <h3 className={`text-sm  2xl:text-[22px] font-bold mb-1 ${lexendDeca.className}`}>{brand}</h3>
-                        <h2 className={`text-sm 2xl:text-[20px] ${lexendDeca.className} font-normal mb-2 h-[60px] overflow-hidden`}>
+                        <h3 className={`text-sm font-bold mb-1 ${lexendDeca.className}`}>{brand}</h3>
+                        <h2 className={`text-sm ${lexendDeca.className} font-normal mb-2 h-[40px] overflow-hidden`}>
                           {decodeHtmlEntities(product.name)}
                         </h2>
                         <div className="flex items-center mb-2">
@@ -483,7 +685,7 @@ export default function SearchResults() {
                               )}
                             </span>
                           ))}
-                          <span className="text-gray-600 text-sm ml-2">
+                          <span className="text-gray-600 text-xs ml-2">
                             ({product.rating_count || 0})
                           </span>
                         </div>
@@ -504,7 +706,7 @@ export default function SearchResults() {
                           )}
                         </div>
                         <button
-                          className={`w-full bg-black text-white py-2 rounded-lg hover:bg-[#CF8562] duration-300 transition ${jost.className}`}
+                          className={`w-full bg-black text-white py-2 rounded-lg hover:bg-[#CF8562] transition ${jost.className}`}
                           onClick={(e) => {
                             e.preventDefault()
                             addToCart(product)
@@ -517,7 +719,9 @@ export default function SearchResults() {
                   })}
                 </div>
                 
-                {renderPagination()}
+                <div className="mt-8 flex justify-end">
+                  {renderPagination()}
+                </div>
               </>
             )}
           </div>

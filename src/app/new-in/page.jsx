@@ -607,24 +607,27 @@ export default function Component() {
 
             {/* Category filter */}
             <FilterSection 
-              title="Category" 
-              isOpen={isCategoryFilterOpen} 
-              toggleOpen={() => setIsCategoryFilterOpen(!isCategoryFilterOpen)}
-            >
-              {getAvailableCategories
-                .sort((a, b) => a.name.localeCompare(b.name))
-                .map((category) => (
-                  <CustomCheckbox
-                    key={category.id}
-                    name="category"
-                    value={category.id.toString()}
-                    checked={filters.categories.includes(category.id.toString())}
-                    onChange={() => handleFilterChange("categories", category.id.toString())}
-                    label={category.name}
-                    count={getFilteredCount("categories", category.id.toString())}
-                  />
-                ))}
-            </FilterSection>
+        title="Category" 
+        isOpen={isCategoryFilterOpen} 
+        toggleOpen={() => setIsCategoryFilterOpen(!isCategoryFilterOpen)}
+      >
+        {Array.from(new Set(getAvailableCategories.map(category => category.name)))
+          .sort((a, b) => a.localeCompare(b))
+          .map((categoryName) => {
+            const category = getAvailableCategories.find(c => c.name === categoryName);
+            return (
+              <CustomCheckbox
+                key={category.id}
+                name="category"
+                value={category.id.toString()}
+                checked={filters.categories.includes(category.id.toString())}
+                onChange={() => handleFilterChange("categories", category.id.toString())}
+                label={category.name}
+                count={getFilteredCount("categories", category.id.toString())}
+              />
+            );
+          })}
+      </FilterSection>
 
             {/* Price range filter */}
             <FilterSection 
