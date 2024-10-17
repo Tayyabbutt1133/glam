@@ -78,13 +78,12 @@ export default function FilterSidebar({
   products,
   currencySymbol,
   rate,
-  filterData
+  filterData,
 }) {
   const [isCategoryFilterOpen, setIsCategoryFilterOpen] = useState(true);
   const [isPriceRangeFilterOpen, setIsPriceRangeFilterOpen] = useState(true);
 
   const priceRanges = ["0-50", "51-100", "101-200", "201-500", "501+"];
-
 
   return (
     <div
@@ -119,7 +118,7 @@ export default function FilterSidebar({
           <div className="mb-4 flex flex-wrap gap-2">
             {filters.categories.map((categoryId) => {
               const category = filterData?.find(
-                (c) => c.categoryId === categoryId
+                (c) => c.categoryId === categoryId,
               );
               return category ? (
                 <span
@@ -192,8 +191,18 @@ export default function FilterSidebar({
           toggleOpen={() => setIsPriceRangeFilterOpen(!isPriceRangeFilterOpen)}
         >
           {priceRanges.map((range) => {
-            const [min, max] = range.split("-").map(Number);
-            const maxConverted = max ? Math.round(max * rate) : Infinity;
+            let min, max;
+
+            // Check if the range is "501+" and handle it explicitly
+            if (range === "501+") {
+              min = 501;
+              max = Infinity; // No upper limit
+            } else {
+              // Split and convert the range for other cases
+              [min, max] = range.split("-").map(Number);
+            }
+
+            const maxConverted = max !== Infinity ? Math.round(max * rate) : ""; // Don't display max for Infinity
             const minConverted = Math.round(min * rate);
 
             return (
@@ -203,13 +212,13 @@ export default function FilterSidebar({
                 value={range}
                 checked={filters.priceRange.includes(range)}
                 onChange={() => onFilterChange("priceRange", range)}
-                label={`${currencySymbol}${minConverted} - ${
-                  max ? `${currencySymbol}${maxConverted}` : "+"
-                }`}
+                label={`${currencySymbol}${minConverted}${max === Infinity ? "+" : ` - ${currencySymbol}${maxConverted}`}`} // Handle label for Infinity
                 count={
                   products.filter((product) => {
                     const price = parseFloat(product.price);
-                    return price >= min && (max ? price <= max : true);
+                    return (
+                      price >= min && (max !== Infinity ? price <= max : true)
+                    );
                   }).length
                 }
               />

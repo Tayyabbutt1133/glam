@@ -1,157 +1,189 @@
-'use client'
+"use client";
 
-import React, { useState, useMemo } from 'react'
-import { useParams } from "next/navigation"
-import Image from "next/image"
-import Breadcrumb from "/components/BreadCrumb"
-import Container from "/components/container"
-import { useCartStore } from "/states/Cardstore"
-import { usePopupStore } from "/states/use-popup-store"
-import filter from "/public/filter.svg"
-import CustomDropdown from './brand-listing/custom-dropdown'
-import ProductGrid from './brand-listing/product-grid'
-import Pagination from './brand-listing/pagination'
-import FilterSidebar from './brand-listing/filter-sidebar'
+import React, { useState, useMemo } from "react";
+import { useParams } from "next/navigation";
+import Image from "next/image";
+import Breadcrumb from "/components/BreadCrumb";
+import Container from "/components/container";
+import { usePopupStore } from "/states/use-popup-store";
+import filter from "/public/filter.svg";
+import CustomDropdown from "./brand-listing/custom-dropdown";
+import ProductGrid from "./brand-listing/product-grid";
+import Pagination from "./brand-listing/pagination";
+import FilterSidebar from "./brand-listing/filter-sidebar";
 
-const PRODUCTS_PER_PAGE = 12
+const PRODUCTS_PER_PAGE = 12;
 
 export default function BrandListing({ productsData, filterData }) {
-  const { brandLanding, brandListing } = useParams()
-  const { rate, currencySymbol } = usePopupStore()
-  const addToCart = useCartStore((state) => state.addToCart)
+  const { brandLanding, brandListing } = useParams();
+  const { rate, currencySymbol } = usePopupStore();
 
-  const [currentPage, setCurrentPage] = useState(1)
+  const [currentPage, setCurrentPage] = useState(1);
   const [filters, setFilters] = useState({
     categories: [],
     priceRange: [],
-  })
-  const [sortOption, setSortOption] = useState("popularity")
-  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false)
-  const [favorites, setFavorites] = useState({})
+  });
+  const [sortOption, setSortOption] = useState("popularity");
+  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
 
-  const products = useMemo(() => productsData?.products?.nodes || [], [productsData])
-
-  const productBelongsToCategory = (product, categoryId) => {
-    return product.productCategories.nodes.some(cat =>
-      cat.databaseId.toString() === categoryId.toString()
-    )
-  }
-  
+  const products = useMemo(
+    () => productsData?.products?.nodes || [],
+    [productsData],
+  );
 
   // Filter products based on initial category (brandListing)
   const initialProducts = useMemo(() => {
     if (brandListing) {
-      return products.filter(product =>
-        product.productCategories.nodes.some(cat => cat.slug === brandListing)
-      )
+      return products.filter((product) =>
+        product.productCategories.nodes.some(
+          (cat) => cat.slug === brandListing,
+        ),
+      );
     }
-    
-    return products
-  }, [products, brandListing])
-  
-  
-  const filteredAndSortedProducts = useMemo(() => {
-    let result = [...initialProducts]
-  
-    console.log('At the Start Filters:', filters);
-    console.log('At the Start Initial products:', initialProducts);
-    console.log('At the Start Filtered products:', result);
-    
-    if (filters.categories.length > 0) {
-      result = result.filter(product =>
-        filters.categories.some(categoryId =>
-          product.productCategories.nodes.some(cat => cat.databaseId === parseInt(categoryId))
-        )
-      )
-    }
-  
-    if (filters.priceRange.length > 0) {
-      result = result.filter(product => {
-        const price = parseFloat(product.price)
-        return filters.priceRange.some(range => {
-          const [min, max] = range.split("-").map(Number)
-          return price >= min && (max ? price <= max : true)
-        })
-      })
-    }
-  
+
+    return products;
+  }, [products, brandListing]);
+
+  const sortedInitialProducts = useMemo(() => {
+    let result = [...initialProducts];
+
     switch (sortOption) {
       case "price-low-to-high":
-        result.sort((a, b) => parseFloat(a.price) - parseFloat(b.price))
-        break
+        result.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+        break;
       case "price-high-to-low":
-        result.sort((a, b) => parseFloat(b.price) - parseFloat(a.price))
-        break
+        result.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+        break;
       case "newest":
-        result.sort((a, b) => new Date(b.date) - new Date(a.date))
-        break
+        result.sort((a, b) => new Date(b.date) - new Date(a.date));
+        break;
       default:
-        result.sort((a, b) => b.reviewCount - a.reviewCount)
+        result.sort((a, b) => b.reviewCount - a.reviewCount);
     }
-  
-    console.log('At the end Filters:', filters);
-    console.log('At the end Initial products:', initialProducts);
-    console.log('At the end Filtered products:', result);
-    return result
-  }, [initialProducts, filters, sortOption])
-  
+
+    if (filters.priceRange.length > 0) {
+      result = result.filter((product) => {
+        const price = parseFloat(product.price);
+        return filters.priceRange.some((range) => {
+          const [min, max] = range.split("-").map(Number);
+          return price >= min && (max ? price <= max : true);
+        });
+      });
+    }
+
+    return result;
+  }, [sortOption, initialProducts, filters.priceRange]);
+
+  const filteredAndSortedProducts = useMemo(() => {
+    let result = [...products];
+
+    if (filters.categories.length > 0) {
+      result = result.filter((product) =>
+        filters.categories.some((categoryId) =>
+          product.productCategories.nodes.some(
+            (cat) => cat.databaseId === parseInt(categoryId),
+          ),
+        ),
+      );
+    }
+
+    if (filters.priceRange.length > 0) {
+      result = result.filter((product) => {
+        const price = parseFloat(product.price);
+        return filters.priceRange.some((range) => {
+          const [min, max] = range.split("-").map(Number);
+          return price >= min && (max ? price <= max : true);
+        });
+      });
+    }
+
+    switch (sortOption) {
+      case "price-low-to-high":
+        result.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+        break;
+      case "price-high-to-low":
+        result.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+        break;
+      case "newest":
+        result.sort((a, b) => new Date(b.date) - new Date(a.date));
+        break;
+      default:
+        result.sort((a, b) => b.reviewCount - a.reviewCount);
+    }
+
+    return result;
+  }, [filters, sortOption, products]);
 
   const paginatedProducts = useMemo(() => {
-    const startIndex = (currentPage - 1) * PRODUCTS_PER_PAGE
+    const startIndex = (currentPage - 1) * PRODUCTS_PER_PAGE;
+
+    // Use sorted initialProducts when no filters are applied
+    if (filters.categories.length === 0) {
+      return sortedInitialProducts.slice(
+        startIndex,
+        startIndex + PRODUCTS_PER_PAGE,
+      );
+    }
+
+    // Otherwise, use filtered and sorted products
     return filteredAndSortedProducts.slice(
       startIndex,
-      startIndex + PRODUCTS_PER_PAGE
-    )
-  }, [filteredAndSortedProducts, currentPage])
+      startIndex + PRODUCTS_PER_PAGE,
+    );
+  }, [sortedInitialProducts, filteredAndSortedProducts, currentPage, filters]);
 
-  const totalPages = Math.ceil(filteredAndSortedProducts.length / PRODUCTS_PER_PAGE)
+  const totalPages = Math.ceil(
+    filters.categories.length === 0
+      ? initialProducts.length / PRODUCTS_PER_PAGE
+      : filteredAndSortedProducts.length / PRODUCTS_PER_PAGE,
+  );
 
   const handlePageChange = (page) => {
     if (page >= 1 && page <= totalPages) {
-      setCurrentPage(page)
-      window.scrollTo({ top: 0, behavior: 'smooth' })
+      setCurrentPage(page);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
-  }
+  };
 
   const handleFilterChange = (filterType, value) => {
-    setFilters(prevFilters => {
-      const currentValues = prevFilters[filterType] || []
-      let newValues
+    setFilters((prevFilters) => {
+      const currentValues = prevFilters[filterType] || [];
+      let newValues;
 
       if (currentValues.includes(value)) {
-        newValues = currentValues.filter(v => v !== value)
+        newValues = currentValues.filter((v) => v !== value);
       } else {
-        newValues = [...currentValues, value]
+        newValues = [...currentValues, value];
       }
 
       return {
         ...prevFilters,
-        [filterType]: newValues
-      }
-    })
-    setCurrentPage(1)
-  }
+        [filterType]: newValues,
+      };
+    });
+    setCurrentPage(1);
+  };
 
   const clearAllFilters = () => {
     setFilters({
       categories: [],
       priceRange: [],
-    })
-    setCurrentPage(1)
-  }
+    });
+    setCurrentPage(1);
+  };
 
   const handleFavoriteClick = (productId) => {
-    setFavorites(prevFavorites => ({
+    setFavorites((prevFavorites) => ({
       ...prevFavorites,
       [productId]: !prevFavorites[productId],
-    }))
-  }
+    }));
+  };
 
   const breadLinks = [
     { name: "Home", route: "/" },
     { name: brandLanding, route: `/brands/${brandLanding}` },
     { name: brandListing, route: `/brands/${brandLanding}/${brandListing}` },
-  ]
+  ];
 
   return (
     <>
@@ -202,16 +234,19 @@ export default function BrandListing({ productsData, filterData }) {
                 </button>
                 <CustomDropdown
                   options={[
-                    { value: 'popularity', label: 'Popularity' },
-                    { value: 'price-low-to-high', label: 'Price: Low to High' },
-                    { value: 'price-high-to-low', label: 'Price: High to Low' },
-                    { value: 'newest', label: 'Newest' },
+                    { value: "popularity", label: "Popularity" },
+                    { value: "price-low-to-high", label: "Price: Low to High" },
+                    { value: "price-high-to-low", label: "Price: High to Low" },
+                    { value: "newest", label: "Newest" },
                   ]}
                   value={sortOption}
                   onChange={(e) => setSortOption(e.target.value)}
                 />
                 <span className="text-sm text-gray-500">
-                  {filteredAndSortedProducts.length} Products found
+                  {filters.categories.length > 0
+                    ? filteredAndSortedProducts.length
+                    : initialProducts.length}{" "}
+                  Products found
                 </span>
               </div>
               <div className="hidden lg:block">
@@ -225,8 +260,12 @@ export default function BrandListing({ productsData, filterData }) {
 
             {filteredAndSortedProducts.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-12">
-                <h3 className="text-xl font-semibold mb-2">No Products Found</h3>
-                <p className="text-gray-500 mb-4">Try adjusting your filters or search criteria</p>
+                <h3 className="text-xl font-semibold mb-2">
+                  No Products Found
+                </h3>
+                <p className="text-gray-500 mb-4">
+                  Try adjusting your filters or search criteria
+                </p>
                 <button
                   onClick={clearAllFilters}
                   className="text-primary hover:text-primary-dark underline"
@@ -235,14 +274,7 @@ export default function BrandListing({ productsData, filterData }) {
                 </button>
               </div>
             ) : (
-              <ProductGrid
-                products={paginatedProducts}
-                addToCart={addToCart}
-                currencySymbol={currencySymbol}
-                rate={rate}
-                favorites={favorites}
-                handleFavoriteClick={handleFavoriteClick}
-              />
+              <ProductGrid products={paginatedProducts} />
             )}
 
             {filteredAndSortedProducts.length > 0 && (
@@ -258,5 +290,5 @@ export default function BrandListing({ productsData, filterData }) {
         </div>
       </Container>
     </>
-  )
+  );
 }
