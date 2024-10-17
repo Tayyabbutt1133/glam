@@ -28,6 +28,7 @@ const GET_PRODUCTS = gql`
           onSale
           averageRating
           reviewCount
+          stockQuantity
           productCategories {
             nodes {
               databaseId
@@ -51,6 +52,7 @@ const GET_PRODUCTS = gql`
           onSale
           averageRating
           reviewCount
+          stockQuantity
           productCategories {
             nodes {
               databaseId
