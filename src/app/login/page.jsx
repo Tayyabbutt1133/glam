@@ -27,7 +27,7 @@ export default function Login() {
       const response = await axios.post(
         "https://glam.clickable.site/wp-json/wc-users/v1/login",
         {
-          username: email, // assuming email is used as username
+          email: email, // assuming email is used as username
           password: password,
         },
         {

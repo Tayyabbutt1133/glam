@@ -4,6 +4,9 @@ import Link from "next/link";
 import { Jost } from "next/font/google";
 import Container from "../../container";
 import MegaMenu from "./megamenu";
+import searchIcon from '../../../public/icons/search'
+import { CartIcon } from "../../../public/icons/cart";
+import { user } from "../../../public/icons/user";
 
 const jost = Jost({ subsets: ["latin"] });
 
@@ -58,7 +61,7 @@ export default function Navigation() {
         style={{ boxShadow: '0px 0px 6px rgba(0, 0, 0, 0.1)', zIndex: '10' }}
       >
         <Container>
-          <nav className="flex  flex-row w-full xl:gap-[20px] 2xl:gap-[0px] 2xl:text-[20px] xl:text-sm   justify-between xl:justify-around items-center py-3 font-normal">
+          <nav className="flex w-[95%] mx-auto  flex-row  xl:gap-[0px] 2xl:gap-[0px] 2xl:text-[20px] xl:text-sm   justify-between xl:justify-around items-center py-3 font-normal">
             {mainLinks?.map((link, index) => (
               <Link
                 className={`box-border pb-2 -mb-2 text-nowrap  uppercase ${
