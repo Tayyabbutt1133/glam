@@ -17,7 +17,6 @@ import { usePopupStore } from "../../../states/use-popup-store"
 import arrow_previous from '../../../public/Keyboard arrow left.svg';
 import arrow_forward from '../../../public/Keyboard arrow right.svg';
 
-
 const API_BASE_URL = "https://glam.clickable.site/wp-json/wc/v3"
 const CONSUMER_KEY = "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d"
 const CONSUMER_SECRET = "cs_3f70ee2600a3ac17a5692d7ac9c358d47275d6fc"
@@ -363,6 +362,7 @@ export default function Component() {
   const getAvailableCategories = useMemo(() => {
     if (filters.brands.length === 0) {
       return categories
+    
     }
 
     const availableCategories = new Set();
@@ -477,6 +477,9 @@ export default function Component() {
   return (
     <div className="min-h-screen py-24 px-4 md:px-8 lg:px-12">
       <style jsx global>{`
+        html, body {
+          scroll-behavior: smooth;
+        }
         .custom-scrollbar::-webkit-scrollbar {
           width: 6px;
         }
@@ -485,7 +488,7 @@ export default function Component() {
           border-radius: 3px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: #EFEFEF;
+          background: #888;
           border-radius: 3px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
@@ -495,7 +498,7 @@ export default function Component() {
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Sidebar for filters */}
         <div className={`lg:w-1/4 ${isMobileFilterOpen ? 'block' : 'hidden lg:block'}`}>
-          <div className="sticky top-24">
+          <div>
             <div className="flex justify-between items-center mb-4">
               <h3 className={`text-lg font-normal flex items-center gap-4 ${lexendDeca.className}`}>
                 <Image
@@ -607,27 +610,27 @@ export default function Component() {
 
             {/* Category filter */}
             <FilterSection 
-        title="Category" 
-        isOpen={isCategoryFilterOpen} 
-        toggleOpen={() => setIsCategoryFilterOpen(!isCategoryFilterOpen)}
-      >
-        {Array.from(new Set(getAvailableCategories.map(category => category.name)))
-          .sort((a, b) => a.localeCompare(b))
-          .map((categoryName) => {
-            const category = getAvailableCategories.find(c => c.name === categoryName);
-            return (
-              <CustomCheckbox
-                key={category.id}
-                name="category"
-                value={category.id.toString()}
-                checked={filters.categories.includes(category.id.toString())}
-                onChange={() => handleFilterChange("categories", category.id.toString())}
-                label={category.name}
-                count={getFilteredCount("categories", category.id.toString())}
-              />
-            );
-          })}
-      </FilterSection>
+              title="Category" 
+              isOpen={isCategoryFilterOpen} 
+              toggleOpen={() => setIsCategoryFilterOpen(!isCategoryFilterOpen)}
+            >
+              {Array.from(new Set(getAvailableCategories.map(category => category.name)))
+                .sort((a, b) => a.localeCompare(b))
+                .map((categoryName) => {
+                  const category = getAvailableCategories.find(c => c.name === categoryName);
+                  return (
+                    <CustomCheckbox
+                      key={category.id}
+                      name="category"
+                      value={category.id.toString()}
+                      checked={filters.categories.includes(category.id.toString())}
+                      onChange={() => handleFilterChange("categories", category.id.toString())}
+                      label={category.name}
+                      count={getFilteredCount("categories", category.id.toString())}
+                    />
+                  );
+                })}
+            </FilterSection>
 
             {/* Price range filter */}
             <FilterSection 
