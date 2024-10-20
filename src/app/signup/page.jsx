@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export default function SignUp() {
   const [fullName, setFullName] = useState("");
@@ -19,6 +20,9 @@ export default function SignUp() {
   const [agreeToOffers, setAgreeToOffers] = useState(false);
   const [activeTab, setActiveTab] = useState("signup");
 
+  const router = useRouter();
+
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -27,18 +31,46 @@ export default function SignUp() {
       return;
     }
 
+    const data = {
+      username: email,
+      password,
+      email,
+      fullname: fullName,
+      phoneno: phone,
+    };
+
     try {
-      const response = await axios.post("/api/signup", {
-        fullName,
-        email,
-        password,
-        phone,
-      });
+      const response = await axios.post(
+        "https://glam.clickable.site/wp-json/wc-users/v1/register",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      toast.success("Registration successful!");
       console.log(response.data);
-      // Handle successful sign-up (e.g., redirect to a different page)
+
+      // Assuming the response contains a token
+      const token = response.data.token; // Adjust according to your response structure
+
+      // Send the token to the server to set the cookie
+      await fetch('/api/setCookie', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ token: token.token }),
+      });
+      
+
+      // Route to home page after successful registration
+      router.push('/');
     } catch (error) {
       console.error(error);
-      // Handle errors (e.g., show an error message to the user)
+      toast.error("Registration failed. Please try again.");
     }
   };
 
@@ -129,36 +161,36 @@ export default function SignUp() {
             <div>
               <div className={`relative w-full 2xl:w-[521px] ${lexendDeca.className}`}>
                 <PhoneInput
-                  country={'gb'}
+                  country={"gb"}
                   value={phone}
                   onChange={(phone) => setPhone(phone)}
                   inputProps={{
-                    name: 'phone',
+                    name: "phone",
                     required: true,
-                    className: inputStyles
+                    className: inputStyles,
                   }}
                   containerStyle={{
-                    width: '100%',
+                    width: "100%",
                   }}
                   dropdownStyle={{
-                    width: '300px',
+                    width: "300px",
                   }}
                   buttonStyle={{
-                    border: 'none',
-                    backgroundColor: '#E9E9E9',
-                    borderTopLeftRadius: '4px',
-                    borderBottomLeftRadius: '4px',
-                    borderRight: '1px solid #D9D9D9',
+                    border: "none",
+                    backgroundColor: "#E9E9E9",
+                    borderTopLeftRadius: "4px",
+                    borderBottomLeftRadius: "4px",
+                    borderRight: "1px solid #D9D9D9",
                   }}
                   inputStyle={{
-                    width: '100%',
-                    height: '44px',
-                    fontSize: '16px',
-                    paddingLeft: '52px',
-                    borderRadius: '6px',
-                    border: '1px solid #D9D9D9',
-                    backgroundColor: 'white',
-                    color: '#707070',
+                    width: "100%",
+                    height: "44px",
+                    fontSize: "16px",
+                    paddingLeft: "52px",
+                    borderRadius: "6px",
+                    border: "1px solid #D9D9D9",
+                    backgroundColor: "white",
+                    color: "#707070",
                   }}
                 />
               </div>
@@ -210,7 +242,7 @@ export default function SignUp() {
               REGISTER
             </button>
           </form>
-          
+
           {/* Separator */}
           <div className="relative mt-8 text-center">
             <span className={`mx-4 text-sm 2xl:text-[16px] text-[#8B929D] ${lexendDeca.className}`}>
@@ -231,41 +263,6 @@ export default function SignUp() {
           </div>
         </div>
       </div>
-      <style jsx global>{`
-        .react-tel-input .flag-dropdown.open,
-        .react-tel-input .selected-flag:hover,
-        .react-tel-input .selected-flag:focus,
-        .react-tel-input .selected-flag.open {
-          background-color: #f3f4f6 !important;
-        }
-        .react-tel-input .selected-flag {
-          width: 44px;
-          border-top-left-radius: 4px;
-          border-bottom-left-radius: 4px;
-        }
-        .react-tel-input .selected-flag .arrow {
-          left: 28px;
-        }
-        .react-tel-input .country-list {
-          width: 300px;
-        }
-        .react-tel-input .country-list .country {
-          display: flex;
-          align-items: center;
-        }
-        .react-tel-input .country-list .country .dial-code {
-          display: none;
-        }
-        .react-tel-input input {
-          font-family: "Lexend Deca", sans-serif !important;
-          font-size: 16px !important;
-          font-style: normal !important;
-          font-weight: 400 !important;
-          line-height: 20px !important;
-          letter-spacing: 0.2px !important;
-          color: #707070 !important;
-        }
-      `}</style>
     </>
   );
 }
