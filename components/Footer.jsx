@@ -1,5 +1,4 @@
-'use client'
-
+"use client"
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -82,8 +81,8 @@ export default function Footer() {
                 </h2>
                 <ul className={`text-[#8B929D] lg:text-[14px] 2xl:text-[16px] text-sm space-y-3 ${lexendDeca.className} font-normal transition-all duration-300 ease-in-out ${openSections.glamBeauty ? 'max-h-screen opacity-100 pb-4' : 'max-h-0 opacity-0 overflow-hidden'} md:max-h-screen md:opacity-100 md:overflow-visible`}>
                   <li><Link href="/aboutus" className="hover:underline">About us</Link></li>
-                  <li><Link href="#" className="hover:underline">Partnerships & Suppliers</Link></li>
-                  <li><Link href="#" className="hover:underline">Sitemap</Link></li>
+                  <li><Link href="/partnerships-suppliers" className="hover:underline">Partnerships & Suppliers</Link></li>
+                  <li><Link href="/" className="hover:underline">Sitemap</Link></li>
                 </ul>
               </div>
 
@@ -103,8 +102,8 @@ export default function Footer() {
                   </span>
                 </h2>
                 <ul className={`text-[#8B929D] text-sm lg:text-[14px] 2xl:text-[16px] space-y-3 ${lexendDeca.className} font-normal transition-all duration-300 ease-in-out ${openSections.helpInfo ? 'max-h-screen opacity-100 pb-4' : 'max-h-0 opacity-0 overflow-hidden'} md:max-h-screen md:opacity-100 md:overflow-visible`}>
-                  <li><Link href="#" className="hover:underline">Delivery Information</Link></li>
-                  <li><Link href="#" className="hover:underline">Returns Policy</Link></li>
+                  <li><Link href="/delivery-information" className="hover:underline">Delivery Information</Link></li>
+                  <li><Link href="/return-policy" className="hover:underline">Returns Policy</Link></li>
                   <li><Link href="#" className="hover:underline">FAQs</Link></li>
                   <li><Link href="/contact-us" className="hover:underline">Contact Us</Link></li>
                   <li><Link href="#" className="hover:underline">Student Discounts</Link></li>
@@ -128,8 +127,8 @@ export default function Footer() {
                 </h2>
                 <ul className={`text-[#8B929D] text-sm lg:text-[14px] 2xl:text-[16px] space-y-3 ${lexendDeca.className} font-normal transition-all duration-300 ease-in-out ${openSections.legal ? 'max-h-screen opacity-100 pb-4' : 'max-h-0 opacity-0 overflow-hidden'} md:max-h-screen md:opacity-100 md:overflow-visible`}>
                   <li><Link href="/terms-and-conditions" className="hover:underline">Terms & Conditions</Link></li>
-                  <li><Link href="#" className="hover:underline">Privacy Policy</Link></li>
-                  <li><Link href="#" className="hover:underline">Cookie Policy (EU)</Link></li>
+                  <li><Link href="/privacy-policy" className="hover:underline">Privacy Policy</Link></li>
+                  <li><Link href="/cookie-policy" className="hover:underline">Cookie Policy (EU)</Link></li>
                 </ul>
               </div>
 
