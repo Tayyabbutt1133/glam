@@ -1,4 +1,4 @@
-// pages/api/setCookie.js
+// app/api/setCookie/route.js
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 

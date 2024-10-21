@@ -22,12 +22,13 @@ export default function SignUp() {
 
   const router = useRouter();
 
-  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!agreeToTerms) {
-      toast.error("You must agree to the Terms and Conditions and Privacy Policy.");
+      toast.error(
+        "You must agree to the Terms and Conditions and Privacy Policy.",
+      );
       return;
     }
 
@@ -47,7 +48,7 @@ export default function SignUp() {
           headers: {
             "Content-Type": "application/json",
           },
-        }
+        },
       );
 
       toast.success("Registration successful!");
@@ -57,27 +58,50 @@ export default function SignUp() {
       const token = response.data.token; // Adjust according to your response structure
 
       // Send the token to the server to set the cookie
-      await fetch('/api/setCookie', {
-        method: 'POST',
+      await fetch("/api/setCookie", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ token: token.token }),
       });
-      
 
       // Route to home page after successful registration
-      router.push('/');
+      router.push("/");
     } catch (error) {
       console.error(error);
       toast.error("Registration failed. Please try again.");
     }
   };
 
+  const handleGoogleLogin = async () => {
+    try {
+      const response = await axios.get(
+        "https://glam.clickable.site/wp-json/wc-users/v1/google-sso-init",
+      );
+      window.location.href = response.data.url;
+    } catch (error) {
+      console.error("Error initiating Google login:", error);
+      // Handle error (e.g., show an error message to the user)
+    }
+  };
+
+  const handleAppleLogin = async () => {
+    try {
+      const response = await axios.get(
+        "https://glam.clickable.site/wp-json/wc-users/v1/apple-sso-initiate",
+      );
+      window.location.href = response.data.redirect_url;
+    } catch (error) {
+      console.error("Error initiating Apple login:", error);
+      toast.error("Failed to initiate Apple login. Please try again.");
+    }
+  };
+
   const inputStyles = `
-    mt-1 block w-full 2xl:w-[521px] px-4 py-2 
-    border border-[#D9D9D9] rounded-md 
-    focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent 
+    mt-1 block w-full 2xl:w-[521px] px-4 py-2
+    border border-[#D9D9D9] rounded-md
+    focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent
     ${lexendDeca.className}
     text-[#8B929D]
     text-base font-normal leading-5 tracking-[0.2px]
@@ -159,7 +183,9 @@ export default function SignUp() {
               />
             </div>
             <div>
-              <div className={`relative w-full 2xl:w-[521px] ${lexendDeca.className}`}>
+              <div
+                className={`relative w-full 2xl:w-[521px] ${lexendDeca.className}`}
+              >
                 <PhoneInput
                   country={"gb"}
                   value={phone}
@@ -207,7 +233,8 @@ export default function SignUp() {
                 htmlFor="agreeToOffers"
                 className={`ml-2 block text-sm 2xl:text-[16px] text-gray-900 ${lexendDeca.className}`}
               >
-                Tick here if you do not wish to receive exclusive offers and discounts via email.
+                Tick here if you do not wish to receive exclusive offers and
+                discounts via email.
               </label>
             </div>
 
@@ -245,18 +272,26 @@ export default function SignUp() {
 
           {/* Separator */}
           <div className="relative mt-8 text-center">
-            <span className={`mx-4 text-sm 2xl:text-[16px] text-[#8B929D] ${lexendDeca.className}`}>
+            <span
+              className={`mx-4 text-sm 2xl:text-[16px] text-[#8B929D] ${lexendDeca.className}`}
+            >
               or Continue with
             </span>
           </div>
 
           {/* Social Login Buttons */}
           <div className="flex justify-between space-x-4 mt-6">
-            <button className={`flex items-center border border-[#EFEFEF] justify-center w-full 2xl:w-[253px] px-4 py-2 bg-white text-gray-800 font-semibold rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300 ${lexendDeca.className}`}>
+            <button
+              onClick={handleGoogleLogin}
+              className={`flex items-center border border-[#EFEFEF] justify-center w-full 2xl:w-[253px] px-4 py-2 bg-white text-gray-800 font-semibold rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300 ${lexendDeca.className}`}
+            >
               <FcGoogle className="mr-2" />
               Google
             </button>
-            <button className={`flex items-center border border-[#EFEFEF] justify-center w-full 2xl:w-[253px] px-4 py-2 bg-white text-black font-semibold rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 ${lexendDeca.className}`}>
+            <button
+              onClick={handleAppleLogin}
+              className={`flex items-center border border-[#EFEFEF] justify-center w-full 2xl:w-[253px] px-4 py-2 bg-white text-black font-semibold rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 ${lexendDeca.className}`}
+            >
               <FaApple className="mr-2" />
               Apple
             </button>
