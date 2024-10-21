@@ -9,16 +9,14 @@ import CheckoutHeader from "./CheckoutHeader";
 export default function Header() {
   const url = usePathname();
   if (url.includes("/checkout")) {
-    return (
-      <CheckoutHeader />
-    );
+    return <CheckoutHeader />;
   } else
     return (
       <header className="sticky top-0 left-0 z-[110]">
         <NewsBannerNav />
-        <div className=" hidden lg:block">
-          <MiddleBarNav />
-        </div>
+
+        <MiddleBarNav />
+
         <MainLayoutMobile />
         <Navigation />
         <Promo />

@@ -71,7 +71,7 @@ export default function MiddleBarNav() {
   }, [searchParams, router, checkAuthStatus]);
 
   return (
-    <div className="flex w-full bg-white font-normal">
+    <div className="hidden lg:flex w-full bg-white font-normal">
       <Container>
         <div className="flex flex-row w-full justify-between items-center py-4">
           {/* Logo */}
