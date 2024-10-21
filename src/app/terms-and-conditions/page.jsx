@@ -19,7 +19,7 @@ const Para = ({ children }) => {
   );
 };
 
-function Page() {
+function TermsAndConditions() {
   return (
     <main className="">
       <Container>
@@ -35,7 +35,7 @@ function Page() {
           TERMS AND CONDITIONS
         </h1>
         <Para>
-          These terms and conditions ( Terms ) govern the use of the website https://www.glambeauty.com/ ( Website ) by users ( you  or  your ) and their relationship with GLAMBEAUTY INTERNATIONAL LIMITED (trading as www.glambeauty.com) whose registered office is at 133 Ley Street, Ilford, Essex, IG1 4BH, company registration number 14517764. <br /> <br />
+          These terms and conditions (&quot;Terms&quot;) govern the use of the website https://www.glambeauty.com/ (&quot;Website&quot;) by users (&quot;you&quot; or &quot;your&quot;) and their relationship with GLAMBEAUTY INTERNATIONAL LIMITED (trading as www.glambeauty.com) whose registered office is at 133 Ley Street, Ilford, Essex, IG1 4BH, company registration number 14517764. <br /> <br />
           Please read the terms and conditions carefully, as they affect your legal rights and obligations. If you do not agree to these Terms and Conditions, please do not access or use the Website. By ordering our goods or services, you agree to comply with these Terms and Conditions. It is recommended that you print a copy of these Terms and Conditions so that you have them at your fingertips. If you have any questions about these Terms and Conditions, please contact us.
         </Para>
         <Head>Agreement</Head>
@@ -52,7 +52,7 @@ function Page() {
         <Head>Privacy Policy</Head>
         <Para>
           We will treat all your personal information as confidential and we will only use it in accordance with our Privacy Policy. <br /> <br />
-          When you shop on this Website, we will ask you to input personal details in order for us to identify you, such as your name, e-mail address, billing address, delivery address, credit card or other payment information. We confirm that this information will be held by us in accordance with the registration we have with the Data Commissioner s office.
+          When you shop on this Website, we will ask you to input personal details in order for us to identify you, such as your name, e-mail address, billing address, delivery address, credit card or other payment information. We confirm that this information will be held by us in accordance with the registration we have with the Data Commissioner&apos;s office.
         </Para>
         <Head>Protecting Your Security</Head>
         <Para>
@@ -79,7 +79,7 @@ function Page() {
           You will assume the risk for the products once they have been delivered to the delivery address which you specified when ordering the products. We accept no liability where you provide an incorrect delivery address or where you fail to collect the products from the delivery address which you specified. Notwithstanding that risk of loss or damage to the products only passes to you once they have been delivered to the delivery address, ownership of the products shall pass to you on the later of: (a) the products being dispatched by us; and (b) us receiving payment in respect of the same.<br /> <br />
           We do not allow drop-shipping.<br /> <br />
           Images are for illustration purposes only.<br /> <br />
-          If you are sent an item and it is held at the local sorting office and Royal Mail have attempted and failed delivery (for any reason such as but not limited to the address being inaccessible, you not being in to sign for the goods etc.) it is your responsibility to collect it from said sorting office. Any items that aren t collected are returned back to us. We will then ask you to pay an additional £2.50 postage to have the goods re-sent to you or if you request a refund, you will be refunded minus £2.50 to cover the costs of Royal Mail returning your order to us.<br /> <br />
+          If you are sent an item and it is held at the local sorting office and Royal Mail have attempted and failed delivery (for any reason such as but not limited to the address being inaccessible, you not being in to sign for the goods etc.) it is your responsibility to collect it from said sorting office. Any items that aren&apos;t collected are returned back to us. We will then ask you to pay an additional £2.50 postage to have the goods re-sent to you or if you request a refund, you will be refunded minus £2.50 to cover the costs of Royal Mail returning your order to us.<br /> <br />
           GlamBeauty accepts no responsibility for transport delays or circumstances outside of our control causing late delivery. Delivery will be to the address advised in your order. We will only deliver to the address provided at checkout. If no one is available at the postal address provided at the time of delivery, a note will be left to advise you or Royal Mail may deliver to a neighbour. Recipients can opt out of Delivery to neighbour and can also nominate a specific neighbour if they wish. Details of how to do so can be found here:<a href="https://www.royalmail.com/personal/receiving-mail/delivery-to-neighbour" target="_blank"> https://www.royalmail.com/personal/receiving-mail/delivery-to-neighbour</a>
           We do not allow collections.
         </Para>
@@ -91,12 +91,12 @@ function Page() {
         <Head>Price and Payment</Head>
         <Para>
           All prices shown are inclusive of VAT (only where applicable – see below) at the current rates and are correct at the time of entering the information onto the system. We reserve the right, however, to change prices at any time without notice to you. If your delivery address is within the United Kingdom, no additional taxes will be charged to you.
-          If your delivery address is outside of the United Kingdom you may be subject to import duties and taxes (including VAT), which are levied once a delivery reaches your destination country. Any such additional charges must be borne by you. (if your delivery address is inside the European Union ( EU ) see  Customs clearance responsibilities for EU delivery addresses ). You should note that customs policies and practices vary widely from country to country. We recommend that you contact your local customs office for information.
+          If your delivery address is outside of the United Kingdom you may be subject to import duties and taxes (including VAT), which are levied once a delivery reaches your destination country. Any such additional charges must be borne by you. (if your delivery address is inside the European Union (&quot;EU&quot;) see &quot;Customs clearance responsibilities for EU delivery addresses&quot;). You should note that customs policies and practices vary widely from country to country. We recommend that you contact your local customs office for information.
           Please note that when shipping goods from outside the United Kingdom, cross border shipments may be subject to opening and inspection by customs authorities. In respect of all goods dispatched to you to an address outside of the United Kingdom, you are deemed to be the importer of the goods and must therefore comply with all the laws and regulations of the country into which the goods are being delivered.<br /> <br />
           Payment can be made by any major credit or debit card or via your PayPal account. Payment will be debited and cleared from your account before the dispatch of your good or provision of the service to you.<br /> <br />
           If payment is to be made via a credit card, a pre-auth value of £0.01 will be held against the card until the card issuer validates the payment. In the unlikely event that the price shown on the checkout page is wrong, and we discover this before accepting your order in accordance with clause 9, we are not required to sell the goods to you at the price shown. We always try and ensure that the prices of goods shown on our Website are accurate, but occasionally genuine errors may occur. If we discover an error in the price of the goods that you have ordered we will let you know as soon as possible and give you the option of reconfirming your order at the correct price or cancelling it. If you cancel your order and you have already paid for the goods, then you will receive a full refund.<br /> <br />
           You confirm that the credit, debit card or PayPal account that is being used is yours. All credit/debit cardholders are subject to validation checks and authorisation by the card issuer. If the issuer of your payment card refuses to or does not, for any reason, authorise payment to us we will not be liable to you for any delay or non-delivery.
-          If your credit or debit card payment is not processed successfully for any reason, we reserve the right to reattempt to process payment within 48 hours. In the event that the payment is still unsuccessful, we will give you at least 48 hours  notice in advance of any further reattempt to process payment by sending an email to the email address you have provided to us. If you do not want us to reattempt to process payment, you must cancel your order in advance.<br /> <br />
+          If your credit or debit card payment is not processed successfully for any reason, we reserve the right to reattempt to process payment within 48 hours. In the event that the payment is still unsuccessful, we will give you at least 48 hours&apos; notice in advance of any further reattempt to process payment by sending an email to the email address you have provided to us. If you do not want us to reattempt to process payment, you must cancel your order in advance.<br /> <br />
           You may only use one discount code with each order. We reserve the right to reject or cancel any orders where you add more than one discount code to the basket. We allow you to use discount codes strictly on the terms and conditions upon which they were issued which, amongst other things, may include terms relating to your eligibility to use them and a maximum order value.<br /> <br />
           Please familiarise yourself with these terms and conditions before you place an order as we reserve the right to reject or cancel any orders which do not comply with these terms even if your credit or debit card has been charged. If there is any inconsistency between the terms and conditions upon which the discount codes were issued and these terms and conditions, the discount code terms and conditions prevail. A copy of the discount code terms and conditions can be obtained by mailing or telephoning our customer service representatives at:cs@glambeauty.com<br /> <br />
           Customs clearance responsibilities for EU delivery addresses: For orders dispatched from the UK only. For deliveries to addresses within the EU, for legal purposes you are the importer of the goods, and are responsible for any import formalities as well as any duties, tariffs, or taxes which may be charged by any customs authority.<br /> <br />
@@ -109,8 +109,8 @@ function Page() {
           <br /> <br />
           P2P 10. The Netherlands (for all addresses) <br /> <br />
           This means that you will be charged duties, tariffs, or taxes at the rate applicable in the clearance country – these will be paid on your behalf by the designated carrier. These clearance countries are subject to change without notice being provided to you.
-          By accepting these terms, you consent to us appointing a designated carrier to act on your behalf as described above, and that the designated carrier is acting solely for you as your customs direct representative. <br /> <br />
-          We do not issue tax  invoices for shipments to the EU from the UK. Any proof-of-sale document we provide at your request is provided entirely at our discretion, and serves as a record of your purchase only. The document may not comply with the requirements imposed by the tax authorities in your local jurisdiction for the purposes of reclaiming VAT, and we are unable to provide additional documentation in this regard.
+          By accepting these terms, you consent to us appointing a  designated carrier to act on your behalf as described above, and that the designated carrier is acting solely for you as your customs direct representative. <br /> <br />
+          We do not issue tax invoices for shipments to the EU from the UK. Any proof-of-sale document we provide at your request is provided entirely at our discretion, and serves as a record of your purchase only. The document may not comply with the requirements imposed by the tax authorities in your local jurisdiction for the purposes of reclaiming VAT, and we are unable to provide additional documentation in this regard.
         </Para>
         <Head>Eligibility to Purchase</Head>
         <Para>
@@ -251,7 +251,7 @@ function Page() {
         </Para>
         <Head>Notification</Head>
         <Para>
-          The winner's name will be selected in a random draw, after the closing
+          The winner&apos;s name will be selected in a random draw, after the closing
           date, from all correct answers received. The winner of a prize will be
           notified within 28 days after the winner has been ascertained.
         </Para>
@@ -298,7 +298,7 @@ function Page() {
         <Para>
           If you are not at least 16 years of age, please do not access, use,
           register or purchase merchandise on the GlamBeauty website. In the event
-          that we become aware that you're under 16, we will terminate your
+          that we become aware that you&apos;re under 16, we will terminate your
           registration.
         </Para>
         <Head>External Sites</Head>
@@ -317,4 +317,4 @@ function Page() {
   );
 }
 
-export default Page;
+export default TermsAndConditions;
