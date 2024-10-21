@@ -106,7 +106,6 @@ export default function Footer() {
                   <li><Link href="/return-policy" className="hover:underline">Returns Policy</Link></li>
                   <li><Link href="#" className="hover:underline">FAQs</Link></li>
                   <li><Link href="/contact-us" className="hover:underline">Contact Us</Link></li>
-                  <li><Link href="#" className="hover:underline">Student Discounts</Link></li>
                 </ul>
               </div>
 
