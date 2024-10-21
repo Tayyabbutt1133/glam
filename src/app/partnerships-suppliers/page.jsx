@@ -11,9 +11,10 @@ const breadcrumbLinks = [
 
 function page() {
   return (
-      <div className="my-16">
-          <Container>
-              {/* <Breadcrumb breadcrumbLinks={breadcrumbLinks} /> */}
+          
+    <Container>
+      <Breadcrumb links={breadcrumbLinks} />
+        <div className="my-16">
       <h1 className={`text-3xl ${jost.className} font-bold mb-4`}>Partnerships & Suppliers</h1>
       <p className={`${lexendDeca.className}`}>
         GlamBeauty.com is one of the UK’s fastest growing online retailers for
@@ -23,8 +24,8 @@ function page() {
         partnership, please get in contact via our email address
         partnerships@glambeauty.com .
               </p>
+              </div>
               </Container>
-    </div>
   );
 }
 
