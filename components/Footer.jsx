@@ -133,7 +133,7 @@ export default function Footer() {
 
               {/* Download App Section */}
               <div className="mt-8 md:mt-0">
-                <h2 className={`mb-4 text-[20px] capitalize font-semibold text-black ${jost.className}`}>
+                <h2 className={`py-4 text-[20px] capitalize font-semibold text-black ${jost.className}`}>
                   Download App
                 </h2>
                 <p className={`text-[#8B929D] text-sm lg:text-[14px] 2xl:text-[16px] ${lexendDeca.className} font-normal mb-4`}>
