@@ -1,11 +1,11 @@
 "use client";
-
 import { useState, useEffect, useRef, Suspense } from "react";
 import NewsBannerNav from "./news-banner-nav/news-banner-nav";
 import MiddleBarNav from "./middle-bar-nav/middle-bar-nav";
 import Navigation from "./navigation-nav/navigation";
 import Promo from "./banner/Promo";
 import MainLayoutMobile from "./mobile/MainLayoutMobile";
+import { usePathname } from "next/navigation";
 import CheckoutHeader from "./CheckoutHeader";
 
 export default function Header() {
