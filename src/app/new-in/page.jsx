@@ -1,22 +1,20 @@
 "use client"
 
-import React, { useEffect, useState, useMemo } from "react"
+import React, { useEffect, useState, useMemo, Suspense } from "react"
 import axios from "axios"
 import Image from "next/image"
 import Link from "next/link"
 import { FaStar, FaRegStar, FaHeart } from "react-icons/fa"
 import { CiHeart } from "react-icons/ci"
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io"
-import { IoFilterOutline } from "react-icons/io5"
-import { RxCross2 } from "react-icons/rx"
 import { MdKeyboardArrowDown } from 'react-icons/md'
+import { RxCross2 } from "react-icons/rx"
 import { lexendDeca, jost } from "../../../components/ui/fonts"
 import filter from "../../../public/filter.svg"
 import { useCartStore } from "../../../states/Cardstore"
 import { usePopupStore } from "../../../states/use-popup-store"
-import arrow_previous from '../../../public/Keyboard arrow left.svg';
-import arrow_forward from '../../../public/Keyboard arrow right.svg';
-
+import arrow_previous from '../../../public/Keyboard arrow left.svg'
+import arrow_forward from '../../../public/Keyboard arrow right.svg'
 
 const API_BASE_URL = "https://glam.clickable.site/wp-json/wc/v3"
 const CONSUMER_KEY = "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d"
@@ -135,7 +133,7 @@ const CustomDropdown = ({ options, value, onChange }) => {
   )
 }
 
-export default function Component() {
+function ProductListingContent() {
   const { rate, currencySymbol } = usePopupStore()
   const [products, setProducts] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
@@ -365,15 +363,16 @@ export default function Component() {
       return categories
     }
 
-    const availableCategories = new Set();
+    const availableCategories = new Set()
     filters.brands.forEach((brand) => {
-      const brandData = brands.find((b) => b.name === brand);
+      const brandData = brands.find((b) => b.name === brand)
       if (brandData) {
         brandData.categories.forEach((categoryId) => {
-          availableCategories.add(categoryId.toString());
-        });
+          availableCategories.add(categoryId.toString())
+        
+        })
       }
-    });
+    })
 
     return categories.filter((category) =>
       availableCategories.has(category.id.toString())
@@ -477,6 +476,9 @@ export default function Component() {
   return (
     <div className="min-h-screen py-24 px-4 md:px-8 lg:px-12">
       <style jsx global>{`
+        html, body {
+          scroll-behavior: smooth;
+        }
         .custom-scrollbar::-webkit-scrollbar {
           width: 6px;
         }
@@ -485,7 +487,7 @@ export default function Component() {
           border-radius: 3px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: #EFEFEF;
+          background: #888;
           border-radius: 3px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
@@ -495,7 +497,7 @@ export default function Component() {
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Sidebar for filters */}
         <div className={`lg:w-1/4 ${isMobileFilterOpen ? 'block' : 'hidden lg:block'}`}>
-          <div className="sticky top-24">
+          <div>
             <div className="flex justify-between items-center mb-4">
               <h3 className={`text-lg font-normal flex items-center gap-4 ${lexendDeca.className}`}>
                 <Image
@@ -607,27 +609,27 @@ export default function Component() {
 
             {/* Category filter */}
             <FilterSection 
-        title="Category" 
-        isOpen={isCategoryFilterOpen} 
-        toggleOpen={() => setIsCategoryFilterOpen(!isCategoryFilterOpen)}
-      >
-        {Array.from(new Set(getAvailableCategories.map(category => category.name)))
-          .sort((a, b) => a.localeCompare(b))
-          .map((categoryName) => {
-            const category = getAvailableCategories.find(c => c.name === categoryName);
-            return (
-              <CustomCheckbox
-                key={category.id}
-                name="category"
-                value={category.id.toString()}
-                checked={filters.categories.includes(category.id.toString())}
-                onChange={() => handleFilterChange("categories", category.id.toString())}
-                label={category.name}
-                count={getFilteredCount("categories", category.id.toString())}
-              />
-            );
-          })}
-      </FilterSection>
+              title="Category" 
+              isOpen={isCategoryFilterOpen} 
+              toggleOpen={() => setIsCategoryFilterOpen(!isCategoryFilterOpen)}
+            >
+              {Array.from(new Set(getAvailableCategories.map(category => category.name)))
+                .sort((a, b) => a.localeCompare(b))
+                .map((categoryName) => {
+                  const category = getAvailableCategories.find(c => c.name === categoryName);
+                  return (
+                    <CustomCheckbox
+                      key={category.id}
+                      name="category"
+                      value={category.id.toString()}
+                      checked={filters.categories.includes(category.id.toString())}
+                      onChange={() => handleFilterChange("categories", category.id.toString())}
+                      label={category.name}
+                      count={getFilteredCount("categories", category.id.toString())}
+                    />
+                  );
+                })}
+            </FilterSection>
 
             {/* Price range filter */}
             <FilterSection 
@@ -789,12 +791,21 @@ export default function Component() {
                   );
                 })}
           </div>
-          {/* Bottom pagination for mobile */}
-          <div className="mt-8 flex justify-end">
+
+          {/* Pagination for mobile */}
+          <div className="mt-8">
             {renderPagination()}
           </div>
         </div>
       </div>
     </div>
+  )
+}
+
+export default function ProductListing() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ProductListingContent />
+    </Suspense>
   )
 }
