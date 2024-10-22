@@ -1,4 +1,7 @@
-import React, { useState, useEffect } from "react";
+"use client";
+
+import React, { useState, useEffect, useCallback } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useCartStore } from "../../../states/Cardstore";
 import { CartIcon } from "../../../public/icons/cart";
 import CartDropdown from "../../Cartdropdown";
@@ -14,42 +17,61 @@ export default function MiddleBarNav() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const cartItems = useCartStore((state) => state.cartItems);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [loading, setLoading] = useState(true); // Loading state
 
   const toggleCartDropdown = () => {
     setIsCartOpen((prev) => !prev);
   };
 
-  // checking authentication/validaton status for conditional routing
-  const checkAuthStatus = async () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const checkAuthStatus = useCallback(async () => {
     try {
-      setLoading(true); // Start loading
       const response = await fetch("/api/setCookie", {
         method: "GET",
         credentials: "include",
       });
-
-      if (response.ok) {
-        const data = await response.json();
-        console.log("Response from API:", data.token); // Log the API response
+      const data = await response.json();
+      if (response.ok && data.token) {
+        console.log("Authentication successful.");
         setIsAuthenticated(true);
       } else {
+        console.log("Not authenticated:", data.message);
         setIsAuthenticated(false);
       }
     } catch (error) {
-      console.error("Error checking authentication:", error);
+      console.error("Error checking authentication status:", error);
       setIsAuthenticated(false);
-    } finally {
-      setLoading(false); // Stop loading
     }
-  };
+  }, []);
 
   useEffect(() => {
-    checkAuthStatus();
-  }, []); // Empty dependency array means this effect runs once on mount
+    const token = searchParams.get("token");
+    const email = searchParams.get("email");
+
+    if (token && email) {
+      // Set the cookie
+      fetch("/api/setCookie", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ token }),
+      })
+        .then(() => {
+          router.replace("/"); // Remove token from URL
+          checkAuthStatus(); // Check auth status after setting cookie
+        })
+        .catch((error) => {
+          console.error("Error setting cookie:", error);
+        });
+    } else {
+      checkAuthStatus();
+    }
+  }, [searchParams, router, checkAuthStatus]);
 
   return (
-    <div className="flex w-full bg-white font-normal">
+    <div className="hidden lg:flex w-full bg-white font-normal">
       <Container>
         <div className="flex flex-row w-full justify-between items-center py-4">
           {/* Logo */}
@@ -61,34 +83,25 @@ export default function MiddleBarNav() {
               height={45}
             />
           </Link>
-
           {/* Search bar */}
           <SearchBarWithDropdown />
-
           {/* Account and Cart */}
           <section className="flex flex-row justify-between items-center gap-6 text-primary">
             {/* Account Section */}
             <div className="relative">
               <div onClick={checkAuthStatus}>
-                <Link href={isAuthenticated ? "/myaccount" : "/signup"}>
+                <Link href={isAuthenticated ? "/myaccount" : "/login"}>
                   <div className="flex flex-row justify-center items-center gap-3">
                     <UserIcon className={"w-4"} />
-                    {loading ? (
-                      <span className={`capitalize text-nowrap font-normal lg:text-base xl:text-lg ${jost.className}`}>
-                        Checking...
-                      </span>
-                    ) : (
-                      <span
-                        className={`capitalize text-nowrap font-normal lg:text-base xl:text-lg ${jost.className}`}
-                      >
-                        My Account
-                      </span>
-                    )}
+                    <span
+                      className={`capitalize text-nowrap font-normal lg:text-base xl:text-lg ${jost.className}`}
+                    >
+                      {isAuthenticated ? "My Account" : "Login / Sign Up"}
+                    </span>
                   </div>
                 </Link>
               </div>
             </div>
-
             {/* Cart Section */}
             <div className="relative">
               <div

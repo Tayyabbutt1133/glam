@@ -1,27 +1,25 @@
 'use client'
 
-import React, { useState } from 'react';
-import { ChevronDown, ChevronUp } from 'lucide-react';
-
-// Note: Assuming these fonts are imported from a local file. Adjust the import path as necessary.
-import { jost, lexendDeca } from "../../../components/ui/fonts";
-import Container from '../../../components/container';
-import Breadcrumb from '../../../components/BreadCrumb';
+import React, { useState, Suspense } from 'react'
+import { ChevronDown, ChevronUp } from 'lucide-react'
+import { jost, lexendDeca } from "../../../components/ui/fonts"
+import Container from '../../../components/container'
+import Breadcrumb from '../../../components/BreadCrumb'
 
 const Head = ({ children }) => (
   <h2 className={`text-2xl font-semibold mt-8 mb-4 ${jost.className}`}>
     {children}
   </h2>
-);
+)
 
 const Para = ({ children }) => (
   <p className={`mb-4 ${lexendDeca.className}`}>
     {children}
   </p>
-);
+)
 
 const CookieSection = ({ title, children }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
 
   return (
     <div className="border-b border-gray-200 py-4">
@@ -34,15 +32,15 @@ const CookieSection = ({ title, children }) => {
       </button>
       {isOpen && <div className="mt-4">{children}</div>}
     </div>
-  );
-};
+  )
+}
 
 const breadcrumbLinks = [
   { name: "Home", route: "/" },
-  { name: "Cookie Policy (EU)", route: "/Cookie Policy (EU)" },
-];
+  { name: "Cookie Policy (EU)", route: "/cookie-policy" },
+]
 
-export default function CookiePolicy() {
+function CookiePolicyContent() {
   return (
     <Container>
       <Breadcrumb links={breadcrumbLinks}/>
@@ -209,5 +207,13 @@ export default function CookiePolicy() {
         </address>
       </div>
     </Container>
-  );
+  )
+}
+
+export default function CookiePolicy() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <CookiePolicyContent />
+    </Suspense>
+  )
 }

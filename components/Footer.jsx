@@ -104,7 +104,7 @@ export default function Footer() {
                 <ul className={`text-[#8B929D] text-sm lg:text-[14px] 2xl:text-[16px] space-y-3 ${lexendDeca.className} font-normal transition-all duration-300 ease-in-out ${openSections.helpInfo ? 'max-h-screen opacity-100 pb-4' : 'max-h-0 opacity-0 overflow-hidden'} md:max-h-screen md:opacity-100 md:overflow-visible`}>
                   <li><Link href="/delivery-information" className="hover:underline">Delivery Information</Link></li>
                   <li><Link href="/return-policy" className="hover:underline">Returns Policy</Link></li>
-                  <li><Link href="#" className="hover:underline">FAQs</Link></li>
+                  <li><Link href="/faq" className="hover:underline">FAQs</Link></li>
                   <li><Link href="/contact-us" className="hover:underline">Contact Us</Link></li>
                 </ul>
               </div>
@@ -133,7 +133,7 @@ export default function Footer() {
 
               {/* Download App Section */}
               <div className="mt-8 md:mt-0">
-                <h2 className={`mb-4 text-[20px] capitalize font-semibold text-black ${jost.className}`}>
+                <h2 className={`py-4 text-[20px] capitalize font-semibold text-black ${jost.className}`}>
                   Download App
                 </h2>
                 <p className={`text-[#8B929D] text-sm lg:text-[14px] 2xl:text-[16px] ${lexendDeca.className} font-normal mb-4`}>
