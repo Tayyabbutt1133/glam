@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect, useRef, Suspense } from "react";
-import { usePathname } from "next/navigation";
 import NewsBannerNav from "./news-banner-nav/news-banner-nav";
 import MiddleBarNav from "./middle-bar-nav/middle-bar-nav";
 import Navigation from "./navigation-nav/navigation";
