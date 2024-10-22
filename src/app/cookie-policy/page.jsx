@@ -1,9 +1,7 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
-
-// Note: Assuming these fonts are imported from a local file. Adjust the import path as necessary.
 import { jost, lexendDeca } from "../../../components/ui/fonts";
 import Container from '../../../components/container';
 import Breadcrumb from '../../../components/BreadCrumb';
@@ -39,10 +37,10 @@ const CookieSection = ({ title, children }) => {
 
 const breadcrumbLinks = [
   { name: "Home", route: "/" },
-  { name: "Cookie Policy (EU)", route: "/Cookie Policy (EU)" },
+  { name: "Cookie Policy (EU)", route: "/cookie-policy" },
 ];
 
-export default function CookiePolicy() {
+function CookiePolicyContent() {
   return (
     <Container>
       <Breadcrumb links={breadcrumbLinks}/>
@@ -54,7 +52,7 @@ export default function CookiePolicy() {
 
         <Head>1. Introduction</Head>
         <Para>
-          Our website, https://www.glambeauty.com (hereinafter: &quot;the website&quot;) uses cookies and other related technologies (for convenience all technologies are referred to as &quot;cookies&quot;). Cookies are also placed by third parties we have engaged. In the document below we inform you about the use of cookies on our website.
+          Our website, https://www.glambeauty.com (hereinafter: "the website") uses cookies and other related technologies (for convenience all technologies are referred to as "cookies"). Cookies are also placed by third parties we have engaged. In the document below we inform you about the use of cookies on our website.
         </Para>
 
         <Head>2. What are cookies?</Head>
@@ -169,7 +167,7 @@ export default function CookiePolicy() {
 
         <Head>7. Consent</Head>
         <Para>
-          When you visit our website for the first time, we will show you a pop-up with an explanation about cookies. As soon as you click on &quot;Save preferences&quot;, you consent to us using the categories of cookies and plug-ins you selected in the pop-up, as described in this Cookie Policy. You can disable the use of cookies via your browser, but please note that our website may no longer work properly.
+          When you visit our website for the first time, we will show you a pop-up with an explanation about cookies. As soon as you click on "Save preferences", you consent to us using the categories of cookies and plug-ins you selected in the pop-up, as described in this Cookie Policy. You can disable the use of cookies via your browser, but please note that our website may no longer work properly.
         </Para>
 
         <Head>8. Enabling/disabling and deleting cookies</Head>
@@ -209,5 +207,13 @@ export default function CookiePolicy() {
         </address>
       </div>
     </Container>
+  );
+}
+
+export default function CookiePolicy() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <CookiePolicyContent />
+    </Suspense>
   );
 }

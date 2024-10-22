@@ -1,21 +1,20 @@
 "use client"
 
-import React, { useEffect, useState, useMemo } from "react"
+import React, { useEffect, useState, useMemo, Suspense } from "react"
 import axios from "axios"
 import Image from "next/image"
 import Link from "next/link"
 import { FaStar, FaRegStar, FaHeart } from "react-icons/fa"
 import { CiHeart } from "react-icons/ci"
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io"
-import { IoFilterOutline } from "react-icons/io5"
-import { RxCross2 } from "react-icons/rx"
 import { MdKeyboardArrowDown } from 'react-icons/md'
+import { RxCross2 } from "react-icons/rx"
 import { lexendDeca, jost } from "../../../components/ui/fonts"
 import filter from "../../../public/filter.svg"
 import { useCartStore } from "../../../states/Cardstore"
 import { usePopupStore } from "../../../states/use-popup-store"
-import arrow_previous from '../../../public/Keyboard arrow left.svg';
-import arrow_forward from '../../../public/Keyboard arrow right.svg';
+import arrow_previous from '../../../public/Keyboard arrow left.svg'
+import arrow_forward from '../../../public/Keyboard arrow right.svg'
 
 const API_BASE_URL = "https://glam.clickable.site/wp-json/wc/v3"
 const CONSUMER_KEY = "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d"
@@ -134,7 +133,7 @@ const CustomDropdown = ({ options, value, onChange }) => {
   )
 }
 
-export default function Component() {
+function ProductListingContent() {
   const { rate, currencySymbol } = usePopupStore()
   const [products, setProducts] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
@@ -362,18 +361,18 @@ export default function Component() {
   const getAvailableCategories = useMemo(() => {
     if (filters.brands.length === 0) {
       return categories
-    
     }
 
-    const availableCategories = new Set();
+    const availableCategories = new Set()
     filters.brands.forEach((brand) => {
-      const brandData = brands.find((b) => b.name === brand);
+      const brandData = brands.find((b) => b.name === brand)
       if (brandData) {
         brandData.categories.forEach((categoryId) => {
-          availableCategories.add(categoryId.toString());
-        });
+          availableCategories.add(categoryId.toString())
+        
+        })
       }
-    });
+    })
 
     return categories.filter((category) =>
       availableCategories.has(category.id.toString())
@@ -792,12 +791,21 @@ export default function Component() {
                   );
                 })}
           </div>
-          {/* Bottom pagination for mobile */}
-          <div className="mt-8 flex justify-end">
+
+          {/* Pagination for mobile */}
+          <div className="mt-8">
             {renderPagination()}
           </div>
         </div>
       </div>
     </div>
+  )
+}
+
+export default function ProductListing() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ProductListingContent />
+    </Suspense>
   )
 }

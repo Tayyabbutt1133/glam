@@ -1,8 +1,8 @@
 "use client";
 
+import React, { useEffect, useState, Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { useCartStore } from "../../../states/Cardstore";
 import { jost, lexendDeca } from "../../../components/ui/fonts";
 import Slider from "react-slick";
@@ -24,14 +24,14 @@ const API_URL = "https://glam.clickable.site/wp-json/wc/v3/products";
 const CK = "ck_7a38c15b5f7b119dffcf3a165c4db75ba4349a9d";
 const CS = "cs_3f70ee2600a3ac17a5692d7ac9c358d47275d6fc";
 
-export default function OrderConfirmation() {
+function OrderConfirmationContent() {
   const { clearCart, getOrderDetails, addToCart } = useCartStore();
   const [orderNumber, setOrderNumber] = useState("");
   const [orderDate, setOrderDate] = useState("");
   const [orderDetails, setOrderDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState([]);
-  const { rate,currencySymbol } = usePopupStore();
+  const { rate, currencySymbol } = usePopupStore();
 
   useEffect(() => {
     setOrderNumber(Math.floor(100000 + Math.random() * 900000).toString());
@@ -197,41 +197,6 @@ export default function OrderConfirmation() {
               </div>
             </div>
 
-            {/* <div className="flex items-center justify-between w-full max-w-3xl mx-auto my-8">
-              <div className="relative flex items-center justify-between w-full">
-                <div className="absolute top-1/2 left-0 right-0 h-[1px] bg-gray-300 -z-10"></div>
-                
-                <div className="flex flex-col items-center">
-                  <div className={`w-32 h-8 bg-[#FDF3E7] rounded-full flex items-center justify-center ${jost.className}`}>
-                    <span className="text-xs font-medium text-[#B86E14]">Ordered</span>
-                  </div>
-                </div>
-
-                <div className="w-24 h-[1px] bg-gray-300"></div>
-
-                <div className="flex flex-col items-center">
-                  <div className={`w-32 h-8 bg-gray-100 rounded-full flex items-center justify-center ${jost.className}`}>
-                    <span className="text-xs font-medium text-gray-500">Processing</span>
-                  </div>
-                </div>
-
-                <div className="w-24 h-[1px] bg-gray-300"></div>
-
-                <div className="flex flex-col items-center">
-                  <div className={`w-32 h-8 bg-gray-100 rounded-full flex items-center justify-center ${jost.className}`}>
-                    <span className="text-xs font-medium text-gray-500">Shipped</span>
-                  </div>
-                </div>
-
-                <div className="w-24 h-[1px] bg-gray-300"></div>
-
-                <div className="flex flex-col items-center">
-                  <div className={`w-32 h-8 bg-gray-100 rounded-full flex items-center justify-center ${jost.className}`}>
-                    <span className="text-xs font-medium text-gray-500">Delivered</span>
-                  </div>
-                </div>
-              </div>
-            </div> */}
             <div className="flex items-center justify-between w-full max-w-3xl sm:mx-auto my-8">
               <div className="relative flex items-center justify-between w-full">
                 <div className="absolute top-1/2 left-0 right-0 h-[1px] bg-gray-300 -z-10"></div>
@@ -339,12 +304,15 @@ export default function OrderConfirmation() {
                   Order Summary
                 </h3>
                 <p className={`text-sm ${lexendDeca.className}`}>
-                  Items ({orderDetails.cartItems.length}): {currencySymbol}{(orderDetails.subtotal * rate).toFixed(2)}
+                  Items ({orderDetails.cartItems.length}): {currencySymbol}
+                  {(orderDetails.subtotal * rate).toFixed(2)}
                   <br />
-                  Shipping: {currencySymbol}{(orderDetails.shipping * rate).toFixed(2)}
+                  Shipping: {currencySymbol}
+                  {(orderDetails.shipping * rate).toFixed(2)}
                   <br />
                   <span className="font-semibold">
-                    Total Order Value: {currencySymbol}{(orderDetails.total * rate).toFixed(2)}
+                    Total Order Value: {currencySymbol}
+                    {(orderDetails.total * rate).toFixed(2)}
                   </span>
                 </p>
               </div>
@@ -372,8 +340,8 @@ export default function OrderConfirmation() {
               <div>
                 <h4 className={`font-medium ${jost.className}`}>{item.name}</h4>
                 <p className={`text-sm text-gray-600 ${lexendDeca.className}`}>
-                  Qty: {item.quantity} | {currencySymbol}{parseFloat(item.price * rate).toFixed(2)}{" "}
-                  each
+                  Qty: {item.quantity} | {currencySymbol}
+                  {parseFloat(item.price * rate).toFixed(2)} each
                 </p>
                 <p className={`text-sm ${lexendDeca.className}`}>
                   Shade:{" "}
@@ -399,7 +367,7 @@ export default function OrderConfirmation() {
             Customers Also Bought
           </h2>
           {loading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-6">
               {Array(3)
                 .fill(0)
                 .map((_, index) => (
@@ -412,16 +380,16 @@ export default function OrderConfirmation() {
                 <div key={product.id} className="px-2  mb-3">
                   <div className="bg-white rounded-lg shadow-md flex flex-col overflow-hidden  min-h-[385px] pb-4">
                     <div className="relative pb-[100%]">
-                    <Link href={`/product/${product.id}`}>
-                      <Image
-                        src={product.images[0]?.src || "/placeholder.svg"}
-                        alt={product.name}
-                        layout="fill"
-                        objectFit="cover"
+                      <Link href={`/product/${product.id}`}>
+                        <Image
+                          src={product.images[0]?.src || "/placeholder.svg"}
+                          alt={product.name}
+                          layout="fill"
+                          objectFit="cover"
                         />
-                        </Link>
+                      </Link>
                     </div>
-                    
+
                     <div className="p-4  flex-grow justify-between flex flex-col">
                       <aside>
                         <h3
@@ -439,7 +407,8 @@ export default function OrderConfirmation() {
                         <p
                           className={`text-lg  mt-auto font-bold mb-3 ${lexendDeca.className}`}
                         >
-                          {currencySymbol}{parseFloat(product.price * rate).toFixed(2)}
+                          {currencySymbol}
+                          {parseFloat(product.price * rate).toFixed(2)}
                         </p>
                         <button
                           className={`w-full  text-xs sm:text-base bg-black text-white py-2 rounded-lg hover:bg-[#CF8562]  transition ${jost.className}`}
@@ -466,5 +435,13 @@ export default function OrderConfirmation() {
         </div>
       </div>
     </Container>
+  );
+}
+
+export default function OrderConfirmation() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <OrderConfirmationContent />
+    </Suspense>
   );
 }

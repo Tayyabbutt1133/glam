@@ -1,6 +1,6 @@
 "use client"
 
-import React from 'react'
+import React, { Suspense } from 'react'
 import { jost, lexendDeca } from "../../../components/ui/fonts"
 import Container from '../../../components/container'
 import Breadcrumb from '../../../components/BreadCrumb'
@@ -17,7 +17,7 @@ const Para = ({ children }) => (
   </p>
 )
 
-export default function PrivacyPolicy() {
+function PrivacyPolicyContent() {
   return (
     <Container>
       <Breadcrumb
@@ -77,5 +77,13 @@ export default function PrivacyPolicy() {
         </Para>
       </div>
     </Container>
+  )
+}
+
+export default function PrivacyPolicy() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <PrivacyPolicyContent />
+    </Suspense>
   )
 }
