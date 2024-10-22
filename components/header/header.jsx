@@ -16,28 +16,34 @@ export default function Header() {
   useEffect(() => {
     let prevScrollPos = window.pageYOffset;
     let ticking = false;
-
+  
     const handleScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
           const currentScrollPos = window.pageYOffset;
           const isScrollingUp = prevScrollPos > currentScrollPos;
-
-          setShowTopElements(isScrollingUp || currentScrollPos < 100);
+  
+          if (showTopElements !== (isScrollingUp || currentScrollPos < 100)) {
+            setShowTopElements(isScrollingUp || currentScrollPos < 100);
+          }
+  
           prevScrollPos = currentScrollPos;
           ticking = false;
         });
-
+  
         ticking = true;
       }
     };
-
+  
     window.addEventListener("scroll", handleScroll, { passive: true });
-
+  
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [showTopElements]);
+
+
+
 
   if (url.includes("/checkout")) {
     return <CheckoutHeader />;
@@ -45,20 +51,30 @@ export default function Header() {
 
   return (
     <div ref={headerRef} className="sticky top-0 left-0 z-[110]">
+      {/* NewsBannerNav will dynamically give up its space when it hides */}
       <div
-        className={`transition-transform duration-300 ease-in-out ${
-          showTopElements ? "translate-y-0" : "-translate-y-full"
+        className={`transition-all duration-300 ease-in-out ${
+          showTopElements ? "h-auto" : "h-0"
         }`}
       >
-        <NewsBannerNav />
+        <div
+          className={`transition-transform duration-300 ease-in-out ${
+            showTopElements ? "translate-y-0" : "-translate-y-full"
+          }`}
+        >
+          <NewsBannerNav />
+        </div>
       </div>
 
-      <Suspense fallback={null}>
-        <MiddleBarNav />
-      </Suspense>
-      <MainLayoutMobile />
-      <Navigation />
+      <div>
+        <Suspense>
+          <MiddleBarNav />
+        </Suspense>
+        <MainLayoutMobile />
+        <Navigation />
+      </div>
 
+      {/* Promo remains unchanged with its own translate behavior */}
       <div
         className={`transition-transform duration-300 ease-in-out ${
           showTopElements ? "translate-y-0" : "-translate-y-full"
