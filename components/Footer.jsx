@@ -104,7 +104,7 @@ export default function Footer() {
                 <ul className={`text-[#8B929D] text-sm lg:text-[14px] 2xl:text-[16px] space-y-3 ${lexendDeca.className} font-normal transition-all duration-300 ease-in-out ${openSections.helpInfo ? 'max-h-screen opacity-100 pb-4' : 'max-h-0 opacity-0 overflow-hidden'} md:max-h-screen md:opacity-100 md:overflow-visible`}>
                   <li><Link href="/delivery-information" className="hover:underline">Delivery Information</Link></li>
                   <li><Link href="/return-policy" className="hover:underline">Returns Policy</Link></li>
-                  <li><Link href="#" className="hover:underline">FAQs</Link></li>
+                  <li><Link href="/faq" className="hover:underline">FAQs</Link></li>
                   <li><Link href="/contact-us" className="hover:underline">Contact Us</Link></li>
                 </ul>
               </div>
