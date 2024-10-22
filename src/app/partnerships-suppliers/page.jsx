@@ -17,7 +17,7 @@ function PartnershipsAndSuppliersContent() {
       <div className="my-16">
         <h1 className={`text-3xl ${jost.className} font-bold mb-4`}>Partnerships & Suppliers</h1>
         <p className={`${lexendDeca.className}`}>
-          GlamBeauty.com is one of the UK's fastest growing online retailers for
+          GlamBeauty.com is one of the UK&apos;s fastest growing online retailers for
           premium hair and beauty products. We have only one aim; to make hair and
           beauty brands more accessible to customers across the globe. If you are
           interested in working with us as a supplier or any other form of

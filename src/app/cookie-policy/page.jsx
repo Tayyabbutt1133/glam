@@ -1,25 +1,25 @@
 'use client'
 
-import React, { useState, Suspense } from 'react';
-import { ChevronDown, ChevronUp } from 'lucide-react';
-import { jost, lexendDeca } from "../../../components/ui/fonts";
-import Container from '../../../components/container';
-import Breadcrumb from '../../../components/BreadCrumb';
+import React, { useState, Suspense } from 'react'
+import { ChevronDown, ChevronUp } from 'lucide-react'
+import { jost, lexendDeca } from "../../../components/ui/fonts"
+import Container from '../../../components/container'
+import Breadcrumb from '../../../components/BreadCrumb'
 
 const Head = ({ children }) => (
   <h2 className={`text-2xl font-semibold mt-8 mb-4 ${jost.className}`}>
     {children}
   </h2>
-);
+)
 
 const Para = ({ children }) => (
   <p className={`mb-4 ${lexendDeca.className}`}>
     {children}
   </p>
-);
+)
 
 const CookieSection = ({ title, children }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
 
   return (
     <div className="border-b border-gray-200 py-4">
@@ -32,13 +32,13 @@ const CookieSection = ({ title, children }) => {
       </button>
       {isOpen && <div className="mt-4">{children}</div>}
     </div>
-  );
-};
+  )
+}
 
 const breadcrumbLinks = [
   { name: "Home", route: "/" },
   { name: "Cookie Policy (EU)", route: "/cookie-policy" },
-];
+]
 
 function CookiePolicyContent() {
   return (
@@ -52,7 +52,7 @@ function CookiePolicyContent() {
 
         <Head>1. Introduction</Head>
         <Para>
-          Our website, https://www.glambeauty.com (hereinafter: "the website") uses cookies and other related technologies (for convenience all technologies are referred to as "cookies"). Cookies are also placed by third parties we have engaged. In the document below we inform you about the use of cookies on our website.
+          Our website, https://www.glambeauty.com (hereinafter: &quot;the website&quot;) uses cookies and other related technologies (for convenience all technologies are referred to as &quot;cookies&quot;). Cookies are also placed by third parties we have engaged. In the document below we inform you about the use of cookies on our website.
         </Para>
 
         <Head>2. What are cookies?</Head>
@@ -167,7 +167,7 @@ function CookiePolicyContent() {
 
         <Head>7. Consent</Head>
         <Para>
-          When you visit our website for the first time, we will show you a pop-up with an explanation about cookies. As soon as you click on "Save preferences", you consent to us using the categories of cookies and plug-ins you selected in the pop-up, as described in this Cookie Policy. You can disable the use of cookies via your browser, but please note that our website may no longer work properly.
+          When you visit our website for the first time, we will show you a pop-up with an explanation about cookies. As soon as you click on &quot;Save preferences&quot;, you consent to us using the categories of cookies and plug-ins you selected in the pop-up, as described in this Cookie Policy. You can disable the use of cookies via your browser, but please note that our website may no longer work properly.
         </Para>
 
         <Head>8. Enabling/disabling and deleting cookies</Head>
@@ -207,7 +207,7 @@ function CookiePolicyContent() {
         </address>
       </div>
     </Container>
-  );
+  )
 }
 
 export default function CookiePolicy() {
@@ -215,5 +215,5 @@ export default function CookiePolicy() {
     <Suspense fallback={<div>Loading...</div>}>
       <CookiePolicyContent />
     </Suspense>
-  );
+  )
 }
