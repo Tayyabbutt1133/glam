@@ -66,7 +66,7 @@ function SignUpContent() {
       })
 
       // Route to home page after successful registration
-      router.push("/")
+      router.push("/myaccount")
     } catch (error) {
       console.error(error)
       toast.error("Registration failed. Please try again.")

@@ -53,7 +53,7 @@ function LoginContent() {
             body: JSON.stringify({ token }),
           });
 
-          router.push("/");
+          router.push("/myaccount");
         } else {
           setMessage(
             "Login failed. Please check your credentials and try again."
