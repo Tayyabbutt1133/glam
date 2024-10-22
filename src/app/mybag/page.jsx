@@ -10,7 +10,7 @@ import ae from "../../../public/card-logos/american-express.svg";
 import paypal from "../../../public/card-logos/paypal.svg";
 import { jost, lexendDeca } from "../../../components/ui/fonts";
 import Link from "next/link";
-import NextArrowIcon from '../../../public/hero-banners/next-arrow';
+import NextArrowIcon from "../../../public/hero-banners/next-arrow";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -21,7 +21,7 @@ import { CiHeart } from "react-icons/ci";
 
 // Function to decode HTML entities
 function decodeHTMLEntities(text) {
-  const textArea = document.createElement('textarea');
+  const textArea = document.createElement("textarea");
   textArea.innerHTML = text;
   return textArea.value;
 }
@@ -68,18 +68,16 @@ export default function MyBag() {
   const [showScroll, setShowScroll] = useState(false);
   const [favorites, setFavorites] = useState({});
   const cartRef = useRef(null);
-
   const { rate, currencySymbol } = usePopupStore();
-  console.log({ currencySymbol, rate });
-
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const calculateSubtotal = () => {
-    return cartItems.reduce(
-      (acc, item) => acc + parseFloat(item.price) * item.quantity,
-      0
-    );
+    return cartItems.reduce((acc, item) => {
+      // Using price format from GraphQL schema
+      const price = parseFloat(item.price.replace(/[^\d.-]/g, ""));
+      return acc + price * item.quantity;
+    }, 0);
   };
 
   const subtotal = calculateSubtotal();
@@ -116,7 +114,7 @@ export default function MyBag() {
     const fetchProducts = async () => {
       try {
         const response = await fetch(
-          `${API_URL}?consumer_key=${CK}&consumer_secret=${CS}`
+          `${API_URL}?consumer_key=${CK}&consumer_secret=${CS}`,
         );
         const data = await response.json();
         const filteredProducts = data.filter(
@@ -124,8 +122,9 @@ export default function MyBag() {
             product.images[0]?.src &&
             product.price &&
             getBrand(product) !== "Unknown Brand" &&
-            product.name
+            product.name,
         );
+        console.log(filteredProducts)
         setProducts(filteredProducts);
         setLoading(false);
       } catch (error) {
@@ -146,8 +145,12 @@ export default function MyBag() {
   };
 
   const getBrand = (product) => {
-    const brandAttribute = product.attributes.find((attr) => attr.name === "Brand");
-    return brandAttribute ? decodeHTMLEntities(brandAttribute.options[0]) : "Unknown Brand";
+    const brandAttribute = product.attributes?.nodes?.find(
+      (attr) => attr.name === "pa_brand",
+    );
+    return brandAttribute
+      ? decodeHTMLEntities(brandAttribute.options[0])
+      : "Unknown Brand";
   };
 
   const sliderSettings = {
@@ -200,7 +203,9 @@ export default function MyBag() {
     <main className="mx-6">
       <div className="lg:w-[98%] xl:w-[98%] mx-auto px-4 mt-8">
         <div className="flex flex-col md:flex-row items-center md:justify-between md:pr-2 w-full md:w-[69%]">
-          <p className={`text-[16px] md:text-[15px] 2xl:text-[20px] md:w-full text-black ${jost.className} font-normal sm:font-medium`}>
+          <p
+            className={`text-[16px] md:text-[15px] 2xl:text-[20px] md:w-full text-black ${jost.className} font-normal sm:font-medium`}
+          >
             Log in or create an account now to get these exclusive benefits.
           </p>
           <div className="flex mt-3 md:mt-0 items-center justify-between  w-[80%] sm:w-8/12 md:w-[59%] lg:w-[40%]  md:mr-10 md:justify-end flex-row gap-4 md:gap-1 lg:gap-4">
@@ -222,7 +227,9 @@ export default function MyBag() {
         </div>
 
         <div className="flex justify-between items-center mb-6 mt-8">
-          <h1 className={`2xl:text-[36px] sm:text-2xl text-[16px] font-medium ${jost.className}`}>
+          <h1
+            className={`2xl:text-[36px] sm:text-2xl text-[16px] font-medium ${jost.className}`}
+          >
             Your Bag ({cartItems.length})
           </h1>
         </div>
@@ -232,24 +239,21 @@ export default function MyBag() {
           <div className="md:w-2/3">
             <div
               ref={cartRef}
-              className={`max-h-[600px] overflow-y-auto ${
-                showScroll ? "pr-4" : ""
-              }`}
-              style={{
-                scrollbarWidth: "thin",
-                scrollbarColor: "#888 #f1f1f1",
-              }}
+              className={`max-h-[600px] overflow-y-auto ${showScroll ? "pr-4" : ""}`}
+              style={{ scrollbarWidth: "thin", scrollbarColor: "#888 #f1f1f1" }}
             >
               {cartItems.map((item, index) => (
                 <div
-                  key={item.id}
+                  key={item.databaseId}
                   className={`flex flex-row gap-4 items-start md:items-center py-6 ${
-                    cartItems.length > 1 && index !== cartItems.length - 1 ? "border-b border-gray-200" : ""
+                    cartItems.length > 1 && index !== cartItems.length - 1
+                      ? "border-b border-gray-200"
+                      : ""
                   }`}
                 >
                   <div className="w-[120px] md:w-48 md:flex-shrink-0">
                     <Image
-                      src={item.images[0].src}
+                      src={item.image?.sourceUrl || "/placeholder.svg"}
                       alt={decodeHTMLEntities(item.name)}
                       width={200}
                       height={200}
@@ -259,7 +263,7 @@ export default function MyBag() {
                   </div>
 
                   <div className="ml-4 md:flex-grow">
-                    {editingItem?.id === item.id ? (
+                    {editingItem?.databaseId === item.databaseId ? (
                       <div>
                         <input
                           type="text"
@@ -283,7 +287,7 @@ export default function MyBag() {
                       <>
                         <div className="flex justify-between items-start mb-4">
                           <div>
-                            <Link href={`/product/${item.id}`}>
+                            <Link href={`/product/${item.databaseId}`}>
                               <h2
                                 className={`2xl:text-[24px] xs:text-lg text-[16px] cursor-pointer font-medium w-[80%] ${jost.className}`}
                               >
@@ -294,78 +298,48 @@ export default function MyBag() {
                               className={`text-sm 2xl:text-[20px] leading-normal text-black ${jost.className} font-normal mt-[15px]`}
                             >
                               Shade:{" "}
-                              {decodeHTMLEntities(item.attributes.find(
-                                (attr) => attr.name === "Shade"
-                              )?.options[0] || "N/A")}
+                              {item.attributes?.nodes.find(
+                                (attr) => attr.name === "Shade",
+                              )?.options[0] || "N/A"}
                             </p>
                             <p
                               className={`text-sm 2xl:text-[20px] text-black ${jost.className} font-normal mt-[10px]`}
                             >
                               Size:{" "}
-                              {decodeHTMLEntities(item.attributes.find(
-                                (attr) => attr.name === "Size"
-                              )?.options[0] || "N/A")}
-                              </p>
-                              
-                              <p
-                            className={`font-medium sm:hidden mt-4 sm:mt-0 block  text-[16px] ${jost.className}`}
-                          >
-                            {currencySymbol}
-                            {parseFloat(
-                              item.price * rate * item.quantity
-                            ).toFixed(2)}
-                          </p>
+                              {item.attributes?.nodes.find(
+                                (attr) => attr.name === "Size",
+                              )?.options[0] || "N/A"}
+                            </p>
 
+                            <p
+                              className={`font-medium sm:hidden mt-4 sm:mt-0 block text-[16px] ${jost.className}`}
+                            >
+                              {currencySymbol}
+                              {parseFloat(
+                                item.price * rate * item.quantity,
+                              ).toFixed(2)}
+                            </p>
                           </div>
                           <p
-                            className={`font-medium  hidden sm:block text-lg ${jost.className}`}
+                            className={`font-medium hidden sm:block text-lg ${jost.className}`}
                           >
                             {currencySymbol}
                             {parseFloat(
-                              item.price * rate * item.quantity
+                              item.price * rate * item.quantity,
                             ).toFixed(2)}
                           </p>
-                          </div>
-                          
+                        </div>
 
-                          
-
-
-
-
-
-                          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                          <div className=" -mt-12 sm:-mt-0 flex sm:flex-row flex-col sm:items-center items-end gap-4 justify-between ">
-                            
-                            {/* adding up product's */}
+                        {/* Quantity controls and action buttons */}
+                        <div className="-mt-12 sm:-mt-0 flex sm:flex-row flex-col sm:items-center items-end gap-4 justify-between">
                           <div className="flex items-center">
-                            <div className="inline-flex items-center justify-between border w-[102px] h-[35px]  rounded-lg overflow-hidden sm:max-w-[102px] max-w-[80px] sm:h-[35px]">
+                            <div className="inline-flex items-center justify-between border w-[102px] h-[35px] rounded-lg overflow-hidden sm:max-w-[102px] max-w-[80px] sm:h-[35px]">
                               <button
                                 className="text-sm w-1/3 h-full text-b-03 hover:bg-gray-100 focus:outline-none"
                                 onClick={() =>
                                   updateQuantity(
-                                    item.id,
-                                    Math.max(1, item.quantity - 1)
+                                    item.databaseId,
+                                    Math.max(1, item.quantity - 1),
                                   )
                                 }
                               >
@@ -380,7 +354,10 @@ export default function MyBag() {
                               <button
                                 className="text-sm h-full w-1/3 text-b-03 hover:bg-gray-100 focus:outline-none"
                                 onClick={() =>
-                                  updateQuantity(item.id, item.quantity + 1)
+                                  updateQuantity(
+                                    item.databaseId,
+                                    item.quantity + 1,
+                                  )
                                 }
                               >
                                 +
@@ -388,11 +365,12 @@ export default function MyBag() {
                             </div>
                           </div>
 
-                            {/* button's */}
                           <div className="space-x-8">
                             <button
                               className={`font-medium 2xl:text-[20px] text-black ${jost.className}`}
-                              onClick={() => handleSaveForLater(item.id)}
+                              onClick={() =>
+                                handleSaveForLater(item.databaseId)
+                              }
                             >
                               Save For Later
                             </button>
@@ -404,46 +382,12 @@ export default function MyBag() {
                             </button>
                             <button
                               className={`font-medium 2xl:text-[20px] text-black ${jost.className}`}
-                              onClick={() => removeFromCart(item.id)}
+                              onClick={() => removeFromCart(item.databaseId)}
                             >
                               Remove
                             </button>
-                            </div>
-                            
-
                           </div>
-                          
-
-
-
-
-                          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                        </div>
                       </>
                     )}
                   </div>
@@ -486,7 +430,9 @@ export default function MyBag() {
                           <div>
                             <div className="relative pb-[100%]">
                               <Image
-                                src={product.images[0]?.src || '/placeholder.svg'}
+                                src={
+                                  product.images[0]?.src || "/placeholder.svg"
+                                }
                                 alt={decodeHTMLEntities(product.name)}
                                 layout="fill"
                                 objectFit="cover"
@@ -494,7 +440,9 @@ export default function MyBag() {
                             </div>
 
                             <div className="px-2 mt-6">
-                              <h3 className={`text-sm font-bold mb-1 ${jost.className}`}>
+                              <h3
+                                className={`text-sm font-bold mb-1 ${jost.className}`}
+                              >
                                 {getBrand(product)}
                               </h3>
                               <p
@@ -535,7 +483,9 @@ export default function MyBag() {
           <div className="md:w-1/3 md:-mt-44  md:flex-grow rounded-xl md:rounded-none">
             <div className="p-2 rounded-lg sm:bg-[#F7F7F7A6]">
               <div className="bg-white p-4 rounded-lg mt-4">
-                <h2 className={`text-xl 2xl:text-[22px] font-medium mb-4 ${jost.className}`}>
+                <h2
+                  className={`text-xl 2xl:text-[22px] font-medium mb-4 ${jost.className}`}
+                >
                   Order Summary
                 </h2>
                 <div className={`flex justify-between mb-2 ${jost.className}`}>
@@ -557,30 +507,44 @@ export default function MyBag() {
                     className="border-gray-300 w-[100%] xl:w-[65%] rounded-md px-2 py-1 -mr-2 text-gray-800 text-right"
                   />
                 </div>
-                <p className={`text-sm 2xl:text-[18px] text-black font-normal mb-4 ${jost.className}`}>
+                <p
+                  className={`text-sm 2xl:text-[18px] text-black font-normal mb-4 ${jost.className}`}
+                >
                   (Spend{" "}
-                  <span className={`font-medium 2xl:text-[18px] ${jost.className}`}>
+                  <span
+                    className={`font-medium 2xl:text-[18px] ${jost.className}`}
+                  >
                     {currencySymbol}
                     {(0.01 * rate).toFixed(2)}{" "}
                   </span>
-                  more for <span className="font-medium 2xl:text-[2xl]">FREE DELIVERY</span>)
+                  more for{" "}
+                  <span className="font-medium 2xl:text-[2xl]">
+                    FREE DELIVERY
+                  </span>
+                  )
                 </p>
                 <hr className="h-1" />
                 <div
                   className={`flex mt-4 justify-between font-semibold ${jost.className}`}
                 >
-                  <span className={`${jost.className} text-xl 2xl:text-[22px] font-medium`}>Estimated Total:</span>
+                  <span
+                    className={`${jost.className} text-xl 2xl:text-[22px] font-medium`}
+                  >
+                    Estimated Total:
+                  </span>
                   <span>
                     {currencySymbol}
                     {parseFloat(total * rate).toFixed(2)}
                   </span>
                 </div>
-                <p className={`text-sm 2xl:text-[16px] text-[#8B929D] mt-1 ${jost.className}`}>
+                <p
+                  className={`text-sm 2xl:text-[16px] text-[#8B929D] mt-1 ${jost.className}`}
+                >
                   Including {currencySymbol}
                   {(3.2 * rate).toFixed(2)} in taxes
                 </p>
               </div>
-                 <hr className="h-2" />
+              <hr className="h-2" />
               <div className="mt-4 bg-white p-6 rounded-lg">
                 <label
                   htmlFor="promo"
@@ -588,7 +552,7 @@ export default function MyBag() {
                 >
                   Promo code
                 </label>
-                
+
                 <div className="flex items-center mt-5">
                   <input
                     type="text"
@@ -615,20 +579,10 @@ export default function MyBag() {
                   <p>Pay by Card/Pay Later</p>
                   <section className="gap-4 items-center flex">
                     <div className="hover:scale-110 transition-transform duration-300 cursor-pointer flex items-center justify-center">
-                      <Image
-                        src={visa}
-                        alt="Visa"
-                        width={40}
-                        height={25}
-                      />
+                      <Image src={visa} alt="Visa" width={40} height={25} />
                     </div>
                     <div className="p-2 hover:scale-110 transition-transform duration-300 cursor-pointer flex items-center justify-center">
-                      <Image
-                        src={master}
-                        alt="Master"
-                        width={40}
-                        height={25}
-                      />
+                      <Image src={master} alt="Master" width={40} height={25} />
                     </div>
                     <div className="p-2 hover:scale-110 transition-transform duration-300 cursor-pointer flex items-center justify-center">
                       <Image
@@ -647,12 +601,7 @@ export default function MyBag() {
                       />
                     </div>
                     <div className="p-2 hover:scale-110 transition-transform duration-300 cursor-pointer flex items-center justify-center">
-                      <Image
-                        src={paypal}
-                        alt="PayPal"
-                        width={40}
-                        height={25}
-                      />
+                      <Image src={paypal} alt="PayPal" width={40} height={25} />
                     </div>
                   </section>
                 </div>
@@ -666,7 +615,7 @@ export default function MyBag() {
               </div>
             </div>
           </div>
-          
+
           <div className="container mx-auto px-4 py-8 mb-24 md:mb-0 md:hidden block">
             <h2 className={`text-2xl font-bold mb-14 ${jost.className}`}>
               You May Also Like
