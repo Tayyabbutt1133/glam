@@ -1,5 +1,4 @@
 "use client";
-
 import { useState, useEffect, useRef, Suspense } from "react";
 import NewsBannerNav from "./news-banner-nav/news-banner-nav";
 import MiddleBarNav from "./middle-bar-nav/middle-bar-nav";

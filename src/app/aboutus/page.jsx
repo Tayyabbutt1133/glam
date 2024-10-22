@@ -1,4 +1,5 @@
-import React from 'react'
+"use client"
+import React, { Suspense } from 'react'
 import Breadcrumb from '../../../components/BreadCrumb'
 import Container from '../../../components/container'
 import { jost, lexendDeca } from '../../../components/ui/fonts'
@@ -11,7 +12,7 @@ const breadcrumbLinks = [
 
 export default function AboutUsPage() {
   return (
-    <>
+    <Suspense fallback={<div>Loading...</div>}>
       <Container>
         <Breadcrumb links={breadcrumbLinks} />
       </Container>
@@ -60,6 +61,6 @@ export default function AboutUsPage() {
           </section>
         </main>
       </div>
-    </>
+    </Suspense>
   )
 }

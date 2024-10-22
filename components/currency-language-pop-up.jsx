@@ -99,6 +99,10 @@ export default function CurrencyLanguagePopUp() {
     };
   }, [isOpen, closeModal]);
 
+  const sortedCountries = [...name].sort((a, b) => {
+    return a.country.localeCompare(b.country); // Sort alphabetically
+  });
+
   const isUK =
     selectedCountry.country === "United Kingdom" &&
     selectedCountry.name === "Pound Sterling";
@@ -161,7 +165,7 @@ export default function CurrencyLanguagePopUp() {
                     onChange={handleCountryChange}
                     value={selectedCountry?.code || ""}
                   >
-                    {name.map((country) => (
+                    {sortedCountries.map((country) => (
                       <option key={country.code} value={country.code}>
                         <Text style={"sm"}>{country.country}</Text>
                       </option>
@@ -178,7 +182,7 @@ export default function CurrencyLanguagePopUp() {
                     onChange={(e) => setSelectedCurrency(e.target.value)}
                     value={selectedCurrency || ""}
                   >
-                    {name.map((country) => (
+                    {sortedCountries.map((country) => (
                       <option key={country.code} value={country.code}>
                         <Text style={"sm"}>{country.name}</Text>
                       </option>
