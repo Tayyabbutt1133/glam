@@ -131,7 +131,7 @@ export default function FastSearchBarWithDropdown({ formobile = false }) {
   }, [handleClickOutside])
 
   const SkeletonLoader = () => (
-    <div className="animate-pulse flex p-1 items-center">
+    <div className="flex p-1 items-center">
       <div className="w-10 h-10 mr-4 ml-4 bg-gray-200 rounded-md flex-shrink-0"></div>
       <div className="flex-1">
         <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>

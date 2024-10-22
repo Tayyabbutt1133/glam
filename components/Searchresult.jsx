@@ -288,7 +288,7 @@ export default function SearchResults() {
   }
 
   const ProductSkeleton = () => (
-    <div className="border p-4 rounded-lg relative bg-white animate-pulse">
+    <div className="border p-4 rounded-lg relative bg-white">
       <div className="w-full h-64 bg-gray-300 mb-4"></div>
       <div className="h-6 bg-gray-300 mb-2"></div>
       <div className="h-4 bg-gray-300 w-1/2"></div>
