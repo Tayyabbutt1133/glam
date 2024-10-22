@@ -23,6 +23,7 @@ export default function Header() {
         <MainLayoutMobile />
         <Navigation />
       <Suspense>
+      <Suspense fallback={console.log("loading")}>
         <MiddleBarNav />
       </Suspense>
         <Promo />
