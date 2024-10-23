@@ -1,30 +1,30 @@
-'use client'
+"use client";
 
-import Image from "next/image"
-import Link from "next/link"
-import { useState, useEffect, useRef } from "react"
-import creditCardType from "credit-card-type"
-import { useCartStore } from "../../../states/Cardstore"
-import { jost, lexendDeca } from "../../../components/ui/fonts"
-import Container from "../../../components/container"
-import PayPal from "../../../public/card-logos/paypal.svg"
-import {ChevronDown} from 'lucide-react'
-import Klarna from "../../../public/Klarna.svg"
-import visa from "../../../public/card-logos/visa.svg"
-import master from "../../../public/card-logos/master.svg"
-import maestro from "../../../public/card-logos/maestro.svg"
-import ae from "../../../public/card-logos/american-express.svg"
-import paypal from "../../../public/card-logos/paypal.svg"
-import klarna_wal from "../../../public/Klarnawallet.svg"
-import klarna_pink from "../../../public/klarn_pink.svg"
-import {Search, Lock, HelpCircle} from 'lucide-react'
+import Image from "next/image";
+import Link from "next/link";
+import { useState, useEffect, useRef } from "react";
+import creditCardType from "credit-card-type";
+import { useCartStore } from "../../../states/Cardstore";
+import { jost, lexendDeca } from "../../../components/ui/fonts";
+import Container from "../../../components/container";
+import PayPal from "../../../public/card-logos/paypal.svg";
+import { ChevronDown } from "lucide-react";
+import Klarna from "../../../public/Klarna.svg";
+import visa from "../../../public/card-logos/visa.svg";
+import master from "../../../public/card-logos/master.svg";
+import maestro from "../../../public/card-logos/maestro.svg";
+import ae from "../../../public/card-logos/american-express.svg";
+import paypal from "../../../public/card-logos/paypal.svg";
+import klarna_wal from "../../../public/Klarnawallet.svg";
+import klarna_pink from "../../../public/klarn_pink.svg";
+import { Search, Lock, HelpCircle } from "lucide-react";
 
-import { usePopupStore } from "/states/use-popup-store"
-import { useRouter } from "next/navigation"
-import { toast } from 'react-toastify'
-import PhoneInput from "react-phone-input-2"
-import "react-phone-input-2/lib/style.css"
-import { CountryDropdown, RegionDropdown } from 'react-country-region-selector'
+import { usePopupStore } from "/states/use-popup-store";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
 
 const shippingOptions = [
   {
@@ -57,11 +57,26 @@ const shippingOptions = [
     time: "(Arrives tomorrow, 20 June before 11:00am)",
     price: 5.99,
   },
-]
+];
 
-const FloatingLabelInput = ({ label, name, value, onChange, type = "text", error, icon }) => {
-  const formattedLabel = label === "FirstName" ? "First Name" : label === "LastName" ? "Last Name" : label;
-  const formattedError = error?.replace("FirstName", "First Name").replace("LastName", "Last Name");
+const FloatingLabelInput = ({
+  label,
+  name,
+  value,
+  onChange,
+  type = "text",
+  error,
+  icon,
+}) => {
+  const formattedLabel =
+    label === "FirstName"
+      ? "First Name"
+      : label === "LastName"
+        ? "Last Name"
+        : label;
+  const formattedError = error
+    ?.replace("FirstName", "First Name")
+    .replace("LastName", "Last Name");
 
   return (
     <div className="relative mb-4">
@@ -69,27 +84,29 @@ const FloatingLabelInput = ({ label, name, value, onChange, type = "text", error
         type={type}
         id={name}
         name={name}
-        className={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-[#8B929D] bg-transparent rounded-lg border ${error ? 'border-[#BF0000]' : 'border-[#EFEFEF]'} appearance-none focus:outline-none focus:ring-0 focus:border-black peer ${lexendDeca.className}`}
+        className={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-[#8B929D] bg-transparent rounded-lg border ${error ? "border-[#BF0000]" : "border-[#EFEFEF]"} appearance-none focus:outline-none focus:ring-0 focus:border-black peer ${lexendDeca.className}`}
         placeholder=" "
         value={value}
         onChange={onChange}
       />
       <label
         htmlFor={name}
-        className={`absolute text-sm ${error ? 'text-[#BF0000]' : 'text-[#8B929D]'} duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-black peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 start-1 ${lexendDeca.className}`}
+        className={`absolute text-sm ${error ? "text-[#BF0000]" : "text-[#8B929D]"} duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-black peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 start-1 ${lexendDeca.className}`}
       >
         {formattedLabel}
       </label>
       {error && (
         <div className="absolute flex items-center mt-1">
-          <div className="text-[#BF0000] text-xs bg-white px-1">{formattedError}</div>
+          <div className="text-[#BF0000] text-xs bg-white px-1">
+            {formattedError}
+          </div>
         </div>
       )}
       {icon && (
-  <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-    {icon}
-  </div>
-)}
+        <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+          {icon}
+        </div>
+      )}
     </div>
   );
 };
@@ -106,7 +123,9 @@ function PaymentOption({ id, name, selected, onChange, children }) {
             onChange={onChange}
             className="sr-only"
           />
-          <div className={`w-5 h-5 border-2 rounded-full ${selected ? 'border-black bg-black' : 'border-gray-300'}`}>
+          <div
+            className={`w-5 h-5 border-2 rounded-full ${selected ? "border-black bg-black" : "border-gray-300"}`}
+          >
             {selected && (
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="w-2 h-2 bg-white rounded-full"></div>
@@ -118,13 +137,61 @@ function PaymentOption({ id, name, selected, onChange, children }) {
       </label>
       {children}
     </div>
-  )
+  );
 }
 
+const decodeHTMLEntities = (text) => {
+  if (!text) return "";
+  const textArea = document.createElement("textarea");
+  textArea.innerHTML = text;
+  return textArea.value;
+};
+
+// Add these normalization functions at the top of your file
+const normalizeCartItem = (item) => {
+  const isGraphQLSchema = item.attributes?.nodes !== undefined;
+
+  return {
+    id: isGraphQLSchema ? item.databaseId : item.id,
+    name: decodeHTMLEntities(item.name), // Decode name during normalization
+    price: isGraphQLSchema
+      ? parseFloat(item.price.replace(/[^\d.-]/g, ""))
+      : parseFloat(item.price),
+    image: isGraphQLSchema
+      ? { src: item.image?.sourceUrl || "/placeholder.svg" }
+      : { src: item.images?.[0]?.src || item.image?.src || "/placeholder.svg" },
+    attributes: normalizeAttributes(item.attributes, isGraphQLSchema),
+    quantity: item.quantity,
+  };
+};
+
+const normalizeAttributes = (attributes, isGraphQLSchema) => {
+  if (!attributes) return [];
+
+  if (isGraphQLSchema) {
+    return (attributes.nodes || []).map((attr) => ({
+      name: attr.name,
+      options: attr.options?.map((opt) => decodeHTMLEntities(opt)) || [], // Decode options
+    }));
+  }
+
+  return (attributes || []).map((attr) => ({
+    name: attr.name,
+    options: attr.options?.map((opt) => decodeHTMLEntities(opt)) || [], // Decode options
+  }));
+};
+
+const getAttributeValue = (normalizedItem, attributeName) => {
+  const attribute = normalizedItem.attributes.find(
+    (attr) => attr.name === attributeName,
+  );
+  return attribute?.options?.[0] || "N/A";
+};
+
 export default function Checkout() {
-  const [isMounted, setIsMounted] = useState(false)
-  const { cartItems } = useCartStore()
-  const { rate, currencySymbol } = usePopupStore()
+  const [isMounted, setIsMounted] = useState(false);
+  const { cartItems } = useCartStore();
+  const { rate, currencySymbol } = usePopupStore();
   const [formData, setFormData] = useState({
     email: "",
     firstName: "",
@@ -140,49 +207,46 @@ export default function Checkout() {
     promoCode: "",
     country: "",
     region: "",
-  })
-  const [errors, setErrors] = useState({})
-  const [touched, setTouched] = useState({})
-  const [saveInfo, setSaveInfo] = useState(false)
-  const [cardNumber, setCardNumber] = useState("")
-  const [subscribeToNews, setSubscribeToNews] = useState(false)
-  const [useSameAddress, setUseSameAddress] = useState(false)
-  const [paymentMethod, setPaymentMethod] = useState("card")
-  const [shippingMethod, setShippingMethod] = useState(null)
-  const [showShippingDropdown, setShowShippingDropdown] = useState(false)
-  const [filteredShippingOptions, setFilteredShippingOptions] = useState(shippingOptions)
-  const [showPaymentOptions, setShowPaymentOptions] = useState(false)
-  const shippingRef = useRef(null)
-  const paymentRef = useRef(null)
-  const [cardType, setCardType] = useState("")
-  const router = useRouter()
-  const [paypalOption, setPaypalOption] = useState("")
-  const [klarnaOption, setKlarnaOption] = useState("")
-  const [phone, setPhone] = useState('')
-  const [error, setError] = useState('')
+  });
+  const [errors, setErrors] = useState({});
+  const [touched, setTouched] = useState({});
+  const [saveInfo, setSaveInfo] = useState(false);
+  const [cardNumber, setCardNumber] = useState("");
+  const [subscribeToNews, setSubscribeToNews] = useState(false);
+  const [useSameAddress, setUseSameAddress] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState("card");
+  const [shippingMethod, setShippingMethod] = useState(null);
+  const [showShippingDropdown, setShowShippingDropdown] = useState(false);
+  const [filteredShippingOptions, setFilteredShippingOptions] =
+    useState(shippingOptions);
+  const [showPaymentOptions, setShowPaymentOptions] = useState(false);
+  const shippingRef = useRef(null);
+  const paymentRef = useRef(null);
+  const [cardType, setCardType] = useState("");
+  const router = useRouter();
+  const [paypalOption, setPaypalOption] = useState("");
+  const [klarnaOption, setKlarnaOption] = useState("");
+  const [phone, setPhone] = useState("");
+  const [error, setError] = useState("");
 
-  const paypalOptions = [
-    "Pay in full",
-    "Pay in 4",
-    "Pay monthly",
-  ]
+  const paypalOptions = ["Pay in full", "Pay in 4", "Pay monthly"];
 
   const klarnaOptions = [
     "Pay in 30 days",
     "Pay in 3 installments",
     "6-36 month financing",
-  ]
+  ];
 
   const validateField = (name, value) => {
-    let error = ""
+    let error = "";
     switch (name) {
       case "email":
         if (!value) {
-          error = "Email is required"
+          error = "Email is required";
         } else if (!/\S+@\S+\.\S+/.test(value)) {
-          error = "Enter a valid email address"
+          error = "Enter a valid email address";
         }
-        break
+        break;
       case "firstName":
       case "lastName":
       case "address":
@@ -192,97 +256,111 @@ export default function Checkout() {
       case "country":
       case "region":
         if (!value) {
-          error = `${name.charAt(0).toUpperCase() + name.slice(1)} is required`
+          error = `${name.charAt(0).toUpperCase() + name.slice(1)} is required`;
         }
-        break
+        break;
       case "cardNumber":
         if (!value) {
-          error = "Card number is required"
+          error = "Card number is required";
         } else {
-          const cleanedValue = value.replace(/\s/g, "")
+          const cleanedValue = value.replace(/\s/g, "");
           if (!/^\d{15,16}$/.test(cleanedValue)) {
-            error = "Enter a valid 15 or 16-digit card number"
+            error = "Enter a valid 15 or 16-digit card number";
           } else if (
             cleanedValue.length === 15 &&
             cardType !== "american-express"
           ) {
-            error = "This card number is invalid for the detected card type"
+            error = "This card number is invalid for the detected card type";
           } else if (
             cleanedValue.length === 16 &&
             cardType === "american-express"
           ) {
-            error = "American Express cards should have 15 digits"
+            error = "American Express cards should have 15 digits";
           }
         }
-        break
+        break;
       case "expirationDate":
         if (!value) {
-          error = "Expiration date is required"
+          error = "Expiration date is required";
         } else if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(value)) {
-          error = "Enter a valid expiration date (MM/YY)"
+          error = "Enter a valid expiration date (MM/YY)";
         }
-        break
+        break;
       case "securityCode":
         if (!value) {
-          error = "Security code is required"
+          error = "Security code is required";
         } else if (!/^\d{3,4}$/.test(value)) {
-          error = "Enter a valid 3 or 4-digit security code"
+          error = "Enter a valid 3 or 4-digit security code";
         }
-        break
+        break;
       case "nameOnCard":
         if (!value) {
-          error = "Name on card is required"
+          error = "Name on card is required";
         }
-        break
+        break;
     }
-    return error
-  }
+    return error;
+  };
 
   const handlePayNow = () => {
-    const requiredFields = ['firstName', 'lastName', 'address', 'city', 'postcode', 'phone', 'email', 'country']
-    const newErrors = {}
-    requiredFields.forEach(field => {
-      const error = validateField(field, formData[field])
+    const requiredFields = [
+      "firstName",
+      "lastName",
+      "address",
+      "city",
+      "postcode",
+      "phone",
+      "email",
+      "country",
+    ];
+    const newErrors = {};
+    requiredFields.forEach((field) => {
+      const error = validateField(field, formData[field]);
       if (error) {
-        newErrors[field] = error
+        newErrors[field] = error;
       }
-    })
+    });
 
     if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors)
-      toast.error(`Please fill in all required fields`)
-      return
+      setErrors(newErrors);
+      toast.error(`Please fill in all required fields`);
+      return;
     }
 
     if (!shippingMethod) {
-      toast.error('Please select a shipping method')
-      return
+      toast.error("Please select a shipping method");
+      return;
     }
 
     if (!paymentMethod) {
-      toast.error('Please select a payment method')
-      return
+      toast.error("Please select a payment method");
+      return;
     }
 
-    if (paymentMethod === 'card') {
-      const cardFields = ['cardNumber', 'expirationDate', 'securityCode', 'nameOnCard']
-      cardFields.forEach(field => {
-        const error = validateField(field, formData[field])
+    if (paymentMethod === "card") {
+      const cardFields = [
+        "cardNumber",
+        "expirationDate",
+        "securityCode",
+        "nameOnCard",
+      ];
+      cardFields.forEach((field) => {
+        const error = validateField(field, formData[field]);
         if (error) {
-          newErrors[field] = error
+          newErrors[field] = error;
         }
-      })
+      });
 
       if (Object.keys(newErrors).length > 0) {
-        setErrors(newErrors)
-        toast.error(`Please fill in all card details correctly`)
-        return
+        setErrors(newErrors);
+        toast.error(`Please fill in all card details correctly`);
+        return;
       }
     }
 
     if (cartItems.length === 0) {
-      toast.error('Your cart is empty')
-      return
+      toast.error("Your cart is empty");
+      return;
     }
 
     try {
@@ -300,163 +378,165 @@ export default function Checkout() {
         },
         paymentMethod: paymentMethod,
         cardType: cardType,
-        cardLastFour: formData.cardNumber ? formData.cardNumber.slice(-4) : null,
+        cardLastFour: formData.cardNumber
+          ? formData.cardNumber.slice(-4)
+          : null,
         cartItems: cartItems,
         subtotal: subtotal,
         shipping: shipping,
         total: total,
         shippingMethod: shippingMethod.name,
-      }
+      };
 
-      useCartStore.getState().setOrderDetails(orderDetails)
-      toast.success('Order placed successfully!')
-      
-      router.push('/confirmation-successful')
+      useCartStore.getState().setOrderDetails(orderDetails);
+      toast.success("Order placed successfully!");
+
+      router.push("/confirmation-successful");
     } catch (error) {
-      console.error('Error processing order:', error)
-      toast.error('There was an error processing your order. Please try again.')
+      console.error("Error processing order:", error);
+      toast.error(
+        "There was an error processing your order. Please try again.",
+      );
     }
-  }
+  };
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
-    setErrors((prev) => ({ ...prev, [name]: validateField(name, value) }))
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    setErrors((prev) => ({ ...prev, [name]: validateField(name, value) }));
 
     if (name === "cardNumber") {
-      handleCardNumberChange(e)
+      handleCardNumberChange(e);
     }
-  }
+  };
 
   const handleBlur = (e) => {
-    const { name } = e.target
-    setTouched((prev) => ({ ...prev, [name]: true }))
-  }
+    const { name } = e.target;
+    setTouched((prev) => ({ ...prev, [name]: true }));
+  };
 
   const handleShippingSearch = (e) => {
-    const searchTerm = e.target.value.toLowerCase()
+    const searchTerm = e.target.value.toLowerCase();
     const filtered = shippingOptions.filter(
       (option) =>
         option.name.toLowerCase().includes(searchTerm) ||
-        option.time.toLowerCase().includes(searchTerm)
-    )
-    setFilteredShippingOptions(filtered)
-  }
+        option.time.toLowerCase().includes(searchTerm),
+    );
+    setFilteredShippingOptions(filtered);
+  };
 
   const selectShippingMethod = (method) => {
-    setShippingMethod(method)
-    setShowShippingDropdown(false)
-  }
+    setShippingMethod(method);
+    setShowShippingDropdown(false);
+  };
 
   const calculateSubtotal = () => {
-    return cartItems.reduce(
-      (acc, item) => acc + (parseFloat(item.price) || 0) * item.quantity,
-      0
-    )
-  }
+    return cartItems.reduce((acc, item) => {
+      const normalizedItem = normalizeCartItem(item);
+      return acc + normalizedItem.price * item.quantity;
+    }, 0);
+  };
 
-  const subtotal = calculateSubtotal()
-  const shipping = shippingMethod ? shippingMethod.price : 0
-  const total = subtotal + shipping
+  const subtotal = calculateSubtotal();
+  const shipping = shippingMethod ? shippingMethod.price : 0;
+  const total = subtotal + shipping;
 
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (shippingRef.current && !shippingRef.current.contains(event.target)) {
-        setShowShippingDropdown(false)
+        setShowShippingDropdown(false);
       }
-    }
+    };
 
-    document.addEventListener("mousedown", handleClickOutside)
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside)
-    }
-  }, [])
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const handleCardNumberChange = (e) => {
-    const value = e.target.value.replace(/\s/g, "")
-    setCardNumber(value)
-    setFormData((prev) => ({ ...prev, cardNumber: formatCardNumber(value) }))
+    const value = e.target.value.replace(/\s/g, "");
+    setCardNumber(value);
+    setFormData((prev) => ({ ...prev, cardNumber: formatCardNumber(value) }));
 
     if (value) {
-      const detectedTypes = creditCardType(value)
+      const detectedTypes = creditCardType(value);
       if (detectedTypes.length > 0) {
-        setCardType(detectedTypes[0].type)
+        setCardType(detectedTypes[0].type);
       } else {
-        setCardType("")
+        setCardType("");
       }
     } else {
-      setCardType("")
+      setCardType("");
     }
 
     setErrors((prev) => ({
       ...prev,
       cardNumber: validateField("cardNumber", value),
-    }))
-  }
+    }));
+  };
 
   const getCardLogo = () => {
     switch (cardType) {
       case "visa":
-        return visa
+        return visa;
       case "mastercard":
-        return master
+        return master;
       case "maestro":
-        return maestro
+        return maestro;
       case "american-express":
-        return ae
+        return ae;
       default:
-        return null
+        return null;
     }
-  }
+  };
 
   const formatCardNumber = (value) => {
-    const v = value.replace(/\s+/g, "").replace(/[^0-9]/gi, "")
-    const matches = v.match(/\d{4,16}/g)
-    const match = (matches && matches[0]) || ""
-    const parts = []
+    const v = value.replace(/\s+/g, "").replace(/[^0-9]/gi, "");
+    const matches = v.match(/\d{4,16}/g);
+    const match = (matches && matches[0]) || "";
+    const parts = [];
 
     for (let i = 0, len = match.length; i < len; i += 4) {
-      parts.push(match.substring(i, i + 4))
+      parts.push(match.substring(i, i + 4));
     }
 
     if (parts.length) {
-      return parts.join(" ")
+      return parts.join(" ");
     } else {
-      return value
+      return value;
     }
-  }
+  };
 
   const handlePaymentMethodChange = (method) => {
-    setPaymentMethod(method)
-    setShowPaymentOptions(false)
-    if (method === 'paypal') {
-      setPaypalOption(paypalOptions[0])
-    } else if (method === 'klarna') {
-      setKlarnaOption(klarnaOptions[0])
+    setPaymentMethod(method);
+    setShowPaymentOptions(false);
+    if (method === "paypal") {
+      setPaypalOption(paypalOptions[0]);
+    } else if (method === "klarna") {
+      setKlarnaOption(klarnaOptions[0]);
     }
-  }
+  };
 
   const handlePhoneChange = (value) => {
-    setFormData(prev => ({ ...prev, phone: value }))
-    setErrors(prev => ({ ...prev, phone: validateField("phone", value) }))
-  }
+    setFormData((prev) => ({ ...prev, phone: value }));
+    setErrors((prev) => ({ ...prev, phone: validateField("phone", value) }));
+  };
 
   const handleCountryChange = (val) => {
-    setFormData(prev => ({ ...prev, country: val, region: '' }))
-    setErrors(prev => ({ ...prev, country: validateField("country", val) }))
-  }
+    setFormData((prev) => ({ ...prev, country: val, region: "" }));
+    setErrors((prev) => ({ ...prev, country: validateField("country", val) }));
+  };
 
   const handleRegionChange = (val) => {
-    setFormData(prev => ({ ...prev, region: val }))
-    setErrors(prev => ({ ...prev, region: validateField("region", val) }))
-  }
+    setFormData((prev) => ({ ...prev, region: val }));
+    setErrors((prev) => ({ ...prev, region: validateField("region", val) }));
+  };
 
   return (
     <Container>
       <div className="flex justify-between w-[65%] mt-16 mb-20 items-center">
-        <h1 className={`text-3xl font-semibold ${jost.className}`}>
-          Checkout
-        </h1>
+        <h1 className={`text-3xl font-semibold ${jost.className}`}>Checkout</h1>
         <div className="md:flex items-center gap-4 hidden">
           <p className={`${jost.className}`}>Have an account ?</p>
           <Link href="/login">
@@ -477,9 +557,9 @@ export default function Checkout() {
               <button
                 className={`bg-yellow-400 w-[48%] hover:bg-yellow-500 text-black px-4 py-2 rounded flex items-center justify-center ${jost.className}`}
               >
-                <span className=" hidden sm:inline">Pay with{" "}</span>
+                <span className=" hidden sm:inline">Pay with </span>
                 <span className="sm:ml-2  ">
-                  <Image className="w-16" src={PayPal} alt="PayPal"   />
+                  <Image className="w-16" src={PayPal} alt="PayPal" />
                 </span>
               </button>
               <button
@@ -488,7 +568,7 @@ export default function Checkout() {
                 <span className="sm:mr-2">
                   <Image src={Klarna} alt="Klarna" />
                 </span>{" "}
-                <span  className=" hidden sm:inline">Express Checkout</span>
+                <span className=" hidden sm:inline">Express Checkout</span>
               </button>
             </div>
 
@@ -498,7 +578,7 @@ export default function Checkout() {
                 <span
                   className={`px-3 text-gray-500 text-sm ${lexendDeca.className}`}
                 >
-                   or Continue with
+                  or Continue with
                 </span>
                 {/* <hr className="flex-grow border-t border-[#EFEFEF]" /> */}
               </div>
@@ -539,27 +619,34 @@ export default function Checkout() {
 
               {/* Delivery Section */}
               <div className="">
-                <h2 className={`text-xl font-semibold mb-2 mt-20 ${jost.className}`}>
+                <h2
+                  className={`text-xl font-semibold mb-2 mt-20 ${jost.className}`}
+                >
                   Delivery
                 </h2>
                 <div className="relative mb-4">
                   <CountryDropdown
                     value={formData.country}
                     onChange={handleCountryChange}
-                    classes={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-[#8B929D] bg-transparent rounded-lg border ${errors.country ? 'border-[#BF0000]' : 'border-[#EFEFEF]'} appearance-none focus:outline-none focus:ring-0 focus:border-black peer ${lexendDeca.className}`}
+                    classes={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-[#8B929D] bg-transparent rounded-lg border ${errors.country ? "border-[#BF0000]" : "border-[#EFEFEF]"} appearance-none focus:outline-none focus:ring-0 focus:border-black peer ${lexendDeca.className}`}
                   />
-                  <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-black pointer-events-none" size={20} />
+                  <ChevronDown
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-black pointer-events-none"
+                    size={20}
+                  />
                   <label
                     htmlFor="country"
-                    className={`absolute text-sm ${errors.country ? 'text-[#BF0000]' : 'text-black'} duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-black peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 start-1 ${lexendDeca.className}`}
+                    className={`absolute text-sm ${errors.country ? "text-[#BF0000]" : "text-black"} duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-black peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 start-1 ${lexendDeca.className}`}
                   >
                     Country/Region*
                   </label>
                   {errors.country && (
-                    <div className="text-[#BF0000] text-xs mt-1">{errors.country}</div>
+                    <div className="text-[#BF0000] text-xs mt-1">
+                      {errors.country}
+                    </div>
                   )}
                 </div>
-      
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 mt-7 mb-4 gap-4">
                   <FloatingLabelInput
                     label="First Name*"
@@ -577,21 +664,21 @@ export default function Checkout() {
                   />
                 </div>
                 <FloatingLabelInput
-  label="Address*"
-  name="address"
-  value={formData.address}
-  onChange={handleInputChange}
-  error={errors.address}
-  icon={<Search size={20} />}
+                  label="Address*"
+                  name="address"
+                  value={formData.address}
+                  onChange={handleInputChange}
+                  error={errors.address}
+                  icon={<Search size={20} />}
                 />
-                   <FloatingLabelInput
-  label="Address, suite, etc. (optional)"
-  name="address"
-  value={formData.address}
-  onChange={handleInputChange}
-  error={errors.address}
-  icon={<HelpCircle size={20} />}
-/>
+                <FloatingLabelInput
+                  label="Address, suite, etc. (optional)"
+                  name="address"
+                  value={formData.address}
+                  onChange={handleInputChange}
+                  error={errors.address}
+                  icon={<HelpCircle size={20} />}
+                />
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-7 mb-4">
                   <FloatingLabelInput
                     label="City*"
@@ -610,13 +697,13 @@ export default function Checkout() {
                 </div>
                 <div className="relative">
                   <PhoneInput
-                    country={'gb'}
+                    country={"gb"}
                     value={phone}
                     onChange={handlePhoneChange}
                     inputProps={{
-                      name: 'phone',
+                      name: "phone",
                       required: true,
-                      className: `block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border ${error ? 'border-red-500' : 'border-[#EFEFEF]'} appearance-none focus:outline-none focus:ring-0 focus:border-black peer pl-14 ${lexendDeca.className}`,
+                      className: `block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border ${error ? "border-red-500" : "border-[#EFEFEF]"} appearance-none focus:outline-none focus:ring-0 focus:border-black peer pl-14 ${lexendDeca.className}`,
                     }}
                     containerClass="w-full"
                     buttonClass="h-full !bg-[#F7F7F7A6] hover:!bg-[#F7F7F7A6] focus:!bg-[#F7F7F7A6] active:!bg-[#F7F7F7A6] border-none rounded-l-lg"
@@ -682,7 +769,8 @@ export default function Checkout() {
                             <p
                               className={`font-semibold ${lexendDeca.className}`}
                             >
-                              {currencySymbol}{parseFloat(option.price * rate).toFixed(2)}
+                              {currencySymbol}
+                              {parseFloat(option.price * rate).toFixed(2)}
                             </p>
                           </div>
                         </div>
@@ -693,7 +781,8 @@ export default function Checkout() {
                 {shippingMethod && (
                   <div className={`mt-2 ${jost.className}`}>
                     <p>
-                      Selected: {shippingMethod.name} - {currencySymbol}{parseFloat(shippingMethod.price * rate).toFixed(2)}
+                      Selected: {shippingMethod.name} - {currencySymbol}
+                      {parseFloat(shippingMethod.price * rate).toFixed(2)}
                     </p>
                   </div>
                 )}
@@ -719,15 +808,42 @@ export default function Checkout() {
                       <div className="border-b pb-4">
                         <PaymentOption
                           id="card"
-                          name={<span className={`${lexendDeca.className}`} style={{ fontWeight: 400 }}>Pay by card</span>}
+                          name={
+                            <span
+                              className={`${lexendDeca.className}`}
+                              style={{ fontWeight: 400 }}
+                            >
+                              Pay by card
+                            </span>
+                          }
                           selected={paymentMethod === "card"}
                           onChange={() => handlePaymentMethodChange("card")}
                         >
                           <div className="flex space-x-2">
-                            <Image src={visa} alt="Visa" width={32} height={20} />
-                            <Image src={master} alt="Mastercard" width={32} height={20} />
-                            <Image src={maestro} alt="Maestro" width={32} height={20} />
-                            <Image src={ae} alt="American Express" width={32} height={20} />
+                            <Image
+                              src={visa}
+                              alt="Visa"
+                              width={32}
+                              height={20}
+                            />
+                            <Image
+                              src={master}
+                              alt="Mastercard"
+                              width={32}
+                              height={20}
+                            />
+                            <Image
+                              src={maestro}
+                              alt="Maestro"
+                              width={32}
+                              height={20}
+                            />
+                            <Image
+                              src={ae}
+                              alt="American Express"
+                              width={32}
+                              height={20}
+                            />
                           </div>
                         </PaymentOption>
                       </div>
@@ -735,22 +851,46 @@ export default function Checkout() {
                       <div className="border-b pb-4">
                         <PaymentOption
                           id="paypal"
-                          name={<span className={`${lexendDeca.className}`} style={{ fontWeight: 400 }}>PayPal</span>}
+                          name={
+                            <span
+                              className={`${lexendDeca.className}`}
+                              style={{ fontWeight: 400 }}
+                            >
+                              PayPal
+                            </span>
+                          }
                           selected={paymentMethod === "paypal"}
                           onChange={() => handlePaymentMethodChange("paypal")}
                         >
-                          <Image src={paypal} alt="PayPal" width={64} height={20} />
+                          <Image
+                            src={paypal}
+                            alt="PayPal"
+                            width={64}
+                            height={20}
+                          />
                         </PaymentOption>
                       </div>
 
                       <div>
                         <PaymentOption
                           id="klarna"
-                          name={<span className={`${lexendDeca.className}`} style={{ fontWeight: 400 }}>Klarna - Flexible payments</span>}
+                          name={
+                            <span
+                              className={`${lexendDeca.className}`}
+                              style={{ fontWeight: 400 }}
+                            >
+                              Klarna - Flexible payments
+                            </span>
+                          }
                           selected={paymentMethod === "klarna"}
                           onChange={() => handlePaymentMethodChange("klarna")}
                         >
-                          <Image src={klarna_pink} alt="Klarna" width={64} height={20} />
+                          <Image
+                            src={klarna_pink}
+                            alt="Klarna"
+                            width={64}
+                            height={20}
+                          />
                         </PaymentOption>
                       </div>
                     </>
@@ -760,26 +900,53 @@ export default function Checkout() {
                         <div className=" pb-4">
                           <PaymentOption
                             id="card"
-                            name={<span className={`${lexendDeca.className}`} style={{ fontWeight: 400 }}>Pay by card</span>}
+                            name={
+                              <span
+                                className={`${lexendDeca.className}`}
+                                style={{ fontWeight: 400 }}
+                              >
+                                Pay by card
+                              </span>
+                            }
                             selected={true}
                             onChange={() => {}}
                           >
                             <div className="flex space-x-2">
-                              <Image src={visa} alt="Visa" width={32} height={20} />
-                              <Image src={master} alt="Mastercard" width={32} height={20} />
-                              <Image src={maestro} alt="Maestro" width={32} height={20} />
-                              <Image src={ae} alt="American Express" width={32} height={20} />
+                              <Image
+                                src={visa}
+                                alt="Visa"
+                                width={32}
+                                height={20}
+                              />
+                              <Image
+                                src={master}
+                                alt="Mastercard"
+                                width={32}
+                                height={20}
+                              />
+                              <Image
+                                src={maestro}
+                                alt="Maestro"
+                                width={32}
+                                height={20}
+                              />
+                              <Image
+                                src={ae}
+                                alt="American Express"
+                                width={32}
+                                height={20}
+                              />
                             </div>
                           </PaymentOption>
                           <div className="mt-4 space-y-4">
-                          <FloatingLabelInput
-  label="Card number*"
-  name="cardNumber"
-  value={formData.cardNumber}
-  onChange={handleCardNumberChange}
-  error={errors.cardNumber}
-  icon={<Lock size={20} />}
-/>
+                            <FloatingLabelInput
+                              label="Card number*"
+                              name="cardNumber"
+                              value={formData.cardNumber}
+                              onChange={handleCardNumberChange}
+                              error={errors.cardNumber}
+                              icon={<Lock size={20} />}
+                            />
                             <div className="flex items-center gap-4">
                               <div className="relative w-1/2">
                                 <FloatingLabelInput
@@ -793,13 +960,13 @@ export default function Checkout() {
                               </div>
                               <div className="relative w-1/2">
                                 <FloatingLabelInput
-                                    label="Security code*"
-                                    name="securityCode"
-                                    value={formData.securityCode}
-                                    onChange={handleInputChange}
-                                    error={errors.securityCode}
-                                    className="pr-12"
-                                    icon={<HelpCircle size={20} />}
+                                  label="Security code*"
+                                  name="securityCode"
+                                  value={formData.securityCode}
+                                  onChange={handleInputChange}
+                                  error={errors.securityCode}
+                                  className="pr-12"
+                                  icon={<HelpCircle size={20} />}
                                 />
                               </div>
                             </div>
@@ -815,7 +982,9 @@ export default function Checkout() {
                                 type="checkbox"
                                 id="useSameAddress"
                                 checked={useSameAddress}
-                                onChange={(e) => setUseSameAddress(e.target.checked)}
+                                onChange={(e) =>
+                                  setUseSameAddress(e.target.checked)
+                                }
                                 className="mr-2 h-4 w-4 rounded border-gray-300 text-black focus:ring-black accent-black"
                               />
                               <label
@@ -832,15 +1001,31 @@ export default function Checkout() {
                         <div className="pb-4">
                           <PaymentOption
                             id="paypal"
-                            name={<span className={`${lexendDeca.className}`} style={{ fontWeight: 400 }}>PayPal</span>}
+                            name={
+                              <span
+                                className={`${lexendDeca.className}`}
+                                style={{ fontWeight: 400 }}
+                              >
+                                PayPal
+                              </span>
+                            }
                             selected={true}
                             onChange={() => {}}
                           >
-                            <Image src={paypal} alt="PayPal" width={64} height={20} />
+                            <Image
+                              src={paypal}
+                              alt="PayPal"
+                              width={64}
+                              height={20}
+                            />
                           </PaymentOption>
                           <div className="mt-4">
-                            <p className={`text-sm 2xl:text-[16px] w-[70%] text-center mx-auto text-black ${lexendDeca.className}`}>
-                              After clicking &quot;Pay now&quot;, you will be redirected to PayPal to complete your purchase securely.
+                            <p
+                              className={`text-sm 2xl:text-[16px] w-[70%] text-center mx-auto text-black ${lexendDeca.className}`}
+                            >
+                              After clicking &quot;Pay now&quot;, you will be
+                              redirected to PayPal to complete your purchase
+                              securely.
                             </p>
                           </div>
                         </div>
@@ -849,18 +1034,39 @@ export default function Checkout() {
                         <div>
                           <PaymentOption
                             id="klarna"
-                            name={<span className={`${lexendDeca.className}`} style={{ fontWeight: 400 }}>Klarna - Flexible payments</span>}
+                            name={
+                              <span
+                                className={`${lexendDeca.className}`}
+                                style={{ fontWeight: 400 }}
+                              >
+                                Klarna - Flexible payments
+                              </span>
+                            }
                             selected={true}
                             onChange={() => {}}
                           >
-                            <Image src={klarna_pink} alt="Klarna" width={64} height={20} />
+                            <Image
+                              src={klarna_pink}
+                              alt="Klarna"
+                              width={64}
+                              height={20}
+                            />
                           </PaymentOption>
                           <div className="mt-4 space-y-4">
                             <div className="flex justify-center gap-6 items-center space-x-2">
-                              <Image src={klarna_wal} alt="Klarna Wallet" width={130} height={130} />
+                              <Image
+                                src={klarna_wal}
+                                alt="Klarna Wallet"
+                                width={130}
+                                height={130}
+                              />
                             </div>
-                            <p className={`text-sm font-normal mx-auto text-center max-w-[70%] text-black ${lexendDeca.className}`}>
-                              After clicking &quot;Pay now&quot;, you will be redirected to Klarna - Flexible payments to complete your purchase securely.
+                            <p
+                              className={`text-sm font-normal mx-auto text-center max-w-[70%] text-black ${lexendDeca.className}`}
+                            >
+                              After clicking &quot;Pay now&quot;, you will be
+                              redirected to Klarna - Flexible payments to
+                              complete your purchase securely.
                             </p>
                           </div>
                         </div>
@@ -897,12 +1103,16 @@ export default function Checkout() {
               >
                 PAY NOW
               </button>
-              <p className={`${lexendDeca.className} text-[12px] xs:text-[15px]  2xl:text-[20px] font-normal  w-full`}>By placing this order, you are confirming that you agree to our <span className="underline">Terms and Conditions</span>  and  <span className="underline">Privacy Policy</span>.
-          </p>
-
+              <p
+                className={`${lexendDeca.className} text-[12px] xs:text-[15px]  2xl:text-[20px] font-normal  w-full`}
+              >
+                By placing this order, you are confirming that you agree to our{" "}
+                <span className="underline">Terms and Conditions</span> and{" "}
+                <span className="underline">Privacy Policy</span>.
+              </p>
             </div>
           </div>
-         
+
           {/* Right: Order Summary and Bag Summary */}
           <div className="lg:w-1/3 bg-gray-50 p-6  lg:-mt-[180px] xs:block hidden">
             <div className=" ">
@@ -914,13 +1124,20 @@ export default function Checkout() {
                 {/* Subtotal */}
                 <div className={`flex justify-between mb-2 ${jost.className}`}>
                   <span>Subtotal ({cartItems.length} items):</span>
-                  <span>{currencySymbol}{parseFloat(subtotal * rate).toFixed(2)}</span>
+                  <span>
+                    {currencySymbol}
+                    {parseFloat(subtotal * rate).toFixed(2)}
+                  </span>
                 </div>
 
                 {/* Shipping */}
                 <div className={`flex justify-between mb-2 ${jost.className}`}>
                   <span>Shipping:</span>
-                  <span>{shipping ? `${currencySymbol}${shipping.toFixed(2)}` : "Free"}</span>
+                  <span>
+                    {shipping
+                      ? `${currencySymbol}${shipping.toFixed(2)}`
+                      : "Free"}
+                  </span>
                 </div>
                 <hr />
                 {/* Total */}
@@ -928,7 +1145,10 @@ export default function Checkout() {
                   className={`flex justify-between mt-4 font-semibold mb-4 ${jost.className}`}
                 >
                   <span> Estimated Total:</span>
-                  <span>{currencySymbol}{parseFloat(total * rate).toFixed(2)}</span>
+                  <span>
+                    {currencySymbol}
+                    {parseFloat(total * rate).toFixed(2)}
+                  </span>
                 </div>
               </div>
 
@@ -947,61 +1167,54 @@ export default function Checkout() {
                     scrollbarColor: "#888 #f1f1f1",
                   }}
                 >
-                  {cartItems.map((item, index) => (
-                    <div
-                      key={index}
-                      className={`flex justify-between ${
-                        cartItems.length > 1 ? "border-b py-2" : "py-2"
-                      }`}
-                    >
-                      <div className="flex">
-                        {item.images && item.images[0] && item.images[0].src ? (
+                  {cartItems.map((item, index) => {
+                    const normalizedItem = normalizeCartItem(item);
+                    return (
+                      <div
+                        key={normalizedItem.id}
+                        className={`flex justify-between ${
+                          cartItems.length > 1 ? "border-b py-2" : "py-2"
+                        }`}
+                      >
+                        <div className="flex">
                           <Image
-                            src={item.images[0].src}
-                            alt={item.name}
+                            src={normalizedItem.image.src}
+                            alt={normalizedItem.name}
                             width={50}
                             height={50}
                             className="mr-4 object-cover rounded"
                           />
-                        ) : (
-                          <div className="mr-4 bg-gray-200 w-[50px] h-[50px] flex items-center justify-center rounded">
-                            <span className="text-xs text-gray-500">
-                              No Image
-                            </span>
-                          </div>
-                        )}
-                        <div>
-                          <p className={`font-medium ${jost.className}`}>
-                            {item.name}
-                          </p>
-                          <p
-                            className={`text-sm text-black ${jost.className} font-normal`}
-                          >
-                            Shade:{" "}
-                            {item.attributes.find(
-                              (attr) => attr.name === "Shade"
-                            )?.options[0] || "N/A"}
-                          </p>
-                          <p
-                            className={`text-sm text-black ${jost.className} font-normal`}
-                          >
-                            Size:{" "}
-                            {item.attributes.find(
-                              (attr) => attr.name === "Size"
-                            )?.options[0] || "N/A"}
-                          </p>
-                          <p
-                            className={`text-sm text-gray-500 ${lexendDeca.className}`}
-                          >
-                            Qty: {item.quantity}
-                          </p>
-                          <div className={`font-medium ${jost.className}`}>
-                            {currencySymbol}{parseFloat(item.price * rate).toFixed(2)}
+                          <div>
+                            <p className={`font-medium ${jost.className}`}>
+                              {decodeHTMLEntities(normalizedItem.name)}
+                            </p>
+                            <p
+                              className={`text-sm text-black ${jost.className} font-normal`}
+                            >
+                              Shade:{" "}
+                              {getAttributeValue(normalizedItem, "Shade")}
+                            </p>
+                            <p
+                              className={`text-sm text-black ${jost.className} font-normal`}
+                            >
+                              Size: {getAttributeValue(normalizedItem, "Size")}
+                            </p>
+                            <p
+                              className={`text-sm text-gray-500 ${lexendDeca.className}`}
+                            >
+                              Qty: {normalizedItem.quantity}
+                            </p>
+                            <div className={`font-medium ${jost.className}`}>
+                              {currencySymbol}
+                              {parseFloat(normalizedItem.price * rate).toFixed(
+                                2,
+                              )}
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             </div>
@@ -1009,5 +1222,5 @@ export default function Checkout() {
         </div>
       </div>
     </Container>
-  )
+  );
 }
