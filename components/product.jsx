@@ -184,7 +184,7 @@ export default function Product({ product }) {
 //   product: Product;
 // };
 
-export function UpdatedProduct({ product }) {
+function UpdatedProduct({ product }) {
   const [favorites, setFavorites] = useState({});
   const { rate, currencySymbol } = usePopupStore();
 
@@ -240,6 +240,13 @@ export function UpdatedProduct({ product }) {
               </span>
             </div>
           )}
+          {outletPrice ? (
+            <div className="grid place-items-center absolute top-2 left-2 bg-black text-white text-xs font-bold h-16 w-16 rounded-full">
+              <span className={`2xl:text-base font-normal ${lexendDeca.className}`}>
+                OUTLET
+              </span>
+            </div>
+          ): null}
           {/* Favourite button */}
           <div className="absolute top-2 right-2">
             <button
@@ -317,3 +324,4 @@ export function UpdatedProduct({ product }) {
     </div>
   );
 }
+export {UpdatedProduct as Product}

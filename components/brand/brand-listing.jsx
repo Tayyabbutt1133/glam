@@ -7,10 +7,10 @@ import Breadcrumb from "/components/BreadCrumb";
 import Container from "/components/container";
 import { usePopupStore } from "/states/use-popup-store";
 import filter from "/public/filter.svg";
-import CustomDropdown from "./brand-listing/custom-dropdown";
-import ProductGrid from "./brand-listing/product-grid";
-import Pagination from "./brand-listing/pagination";
-import FilterSidebar from "./brand-listing/filter-sidebar";
+import CustomDropdown from "./components/custom-dropdown";
+import ProductGrid from "./components/product-grid";
+import Pagination from "./components/pagination";
+import FilterSidebar from "./components/filter-sidebar";
 
 const PRODUCTS_PER_PAGE = 12;
 

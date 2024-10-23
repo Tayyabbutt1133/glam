@@ -17,7 +17,6 @@ export default function Navigation() {
     img: "",
   });
   const [links, setLinks] = useState([]);
-  const mainLinks = links?.filter((link) => link.parent === "0");
 
   useEffect(() => {
     const fetchLinks = async () => {
@@ -27,16 +26,23 @@ export default function Navigation() {
           {
             method: "GET",
             cache: "no-store",
-          }
+          },
         );
         const data = await res.json();
-        setLinks(data);
+        // Transform all hrefs to lowercase when setting the links
+        const transformedData = data.map((link) => ({
+          ...link,
+          href: link.href?.toLowerCase() || "",
+        }));
+        setLinks(transformedData);
       } catch (err) {
         console.error(err);
       }
     };
     fetchLinks();
   }, []);
+
+  const mainLinks = links?.filter((link) => link.parent === "0");
 
   const shouldShowMegaMenu = links?.find((link) => {
     return (
@@ -47,24 +53,24 @@ export default function Navigation() {
   });
 
   const handleMouseLeave = () => {
-    setHoveredLink({ id: null, href: null, img: '' });
+    setHoveredLink({ id: null, href: null, img: "" });
   };
 
   const closeMegaMenu = () => {
-    setHoveredLink({ id: null, href: null, img: '' });
+    setHoveredLink({ id: null, href: null, img: "" });
   };
 
   return (
     <div className="relative" onMouseLeave={handleMouseLeave}>
       <div
         className={`${jost.className} hidden lg:flex items-center h-[52px] font-normal lg:text-base xl:text-sm bg-white text-sm 2xl:text-lg relative`}
-        style={{ boxShadow: '0px 0px 6px rgba(0, 0, 0, 0.1)', zIndex: '10' }}
+        style={{ boxShadow: "0px 0px 6px rgba(0, 0, 0, 0.1)", zIndex: "10" }}
       >
         <Container>
           <nav className="flex w-[95%] mx-auto  flex-row  xl:gap-[0px] 2xl:gap-[0px] 2xl:text-[20px] xl:text-sm   justify-between xl:justify-around items-center py-3 font-normal">
             {mainLinks?.map((link, index) => (
               <Link
-                className={`box-border pb-2 -mb-2 text-nowrap  uppercase ${
+                className={`box-border pb-2 -mb-2 text-nowrap uppercase ${
                   index === 0 ? "text-sale" : ""
                 }`}
                 key={link.id}
@@ -79,7 +85,7 @@ export default function Navigation() {
                 onMouseEnter={() =>
                   setHoveredLink({
                     id: link.id,
-                    href: link.href,
+                    href: link.href?.toLowerCase(),
                     img: link.menu_img,
                   })
                 }
@@ -97,7 +103,17 @@ export default function Navigation() {
           onMouseEnter={() => clearTimeout()}
           onMouseLeave={handleMouseLeave}
         >
-          <MegaMenu hoveredLink={hoveredLink} links={links} closeMegaMenu={closeMegaMenu} />
+          <MegaMenu
+            hoveredLink={{
+              ...hoveredLink,
+              href: hoveredLink.href?.toLowerCase(),
+            }}
+            links={links.map((link) => ({
+              ...link,
+              href: link.href?.toLowerCase(),
+            }))}
+            closeMegaMenu={closeMegaMenu}
+          />
         </div>
       )}
     </div>
