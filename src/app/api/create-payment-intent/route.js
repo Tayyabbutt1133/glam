@@ -1,6 +1,6 @@
 // app/api/create-payment-intent/route.js
 import { NextResponse } from 'next/server';
-import Stripe from 'stripe';
+import Stripe from '@stripe/stripe-js';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
