@@ -2,7 +2,12 @@
 import { NextResponse } from 'next/server';
 import { headers } from 'next/headers';
 
-// Helper function to validate required order data
+// Modern Next.js App Router configurations
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
+// Validation helper function
 const validateOrderData = (orderData) => {
   const requiredFields = ['customer_data', 'line_items'];
   const requiredCustomerFields = [
@@ -35,9 +40,21 @@ const validateOrderData = (orderData) => {
   if (!Array.isArray(orderData.line_items) || orderData.line_items.length === 0) {
     throw new Error('Order must contain at least one item');
   }
+
+  // Validate email format
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(orderData.customer_data.email)) {
+    throw new Error('Invalid email format');
+  }
+
+  // Validate phone number (basic validation)
+  const phoneRegex = /^\+?[\d\s-]{8,}$/;
+  if (!phoneRegex.test(orderData.customer_data.phone)) {
+    throw new Error('Invalid phone number format');
+  }
 };
 
-// Helper function to calculate order totals
+// Calculate order totals helper function
 const calculateOrderTotals = (lineItems) => {
   let subtotal = 0;
   const shippingCost = 4.99; // Default shipping cost
@@ -45,7 +62,9 @@ const calculateOrderTotals = (lineItems) => {
 
   // Calculate subtotal
   subtotal = lineItems.reduce((total, item) => {
-    return total + (item.price * item.quantity);
+    const itemPrice = parseFloat(item.price) || 0;
+    const quantity = parseInt(item.quantity) || 0;
+    return total + (itemPrice * quantity);
   }, 0);
 
   const tax = subtotal * taxRate;
@@ -59,12 +78,45 @@ const calculateOrderTotals = (lineItems) => {
   };
 };
 
+// Email helper function (implement based on your email provider)
+async function sendOrderConfirmationEmail({ orderNumber, customerEmail, orderDetails }) {
+  try {
+    // Implement your email sending logic here
+    // Example using a logging statement for now
+    console.log('Sending order confirmation email:', {
+      orderNumber,
+      customerEmail,
+      orderDetails,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    console.error('Email sending failed:', error);
+    // Don't throw error to prevent order creation failure
+  }
+}
+
+// Main API route handler
 export async function POST(request) {
   try {
+    // Check request size
+    const contentLength = request.headers.get('content-length');
+    if (contentLength && parseInt(contentLength) > 1024 * 1024) {
+      return NextResponse.json(
+        { error: 'Request entity too large' },
+        { status: 413 }
+      );
+    }
+
+    // Get headers for IP tracking
     const headersList = headers();
+    const clientIp = headersList.get('x-forwarded-for') || 
+                    headersList.get('x-real-ip') || 
+                    'unknown';
+
+    // Parse request body
     const { paymentIntentId, orderData } = await request.json();
 
-    // Validate the request
+    // Validate paymentIntentId
     if (!paymentIntentId) {
       return NextResponse.json(
         { error: 'Payment Intent ID is required' },
@@ -85,7 +137,7 @@ export async function POST(request) {
     // Calculate order totals
     const totals = calculateOrderTotals(orderData.line_items);
 
-    // Prepare the WooCommerce order data
+    // Prepare WooCommerce order data
     const wooCommerceOrderData = {
       payment_method: 'stripe',
       payment_method_title: 'Credit Card (Stripe)',
@@ -122,9 +174,9 @@ export async function POST(request) {
       })),
       shipping_lines: [
         {
-          method_title: 'Standard Shipping',
+          method_title: orderData.shipping_method?.name || 'Standard Shipping',
           method_id: 'flat_rate',
-          total: totals.shipping
+          total: orderData.shipping_method?.price.toString() || totals.shipping
         }
       ],
       meta_data: [
@@ -138,12 +190,20 @@ export async function POST(request) {
         },
         {
           key: '_stripe_customer_ip',
-          value: headersList.get('x-forwarded-for') || 'unknown'
+          value: clientIp
+        },
+        {
+          key: 'order_total_calculated',
+          value: totals.total
         }
       ]
     };
 
-    // Basic auth token for WooCommerce API
+    // Create auth token for WooCommerce
+    if (!process.env.WC_CONSUMER_KEY || !process.env.WC_CONSUMER_SECRET) {
+      throw new Error('WooCommerce credentials are not configured');
+    }
+
     const authToken = Buffer.from(
       `${process.env.WC_CONSUMER_KEY}:${process.env.WC_CONSUMER_SECRET}`
     ).toString('base64');
@@ -159,7 +219,6 @@ export async function POST(request) {
       body: JSON.stringify(wooCommerceOrderData)
     });
 
-    // Handle WooCommerce API response
     if (!response.ok) {
       const errorData = await response.json();
       console.error('WooCommerce API Error:', errorData);
@@ -168,21 +227,16 @@ export async function POST(request) {
 
     const order = await response.json();
 
-    // Send confirmation email (you'll need to implement this based on your email service)
-    try {
-      await sendOrderConfirmationEmail({
-        orderNumber: order.id,
-        customerEmail: orderData.customer_data.email,
-        orderDetails: {
-          ...totals,
-          items: orderData.line_items,
-          shippingAddress: wooCommerceOrderData.shipping
-        }
-      });
-    } catch (emailError) {
-      console.error('Failed to send confirmation email:', emailError);
-      // Don't fail the order creation if email fails
-    }
+    // Send confirmation email
+    await sendOrderConfirmationEmail({
+      orderNumber: order.id,
+      customerEmail: orderData.customer_data.email,
+      orderDetails: {
+        ...totals,
+        items: orderData.line_items,
+        shippingAddress: wooCommerceOrderData.shipping
+      }
+    });
 
     // Return successful response
     return NextResponse.json({
@@ -192,7 +246,8 @@ export async function POST(request) {
       orderKey: order.order_key,
       currency: order.currency,
       total: order.total,
-      createdDate: order.date_created
+      createdDate: order.date_created,
+      customerEmail: orderData.customer_data.email
     });
 
   } catch (error) {
@@ -201,7 +256,11 @@ export async function POST(request) {
     // Handle specific error types
     if (error.response) {
       return NextResponse.json(
-        { error: 'WooCommerce API error', details: error.message },
+        { 
+          error: 'WooCommerce API error', 
+          details: error.message,
+          timestamp: new Date().toISOString()
+        },
         { status: error.response.status }
       );
     }
@@ -211,29 +270,9 @@ export async function POST(request) {
       { 
         error: 'Failed to create order',
         message: error.message,
-        timestamp: new Date().toISOString() 
+        timestamp: new Date().toISOString()
       },
       { status: 500 }
     );
   }
 }
-
-// Helper function for sending order confirmation emails
-// Implement this based on your email service (SendGrid, Amazon SES, etc.)
-async function sendOrderConfirmationEmail({ orderNumber, customerEmail, orderDetails }) {
-  // This is a placeholder - implement your email sending logic here
-  console.log('Sending order confirmation email:', {
-    orderNumber,
-    customerEmail,
-    orderDetails
-  });
-}
-
-// Export config for API route
-export const config = {
-  api: {
-    bodyParser: {
-      sizeLimit: '1mb',
-    },
-  },
-};
