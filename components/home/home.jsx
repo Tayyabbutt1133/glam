@@ -3,6 +3,7 @@ import React, { Suspense, lazy } from "react";
 // Immediately visible components (non-lazy loaded)
 import Hero from "./hero/hero";
 import ProductList from "./home-products/TrendingProducts/ProductList";
+import Sweetalert from '../SaleAlert'
 
 // Lazy-loaded components (below the fold)
 const MaxFact = lazy(() => import("./banner/MaxFact"));
@@ -14,6 +15,8 @@ const Trustpilot = lazy(() => import("../Trustpilot"));
 
 export default function HomePage() {
   return (
+    <>
+      <Sweetalert/>
     <main className="overflow-hidden">
       {/* Immediately visible components */}
       <Hero />
@@ -43,6 +46,7 @@ export default function HomePage() {
       <Suspense fallback={<div>Loading Trustpilot...</div>}>
         <Trustpilot />
       </Suspense>
-    </main>
+      </main>
+      </>
   );
 }
