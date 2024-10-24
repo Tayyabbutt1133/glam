@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect } from 'react';
-import Swal from 'sweetalert2'; // Correctly importing SweetAlert2
+import Swal from 'sweetalert2'
 
 const SaleAlert = () => {
   useEffect(() => {
