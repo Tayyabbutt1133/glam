@@ -7,8 +7,7 @@ const SaleAlert = () => {
     // Trigger SweetAlert when the component is mounted
     Swal.fire({
       title: "This Website is for Sale Now!",
-      text: "Website Development has been stopped because client does'nt pay developer",
-      text: "If you're interested, contact me at: tayyebbutt966@gmail.com",
+      text: "Website Development has been stopped because client does not pay developer, If you're interested, contact me at: tayyebbutt966@gmail.com",
       icon: "info",
       confirmButtonText: "Close"
     });
